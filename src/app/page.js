@@ -879,7 +879,7 @@ export default function Home() {
             </div>
           </div>
           <div className="group relative w-full border-[1px] border-solid border-[#E6E6E6] cursor-pointer transition-shadow duration-200 ease-in-out hover:shadow-md hover:shadow-[#00000010]">
-            <div className="relative group-hover:before:absolute group-hover:before:left-0 group-hover:before:top-0 group-hover:before:h-full group-hover:before:w-full group-hover:before:bg-[#02020231]">
+            <div className="relative group-hover:before:absolute group-hover:before:left-0 group-hover:before:top-0 group-hover:before:h-full group-hover:before:w-full group-hover:before:bg-[#02020231] ">
               <Image
                 className="w-full"
                 width={246}
@@ -893,8 +893,8 @@ export default function Home() {
               <p>Ceo & Founder</p>
             </div>
 
-            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 hidden gap-3 justify-center items-center text-white group-hover:flex opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100">
-              <FaFacebookF className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
+            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 hidden gap-3 justify-center items-center text-white group-hover:flex opacity-0 transition-opacity ease-in-out group-hover:opacity-100 duration-300">
+              <FaFacebookF className="rounded-full text-4xl p-2 transition-all hover:bg-[#00B207] " />
               <FaTwitter className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
               <FaPinterest className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
               <FaInstagram className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
@@ -915,7 +915,7 @@ export default function Home() {
               <p>Ceo & Founder</p>
             </div>
 
-            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 hidden gap-3 justify-center items-center text-white group-hover:flex opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100">
+            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 hidden gap-3 justify-center items-center text-white group-hover:flex opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
               <FaFacebookF className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
               <FaTwitter className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
               <FaPinterest className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
@@ -937,7 +937,7 @@ export default function Home() {
               <p>Ceo & Founder</p>
             </div>
 
-            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 hidden gap-3 justify-center items-center text-white group-hover:flex opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100">
+            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 hidden gap-3 justify-center items-center text-white group-hover:flex opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
               <FaFacebookF className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
               <FaTwitter className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
               <FaPinterest className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
