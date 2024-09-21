@@ -958,7 +958,7 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 ">
-          <div className=" flex flex-col gap-5 border-[1px] border-solid shadow-sm shadow-[#00260314] border-[#E6E6E6]  p-5 ">
+          <div className=" flex flex-col gap-5  shadow-sm shadow-[#00260314] border-[#E6E6E6]  p-5  bg-white">
             <p className="font-normal text-sm">
               Pellentesque eu nibh eget mauris congue mattis mattis nec tellus.
               Phasellus imperdiet elit eu magna dictum, bibendum cursus velit
@@ -987,7 +987,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className=" flex flex-col gap-5 border-[1px] border-solid shadow-sm shadow-[#00260314] border-[#E6E6E6]  p-5 ">
+          <div className=" flex flex-col gap-5  shadow-sm shadow-[#00260314] border-[#E6E6E6]  p-5 bg-white">
             <p className="font-normal text-sm">
               Pellentesque eu nibh eget mauris congue mattis mattis nec tellus.
               Phasellus imperdiet elit eu magna dictum, bibendum cursus velit
@@ -1016,7 +1016,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className=" flex flex-col gap-5 border-[1px] border-solid shadow-sm shadow-[#00260314] border-[#E6E6E6]  p-5 ">
+          <div className=" flex flex-col gap-5  shadow-sm shadow-[#00260314] border-[#E6E6E6]  p-5 bg-white">
             <p className="font-normal text-sm">
               Pellentesque eu nibh eget mauris congue mattis mattis nec tellus.
               Phasellus imperdiet elit eu magna dictum, bibendum cursus velit
