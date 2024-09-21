@@ -33,24 +33,24 @@ const Checkout = () => {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="firstname" className="text-sm font-normal">
-                First Name
+              <label htmlFor="lastname" className="text-sm font-normal">
+                Last Name
               </label>
               <input
                 type="text"
                 placeholder="Your last name"
-                id="firstname"
+                id="lastname"
                 className="border-[1px] border-solid border-[#cbc9c9] rounded-md p-2 px-3 placeholder:text-base placeholder:font-normal focus:outline-none"
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="firstname" className="text-sm font-normal">
+              <label htmlFor="company" className="text-sm font-normal">
                 Company Name <span className="text-[#7e7d7d]">(optional)</span>
               </label>
               <input
                 type="text"
                 placeholder="Company name"
-                id="firstname"
+                id="company"
                 className="border-[1px] border-solid border-[#cbc9c9] rounded-md p-2 px-3 placeholder:text-base placeholder:font-normal focus:outline-none"
               />
             </div>
@@ -97,37 +97,37 @@ const Checkout = () => {
               </select>
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="email" className="text-sm font-normal">
+              <label htmlFor="zip" className="text-sm font-normal">
                 Zip Code{" "}
               </label>
               <input
-                type="email"
+                type="teaxt"
                 placeholder="Zip Code"
-                id="email"
+                id="zip"
                 className="border-[1px] border-solid border-[#cbc9c9] rounded-md p-2 px-3 placeholder:text-base placeholder:font-normal focus:outline-none"
               />
             </div>
           </div>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             <div className="flex flex-col gap-2">
-              <label htmlFor="firstname" className="text-sm font-normal">
+              <label htmlFor="email2" className="text-sm font-normal">
                 Email
               </label>
               <input
                 type="email"
                 placeholder="Email Address"
-                id="firstname"
+                id="email2"
                 className="border-[1px] border-solid border-[#cbc9c9] rounded-md p-2 px-3 placeholder:text-base placeholder:font-normal focus:outline-none"
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="firstname" className="text-sm font-normal">
+              <label htmlFor="phone" className="text-sm font-normal">
                 Phone
               </label>
               <input
                 type="text"
                 placeholder="Phone number"
-                id="firstname"
+                id="phone"
                 className="border-[1px] border-solid border-[#cbc9c9] rounded-md p-2 px-3 placeholder:text-base placeholder:font-normal focus:outline-none"
               />
             </div>
