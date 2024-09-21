@@ -87,43 +87,43 @@ export default function Home() {
           <h1 className="font-semibold text-[24px] text-white  xl:text-[32px]">
             Sale of the Month
           </h1>
-          <div class="flex items-center justify-center gap-3 count-down-main text-white">
-            <div class="timer flex justify-center items-center flex-col text-2xl font-normal">
+          <div className="flex items-center justify-center gap-3 count-down-main text-white">
+            <div className="timer flex justify-center items-center flex-col text-2xl font-normal">
               30
-              <div class="pr-1.5 pl-2 relative bg-indigo-50 w-max before:contents-[''] before:absolute before:h-full before:w-0.5 before:top-0 before:left-1/2 before:-translate-x-1/2 before:bg-white before:z-10 ">
-                <h3 class="countdown-element days font-manrope font-semibold text-2xl text-indigo-600 tracking-[15.36px] max-w-[44px] text-center relative z-20"></h3>
+              <div className="pr-1.5 pl-2 relative bg-indigo-50 w-max before:contents-[''] before:absolute before:h-full before:w-0.5 before:top-0 before:left-1/2 before:-translate-x-1/2 before:bg-white before:z-10 ">
+                <h3 className="countdown-element days font-manrope font-semibold text-2xl text-indigo-600 tracking-[15.36px] max-w-[44px] text-center relative z-20"></h3>
               </div>
-              <p class="text-xs font-normal  mt-1 text-center w-full text-white md:text-sm ">
+              <p className="text-xs font-normal  mt-1 text-center w-full text-white md:text-sm ">
                 DAYS
               </p>
             </div>
-            <h3 class="font-manrope font-semibold text-2xl text-white">:</h3>
-            <div class="timer flex  justify-center items-center flex-col text-2xl font-normal">
+            <h3 className="font-manrope font-semibold text-2xl text-white">:</h3>
+            <div className="timer flex  justify-center items-center flex-col text-2xl font-normal">
               30
-              <div class="pr-1.5 pl-2 relative bg-indigo-50 w-max before:contents-[''] before:absolute before:h-full before:w-0.5 before:top-0 before:left-1/2 before:-translate-x-1/2 before:bg-white before:z-10 ">
-                <h3 class="countdown-element hours font-manrope font-semibold text-2xl text-indigo-600 tracking-[15.36px] max-w-[44px] text-center relative z-20"></h3>
+              <div className="pr-1.5 pl-2 relative bg-indigo-50 w-max before:contents-[''] before:absolute before:h-full before:w-0.5 before:top-0 before:left-1/2 before:-translate-x-1/2 before:bg-white before:z-10 ">
+                <h3 className="countdown-element hours font-manrope font-semibold text-2xl text-indigo-600 tracking-[15.36px] max-w-[44px] text-center relative z-20"></h3>
               </div>
-              <p class="text-xs font-normal  mt-1 text-center w-full text-white md:text-sm">
+              <p className="text-xs font-normal  mt-1 text-center w-full text-white md:text-sm">
                 HOURS
               </p>
             </div>
-            <h3 class="font-manrope font-semibold text-2xl text-white">:</h3>
-            <div class="timer flex justify-center items-center flex-col text-2xl font-normal ">
+            <h3 className="font-manrope font-semibold text-2xl text-white">:</h3>
+            <div className="timer flex justify-center items-center flex-col text-2xl font-normal ">
               30
-              <div class="pr-1.5 pl-2 relative bg-indigo-50 w-max before:contents-[''] before:absolute before:h-full before:w-0.5 before:top-0 before:left-1/2 before:-translate-x-1/2 before:bg-white before:z-10 ">
-                <h3 class="countdown-element minutes font-manrope font-semibold text-2xl text-indigo-600 tracking-[15.36px] max-w-[44px] text-center relative z-20"></h3>
+              <div className="pr-1.5 pl-2 relative bg-indigo-50 w-max before:contents-[''] before:absolute before:h-full before:w-0.5 before:top-0 before:left-1/2 before:-translate-x-1/2 before:bg-white before:z-10 ">
+                <h3 className="countdown-element minutes font-manrope font-semibold text-2xl text-indigo-600 tracking-[15.36px] max-w-[44px] text-center relative z-20"></h3>
               </div>
-              <p class="text-xs font-normal  mt-1 text-center w-full text-white md:text-sm">
+              <p className="text-xs font-normal  mt-1 text-center w-full text-white md:text-sm">
                 MINUTES
               </p>
             </div>
-            <h3 class="font-manrope font-semibold text-2xl text-white">:</h3>
-            <div class="timer flex justify-center items-center flex-col text-2xl font-normal">
+            <h3 className="font-manrope font-semibold text-2xl text-white">:</h3>
+            <div className="timer flex justify-center items-center flex-col text-2xl font-normal">
               30
-              <div class="pr-1.5 pl-2 relative bg-indigo-50 w-max before:contents-[''] before:absolute before:h-full before:w-0.5 before:top-0 before:left-1/2 before:-translate-x-1/2 before:bg-white before:z-10 ">
-                <h3 class="countdown-element seconds font-manrope font-semibold text-2xl text-indigo-600 tracking-[15.36px] max-w-[44px] text-center relative z-20"></h3>
+              <div className="pr-1.5 pl-2 relative bg-indigo-50 w-max before:contents-[''] before:absolute before:h-full before:w-0.5 before:top-0 before:left-1/2 before:-translate-x-1/2 before:bg-white before:z-10 ">
+                <h3 className="countdown-element seconds font-manrope font-semibold text-2xl text-indigo-600 tracking-[15.36px] max-w-[44px] text-center relative z-20"></h3>
               </div>
-              <p class="text-xs font-normal  mt-1 text-center w-full text-white md:text-sm">
+              <p className="text-xs font-normal  mt-1 text-center w-full text-white md:text-sm">
                 SECONDS
               </p>
             </div>
@@ -460,7 +460,7 @@ export default function Home() {
       <div className="w-full grid gap-5 justify-between grid-cols-1 sm:grid-cols-2  xl:grid-cols-4">
         <div className="w-full flex flex-col gap-5">
           <h1 className="font-medium text-lg">Hot Deals</h1>
-          <div class=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
+          <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
             <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
               <Image
                 className=" w-20 h-20 "
@@ -499,7 +499,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div class=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
+          <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
             <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
               <Image
                 className=" w-20 h-20 "
@@ -538,7 +538,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div class=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
+          <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
             <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
               <Image
                 className=" w-20 h-20 "
@@ -580,7 +580,7 @@ export default function Home() {
         </div>
         <div className="w-full flex flex-col gap-5">
           <h1 className="font-medium text-lg">Best Seller</h1>
-          <div class=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
+          <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
             <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
               <Image
                 className=" w-20 h-20 "
@@ -619,7 +619,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div class=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
+          <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
             <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
               <Image
                 className=" w-20 h-20 "
@@ -658,7 +658,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div class=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
+          <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
             <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
               <Image
                 className=" w-20 h-20 "
@@ -700,7 +700,7 @@ export default function Home() {
         </div>
         <div className="w-full flex flex-col gap-5">
           <h1 className="font-medium text-lg">Top Rated</h1>
-          <div class=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
+          <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
             <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
               <Image
                 className=" w-20 h-20 "
@@ -739,7 +739,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div class=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
+          <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
             <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
               <Image
                 className=" w-20 h-20 "
@@ -778,7 +778,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div class=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
+          <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
             <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
               <Image
                 className=" w-20 h-20 "

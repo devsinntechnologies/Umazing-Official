@@ -3,6 +3,9 @@ import "./globals.css";
  // import Font Awesome CSS
  import "@fortawesome/fontawesome-svg-core/styles.css";
  import { config } from "@fortawesome/fontawesome-svg-core";
+import Navbar from "@/components/Nabar/Navbar";
+import HeaderCategory from "@/components/Header/HeaderCategory";
+import Footer from "@/components/Footer/Footer";
  config.autoAddCss = false;
 
 const geistSans = localFont({
@@ -27,7 +30,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Navbar/>
+        <HeaderCategory/>
         {children}
+        <Footer/>
       </body>
     </html>
   );

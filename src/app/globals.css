@@ -11,6 +11,32 @@ body {
   font-family: "Poppins", sans-serif;
   overflow-x: hidden;
 }
+/* * Custom Sidebar Menu Styles  */
+.custom-sidebar-menu .ant-menu-item:hover, 
+.custom-sidebar-menu .ant-menu-item-active {
+    background-color: green !important; /* Green background on hover */
+    color: white;
+}
 
+.custom-sidebar-menu .ant-menu-item-selected {
+    background-color: green !important; /* Maintain green background for selected items */
+    color: white;
+}
+
+.custom-sidebar-menu .ant-menu-item a {
+    color: black !important; /* Ensure text color remains visible on hover */
+}
+
+.custom-sidebar-menu .ant-menu-item a:hover {
+    color: white !important; /* Ensure text color remains visible on hover */
+}
+
+.custom-sidebar-menu .ant-menu-item-selected a {
+    color: white !important; /* Change the text color when an item is selected */
+}
+#overflow::-webkit-scrollbar{
+visibility: none;
+display: none;
+}
 
 
