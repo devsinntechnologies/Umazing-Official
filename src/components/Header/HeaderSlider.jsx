@@ -1,12 +1,12 @@
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectFade, Pagination, Autoplay } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/effect-fade';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import Image from 'next/image';
-import salad from '../../app/images/salad.png'; 
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectFade, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import Image from "next/image";
+import salad from "../../app/images/salad.png";
 
 const HeaderSlider = () => {
   return (
@@ -32,7 +32,9 @@ const HeaderSlider = () => {
           </h1>
           <p className="text-sm md:text-lg lg:text-xl text-white mb-6">
             SALE UP TO <br />
-            <span className="text-lg md:text-4xl lg:text-5xl font-bold">48% OFF</span>
+            <span className="text-lg md:text-4xl lg:text-5xl font-bold">
+              48% OFF
+            </span>
           </p>
           <button className="mt-4 flex items-center gap-2 px-3 py-1 md:px-6 md:py-3 bg-green-500 text-white text-sm md:text-lg font-medium rounded-full hover:bg-green-600 transition duration-300">
             Shop now <span className="rotate-45">→</span>
@@ -44,7 +46,6 @@ const HeaderSlider = () => {
           <Image
             src={salad}
             alt="Organic Food"
-
             className={`max-w-xs w-[200px]  md:w-[500px] lg:max-w-sm object-contain rounded-lg`}
             priority
           />
@@ -59,7 +60,9 @@ const HeaderSlider = () => {
           </h1>
           <p className="text-sm md:text-lg lg:text-xl text-white mb-6">
             SALE UP TO <br />
-            <span className="text-lg md:text-4xl lg:text-5xl font-bold">48% OFF</span>
+            <span className="text-lg md:text-4xl lg:text-5xl font-bold">
+              48% OFF
+            </span>
           </p>
           <button className="mt-4 flex items-center gap-2 px-3 py-1 md:px-6 md:py-3 bg-green-500 text-white text-sm md:text-lg font-medium rounded-full hover:bg-green-600 transition duration-300">
             Shop now <span className="rotate-45">→</span>
@@ -71,7 +74,6 @@ const HeaderSlider = () => {
           <Image
             src={salad}
             alt="Organic Food"
-
             className={`max-w-xs w-[200px]  md:w-[500px] lg:max-w-sm object-contain rounded-lg`}
             priority
           />

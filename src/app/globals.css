@@ -38,9 +38,62 @@ body {
 visibility: none;
 display: none;
 }
-
-.border-inline-end{
-  border: none;
+.ant-menu {
+border-inline-end:none;
 }
+
+  
+  .shadow {
+    box-shadow: 0px 0px 12px 0px #20b52652;
+  }
+  
+  .decoration {
+    text-decoration: line-through;
+  }
+  
+  #priceRange::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove WebKit's default styling */
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: green; /* Tailwind green-500 */
+    cursor: pointer;
+    position: relative;
+    top: 0px; /* Center thumb vertically */
+  }
+  
+  #priceRange::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: green; /* Tailwind green-500 */
+    cursor: pointer;
+  }
+  
+  #priceRange::-ms-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  
+    background-color: green; /* Tailwind green-500 */
+    cursor: pointer;
+  }
+  
+  #overflow::-webkit-scrollbar{
+    visibility: none;
+    display: none;
+   
+  }
+  #change{
+    height: 20px;
+    width: 20px;
+    max-width: 15px;
+  }
+  
+  
+  
+  
+  
 
 
