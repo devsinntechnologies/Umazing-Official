@@ -74,7 +74,7 @@ const ProductsCard = ({ product }) => {
               </div>
             </div>
             <div className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center items-center cursor-pointer">
-              <Image width={20} height={20} src="/bag.png" alt="Cart" />
+             <Link href={'/details'} ><Image width={20} height={20} src="/bag.png" alt="Cart" /></Link> 
             </div>
           </div>
         </div>
