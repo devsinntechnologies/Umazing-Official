@@ -38,9 +38,8 @@ body {
 visibility: none;
 display: none;
 }
-
-.border-inline-end{
-  border: none;
+.ant-menu {
+border-inline-end:none;
 }
 
   

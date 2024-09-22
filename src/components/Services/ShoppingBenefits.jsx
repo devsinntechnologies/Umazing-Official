@@ -1,27 +1,29 @@
-import React from 'react';
-import { FaShippingFast, FaHeadset, FaShieldAlt, FaUndo } from 'react-icons/fa'; // Use relevant icons
+import React from "react";
+import { FaShippingFast, FaHeadset, FaShieldAlt, FaUndo } from "react-icons/fa"; // Use relevant icons
 
 const ShoppingBenefits = () => {
   const benefits = [
     {
       icon: <FaShippingFast className="text-green-600 text-4xl" />,
-      title: 'Free Shipping',
-      description: 'Free shipping with discount',
+      title: "Free Shipping",
+      description: "Free shipping with discount",
     },
     {
       icon: <FaHeadset className="text-green-600 text-4xl" />,
-      title: 'Great Support 24/7',
-      description: 'Instant access to Contact',
+      title: "Great Support 24/7",
+      description: "Instant access to Contact",
     },
     {
-      icon: <FaShieldAlt className="text-white text-4xl bg-green-500 p-2 rounded-full" />,
-      title: '100% Secure Payment',
-      description: 'We ensure your money is safe',
+      icon: (
+        <FaShieldAlt className="text-white text-4xl bg-green-500 p-2 rounded-full" />
+      ),
+      title: "100% Secure Payment",
+      description: "We ensure your money is safe",
     },
     {
       icon: <FaUndo className="text-green-600 text-4xl" />,
-      title: 'Money-Back Guarantee',
-      description: '30 days money-back',
+      title: "Money-Back Guarantee",
+      description: "30 days money-back",
     },
   ];
 
@@ -34,7 +36,9 @@ const ShoppingBenefits = () => {
             {benefit.icon}
           </div>
           <div>
-            <h3 className="font-semibold text-base text-black">{benefit.title}</h3>
+            <h3 className="font-semibold text-base text-black">
+              {benefit.title}
+            </h3>
             <p className="text-gray-500 text-sm">{benefit.description}</p>
           </div>
         </div>
