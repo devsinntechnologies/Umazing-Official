@@ -1,7 +1,8 @@
 import React from "react";
 import { IoLocationOutline } from "react-icons/io5";
-import NavMiddleSection from "./NavMiddleSection";
 import Link from "next/link";
+import NavMiddleSection from "./NavMiddleSection";
+
 
 const Navbar = () => {
   return (
@@ -35,10 +36,10 @@ const Navbar = () => {
             </select>
             <div className="flex gap-4">
               <Link href="/login">
-                <p>Login</p>
+                <p className="text-gray-500 text-xs md:text-sm">Login</p>
               </Link>
-              <Link href="/sign-up">
-                <p>Sign Up</p>
+              <Link href="/signup">
+                <p className="text-gray-500 text-xs md:text-sm">Sign Up</p>
               </Link>
             </div>
           </div>
