@@ -3,6 +3,7 @@
 import ProductsCard from "@/components/ProductsCard";
 import Image from "next/image";
 import React, { useState } from "react";
+import Link from "next/link";
 
 const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState("/preview.png");
@@ -169,10 +170,13 @@ const ProductDetails = () => {
                   <Image src="/plus.png" alt="" width={10} height={10} />
                 </button>
               </div>
-              <button className="h-[51px] w-[300px] text-sm lg:w-[447px] bg-[#00B207] text-white text-[16px] font-semibold flex justify-center items-center gap-3 lg:gap-4 rounded-[43px]">
-                Add to Cart
-                <Image src="/bagg.png" alt="" width={20} height={20} />
-              </button>
+              <Link href="/cart">
+                {" "}
+                <button className="h-[51px] w-[300px] text-sm lg:w-[447px] bg-[#00B207] text-white text-[16px] font-semibold flex justify-center items-center gap-3 lg:gap-4 rounded-[43px]">
+                  Add to Cart
+                  <Image src="/bagg.png" alt="" width={20} height={20} />
+                </button>
+              </Link>
               <div className="w-[40px] h-[40px] rounded-full border border-[#F2F2F2] bg-[#F2F2F2] flex justify-center items-center">
                 <Image src="/Heart.png" alt="" width={20} height={20} />
               </div>
@@ -296,7 +300,9 @@ const ProductDetails = () => {
                 <div className="flex items-center space-x-2">
                   <img src="/price-tag.png" alt="" />
                   <div>
-                    <p className="text-gray-800 font-medium md:font-bold">64% Discount</p>
+                    <p className="text-gray-800 font-medium md:font-bold">
+                      64% Discount
+                    </p>
                     <p className="text-gray-500 text-sm">
                       Save your 64% money with us
                     </p>
@@ -305,7 +311,9 @@ const ProductDetails = () => {
                 <div className="flex items-center space-x-2">
                   <img src="/leaf.png" alt="" />
                   <div>
-                    <p className="text-gray-800 font-medium md:font-bold">100% Organic</p>
+                    <p className="text-gray-800 font-medium md:font-bold">
+                      100% Organic
+                    </p>
                     <p className="text-gray-500 text-sm">
                       100% Organic Vegetables
                     </p>
