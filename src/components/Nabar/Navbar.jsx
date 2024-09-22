@@ -38,7 +38,7 @@ const Navbar = () => {
               <Link href="/login">
                 <p className="text-gray-500 text-xs md:text-sm">Login</p>
               </Link>
-              <Link href="/signup">
+              <Link href="/sign-up">
                 <p className="text-gray-500 text-xs md:text-sm">Sign Up</p>
               </Link>
             </div>
@@ -50,7 +50,7 @@ const Navbar = () => {
       </div>
 
       {/* Extra space to accommodate the fixed navbar */}
-      <div className="h-[166px]"></div>
+      <div className="h-[160px]"></div>
     </>
   );
 };

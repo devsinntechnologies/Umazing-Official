@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBagShopping, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FaArrowRight } from "react-icons/fa";
 import HeaderCategory from "@/components/Header/HeaderCategory";
+
 import {
   FaFacebookF,
   FaTwitter,
@@ -21,6 +22,7 @@ import {
   faPinterestP,
   faInstagram,
 } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 
 export default function Home() {
@@ -132,10 +134,11 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <button className="flex gap-3 items-center bg-white rounded-full text-[#00B207] py-[14px] px-10 font-semibold text-sm">
+          
+        <Link href={'/shop'} >  <button className="flex gap-3 items-center bg-white rounded-full text-[#00B207] py-[14px] px-10 font-semibold text-sm">
             Shop Now
             <FaArrowRight />
-          </button>
+          </button></Link>
         </div>
         <div className=" mydiv2 w-full bg-slate-400 flex justify-start items-center flex-col gap-5  pb-56  px-10 pt-10 rounded-xl bg-[url('/Images/bg2.png')] bg-cover	bg-bottom	h-100">
           <p className="font-medium text-sm  text-white">85% Fat Free</p>
@@ -146,10 +149,10 @@ export default function Home() {
             Started at <span className="text-[#FF8A00]">$79.99</span>
           </p>
           <div></div>
-          <button className="flex gap-3 items-center bg-white rounded-full text-[#00B207] py-[14px] px-10 font-semibold text-sm">
+       <Link href={'/shop'}>   <button className="flex gap-3 items-center bg-white rounded-full text-[#00B207] py-[14px] px-10 font-semibold text-sm">
             Shop Now
             <FaArrowRight />
-          </button>
+          </button></Link>
         </div>
         <div className="  w-full bg-slate-400 flex justify-start items-center flex-col gap-5  pb-56  px-10 pt-10 rounded-xl bg-[url('/Images/bg3.png')] bg-cover	bg-bottom h-100	">
           <p className="font-medium text-sm  text-black">Summer Sale</p>
@@ -163,10 +166,10 @@ export default function Home() {
             </p>
           </div>
           <div></div>
-          <button className="flex gap-3 items-center bg-white rounded-full text-[#00B207] py-[14px] px-10 font-semibold text-sm">
+        <Link href={'/shop'}>  <button className="flex gap-3 items-center bg-white rounded-full text-[#00B207] py-[14px] px-10 font-semibold text-sm">
             Shop Now
             <FaArrowRight />
-          </button>
+          </button></Link>
         </div>
       </div>
       {/* Banner Section End  */}
@@ -303,10 +306,10 @@ export default function Home() {
             <p className="font-medium text-sm  text-black">Summer Sale</p>
             <h1 className="font-semibold text-[32px] text-black">75% off</h1>
 
-            <button className="flex gap-3 items-center bg-white rounded-full text-[#00B207] py-[14px] px-5 font-semibold text-sm">
+          <Link href={'/shop'}>  <button className="flex gap-3 items-center bg-white rounded-full text-[#00B207] py-[14px] px-5 font-semibold text-sm">
             Shop Now
             <FaArrowRight />
-          </button>
+          </button></Link>
           </div>
           <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
             <Image
@@ -328,20 +331,20 @@ export default function Home() {
                     <FontAwesomeIcon icon={faStar} className="text-[#CCCCCC]" />
                   </div>
                 </div>
-                <FontAwesomeIcon
+              <Link href={'/details'}>  <FontAwesomeIcon
                   icon={faBagShopping}
                   className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
-                />
+                /></Link>
               </div>
               <div className=" flex-col gap-4 absolute top-7 right-5 hidden group-hover:flex  ">
                 <FontAwesomeIcon
                   icon={faEye}
                   className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 text-sm"
                 />
-                <FontAwesomeIcon
+               <Link href={'/wishlist'}> <FontAwesomeIcon
                   icon={faHeart}
                   className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 "
-                />
+                /></Link>
               </div>
             </div>
           </div>
@@ -365,20 +368,20 @@ export default function Home() {
                     <FontAwesomeIcon icon={faStar} className="text-[#CCCCCC]" />
                   </div>
                 </div>
-                <FontAwesomeIcon
+                <Link href={'/details'}>  <FontAwesomeIcon
                   icon={faBagShopping}
                   className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
-                />
+                /></Link>
               </div>
               <div className=" flex-col gap-4 absolute top-7 right-5 hidden group-hover:flex  ">
                 <FontAwesomeIcon
                   icon={faEye}
                   className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 text-sm"
                 />
-                <FontAwesomeIcon
+                  <Link href={'/wishlist'}> <FontAwesomeIcon
                   icon={faHeart}
                   className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 "
-                />
+                /></Link>
               </div>
             </div>
           </div>
@@ -402,20 +405,20 @@ export default function Home() {
                     <FontAwesomeIcon icon={faStar} className="text-[#CCCCCC]" />
                   </div>
                 </div>
-                <FontAwesomeIcon
+                <Link href={'/details'}>  <FontAwesomeIcon
                   icon={faBagShopping}
                   className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
-                />
+                /></Link>
               </div>
               <div className=" flex-col gap-4 absolute top-7 right-5 hidden group-hover:flex  ">
                 <FontAwesomeIcon
                   icon={faEye}
                   className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 text-sm"
                 />
-                <FontAwesomeIcon
+                  <Link href={'/wishlist'}> <FontAwesomeIcon
                   icon={faHeart}
                   className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 "
-                />
+                /></Link>
               </div>
             </div>
           </div>
@@ -439,20 +442,20 @@ export default function Home() {
                     <FontAwesomeIcon icon={faStar} className="text-[#CCCCCC]" />
                   </div>
                 </div>
-                <FontAwesomeIcon
+                <Link href={'/details'}>  <FontAwesomeIcon
                   icon={faBagShopping}
                   className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
-                />
+                /></Link>
               </div>
               <div className=" flex-col gap-4 absolute top-7 right-5 hidden group-hover:flex  ">
                 <FontAwesomeIcon
                   icon={faEye}
                   className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 text-sm"
                 />
-                <FontAwesomeIcon
+                  <Link href={'/wishlist'}> <FontAwesomeIcon
                   icon={faHeart}
                   className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 "
-                />
+                /></Link>
               </div>
             </div>
           </div>
@@ -487,18 +490,18 @@ export default function Home() {
                 </div>
                 <div className="hidden  gap-3 group-hover:flex  items-center">
                  
-                  <FontAwesomeIcon
-                    icon={faBagShopping}
-                    className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px] bg-[#00B207]"
-                  />
+                <Link href={'/details'}>  <FontAwesomeIcon
+                  icon={faBagShopping}
+                  className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
+                /></Link>
                   <FontAwesomeIcon
                     icon={faEye}
                     className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px]"
                   />
-                  <FontAwesomeIcon
-                    icon={faHeart}
-                    className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px]  text-[11px]"
-                  />
+                   <Link href={'/wishlist'}> <FontAwesomeIcon
+                  icon={faHeart}
+                  className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 "
+                /></Link>
                 </div>
               </div>
             </div>
@@ -526,18 +529,18 @@ export default function Home() {
                 </div>
                 <div className="hidden  gap-3 group-hover:flex  items-center">
                   {" "}
-                  <FontAwesomeIcon
-                    icon={faBagShopping}
-                    className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px] bg-[#00B207]"
-                  />
+                  <Link href={'/details'}>  <FontAwesomeIcon
+                  icon={faBagShopping}
+                  className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
+                /></Link>
                   <FontAwesomeIcon
                     icon={faEye}
                     className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px]"
                   />
-                  <FontAwesomeIcon
-                    icon={faHeart}
-                    className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px]  text-[11px]"
-                  />
+                   <Link href={'/wishlist'}> <FontAwesomeIcon
+                  icon={faHeart}
+                  className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 "
+                /></Link>
                 </div>
               </div>
             </div>
@@ -565,18 +568,18 @@ export default function Home() {
                 </div>
                 <div className="hidden  gap-3 group-hover:flex  items-center">
                   {" "}
-                  <FontAwesomeIcon
-                    icon={faBagShopping}
-                    className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px] bg-[#00B207]"
-                  />
+                  <Link href={'/details'}>  <FontAwesomeIcon
+                  icon={faBagShopping}
+                  className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
+                /></Link>
                   <FontAwesomeIcon
                     icon={faEye}
                     className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px]"
                   />
-                  <FontAwesomeIcon
-                    icon={faHeart}
-                    className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px]  text-[11px]"
-                  />
+                    <Link href={'/wishlist'}> <FontAwesomeIcon
+                  icon={faHeart}
+                  className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 "
+                /></Link>
                 </div>
               </div>
             </div>
@@ -608,10 +611,10 @@ export default function Home() {
                 </div>
                 <div className="hidden  gap-3 group-hover:flex  items-center">
                   {" "}
-                  <FontAwesomeIcon
-                    icon={faBagShopping}
-                    className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px] bg-[#00B207]"
-                  />
+                  <Link href={'/details'}>  <FontAwesomeIcon
+                  icon={faBagShopping}
+                  className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
+                /></Link>
                   <FontAwesomeIcon
                     icon={faEye}
                     className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px]"
@@ -647,10 +650,10 @@ export default function Home() {
                 </div>
                 <div className="hidden  gap-3 group-hover:flex  items-center">
                   {" "}
-                  <FontAwesomeIcon
-                    icon={faBagShopping}
-                    className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px] bg-[#00B207]"
-                  />
+                  <Link href={'/details'}>  <FontAwesomeIcon
+                  icon={faBagShopping}
+                  className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
+                /></Link>
                   <FontAwesomeIcon
                     icon={faEye}
                     className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px]"
@@ -686,10 +689,10 @@ export default function Home() {
                 </div>
                 <div className="hidden  gap-3 group-hover:flex  items-center">
                   {" "}
-                  <FontAwesomeIcon
-                    icon={faBagShopping}
-                    className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px] bg-[#00B207]"
-                  />
+                  <Link href={'/details'}>  <FontAwesomeIcon
+                  icon={faBagShopping}
+                  className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
+                /></Link>
                   <FontAwesomeIcon
                     icon={faEye}
                     className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px]"
@@ -728,10 +731,10 @@ export default function Home() {
                 </div>
                 <div className="hidden  gap-3 group-hover:flex  items-center">
                   {" "}
-                  <FontAwesomeIcon
-                    icon={faBagShopping}
-                    className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px] bg-[#00B207]"
-                  />
+                  <Link href={'/details'}>  <FontAwesomeIcon
+                  icon={faBagShopping}
+                  className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
+                /></Link>
                   <FontAwesomeIcon
                     icon={faEye}
                     className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px]"
@@ -767,10 +770,10 @@ export default function Home() {
                 </div>
                 <div className="hidden  gap-3 group-hover:flex  items-center">
                   {" "}
-                  <FontAwesomeIcon
-                    icon={faBagShopping}
-                    className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px] bg-[#00B207]"
-                  />
+                  <Link href={'/details'}>  <FontAwesomeIcon
+                  icon={faBagShopping}
+                  className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
+                /></Link>
                   <FontAwesomeIcon
                     icon={faEye}
                     className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px]"
@@ -806,10 +809,10 @@ export default function Home() {
                 </div>
                 <div className="hidden  gap-3 group-hover:flex  items-center">
                   {" "}
-                  <FontAwesomeIcon
-                    icon={faBagShopping}
-                    className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px] bg-[#00B207]"
-                  />
+                  <Link href={'/details'}>  <FontAwesomeIcon
+                  icon={faBagShopping}
+                  className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
+                /></Link>
                   <FontAwesomeIcon
                     icon={faEye}
                     className="rounded-full border-[1px] border-solid border-[#9a9292] py-3 px-[12px] text-[11px]"
@@ -831,10 +834,11 @@ export default function Home() {
             Every Order
           </h1>
 
-          <button className="flex gap-3 items-center bg-white rounded-full text-[#00B207] py-[14px] px-10 font-semibold text-sm">
+        <Link href={'/shop'}>  <button className="flex gap-3 items-center bg-white rounded-full text-[#00B207] py-[14px] px-10 font-semibold text-sm">
             Shop Now
             <FaArrowRight />
-          </button>
+          </button></Link>
+
         </div>
       </div>
       {/* Deal Section End  */}

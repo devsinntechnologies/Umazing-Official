@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Image from "next/image";
 import salad from "../../app/images/salad.png";
-
+import Link from "next/link";
 const HeaderSlider = () => {
   return (
     <Swiper
@@ -36,9 +36,9 @@ const HeaderSlider = () => {
               48% OFF
             </span>
           </p>
-          <button className="mt-4 flex items-center gap-2 px-3 py-1 md:px-6 md:py-3 bg-green-500 text-white text-sm md:text-lg font-medium rounded-full hover:bg-green-600 transition duration-300">
+         <Link href={'/shop'}> <button className="mt-4 flex items-center gap-2 px-3 py-1 md:px-6 md:py-3 bg-green-500 text-white text-sm md:text-lg font-medium rounded-full hover:bg-green-600 transition duration-300">
             Shop now <span className="rotate-45">→</span>
-          </button>
+          </button> </Link>
         </div>
 
         {/* Image Content */}
@@ -64,9 +64,9 @@ const HeaderSlider = () => {
               48% OFF
             </span>
           </p>
-          <button className="mt-4 flex items-center gap-2 px-3 py-1 md:px-6 md:py-3 bg-green-500 text-white text-sm md:text-lg font-medium rounded-full hover:bg-green-600 transition duration-300">
+        <Link href={'/shop'}>  <button className="mt-4 flex items-center gap-2 px-3 py-1 md:px-6 md:py-3 bg-green-500 text-white text-sm md:text-lg font-medium rounded-full hover:bg-green-600 transition duration-300">
             Shop now <span className="rotate-45">→</span>
-          </button>
+          </button></Link>
         </div>
 
         {/* Image Content */}
