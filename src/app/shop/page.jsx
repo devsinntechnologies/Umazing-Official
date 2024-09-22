@@ -86,7 +86,7 @@ export default function Shop() {
 
   return (
     <>
-      <section class="flex md:flex-row flex-col my-6">
+      <section class="flex md:flex-row flex-col my-6 w-[95vw] mx-auto">
         {/* <!-- Sidebar --> */}
 
         <FilterBar />

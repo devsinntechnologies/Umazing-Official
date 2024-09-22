@@ -89,9 +89,12 @@ const NavMiddleSection = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="flex items-center hover:text-gray-300">
+                <Link
+                  href="/shop"
+                  className="flex items-center hover:text-gray-300"
+                >
                   Shop
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#" className="flex items-center hover:text-gray-300">
