@@ -25,7 +25,7 @@ const NavMiddleSection = () => {
         <div className="container w-[95vw] mx-auto px-2 py-3 flex justify-between items-center">
           {/* Logo Section */}
           <div>
-            <Image src={ecobazaar} width={150} height={50} />
+           <Link href={'/'}> <Image src={ecobazaar} width={150} height={50} /></Link>
           </div>
 
           {/* Search Bar */}
@@ -73,7 +73,7 @@ const NavMiddleSection = () => {
             {/* Navigation Links for large screens */}
             <ul className="hidden lg:flex items-center space-x-6 ml-4 text-white">
               <li><Link href="/" className="flex items-center hover:text-gray-300">Home</Link></li>
-              <li><a href="#" className="flex items-center hover:text-gray-300">Shop</a></li>
+              <li><Link href="/shop" className="flex items-center hover:text-gray-300">Shop</Link></li>
               <li><a href="#" className="flex items-center hover:text-gray-300">Pages</a></li>
               <li><a href="#" className="flex items-center hover:text-gray-300">Blog</a></li>
               <li><a href="#" className="flex items-center hover:text-gray-300">About Us</a></li>
@@ -82,7 +82,7 @@ const NavMiddleSection = () => {
 
             {/* Icons Section */}
             <div className="flex items-center ml-auto space-x-4">
-              <a href="#" className="text-white hover:text-gray-300"><CiHeart size={30} /></a>
+              <Link href="/wishlist" className="text-white hover:text-gray-300"><CiHeart size={30} /></Link>
               <Link href="/cart" className="relative text-white hover:text-gray-300">
                 <IoCartOutline  size={30} />
                 <span className="absolute -top-1 -right-2 bg-green-600 text-xs rounded-full px-1">2</span>
@@ -101,8 +101,8 @@ const NavMiddleSection = () => {
 
               {/* Navigation Links */}
               <ul className="text-white p-4 space-y-4 flex flex-col items-center">
-                <li><a href="#" className="block hover:text-gray-300">Home</a></li>
-                <li><a href="#" className="block hover:text-gray-300">Shop</a></li>
+                <li><Link href="/" className="block hover:text-gray-300">Home</Link></li>
+                <li><Link href="/shop" className="block hover:text-gray-300">Shop</Link></li>
                 <li><a href="#" className="block hover:text-gray-300">Pages</a></li>
                 <li><a href="#" className="block hover:text-gray-300">Blog</a></li>
                 <li><a href="#" className="block hover:text-gray-300">About Us</a></li>

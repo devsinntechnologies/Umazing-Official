@@ -88,6 +88,7 @@ const HeaderCategory = () => {
           style={{
             fontSize: "16px",
             fontWeight: "400",
+            borderInlineEnd: "none",
           }}
         />
       </div>
