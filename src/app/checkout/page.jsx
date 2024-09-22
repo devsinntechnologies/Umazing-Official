@@ -7,7 +7,7 @@ import Link from "next/link";
 const Checkout = () => {
   return (
     <>
-      <div className="h-28 w-full bg-gray-400 bg-[url('/Images/banner.jpg')] bg-cover bg-bottom flex justify-start text-[#999999] items-center px-5 lg:px-10 ">
+      <div className="h-28 w-[96%] mx-auto bg-gray-400 bg-[url('/Images/banner.jpg')] bg-cover bg-bottom flex justify-start text-[#999999] items-center px-5 lg:px-10 ">
         <div className="flex gap-4 items-center justify-center  ">
           <MdHome className="text-2xl cursor-pointer" />
           <p className="font-normal text-base cursor-pointer">Shopping Cart</p>

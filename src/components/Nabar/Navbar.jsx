@@ -24,7 +24,12 @@ const Navbar = () => {
         <option className="text-gray-500 text-xs md:text-sm" value="">USD</option>
         <option className="text-gray-500 text-xs md:text-sm" value="">PKR</option>
       </select>
+      <div className='flex gap-4'>
+        <p>Login</p>
+        <p>Sign Up</p>
+      </div>
     </div>
+
   </div>
 
   {/* Navbar middle section */}

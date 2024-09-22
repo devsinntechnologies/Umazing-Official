@@ -3,7 +3,7 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBagShopping, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FaArrowRight } from "react-icons/fa";
-
+import HeaderCategory from "@/components/Header/HeaderCategory";
 import {
   FaFacebookF,
   FaTwitter,
@@ -20,6 +20,7 @@ import {
   faPinterestP,
   faInstagram,
 } from "@fortawesome/free-solid-svg-icons";
+
 
 export default function Home() {
   // count-down TimeRanges
@@ -80,8 +81,10 @@ export default function Home() {
 
   return (
     <div className="m-auto w-[95vw] my-5">
+      {/*  */}
+      <HeaderCategory/>
       {/* Banner Section Start*/}
-      <div className="w-full grid grid-cols-1 gap-5   sm:grid-cols-2 lg:grid-cols-3 h-100 ">
+      <div className="w-full grid grid-cols-1 gap-5   sm:grid-cols-2 lg:grid-cols-3 h-100 pt-5">
         <div className=" mydiv1 w-full bg-slate-400 flex justify-start items-center flex-col gap-5  pb-56  px-10 pt-10 rounded-xl bg-[url('/Images/bg1.png')] bg-cover	bg-bottom	 h-100">
           <p className="font-medium text-sm  text-white">Best Deals</p>
           <h1 className="font-semibold text-[24px] text-white  xl:text-[32px]">

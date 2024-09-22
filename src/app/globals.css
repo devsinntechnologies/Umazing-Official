@@ -39,4 +39,8 @@ visibility: none;
 display: none;
 }
 
+.border-inline-end{
+  border: noneurl(../../../task2/task2/src/app/cart);
+}
+
 
