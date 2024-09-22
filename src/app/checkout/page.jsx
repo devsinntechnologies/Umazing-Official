@@ -170,7 +170,7 @@ const Checkout = () => {
                   className="w-[30px] h-[30px] break-inside-auto lg:w-[50px] lg:h-[50px]	"
                   width={100}
                   height={100}
-                  src={"/Images/apple.png"}
+                  src={"/Images/Capsicum.png"}
                 ></Image>
                 <h1 className="font-normal text-sm">Red Capsicum</h1>
                 <h1 className="font-normal text-sm">x1</h1>
