@@ -838,6 +838,7 @@ export default function Home() {
             Shop Now
             <FaArrowRight />
           </button></Link>
+
         </div>
       </div>
       {/* Deal Section End  */}
