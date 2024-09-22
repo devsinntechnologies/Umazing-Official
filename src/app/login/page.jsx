@@ -66,7 +66,7 @@ function login() {
         <div className="register flex justify-center gap-5">
           <p>Don't have any account? </p>
           <button className="underline text-green-600 font-semibold hover:no-underline">
-            <Link href="/sign-up">Sign Up</Link>
+            <Link href="/signup">Sign Up</Link>
           </button>
         </div>
       </div>
