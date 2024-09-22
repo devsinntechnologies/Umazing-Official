@@ -1,17 +1,22 @@
-
 import Link from "next/link";
+import Image from "next/image";
+import { FaRegUser } from "react-icons/fa";
 
-
+import { MdOutlineEmail } from "react-icons/md";
+import { FaRegEye } from "react-icons/fa";
 
 function Register() {
   return (
     <>
-
       <div className="w-[95vw] flex flex-col justify-center  p-5 gap-7 shadow-2xl rounded-lg my-5 mx-auto md:w-[70vw] md:mt-20 lg:w-[55vw] sm:p-12 xl:w-[40vw] xl:mt-5 ">
         <div className="flex flex-col justify-center items-center gap-2">
           <Link href="/">
-            {" "}
-            <img src="https://pickbazar-react.vercel.app/_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F2295%2FLogo-new.png&w=1920&q=75"></img>
+            <Image
+              className=" w-full   	"
+              width={246}
+              height={246}
+              src={"/Images/logo.webp"}
+            ></Image>
           </Link>
           <p className="text-center">Register new account</p>
         </div>
@@ -25,7 +30,7 @@ function Register() {
               type="text"
               id="name"
             ></input>
-            <i class="fa-regular fa-user absolute right-4 top-4 cursor-pointer"></i>
+            <FaRegUser class="absolute right-4 top-4 cursor-pointer" />
           </div>
           <label className="text-sm font-semibold" for="email">
             Email
@@ -36,7 +41,7 @@ function Register() {
               type="email"
               id="email"
             ></input>
-            <i class="fa-regular fa-envelope absolute right-4 top-4 cursor-pointer"></i>
+            <MdOutlineEmail class="absolute right-4 top-4 cursor-pointer" />
           </div>
           <label className="text-sm font-semibold" for="password">
             Password
@@ -47,7 +52,7 @@ function Register() {
               type="password"
               id="password"
             ></input>
-            <i class="fa-regular fa-eye absolute right-4 top-4 cursor-pointer"></i>
+            <FaRegEye class=" absolute right-4 top-4 cursor-pointer" />{" "}
           </div>
           <button className="py-2 px-4 text-xl bg-green-600  text-white rounded-lg">
             {" "}
