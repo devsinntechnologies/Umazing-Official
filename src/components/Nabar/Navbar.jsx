@@ -1,6 +1,7 @@
 import React from "react";
 import { IoLocationOutline } from "react-icons/io5";
-
+import Link from "next/link";
+import NavMiddleSection from "./NavMiddleSection";
 
 
 const Navbar = () => {
