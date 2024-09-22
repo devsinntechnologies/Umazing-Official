@@ -3,7 +3,6 @@ import { IoLocationOutline } from "react-icons/io5";
 import Link from "next/link";
 import NavMiddleSection from "./NavMiddleSection";
 
-
 const Navbar = () => {
   return (
     <>
@@ -38,7 +37,7 @@ const Navbar = () => {
               <Link href="/login">
                 <p className="text-gray-500 text-xs md:text-sm">Login</p>
               </Link>
-              <Link href="/sign-up">
+              <Link href="/signup">
                 <p className="text-gray-500 text-xs md:text-sm">Sign Up</p>
               </Link>
             </div>
