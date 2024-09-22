@@ -5,7 +5,7 @@ import React from "react";
 const ProductsCard = ({ product }) => {
   return (
     <>
-      <div className="group w-[295px] hover:shadow-x-[#00B207] hover:shadow-lg  h-[407px] border border-gray-300 rounded-xl relative hover:border-[#2C742F] ">
+      <div className="group lg:w-[295px]  hover:shadow-x-[#00B207] hover:shadow-lg  lg:h-[407px] border border-gray-300 rounded-xl relative hover:border-[#2C742F] sm:w-52 sm:h-80 ">
         <div>
           <Link href={"/details"}>
             <Image
