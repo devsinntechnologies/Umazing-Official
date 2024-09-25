@@ -1,18 +1,11 @@
 'use client'
-import React, { useState } from 'react';
+
 import { IoLocationOutline } from "react-icons/io5";
 import NavMiddleSection from './NavMiddleSection';
-import Login from '@/components/form/Login';
-import Signup from '@/components/form/Signup';
+
 
 const Navbar = () => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [popupType, setPopupType] = useState('login'); // New state to track the popup type
-
-  const openPopup = (type) => {
-    setPopupType(type);
-    setIsPopupOpen(true);
-  };
+ 
 
   return (
     <>
@@ -35,8 +28,8 @@ const Navbar = () => {
             </select>
             <div className='flex justify-between gap-3'>
               {/* Buttons to open login and signup popups */}
-              <button className='text-gray-500 text-xs md:text-sm' onClick={() => openPopup('login')}>Login</button>
-              <button className='text-gray-500 text-xs md:text-sm' onClick={() => openPopup('signup')}>Signup</button>
+              <button className='text-gray-500 text-xs md:text-sm' >Login</button>
+              <button className='text-gray-500 text-xs md:text-sm' >Signup</button>
             </div>
           </div>
         </div>
@@ -45,13 +38,7 @@ const Navbar = () => {
         <NavMiddleSection />
       </div>
 
-      {/* Conditionally render either the Login or Signup popup */}
-      {popupType === 'login' ? (
-        <Login isOpen={isPopupOpen} setIsOpen={setIsPopupOpen} />
-      ) : (
-        <Signup isOpen={isPopupOpen} setIsOpen={setIsPopupOpen} />
-      )}
-
+      
       {/* Extra space to accommodate the fixed navbar */}
       <div className="h-[166px]"></div>
     </>
