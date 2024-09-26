@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 import ecobazaar from '../../app/images/ecobazaar.jpg';
+import axios from 'axios';
 import Link from 'next/link';
 
 const LoginPopup = ({ isOpen, closePopup }) => {
@@ -11,39 +12,33 @@ const LoginPopup = ({ isOpen, closePopup }) => {
   const [error, setError] = useState('');
 
   if (!isOpen) return null;
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true); 
-
-    const item = { email, password };
-
-    try {
-      const response = await fetch('http://localhost:4000/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(item),
+      const data = { email, password };
+  
+    axios.post("http://97.74.89.204:4000/auth/login", data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(function(res) {
+        setLoading(false); 
+        if (res.data.success) {
+          alert(res.data.message); 
+          alert(res.data.message); 
+        } else {
+          alert(res.data.message);
+        }
+      })
+      .catch(function(error) {
+        setLoading(false); 
+        console.error('Login error:', error);
+        alert('An error occurred during login.');
       });
-
-      if (!response.ok) {
-       
-        const data = await response.json();
-        setError(data.message || 'Login failed. Please try again.');
-      } else {
-       
-        const data = await response.json();
-        console.log('Login successful:', data);
-        
-      }
-    } catch (err) {
-      setError('An error occurred. Please try again later.');
-    } finally {
-      setLoading(false); 
-    }
   };
-
+  
+  
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 w-full max-w-sm sm:max-w-md rounded-lg shadow-lg relative">
