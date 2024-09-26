@@ -1,7 +1,8 @@
 import Image from "next/image";
+import CategoriesPage from "./components/Categories";
 
 export default function Home() {
   return (
-    <h1>Home</h1>
+    <CategoriesPage/>
   );
 }
