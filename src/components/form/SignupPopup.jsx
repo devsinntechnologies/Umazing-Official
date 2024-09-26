@@ -3,11 +3,43 @@ import React, { useState } from 'react';
 import { FaEnvelope, FaLock, FaUser } from 'react-icons/fa';
 import ecobazaar from '../../app/images/ecobazaar.jpg';
 import Link from 'next/link';
+import axios from 'axios'; 
 
 const SignupPopup = ({ isOpen, closePopup }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [phoneNo, setPhoneNo] = useState('');
+  const [gender, setGender] = useState('male'); 
+  const [dob, setDob] = useState('');
+
+  const signup = async (e) => {
+    e.preventDefault();
+    let item = { name, email, password, phoneNo, gender, dob };
+
+    try {
+      
+      let response = await axios.post('http://localhost:4000/auth/register', item, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept':'application/json'
+        },
+      });
+
+      console.log(response.data);
+
+      if (response.status === 200 || response.status === 201) {
+        
+        alert('Registration successful');
+        closePopup(); 
+      } else {
+        alert('Registration failed: ' + response.data.message);
+      }
+    } catch (error) {
+      console.error('Error during registration:', error);
+      alert('An error occurred during registration.');
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -33,7 +65,7 @@ const SignupPopup = ({ isOpen, closePopup }) => {
         </div>
 
         {/* Form fields */}
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={signup}>
           <div className="flex items-center border border-gray-300 p-2 rounded-md">
             <FaUser className="text-gray-500 mr-2" />
             <input
@@ -66,6 +98,38 @@ const SignupPopup = ({ isOpen, closePopup }) => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+          </div>
+          <div className="flex items-center border border-gray-300 p-2 rounded-md">
+            <input
+              type="text"
+              className="w-full focus:outline-none text-sm sm:text-base"
+              placeholder="Enter your phone number"
+              value={phoneNo}
+              onChange={(e) => setPhoneNo(e.target.value)}
+              required
+            />
+          </div>
+          <div className="flex items-center border border-gray-300 p-2 rounded-md">
+            <input
+              type="date"
+              className="w-full focus:outline-none text-sm sm:text-base"
+              placeholder="Enter your date of birth"
+              value={dob}
+              onChange={(e) => setDob(e.target.value)}
+              required
+            />
+          </div>
+          <div className="flex items-center border border-gray-300 p-2 rounded-md">
+            <select
+              className="w-full focus:outline-none text-sm sm:text-base"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              required
+            >
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
           </div>
           <button
             type="submit"

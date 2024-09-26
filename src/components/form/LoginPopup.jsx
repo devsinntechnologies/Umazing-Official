@@ -1,13 +1,48 @@
-import Image from 'next/image';
+import Image from 'next/image'; 
 import React, { useState } from 'react';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 import ecobazaar from '../../app/images/ecobazaar.jpg';
 import Link from 'next/link';
+
 const LoginPopup = ({ isOpen, closePopup }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   if (!isOpen) return null;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true); 
+
+    const item = { email, password };
+
+    try {
+      const response = await fetch('http://localhost:4000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(item),
+      });
+
+      if (!response.ok) {
+       
+        const data = await response.json();
+        setError(data.message || 'Login failed. Please try again.');
+      } else {
+       
+        const data = await response.json();
+        console.log('Login successful:', data);
+        
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again later.');
+    } finally {
+      setLoading(false); 
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -31,7 +66,7 @@ const LoginPopup = ({ isOpen, closePopup }) => {
         </div>
 
         {/* Form fields */}
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="flex items-center border border-gray-300 p-2 rounded-md">
             <FaEnvelope className="text-gray-500 mr-2" />
             <input
@@ -54,6 +89,7 @@ const LoginPopup = ({ isOpen, closePopup }) => {
               required
             />
           </div>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
           <div className="text-right">
             <a href="#" className="text-blue-500 hover:underline text-sm sm:text-base">
               Forgot password?
@@ -61,9 +97,10 @@ const LoginPopup = ({ isOpen, closePopup }) => {
           </div>
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 text-sm sm:text-base"
+            className={`w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 text-sm sm:text-base ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={loading}
           >
-            Login
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
