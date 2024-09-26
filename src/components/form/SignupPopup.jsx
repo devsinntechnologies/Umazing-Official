@@ -19,7 +19,7 @@ const SignupPopup = ({ isOpen, closePopup }) => {
 
     try {
       
-      let response = await axios.post('http://localhost:4000/auth/register', item, {
+      let response = await axios.post('http://97.74.89.204:4000/auth/register', item, {
         headers: {
           'Content-Type': 'application/json',
           'Accept':'application/json'
@@ -28,13 +28,12 @@ const SignupPopup = ({ isOpen, closePopup }) => {
 
       console.log(response.data);
 
-      if (response.status === 200 || response.status === 201) {
-        
+      
         alert('Registration successful');
         closePopup(); 
-      } else {
+      
         alert('Registration failed: ' + response.data.message);
-      }
+    
     } catch (error) {
       console.error('Error during registration:', error);
       alert('An error occurred during registration.');
