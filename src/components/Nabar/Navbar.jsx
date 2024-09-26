@@ -1,11 +1,29 @@
-'use client'
+'use client';
 
 import { IoLocationOutline } from "react-icons/io5";
 import NavMiddleSection from './NavMiddleSection';
-
+import SignupPopup from "../form/SignupPopup";
+import LoginPopup from "../form/LoginPopup";
+import { useState } from "react";
 
 const Navbar = () => {
- 
+  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false); // State for Login popup
+  const [isSignupPopupOpen, setIsSignupPopupOpen] = useState(false); // State for Signup popup
+
+  const openLoginPopup = () => {
+    setIsLoginPopupOpen(true);
+    setIsSignupPopupOpen(false); // Ensure Signup popup is closed when Login opens
+  };
+
+  const openSignupPopup = () => {
+    setIsSignupPopupOpen(true);
+    setIsLoginPopupOpen(false); // Ensure Login popup is closed when Signup opens
+  };
+
+  const closePopup = () => {
+    setIsLoginPopupOpen(false);
+    setIsSignupPopupOpen(false); // Close both popups
+  };
 
   return (
     <>
@@ -27,9 +45,8 @@ const Navbar = () => {
               <option className="text-gray-500 text-xs md:text-sm" value="">PKR</option>
             </select>
             <div className='flex justify-between gap-3'>
-              {/* Buttons to open login and signup popups */}
-              <button className='text-gray-500 text-xs md:text-sm' >Login</button>
-              <button className='text-gray-500 text-xs md:text-sm' >Signup</button>
+              <button onClick={openLoginPopup} className='text-gray-500 text-xs md:text-sm'>Login</button>
+              <button onClick={openSignupPopup} className='text-gray-500 text-xs md:text-sm'>Signup</button>
             </div>
           </div>
         </div>
@@ -38,7 +55,12 @@ const Navbar = () => {
         <NavMiddleSection />
       </div>
 
-      
+      {/* Login Popup */}
+      <LoginPopup isOpen={isLoginPopupOpen} closePopup={closePopup} />
+
+      {/* Signup Popup */}
+      <SignupPopup isOpen={isSignupPopupOpen} closePopup={closePopup} />
+
       {/* Extra space to accommodate the fixed navbar */}
       <div className="h-[166px]"></div>
     </>
