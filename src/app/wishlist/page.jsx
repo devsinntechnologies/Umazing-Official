@@ -9,16 +9,16 @@ const WishlistPage = () => {
     <>
       <BreadCrum />
       <div>
-        <main className="container md:w-[80%] mx-auto px-4 md:px-6 lg:px-8 py-8 mt-20">
+        <main className="container md:w-[83%] mx-auto px-4 md:px-6 lg:px-8 py-8 mt-20">
           <h1 className="text-2xl font-semibold mb-6 text-center">
             My Wishlist
           </h1>
 
           <div
             id="overflow"
-            className="shadow overflow-auto border-b border-gray-200 sm:rounded-lg"
+            className="shadow overflow-auto  border-b border-gray-200 sm:rounded-lg"
           >
-            <table className="w-[96%] divide-y divide-gray-200 table-fixed">
+            <table className="w-[95%] divide-y divide-gray-200 table-fixed">
               <thead>
                 <tr>
                   <th className="w-[170px] md:w-1/3 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -70,7 +70,7 @@ const WishlistPage = () => {
                   <td className="px-4 py-4 text-right text-sm font-medium">
                     <Image src={"/close.png"}
                       id="change"
-                      width={15} height={15} alt="close" />
+                      width={20} height={20} alt="close" />
                   </td>
                 </tr>
 
@@ -106,8 +106,9 @@ const WishlistPage = () => {
                   <td className="px-4 py-4 text-right text-sm font-medium">
                     <Image src={"/close.png"}
                       id="change"
-                      width={15} height={15} alt="close" />
+                      width={20} height={20} alt="close" />
                   </td>
+                
                 </tr>
 
                 {/* Row 3 */}
@@ -143,7 +144,7 @@ const WishlistPage = () => {
                     </button>
                   </td>
                   <td className="px-4 py-4 text-right text-sm font-medium">
-                    <Image id="change" src={"/close.png"} width={15} height={15} alt="close" />
+                    <Image id="change" src={"/close.png"} width={20} height={20} alt="close" />
                   </td>
                 </tr>
 
