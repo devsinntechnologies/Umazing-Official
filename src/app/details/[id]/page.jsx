@@ -1,13 +1,35 @@
 "use client";
 
 import ProductsCard from "@/components/ProductsCard";
+import axios from "axios";
 import Image from "next/image";
-import React, { useState } from "react";
-import Link from "next/link";
+import React, { useEffect, useState } from "react";
 
-const ProductDetails = () => {
+const ProductDetails = ({ params }) => {
+  const { id } = params;
+  console.log(id)
+
   const [selectedImage, setSelectedImage] = useState("/preview.png");
   const [quantity, setQuantity] = useState(0);
+  const [product, setProduct] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async (id) => {
+      try {
+        const { data } = await axios.get(
+          `http://97.74.89.204:4000/product/getById/${id}`
+        );
+        setProduct(data.data);
+        setSelectedImage(data.data.image)
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchData(id);
+  }, [id]);
+
+  console.log(product)
 
   const images = [
     "/preview.png",
@@ -20,21 +42,25 @@ const ProductDetails = () => {
     {
       name: "Big Potatoes",
       price: 14.99,
+      rating: 4,
       image: "/brinjal.png",
     },
     {
       name: "Big Potatoes",
       price: 14.99,
+      rating: 4,
       image: "/preview.png",
     },
     {
       name: "Big Potatoes",
       price: 14.99,
+      rating: 3,
       image: "/japani.png",
     },
     {
       name: "Big Potatoes",
       price: 14.99,
+      rating: 5,
       image: "/mirch.png",
     },
   ];
@@ -47,9 +73,11 @@ const ProductDetails = () => {
     setQuantity((prevQty) => (prevQty > 0 ? prevQty - 1 : prevQty));
   }
 
+  console.log(selectedImage)
+
   return (
-    <main className="w-full flex justify-center items-center px-3 overflow-hidden">
-      <section className="my-6 md:px-0 w-full lg:w-[90vw]">
+    <main className="w-full flex justify-center items-center overflow-hidden px-3 my-10">
+      <section className="my-6 w-full lg:w-[90vw]">
         {/* Product Details */}
 
         <div className="flex lg:flex-row flex-col gap-10">
@@ -65,20 +93,20 @@ const ProductDetails = () => {
                   }`}
                   src={img}
                   alt=""
-                  width={80}
-                  height={80}
+                  width={70}
+                  height={70}
                   onClick={() => setSelectedImage(img)}
                 />
               ))}
             </div>
 
             {/* Preview Image */}
-            <div className="lg:w-[556px]">
+            <div className="w-[350px] sm:w-[400px] lg:w-[556px] ml-6" >
               <Image
-                src={selectedImage}
+                src={"http://97.74.89.204/uploads/products/3067216fdd3760ec9f46aa896ce48beb.jpeg"}
                 alt="Preview Image"
-                width={556}
-                height={556}
+                width={506}
+                height={506}
               />
             </div>
           </div>
@@ -87,7 +115,7 @@ const ProductDetails = () => {
           <div className="w-full lg:w-1/2 h-auto lg:h-[501px]">
             <div className="flex items-center gap-3">
               <h1 className="text-[25px] lg:text-[36px] font-semibold">
-                Chinese Cabbage
+                {product.name}
               </h1>
               <div className="w-[71px] h-[29px] rounded-[4px] bg-[#20B52633] text-[#2C742F] text-[14px] py-[4px] px-[8px]">
                 In Stock
@@ -114,7 +142,7 @@ const ProductDetails = () => {
               <p className="text-[#666666] text-[18px] font-normal line-through ">
                 $48.00
               </p>
-              <p className="text-[#2C742F] text-[24px] font-medium">$17.28</p>
+              <p className="text-[#2C742F] text-[24px] font-medium">${product.basePrice}</p>
               <div className="w-[75px] h-[27px] rounded-[30px] bg-[#EA4B481A] text-[#EA4B48] text-[14px] py-[3px] px-[10px]">
                 In Stock
               </div>
@@ -143,10 +171,7 @@ const ProductDetails = () => {
 
             <div className="w-full lg::w-[568px] mt-4">
               <p className="text-[14px] md:text-[16px] text-[#808080]">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta
-                natus blanditiis voluptas nobis voluptates dolore? Facere
-                ducimus, optio dolorum quaerat fugit rerum pariatur corporis
-                reprehenderit.
+              {product.longDescription}
               </p>
             </div>
 
@@ -170,13 +195,10 @@ const ProductDetails = () => {
                   <Image src="/plus.png" alt="" width={10} height={10} />
                 </button>
               </div>
-              <Link href="/cart">
-                {" "}
-                <button className="h-[51px] w-[300px] text-sm lg:w-[447px] bg-[#00B207] text-white text-[16px] font-semibold flex justify-center items-center gap-3 lg:gap-4 rounded-[43px]">
-                  Add to Cart
-                  <Image src="/bagg.png" alt="" width={20} height={20} />
-                </button>
-              </Link>
+              <button className="h-[51px] w-[300px] text-sm lg:w-[447px] bg-[#00B207] text-white text-[16px] font-semibold flex justify-center items-center gap-3 lg:gap-4 rounded-[43px]">
+                Add to Cart
+                <Image src="/bagg.png" alt="" width={20} height={20} />
+              </button>
               <div className="w-[40px] h-[40px] rounded-full border border-[#F2F2F2] bg-[#F2F2F2] flex justify-center items-center">
                 <Image src="/Heart.png" alt="" width={20} height={20} />
               </div>
@@ -211,7 +233,7 @@ const ProductDetails = () => {
           </div>
         </div>
 
-        <div className="container mx-auto mt-10 lg:mt-0">
+        <div className="container mx-auto mt-10 md:pl-8 lg:mt-0">
           {/* Tabs Section */}
           <div className="border-b border-gray-200">
             <nav className="flex justify-center items-center space-x-4 text-center">
@@ -231,7 +253,7 @@ const ProductDetails = () => {
           </div>
 
           {/* Content Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 my-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 my-10">
             {/* Left Text Content */}
             <div className="text-gray-700">
               <p className="text-[14px] md:text-[16px]">
@@ -250,7 +272,12 @@ const ProductDetails = () => {
               <ul className="mt-4 space-y-2">
                 <li className="flex items-start space-x-2">
                   <span className="w-[18px] h-[18px] rounded-full bg-[#00B207] flex justify-center items-center">
-                    <img src="/check.png" alt="heck" />
+                    <Image
+                      width={10}
+                      height={10}
+                      src="/check.png"
+                      alt="check"
+                    />
                   </span>
                   <span className="text-[14px] md:text-[16px]">
                     100 g of fresh leaves provided.
@@ -258,7 +285,7 @@ const ProductDetails = () => {
                 </li>
                 <li className="flex items-start space-x-2">
                   <span className="w-[18px] h-[18px] rounded-full bg-[#00B207] flex justify-center items-center">
-                    <img src="/check.png" alt="heck" />
+                    <Image width={10} height={10} src="/check.png" alt="heck" />
                   </span>
                   <span className="text-[14px] md:text-[16px]">
                     Aliquam ac est at augue volutpat elementum.
@@ -266,7 +293,7 @@ const ProductDetails = () => {
                 </li>
                 <li className="flex items-start space-x-2">
                   <span className="w-[18px] h-[18px] rounded-full bg-[#00B207] flex justify-center items-center">
-                    <img src="/check.png" alt="heck" />
+                    <Image width={10} height={10} src="/check.png" alt="heck" />
                   </span>
                   <span className="text-[14px] md:text-[16px]">
                     Quisque nec enim eget sapien molestie.
@@ -274,7 +301,7 @@ const ProductDetails = () => {
                 </li>
                 <li className="flex items-start space-x-2">
                   <span className="w-[18px] h-[18px] rounded-full bg-[#00B207] flex justify-center items-center">
-                    <img src="/check.png" alt="heck" />
+                    <Image width={10} height={10} src="/check.png" alt="heck" />
                   </span>
                   <span className="text-[14px] md:text-[16px]">
                     Proin convallis odio volutpat finibus posuere.
@@ -289,7 +316,9 @@ const ProductDetails = () => {
 
             {/* Right Image Content */}
             <div className="relative lg:w-[536px]">
-              <img
+              <Image
+                width={800}
+                height={800}
                 src="/shop.png"
                 alt="Product"
                 className="rounded-lg w-full h-[300px]"
@@ -298,7 +327,12 @@ const ProductDetails = () => {
               {/* Discount & Organic Info */}
               <div className="mt-4 flex lg:space-x-8 space-x-0 border rounded-lg py-4 md:p-4 p-0 w-full">
                 <div className="flex items-center space-x-2">
-                  <img src="/price-tag.png" alt="" />
+                  <Image
+                    width={40}
+                    height={40}
+                    src="/price-tag.png"
+                    alt="price"
+                  />
                   <div>
                     <p className="text-gray-800 font-medium md:font-bold">
                       64% Discount
@@ -309,7 +343,7 @@ const ProductDetails = () => {
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <img src="/leaf.png" alt="" />
+                  <Image width={40} height={40} src="/leaf.png" alt="leaf" />
                   <div>
                     <p className="text-gray-800 font-medium md:font-bold">
                       100% Organic
@@ -330,7 +364,7 @@ const ProductDetails = () => {
             Related Products
           </h1>
           {/* Products */}
-          <div className="lg:h-[407px] w-full flex flex-col lg:flex-row items-center gap-4  mt-8">
+          <div className="lg:h-[407px] w-full flex flex-wrap md:flex-nowrap justify-center md:justify-evenly items-center gap-2 sm:gap-4  mt-8">
             {products.map((item, index) => [
               <ProductsCard key={index} product={item} />,
             ])}
