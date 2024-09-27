@@ -26,6 +26,8 @@ export default function Shop() {
     fetchData();
   }, []);
 
+
+ 
   return (
     <>
       <section class="flex md:flex-row flex-col my-6 w-[95vw] mx-auto">
@@ -53,13 +55,14 @@ export default function Shop() {
           {/* <!-- Products --> */}
 
           <section class=" flex justify-center items-center gap-5 flex-wrap md:ml-7 mt-5 ">
-            {/* <!-- Cards --> */}
+         
 
             {
           data.map((product) => (
             <ProductsCard key= {product.id} product = {product} />
           ))
         }
+          
           </section>
         </main>
       </section>
