@@ -4,6 +4,8 @@ import { FaEnvelope, FaLock, FaUser } from 'react-icons/fa';
 import ecobazaar from '../../app/images/ecobazaar.jpg';
 import Link from 'next/link';
 import axios from 'axios';
+import { toast } from 'react-toastify'; // Use react-toastify here
+import 'react-toastify/dist/ReactToastify.css'; // Ensure you import the CSS
 
 const SignupPopup = ({ isOpen, closePopup }) => {
     const [name, setName] = useState('');
@@ -13,46 +15,42 @@ const SignupPopup = ({ isOpen, closePopup }) => {
     const [gender, setGender] = useState('male');
     const [dob, setDob] = useState('');
 
-    const signup = (e) => {
+    const signup = async (e) => {
         e.preventDefault();
-        axios.post('http://97.74.89.204:4000/auth/register',
-            {
-                name: name,
-                email: email,
-                password: password,
-                phoneNo: phoneNo,
-                gender: gender,
-                dob: dob
-            },
-            {
+        try {
+            const response = await axios.post('http://97.74.89.204:4000/auth/register', {
+                name,
+                email,
+                password,
+                phoneNo,
+                gender,
+                dob
+            }, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 }
-            })
-            .then((response) => {
-                console.log(response.data);
-
-                if (response.data.success === true) {
-                    alert(response.data.message);
-                    closePopup();
-                } else {
-                    alert('Registration failed: ' + response.data.message);
-                }
-            })
-            .catch((error) => {
-                console.error('Error during registration:', error);
-                alert('An error occurred during registration.');
             });
-    };
 
+            console.log(response.data);
+
+            if (response.data.success) {
+                toast.success(response.data.message); // Trigger success toast
+                closePopup();
+            } else {
+                toast.error('Registration failed: ' + (response.data.message || "Unknown error"));
+            }
+        } catch (error) {
+            console.error('Error during registration:', error);
+            toast.error('An error occurred during registration: ' + error.message);
+        }
+    };
 
     if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white p-4 sm:p-6 w-full max-w-xs sm:max-w-sm md:max-w-md rounded-lg shadow-lg relative mx-4 sm:mx-0">
-                {/* Close button */}
                 <button
                     className="absolute top-2 right-2 text-3xl font-semibold text-gray-500 hover:text-gray-700"
                     onClick={closePopup}
@@ -60,7 +58,6 @@ const SignupPopup = ({ isOpen, closePopup }) => {
                     &times;
                 </button>
 
-                {/* Header with image and title */}
                 <div className="flex flex-col gap-3 justify-between items-center mb-4">
                     <div>
                         <Image src={ecobazaar} width={150} alt="EcoBazaar Logo" />
@@ -70,7 +67,6 @@ const SignupPopup = ({ isOpen, closePopup }) => {
                     </div>
                 </div>
 
-                {/* Form fields */}
                 <form className="space-y-4" onSubmit={signup}>
                     <div className="flex items-center border border-gray-300 p-2 rounded-md">
                         <FaUser className="text-gray-500 mr-2" />
@@ -81,6 +77,8 @@ const SignupPopup = ({ isOpen, closePopup }) => {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             required
+                            minLength={3}
+                            maxLength={50}
                         />
                     </div>
                     <div className="flex items-center border border-gray-300 p-2 rounded-md">
@@ -103,6 +101,7 @@ const SignupPopup = ({ isOpen, closePopup }) => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
+                            minLength={8}
                         />
                     </div>
                     <div className="flex items-center border border-gray-300 p-2 rounded-md">
@@ -113,7 +112,7 @@ const SignupPopup = ({ isOpen, closePopup }) => {
                             value={phoneNo}
                             onChange={(e) => setPhoneNo(e.target.value)}
                             maxLength={11}
-                            
+                            pattern="[0-9]{11}"
                             required
                         />
                     </div>
@@ -121,7 +120,6 @@ const SignupPopup = ({ isOpen, closePopup }) => {
                         <input
                             type="date"
                             className="w-full focus:outline-none text-sm sm:text-base"
-                            placeholder="Enter your date of birth"
                             value={dob}
                             onChange={(e) => setDob(e.target.value)}
                             required
@@ -147,7 +145,7 @@ const SignupPopup = ({ isOpen, closePopup }) => {
                     </button>
                 </form>
 
-                {/* Login option */}
+                    
                 <div className="mt-4 text-center">
                     <p>
                         Already have an account?{' '}

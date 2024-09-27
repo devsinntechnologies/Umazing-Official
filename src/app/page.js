@@ -8,7 +8,7 @@ import DealSection from "@/components/Home/DealSection";
 import { BannerSection } from "@/components/Home/BannerSection";
 import {Team}  from "@/components/Home/Team";
 import { Companylogos } from "@/components/Home/Companylogos";
-
+import {  ToastContainer } from 'react-toastify'; // Use react-toastify here
 
 export default function Home() {
     return (
@@ -20,7 +20,8 @@ export default function Home() {
       <DealSection/>
       <BannerSection/>
       <Team/>
-      <Companylogos/>      
+      <Companylogos/>     
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover draggable /> 
     </div>
   );
 }
