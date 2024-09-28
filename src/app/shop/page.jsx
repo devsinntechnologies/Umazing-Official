@@ -4,9 +4,29 @@ import BreadCrum from "@/components/BreadCrum";
 import FilterBar from "@/components/FilterBar";
 import Pagination from "@/components/Pagination";
 import ProductsCard from "@/components/ProductsCard";
+import Image from "next/image";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 export default function Shop() {
-  
+ 
+  const [data, setData] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://97.74.89.204:4000/product/allProducts?pageNo=1&pageSize=100');
+      setData(response.data.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
  
   return (
     <>
@@ -37,6 +57,11 @@ export default function Shop() {
           <section class=" flex justify-center items-center gap-5 flex-wrap md:ml-7 mt-5 ">
          
 
+            {
+          data.map((product) => (
+            <ProductsCard key= {product.id} product = {product} />
+          ))
+        }
           
           </section>
         </main>
