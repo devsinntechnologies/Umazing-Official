@@ -4,8 +4,9 @@ import { FaEnvelope, FaLock, FaUser } from 'react-icons/fa';
 import ecobazaar from '../../app/images/ecobazaar.jpg';
 import Link from 'next/link';
 import axios from 'axios';
-import { toast } from 'react-toastify'; // Use react-toastify here
-import 'react-toastify/dist/ReactToastify.css'; // Ensure you import the CSS
+import Lottie from 'lottie-react';
+import Signupsuccess from '../form/LotieSuccess.json';
+import Signupcancel from '../form/LotieCancel.json';
 
 const SignupPopup = ({ isOpen, closePopup }) => {
     const [name, setName] = useState('');
@@ -14,6 +15,8 @@ const SignupPopup = ({ isOpen, closePopup }) => {
     const [phoneNo, setPhoneNo] = useState('');
     const [gender, setGender] = useState('male');
     const [dob, setDob] = useState('');
+    const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
+    const [showCancelAnimation, setShowCancelAnimation] = useState(false); 
 
     const signup = async (e) => {
         e.preventDefault();
@@ -32,17 +35,42 @@ const SignupPopup = ({ isOpen, closePopup }) => {
                 }
             });
 
-            console.log(response.data);
-
             if (response.data.success) {
-                toast.success(response.data.message); // Trigger success toast
-                closePopup();
+                setShowSuccessAnimation(true); 
+                setTimeout(() => {
+                    setShowSuccessAnimation(false); 
+                    setName('')
+                    setEmail('')
+                    setGender('')
+                    setDob('')
+                    setPhoneNo('')
+                    setPassword('')
+                    closePopup();  
+                }, 3000);
+            } else if (response.data.message === "User already exists") {
+               
+                setShowCancelAnimation(true);
+                setTimeout(() => {
+                    setShowCancelAnimation(false);
+                    closePopup();
+                }, 3000);
             } else {
-                toast.error('Registration failed: ' + (response.data.message || "Unknown error"));
+                console.log('Registration failed: ' + (response.data.message || "Unknown error"));
+                // Trigger cancel animation if there’s another error
+                setShowCancelAnimation(true);
+                setTimeout(() => {
+                    setShowCancelAnimation(false);
+                    closePopup();
+                }, 3000);
             }
         } catch (error) {
             console.error('Error during registration:', error);
-            toast.error('An error occurred during registration: ' + error.message);
+            // Trigger cancel animation on error
+            setShowCancelAnimation(true);
+            setTimeout(() => {
+                setShowCancelAnimation(false);
+                closePopup();
+            }, 3000);
         }
     };
 
@@ -58,102 +86,109 @@ const SignupPopup = ({ isOpen, closePopup }) => {
                     &times;
                 </button>
 
-                <div className="flex flex-col gap-3 justify-between items-center mb-4">
-                    <div>
-                        <Image src={ecobazaar} width={150} alt="EcoBazaar Logo" />
-                    </div>
-                    <div>
-                        <h2 className="text-lg font-bold text-center">Register new account</h2>
-                    </div>
-                </div>
+                {showSuccessAnimation ? (
+                    <Lottie animationData={Signupsuccess} />
+                ) : showCancelAnimation ? (
+                    <Lottie animationData={Signupcancel} />
+                ) : (
+                    <>
+                        <div className="flex flex-col gap-3 justify-between items-center mb-4">
+                            <div>
+                                <Image src={ecobazaar} width={150} alt="EcoBazaar Logo" />
+                            </div>
+                            <div>
+                                <h2 className="text-lg font-bold text-center">Register new account</h2>
+                            </div>
+                        </div>
 
-                <form className="space-y-4" onSubmit={signup}>
-                    <div className="flex items-center border border-gray-300 p-2 rounded-md">
-                        <FaUser className="text-gray-500 mr-2" />
-                        <input
-                            type="text"
-                            className="w-full focus:outline-none text-sm sm:text-base"
-                            placeholder="Enter your name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                            minLength={3}
-                            maxLength={50}
-                        />
-                    </div>
-                    <div className="flex items-center border border-gray-300 p-2 rounded-md">
-                        <FaEnvelope className="text-gray-500 mr-2" />
-                        <input
-                            type="email"
-                            className="w-full focus:outline-none text-sm sm:text-base"
-                            placeholder="Enter your email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="flex items-center border border-gray-300 p-2 rounded-md">
-                        <FaLock className="text-gray-500 mr-2" />
-                        <input
-                            type="password"
-                            className="w-full focus:outline-none text-sm sm:text-base"
-                            placeholder="Enter your password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                            minLength={8}
-                        />
-                    </div>
-                    <div className="flex items-center border border-gray-300 p-2 rounded-md">
-                        <input
-                            type="text"
-                            className="w-full focus:outline-none text-sm sm:text-base"
-                            placeholder="Enter your phone number"
-                            value={phoneNo}
-                            onChange={(e) => setPhoneNo(e.target.value)}
-                            maxLength={11}
-                            pattern="[0-9]{11}"
-                            required
-                        />
-                    </div>
-                    <div className="flex items-center border border-gray-300 p-2 rounded-md">
-                        <input
-                            type="date"
-                            className="w-full focus:outline-none text-sm sm:text-base"
-                            value={dob}
-                            onChange={(e) => setDob(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="flex items-center border border-gray-300 p-2 rounded-md">
-                        <select
-                            className="w-full focus:outline-none text-sm sm:text-base"
-                            value={gender}
-                            onChange={(e) => setGender(e.target.value)}
-                            required
-                        >
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <button
-                        type="submit"
-                        className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 text-sm sm:text-base"
-                    >
-                        Register
-                    </button>
-                </form>
+                        <form className="space-y-4" onSubmit={signup}>
+                            <div className="flex items-center border border-gray-300 p-2 rounded-md">
+                                <FaUser className="text-gray-500 mr-2" />
+                                <input
+                                    type="text"
+                                    className="w-full focus:outline-none text-sm sm:text-base"
+                                    placeholder="Enter your name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                    minLength={3}
+                                    maxLength={50}
+                                />
+                            </div>
+                            <div className="flex items-center border border-gray-300 p-2 rounded-md">
+                                <FaEnvelope className="text-gray-500 mr-2" />
+                                <input
+                                    type="email"
+                                    className="w-full focus:outline-none text-sm sm:text-base"
+                                    placeholder="Enter your email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="flex items-center border border-gray-300 p-2 rounded-md">
+                                <FaLock className="text-gray-500 mr-2" />
+                                <input
+                                    type="password"
+                                    className="w-full focus:outline-none text-sm sm:text-base"
+                                    placeholder="Enter your password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                    minLength={8}
+                                />
+                            </div>
+                            <div className="flex items-center border border-gray-300 p-2 rounded-md">
+                                <input
+                                    type="text"
+                                    className="w-full focus:outline-none text-sm sm:text-base"
+                                    placeholder="Enter your phone number"
+                                    value={phoneNo}
+                                    onChange={(e) => setPhoneNo(e.target.value)}
+                                    maxLength={11}
+                                    pattern="[0-9]{11}"
+                                    required
+                                />
+                            </div>
+                            <div className="flex items-center border border-gray-300 p-2 rounded-md">
+                                <input
+                                    type="date"
+                                    className="w-full focus:outline-none text-sm sm:text-base"
+                                    value={dob}
+                                    onChange={(e) => setDob(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="flex items-center border border-gray-300 p-2 rounded-md">
+                                <select
+                                    className="w-full focus:outline-none text-sm sm:text-base"
+                                    value={gender}
+                                    onChange={(e) => setGender(e.target.value)}
+                                    required
+                                >
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <button
+                                type="submit"
+                                className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 text-sm sm:text-base"
+                            >
+                                Register
+                            </button>
+                        </form>
 
-                    
-                <div className="mt-4 text-center">
-                    <p>
-                        Already have an account?{' '}
-                        <Link href="/login" className="text-green-500 hover:underline text-sm sm:text-base">
-                            Login
-                        </Link>
-                    </p>
-                </div>
+                        <div className="mt-4 text-center">
+                            <p>
+                                Already have an account?{' '}
+                                <Link href="/login" className="text-green-500 hover:underline text-sm sm:text-base">
+                                    Login
+                                </Link>
+                            </p>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );

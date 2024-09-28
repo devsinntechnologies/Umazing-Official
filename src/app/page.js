@@ -8,11 +8,12 @@ import DealSection from "@/components/Home/DealSection";
 import { BannerSection } from "@/components/Home/BannerSection";
 import {Team}  from "@/components/Home/Team";
 import { Companylogos } from "@/components/Home/Companylogos";
-import {  ToastContainer } from 'react-toastify'; // Use react-toastify here
+
 
 export default function Home() {
     return (
     <div className="m-auto w-[95vw] my-5">
+       
       <HeaderCategory/>
       <Banner/>
       <Category/>
@@ -21,7 +22,7 @@ export default function Home() {
       <BannerSection/>
       <Team/>
       <Companylogos/>     
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover draggable /> 
+     
     </div>
   );
 }
