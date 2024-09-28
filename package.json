@@ -15,7 +15,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@glidejs/glide": "^3.6.2",
-    "antd": "^5.20.6",
+    "antd": "^5.0.0-rc.0",
     "axios": "^1.7.7",
     "next": "14.2.11",
     "react": "^18",
