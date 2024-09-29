@@ -33,6 +33,7 @@ export const ProductSection = () => {
             width={246}
             height={246}
             src={"/Images/Lettuce.png"}
+            alt="Lettuce"
           ></Image>
           <div className="px-4">
             <h3 className="text-sm font-normal">Chanise Cabbage</h3>
@@ -76,6 +77,7 @@ export const ProductSection = () => {
             width={246}
             height={246}
             src={"/Images/Chili.png"}
+            alt="Chili"
           ></Image>
           <div className="px-4">
             <h3 className="text-sm font-normal">Green Chili</h3>
@@ -119,6 +121,7 @@ export const ProductSection = () => {
             width={246}
             height={246}
             src={"/Images/corn.png"}
+            alt="corn"
           ></Image>
           <div className="px-4">
             <h3 className="text-sm font-normal">Corn</h3>
@@ -162,6 +165,7 @@ export const ProductSection = () => {
             width={246}
             height={246}
             src={"/Images/GreenLettuce.png"}
+            alt="GreenLettuce"
           ></Image>
           <div className="px-4">
             <h3 className="text-sm font-normal">Chanise Cabbage</h3>

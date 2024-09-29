@@ -24,6 +24,7 @@ const Testimonial = () => {
                 width={246}
                 height={246}
                 src={"/Images/test1.webp"}
+                alt="test"
               ></Image>
               <div className="flex flex-col">
                 <h1 className="font-medium text-base">Robert Fox</h1>
@@ -53,6 +54,7 @@ const Testimonial = () => {
                 width={246}
                 height={246}
                 src={"/Images/test1.webp"}
+                alt="test"
               ></Image>
               <div className="flex flex-col">
                 <h1 className="font-medium text-base">Robert Fox</h1>
@@ -82,6 +84,7 @@ const Testimonial = () => {
                 width={246}
                 height={246}
                 src={"/Images/test1.webp"}
+                alt="test"
               ></Image>
               <div className="flex flex-col">
                 <h1 className="font-medium text-base">Robert Fox</h1>

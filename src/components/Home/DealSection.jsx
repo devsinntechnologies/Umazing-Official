@@ -21,6 +21,7 @@ const DealSection = () => {
               width={100}
               height={100}
               src={"/Images/greenapple.png"}
+              alt="greenapple"
             ></Image>
 
             <div className="flex flex-col gap-2 w-[50%] ">
@@ -65,6 +66,7 @@ const DealSection = () => {
               width={100}
               height={100}
               src={"/Images/Eggplant.png"}
+              alt="Eggplant"
             ></Image>
 
             <div className="flex flex-col gap-2 w-[50%] ">
@@ -109,6 +111,7 @@ const DealSection = () => {
               width={100}
               height={100}
               src={"/Images/GreenLettuce.png"}
+              alt="GreenLettuce"
             ></Image>
 
             <div className="flex flex-col gap-2 w-[50%] ">
@@ -156,6 +159,7 @@ const DealSection = () => {
               width={100}
               height={100}
               src={"/Images/Eggplant.png"}
+              alt="Eggplant"
             ></Image>
 
             <div className="flex flex-col gap-2 w-[50%] ">
@@ -200,6 +204,7 @@ const DealSection = () => {
               width={100}
               height={100}
               src={"/Images/Capsicum.png"}
+              alt="Capsicum"
             ></Image>
 
             <div className="flex flex-col gap-2 w-[50%] ">
@@ -244,6 +249,7 @@ const DealSection = () => {
               width={100}
               height={100}
               src={"/Images/Tomatos.png"}
+              alt="Tomatos"
             ></Image>
 
             <div className="flex flex-col gap-2 w-[50%] ">
@@ -291,6 +297,7 @@ const DealSection = () => {
               width={100}
               height={100}
               src={"/Images/Potatos.png"}
+              alt="Potatos"
             ></Image>
 
             <div className="flex flex-col gap-2 w-[50%] ">
@@ -335,6 +342,7 @@ const DealSection = () => {
               width={100}
               height={100}
               src={"/Images/corn.png"}
+              alt="corn"
             ></Image>
 
             <div className="flex flex-col gap-2 w-[50%] ">
@@ -379,6 +387,7 @@ const DealSection = () => {
               width={100}
               height={100}
               src={"/Images/cauliflower.png"}
+              alt="cauliflower"
             ></Image>
 
             <div className="flex flex-col gap-2 w-[50%] ">

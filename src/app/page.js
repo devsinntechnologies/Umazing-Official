@@ -8,7 +8,9 @@ import { BannerSection } from "@/components/Home/BannerSection";
 import {Team}  from "@/components/Home/Team";
 import { Companylogos } from "@/components/Home/Companylogos";
 
+
 import Categories from "@/components/Home/Categories";
+import { ToastContainer } from "react-toastify";
 
 export default function Home() {
     return (

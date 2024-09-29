@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ServiceAPI } from "@/services";
+import Image from "next/image";
 
 export default function Categories() {
   const [data, setData] = useState([]);
@@ -32,15 +33,16 @@ export default function Categories() {
         {data.map((product, index) => (
           <li
             key={index}
-            className="border-[1px] border-solid border-[#E6E6E6] flex justify-center items-center flex-col gap-3 py-4 px-5 cursor-pointer transition-shadow duration-150 ease-in-out hover:border-[#2C742F] hover:shadow-md hover:shadow-[#2c742e6d]"
+            className="border-[1px] border-solid border-[#E6E6E6] flex justify-center items-center flex-col gap-3 py-4  cursor-pointer transition-shadow duration-150 ease-in-out hover:border-[#2C742F] hover:shadow-md hover:shadow-[#2c742e6d]"
           >
-            <img
+            <Image
               src={`http://97.74.89.204/${product.imageUrl}`}
               alt={product.name}
               width={100}
               height={100}
               className="object-cover rounded-md mb-2 w-8"
-            />
+            ></Image>
+
             <h3 className="text-sm">{product.name}</h3>
           </li>
         ))}
