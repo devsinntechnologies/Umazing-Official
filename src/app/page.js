@@ -1,7 +1,30 @@
-import Image from "next/image";
+"use client";
+import "./globals.css";
+import HeaderCategory from "@/components/Header/HeaderCategory";
+import { Banner } from "@/components/Home/Banner";
+import { ProductSection } from "@/components/Home/ProductSection";
+import DealSection from "@/components/Home/DealSection";
+import { BannerSection } from "@/components/Home/BannerSection";
+import {Team}  from "@/components/Home/Team";
+import { Companylogos } from "@/components/Home/Companylogos";
+
+
+import Categories from "@/components/Home/Categories";
+import { ToastContainer } from "react-toastify";
 
 export default function Home() {
-  return (
-    <h1>Home</h1>
+    return (
+    <div className="m-auto w-[95vw] my-5">
+       
+      <HeaderCategory/>
+      <Banner/>
+      <Categories/>
+      <ProductSection/>
+      <DealSection/>
+      <BannerSection/>
+      <Team/>
+      <Companylogos/>     
+     
+    </div>
   );
 }

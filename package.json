@@ -9,14 +9,31 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.5.1",
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-brands-svg-icons": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@glidejs/glide": "^3.6.2",
+    "@tanstack/react-query": "^5.56.2",
+    "antd": "^5.0.0-rc.0",
+    "axios": "^1.7.7",
+    "jwt-decode": "^4.0.0",
+    "lottie-react": "^2.4.0",
+    "next": "14.2.11",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.11"
+    "react-icons": "^5.3.0",
+    "react-modal": "^3.16.1",
+    "react-toastify": "^10.0.5",
+    "reactjs-popup": "^2.0.6",
+    "swiper": "^11.1.14",
+    "toaster": "^0.1.2"
   },
   "devDependencies": {
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
     "eslint": "^8",
-    "eslint-config-next": "14.2.11"
+    "eslint-config-next": "14.2.11",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.13"
   }
 }

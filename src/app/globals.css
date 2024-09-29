@@ -3,27 +3,99 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+}
+/* * Custom Sidebar Menu Styles  */
+.custom-sidebar-menu .ant-menu-item:hover, 
+.custom-sidebar-menu .ant-menu-item-active {
+    background-color: green !important; /* Green background on hover */
+    color: white;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.custom-sidebar-menu .ant-menu-item-selected {
+    background-color: green !important; /* Maintain green background for selected items */
+    color: white;
 }
+
+.custom-sidebar-menu .ant-menu-item a {
+    color: black !important; /* Ensure text color remains visible on hover */
+}
+
+.custom-sidebar-menu .ant-menu-item a:hover {
+    color: white !important; /* Ensure text color remains visible on hover */
+}
+
+.custom-sidebar-menu .ant-menu-item-selected a {
+    color: white !important; /* Change the text color when an item is selected */
+}
+#overflow::-webkit-scrollbar{
+visibility: none;
+display: none;
+}
+
+
+  
+  .shadow {
+    box-shadow: 0px 0px 12px 0px #20b52652;
+  }
+  
+  .decoration {
+    text-decoration: line-through;
+  }
+  
+  #priceRange::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove WebKit's default styling */
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: green; /* Tailwind green-500 */
+    cursor: pointer;
+    position: relative;
+    top: 0px; /* Center thumb vertically */
+  }
+  
+  #priceRange::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: green; /* Tailwind green-500 */
+    cursor: pointer;
+  }
+  
+  #priceRange::-ms-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  
+    background-color: green; /* Tailwind green-500 */
+    cursor: pointer;
+  }
+  
+  #overflow::-webkit-scrollbar{
+    visibility: none;
+    display: none;
+   
+  }
+  #change{
+    height: 20px;
+    width: 20px;
+    max-width: 20px;
+  }
+
+  .border-inline-end{
+    border:none;
+}
+  
+  
+  
+  
+  
+
+
