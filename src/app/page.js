@@ -15,6 +15,7 @@ import { ToastContainer } from "react-toastify";
 export default function Home() {
     return (
     <div className="m-auto w-[95vw] my-5">
+       
       <HeaderCategory/>
       <Banner/>
       <Categories/>
@@ -23,7 +24,7 @@ export default function Home() {
       <BannerSection/>
       <Team/>
       <Companylogos/>     
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover draggable /> 
+     
     </div>
   );
 }
