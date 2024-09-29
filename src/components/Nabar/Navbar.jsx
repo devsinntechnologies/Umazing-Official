@@ -1,5 +1,3 @@
-'use client';
-
 import { IoLocationOutline } from "react-icons/io5";
 import NavMiddleSection from './NavMiddleSection';
 import SignupPopup from "../form/SignupPopup";
@@ -7,29 +5,27 @@ import LoginPopup from "../form/LoginPopup";
 import { useState } from "react";
 
 const Navbar = () => {
-  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false); // State for Login popup
-  const [isSignupPopupOpen, setIsSignupPopupOpen] = useState(false); // State for Signup popup
+  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
+  const [isSignupPopupOpen, setIsSignupPopupOpen] = useState(false);
 
   const openLoginPopup = () => {
     setIsLoginPopupOpen(true);
-    setIsSignupPopupOpen(false); // Ensure Signup popup is closed when Login opens
+    setIsSignupPopupOpen(false);
   };
 
   const openSignupPopup = () => {
     setIsSignupPopupOpen(true);
-    setIsLoginPopupOpen(false); // Ensure Login popup is closed when Signup opens
+    setIsLoginPopupOpen(false);
   };
 
   const closePopup = () => {
     setIsLoginPopupOpen(false);
-    setIsSignupPopupOpen(false); // Close both popups
+    setIsSignupPopupOpen(false);
   };
 
   return (
     <>
-      {/* Fixed Navbar */}
       <div className="fixed w-full top-0 left-0 right-0 z-50 bg-white">
-        {/* Top bar */}
         <div className="flex flex-wrap md:flex-nowrap w-[95vw] mx-auto justify-between p-2 border-b-2 border-gray-200">
           <div className="flex items-center gap-2">
             <IoLocationOutline color="#6b7280" size={24} />
@@ -55,11 +51,8 @@ const Navbar = () => {
         <NavMiddleSection />
       </div>
 
-      {/* Login Popup */}
-      <LoginPopup isOpen={isLoginPopupOpen} closePopup={closePopup} />
-
-      {/* Signup Popup */}
-      <SignupPopup isOpen={isSignupPopupOpen} closePopup={closePopup} />
+      <LoginPopup isOpen={isLoginPopupOpen} closePopup={closePopup} openSignupPopup={openSignupPopup} />
+      <SignupPopup isOpen={isSignupPopupOpen} closePopup={closePopup} LoginPopup={openLoginPopup} />
 
       {/* Extra space to accommodate the fixed navbar */}
       <div className="h-[166px]"></div>

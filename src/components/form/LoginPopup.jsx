@@ -1,97 +1,95 @@
-import Image from "next/image";
-import React, { useState, useEffect } from "react";
-import { FaEnvelope, FaLock } from "react-icons/fa";
-import ecobazaar from "../../app/images/ecobazaar.jpg";
-import axios from "axios";
-import Link from "next/link";
-import Lottie from "lottie-react";
-import SignupSuccess from "../form/LotieSuccess.json"; // Success animation JSON
-import SignupCancel from "../form/LotieCancel.json"; // Error animation JSON
-import jwt_decode from "jwt-decode"; // Ensure this import is correct
+import Image from 'next/image'; 
+import React, { useState, useEffect } from 'react';
+import { FaEnvelope, FaLock } from 'react-icons/fa';
+import ecobazaar from '../../app/images/ecobazaar.jpg';
+import axios from 'axios';
+import Lottie from 'lottie-react';
+import SignupSuccess from '../form/LotieSuccess.json';  // Success animation JSON
+import SignupCancel from '../form/LotieCancel.json';   // Error animation JSON
+import jwt_decode from 'jwt-decode';  
+import { useMutation } from '@tanstack/react-query'; 
 
-const LoginPopup = ({ isOpen, closePopup }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
   const [showErrorAnimation, setShowErrorAnimation] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login state
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
+    const token = localStorage.getItem('authToken');
     if (token) {
       try {
-        const decodedToken = jwt_decode(token);
-        const currentTime = Date.now() / 1000;
-
-        if (decodedToken.exp < currentTime) {
-          setError("Your session has expired. Please log in again.");
-          localStorage.removeItem("authToken");
-          setIsLoggedIn(false); // User is not logged in
-        } else {
-          setIsLoggedIn(true); // User is already logged in
-        }
+       
+        jwt_decode(token); 
+        setIsLoggedIn(true); 
       } catch (error) {
-        console.error("Token decoding error:", error);
-        setError("Error decoding token. Please log in again.");
-        localStorage.removeItem("authToken");
-        setIsLoggedIn(false); // User is not logged in
+        console.error('Token decoding error:', error);
+        setError('Error decoding token. Please log in again.');
+        localStorage.removeItem('authToken'); 
+        setIsLoggedIn(false); 
       }
     } else {
-      setIsLoggedIn(false); // No token found, user is not logged in
+      setIsLoggedIn(false); 
     }
   }, []);
+  
+  
 
-  if (!isOpen) return null;
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setShowSuccessAnimation(false);
-    setShowErrorAnimation(false);
-
-    const data = { email, password };
-
-    try {
-      const res = await axios.post(
-        "http://97.74.89.204:4000/auth/login",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+  const mutation = useMutation({
+    mutationFn: async (data) => {
+      const response = await axios.post(`http://97.74.89.204:4000/auth/login`, data,{
+        headers:{
+          'Content-Type':'application/json',
         }
-      );
-
-      if (res.data.success) {
-        localStorage.setItem("authToken", res.data.data.token);
+      });
+      return response.data; // Return the response data
+    },
+    onSuccess: (data) => {
+      if (data.success) {
+        localStorage.setItem('authToken', data.data.token); // Store token on successful login
         setShowSuccessAnimation(true);
         setIsLoggedIn(true); // User logged in successfully
         setTimeout(() => {
           setShowSuccessAnimation(false);
+          closePopup(); // Close popup on successful login
         }, 3000);
       } else {
         setShowErrorAnimation(true);
-        setError(res.data.message);
+        setError(data.message);
         setTimeout(() => {
           setShowErrorAnimation(false);
         }, 3000);
       }
-    } catch (error) {
-      console.error("Login error:", error);
+    },
+    onError: (error) => {
+      console.error('Login error:', error);
       setShowErrorAnimation(true);
-      setError("An error occurred during login.");
+      setError('An error occurred during login.');
       setTimeout(() => {
         setShowErrorAnimation(false);
       }, 3000);
     }
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError('');
+    setShowSuccessAnimation(false);
+    setShowErrorAnimation(false);
+    
+    // Call the mutation with email and password
+    mutation.mutate({ email, password });
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    setIsLoggedIn(false); // User logged out
-    setError("You have logged out.");
+    localStorage.removeItem('authToken');
+    setIsLoggedIn(false);
+    setError('You have logged out.');
   };
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -102,19 +100,17 @@ const LoginPopup = ({ isOpen, closePopup }) => {
         >
           &times;
         </button>
-
+        
         <div className="flex flex-col gap-3 justify-between items-center mb-4">
           <div>
             <Image src={ecobazaar} width={150} alt="EcoBazaar Logo" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-center">
-              Login with your email & password
-            </h2>
+            <h2 className="text-lg font-bold text-center">Login with your email & password</h2>
           </div>
         </div>
 
-        {isLoggedIn ? ( // Show logout option if logged in
+        {isLoggedIn ? (
           <div>
             <p>You are already logged in.</p>
             <button
@@ -152,10 +148,7 @@ const LoginPopup = ({ isOpen, closePopup }) => {
               </div>
               {error && <p className="text-red-500 text-sm">{error}</p>}
               <div className="text-right">
-                <a
-                  href="#"
-                  className="text-blue-500 hover:underline text-sm sm:text-base"
-                >
+                <a href="#" className="text-blue-500 hover:underline text-sm sm:text-base">
                   Forgot password?
                 </a>
               </div>
@@ -193,13 +186,8 @@ const LoginPopup = ({ isOpen, closePopup }) => {
 
             <div className="mt-4 text-center">
               <p>
-                Don’t have an account?{" "}
-                <Link
-                  href="/signup"
-                  className="text-blue-500 hover:underline text-sm sm:text-base"
-                >
-                  Sign Up
-                </Link>
+                Don’t have an account?{' '}
+                <button onClick={openSignupPopup} className="text-blue-500 hover:underline text-sm sm:text-base">Sign Up</button>
               </p>
             </div>
           </>
