@@ -15,6 +15,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@glidejs/glide": "^3.6.2",
+    "@tanstack/react-query": "^5.56.2",
     "antd": "^5.0.0-rc.0",
     "axios": "^1.7.7",
     "jwt-decode": "^4.0.0",

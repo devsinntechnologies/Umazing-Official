@@ -7,8 +7,9 @@ import axios from 'axios';
 import Lottie from 'lottie-react';
 import Signupsuccess from '../form/LotieSuccess.json';
 import Signupcancel from '../form/LotieCancel.json';
+import { useMutation } from '@tanstack/react-query'; 
 
-const SignupPopup = ({ isOpen, closePopup }) => {
+const SignupPopup = ({ isOpen, closePopup, LoginPopup }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,60 +19,63 @@ const SignupPopup = ({ isOpen, closePopup }) => {
     const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
     const [showCancelAnimation, setShowCancelAnimation] = useState(false); 
 
-    const signup = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post('http://97.74.89.204:4000/auth/register', {
-                name,
-                email,
-                password,
-                phoneNo,
-                gender,
-                dob
-            }, {
+    
+    const mutation = useMutation({
+        mutationFn: async (userData) => {
+            const response = await axios.post('http://97.74.89.204:4000/auth/register', userData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 }
             });
-
-            if (response.data.success) {
-                setShowSuccessAnimation(true); 
+            return response.data;
+        },
+        onSuccess: (data) => {
+            if (data.success) {
+                setShowSuccessAnimation(true);
                 setTimeout(() => {
-                    setShowSuccessAnimation(false); 
-                    setName('')
-                    setEmail('')
-                    setGender('')
-                    setDob('')
-                    setPhoneNo('')
-                    setPassword('')
-                    closePopup();  
-                }, 3000);
-            } else if (response.data.message === "User already exists") {
-               
-                setShowCancelAnimation(true);
-                setTimeout(() => {
-                    setShowCancelAnimation(false);
+                    setShowSuccessAnimation(false);
+                    resetForm();
                     closePopup();
                 }, 3000);
             } else {
-                console.log('Registration failed: ' + (response.data.message || "Unknown error"));
-                // Trigger cancel animation if there’s another error
-                setShowCancelAnimation(true);
-                setTimeout(() => {
-                    setShowCancelAnimation(false);
-                    closePopup();
-                }, 3000);
+                handleFailure(data.message);
             }
-        } catch (error) {
+        },
+        onError: (error) => {
             console.error('Error during registration:', error);
-            // Trigger cancel animation on error
-            setShowCancelAnimation(true);
-            setTimeout(() => {
-                setShowCancelAnimation(false);
-                closePopup();
-            }, 3000);
+            handleFailure();
         }
+    });
+
+    const resetForm = () => {
+        setName('');
+        setEmail('');
+        setGender('male');
+        setDob('');
+        setPhoneNo('');
+        setPassword('');
+    };
+
+    const handleFailure = (message = "Unknown error") => {
+        console.log('Registration failed: ' + message);
+        setShowCancelAnimation(true);
+        setTimeout(() => {
+            setShowCancelAnimation(false);
+            closePopup();
+        }, 3000);
+    };
+
+    const signup = (e) => {
+        e.preventDefault();
+        mutation.mutate({
+            name,
+            email,
+            password,
+            phoneNo,
+            gender,
+            dob
+        });
     };
 
     if (!isOpen) return null;
@@ -182,9 +186,8 @@ const SignupPopup = ({ isOpen, closePopup }) => {
                         <div className="mt-4 text-center">
                             <p>
                                 Already have an account?{' '}
-                                <Link href="/login" className="text-green-500 hover:underline text-sm sm:text-base">
-                                    Login
-                                </Link>
+                                <button onClick={LoginPopup} className="text-blue-500 hover:underline text-sm sm:text-base">Login</button>
+
                             </p>
                         </div>
                     </>
