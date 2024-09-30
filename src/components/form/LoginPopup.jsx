@@ -1,61 +1,55 @@
-import Image from 'next/image'; 
-import React, { useState, useEffect } from 'react';
-import { FaEnvelope, FaLock } from 'react-icons/fa';
-import ecobazaar from '../../app/images/ecobazaar.jpg';
-import axios from 'axios';
-import Lottie from 'lottie-react';
-import LottieSuccess from '../form/LotieSuccess.json';  // Success animation JSON
-import LottieCancel from '../form/LotieCancel.json';   // Error animation JSON
-import jwt_decode from 'jwt-decode';  
-import { useMutation } from '@tanstack/react-query'; 
+import Image from "next/image";
+import React, { useState, useEffect } from "react";
+import { FaEnvelope, FaLock } from "react-icons/fa";
+import ecobazaar from "../../app/images/ecobazaar.jpg";
+import Lottie from "lottie-react";
+import LottieSuccess from "../form/LotieSuccess.json"; // Success animation JSON
+import LottieCancel from "../form/LotieCancel.json"; // Error animation JSON
+import jwt_decode from "jwt-decode";
+import { useMutation } from "@tanstack/react-query";
+import { login } from "@/services"; // Import the login function
 
 const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
   const [showErrorAnimation, setShowErrorAnimation] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem("authToken");
     if (token) {
       try {
-        jwt_decode(token); 
-        setIsLoggedIn(true); 
+        jwt_decode(token);
+        setIsLoggedIn(true);
       } catch (error) {
-        console.error('Token decoding error:', error);
-        setError('Error decoding token. Please log in again.');
-        localStorage.removeItem('authToken'); 
-        setIsLoggedIn(false); 
+        console.error("Token decoding error:", error);
+        setError("Error decoding token. Please log in again.");
+        localStorage.removeItem("authToken");
+        setIsLoggedIn(false);
       }
     } else {
-      setIsLoggedIn(false); 
+      setIsLoggedIn(false);
     }
   }, []);
-  
+
+  // Use the imported login function from services.jsx
   const mutation = useMutation({
-    mutationFn: async (data) => {
-      const response = await axios.post(`http://97.74.89.204:4000/auth/login`, data, {
-        headers: {
-          'Content-Type':'application/json',
-        }
-      });
-      return response.data; // Return the response data
-    },
+    mutationFn: login, // Use the reusable function here
     onSuccess: (data) => {
       if (data.success) {
         // Clear any previous error
-        setError('');
+        setError("");
         setShowErrorAnimation(false); // Ensure error animation is not visible
-   
+
         // Set the token and update states
-        localStorage.setItem('authToken', data.data.token);
-        setEmail(''); // Clear email input
-        setPassword(''); // Clear password input
+        localStorage.setItem("authToken", data.data.token);
+        setEmail(""); // Clear email input
+        setPassword(""); // Clear password input
         setShowSuccessAnimation(true); // Show success animation
         setIsLoggedIn(true); // User logged in successfully
-   
+
         setTimeout(() => {
           setShowSuccessAnimation(false); // Hide success animation after 3 seconds
           closePopup(); // Close popup on successful login
@@ -69,25 +63,22 @@ const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
         }, 3000);
       }
     },
-   
-    onError: (error) => {
-      // Ensure success animation is not visible
+    onError: () => {
       setShowSuccessAnimation(false);
-      // Show error animation
       setShowErrorAnimation(true);
-      setError('An error occurred during login.');
+      setError("An error occurred during login.");
       setTimeout(() => {
         setShowErrorAnimation(false); // Hide error animation after 3 seconds
       }, 3000);
-    }
+    },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setShowSuccessAnimation(false);
     setShowErrorAnimation(false);
-    
+
     // Call the mutation with email and password
     mutation.mutate({ email, password });
   };
@@ -103,20 +94,24 @@ const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
         >
           &times;
         </button>
-        
+
         <div className="flex flex-col gap-3 justify-between items-center mb-4">
           <div>
             <Image src={ecobazaar} width={150} alt="EcoBazaar Logo" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-center">Login with your email & password</h2>
+            <h2 className="text-lg font-bold text-center">
+              Login with your email & password
+            </h2>
           </div>
         </div>
 
         {isLoggedIn ? (
           <div className="text-center">
             <Lottie animationData={LottieSuccess} size={18} loop={false} />
-            <p className="mt-4 text-green-600 font-semibold text-sm sm:text-base">User successfully logged in</p>
+            <p className="mt-4 text-green-600 font-semibold text-sm sm:text-base">
+              User successfully logged in
+            </p>
           </div>
         ) : (
           <>
@@ -146,7 +141,10 @@ const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
               </div>
               {error && <p className="text-red-500 text-sm">{error}</p>}
               <div className="text-right">
-                <a href="#" className="text-blue-500 hover:underline text-sm sm:text-base">
+                <a
+                  href="#"
+                  className="text-blue-500 hover:underline text-sm sm:text-base"
+                >
                   Forgot password?
                 </a>
               </div>
@@ -184,8 +182,13 @@ const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
 
             <div className="mt-4 text-center">
               <p>
-                Don’t have an account?{' '}
-                <button onClick={openSignupPopup} className="text-blue-500 hover:underline text-sm sm:text-base">Sign Up</button>
+                Don’t have an account?{" "}
+                <button
+                  onClick={openSignupPopup}
+                  className="text-blue-500 hover:underline text-sm sm:text-base"
+                >
+                  Sign Up
+                </button>
               </p>
             </div>
           </>

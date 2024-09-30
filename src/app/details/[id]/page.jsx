@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 
 const ProductDetails = ({ params }) => {
   const { id } = params;
-  console.log(id)
+  console.log(id);
 
   const [selectedImage, setSelectedImage] = useState("/preview.png");
   const [quantity, setQuantity] = useState(0);
@@ -20,7 +20,7 @@ const ProductDetails = ({ params }) => {
           `http://97.74.89.204:4000/product/getById/${id}`
         );
         setProduct(data.data);
-        setSelectedImage(data.data.image)
+        setSelectedImage(data.data.image);
       } catch (error) {
         console.error(error.message);
       }
@@ -29,7 +29,7 @@ const ProductDetails = ({ params }) => {
     fetchData(id);
   }, [id]);
 
-  console.log(product)
+  console.log(product);
 
   const images = [
     "/preview.png",
@@ -73,7 +73,7 @@ const ProductDetails = ({ params }) => {
     setQuantity((prevQty) => (prevQty > 0 ? prevQty - 1 : prevQty));
   }
 
-  console.log(selectedImage)
+  console.log(selectedImage);
 
   return (
     <main className="w-full flex justify-center items-center overflow-hidden px-3 my-10">
@@ -101,9 +101,11 @@ const ProductDetails = ({ params }) => {
             </div>
 
             {/* Preview Image */}
-            <div className="w-[350px] sm:w-[400px] lg:w-[556px] ml-6" >
+            <div className="w-[350px] sm:w-[400px] lg:w-[556px] ml-6">
               <Image
-                src={"http://97.74.89.204/uploads/products/3067216fdd3760ec9f46aa896ce48beb.jpeg"}
+                src={
+                  "http://97.74.89.204/uploads/products/3067216fdd3760ec9f46aa896ce48beb.jpeg"
+                }
                 alt="Preview Image"
                 width={506}
                 height={506}
@@ -142,7 +144,9 @@ const ProductDetails = ({ params }) => {
               <p className="text-[#666666] text-[18px] font-normal line-through ">
                 $48.00
               </p>
-              <p className="text-[#2C742F] text-[24px] font-medium">${product.basePrice}</p>
+              <p className="text-[#2C742F] text-[24px] font-medium">
+                ${product.basePrice}
+              </p>
               <div className="w-[75px] h-[27px] rounded-[30px] bg-[#EA4B481A] text-[#EA4B48] text-[14px] py-[3px] px-[10px]">
                 In Stock
               </div>
@@ -168,10 +172,9 @@ const ProductDetails = ({ params }) => {
                 </div>
               </div>
             </div>
-
             <div className="w-full lg::w-[568px] mt-4">
               <p className="text-[14px] md:text-[16px] text-[#808080]">
-              {product.longDescription}
+                {product.longDescription}
               </p>
             </div>
 

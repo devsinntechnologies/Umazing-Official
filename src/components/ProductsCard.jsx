@@ -36,7 +36,9 @@ const ProductsCard = ({ product }) => {
           <div className="flex justify-between items-center px-3 pt-7">
             <div>
               <p className="text-[#4D4D4D] text-[14px]">{product.name}</p>
-              <p className="text-[16px] py-1 font-medium">$ {product.basePrice}</p>
+              <p className="text-[16px] py-1 font-medium">
+                $ {product.basePrice}
+              </p>
               <div className="flex">
                 <Image
                   width={100}
