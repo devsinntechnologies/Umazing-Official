@@ -4,8 +4,8 @@ import { FaEnvelope, FaLock } from 'react-icons/fa';
 import ecobazaar from '../../app/images/ecobazaar.jpg';
 import axios from 'axios';
 import Lottie from 'lottie-react';
-import SignupSuccess from '../form/LotieSuccess.json';  // Success animation JSON
-import SignupCancel from '../form/LotieCancel.json';   // Error animation JSON
+import LottieSuccess from '../form/LotieSuccess.json';  // Success animation JSON
+import LottieCancel from '../form/LotieCancel.json';   // Error animation JSON
 import jwt_decode from 'jwt-decode';  
 import { useMutation } from '@tanstack/react-query'; 
 
@@ -21,7 +21,6 @@ const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
     const token = localStorage.getItem('authToken');
     if (token) {
       try {
-       
         jwt_decode(token); 
         setIsLoggedIn(true); 
       } catch (error) {
@@ -35,12 +34,10 @@ const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
     }
   }, []);
   
-  
-
   const mutation = useMutation({
     mutationFn: async (data) => {
-      const response = await axios.post(`http://97.74.89.204:4000/auth/login`, data,{
-        headers:{
+      const response = await axios.post(`http://97.74.89.204:4000/auth/login`, data, {
+        headers: {
           'Content-Type':'application/json',
         }
       });
@@ -48,27 +45,39 @@ const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
     },
     onSuccess: (data) => {
       if (data.success) {
-        localStorage.setItem('authToken', data.data.token); // Store token on successful login
-        setShowSuccessAnimation(true);
+        // Clear any previous error
+        setError('');
+        setShowErrorAnimation(false); // Ensure error animation is not visible
+   
+        // Set the token and update states
+        localStorage.setItem('authToken', data.data.token);
+        setEmail(''); // Clear email input
+        setPassword(''); // Clear password input
+        setShowSuccessAnimation(true); // Show success animation
         setIsLoggedIn(true); // User logged in successfully
+   
         setTimeout(() => {
-          setShowSuccessAnimation(false);
+          setShowSuccessAnimation(false); // Hide success animation after 3 seconds
           closePopup(); // Close popup on successful login
         }, 3000);
       } else {
-        setShowErrorAnimation(true);
+        setShowSuccessAnimation(false); // Ensure success animation is not visible
+        setShowErrorAnimation(true); // Show error animation
         setError(data.message);
         setTimeout(() => {
-          setShowErrorAnimation(false);
+          setShowErrorAnimation(false); // Hide error animation after 3 seconds
         }, 3000);
       }
     },
+   
     onError: (error) => {
-      console.error('Login error:', error);
+      // Ensure success animation is not visible
+      setShowSuccessAnimation(false);
+      // Show error animation
       setShowErrorAnimation(true);
       setError('An error occurred during login.');
       setTimeout(() => {
-        setShowErrorAnimation(false);
+        setShowErrorAnimation(false); // Hide error animation after 3 seconds
       }, 3000);
     }
   });
@@ -81,12 +90,6 @@ const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
     
     // Call the mutation with email and password
     mutation.mutate({ email, password });
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    setIsLoggedIn(false);
-    setError('You have logged out.');
   };
 
   if (!isOpen) return null;
@@ -111,14 +114,9 @@ const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
         </div>
 
         {isLoggedIn ? (
-          <div>
-            <p>You are already logged in.</p>
-            <button
-              onClick={handleLogout}
-              className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 text-sm sm:text-base mt-4"
-            >
-              Logout
-            </button>
+          <div className="text-center">
+            <Lottie animationData={LottieSuccess} size={18} loop={false} />
+            <p className="mt-4 text-green-600 font-semibold text-sm sm:text-base">User successfully logged in</p>
           </div>
         ) : (
           <>
@@ -162,13 +160,13 @@ const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
 
             {showSuccessAnimation && (
               <div className="mt-4">
-                <Lottie animationData={SignupSuccess} loop={false} />
+                <Lottie animationData={LottieSuccess} size={24} loop={false} />
               </div>
             )}
 
             {showErrorAnimation && (
               <div className="mt-4">
-                <Lottie animationData={SignupCancel} loop={false} />
+                <Lottie animationData={LottieCancel} loop={false} />
               </div>
             )}
 
