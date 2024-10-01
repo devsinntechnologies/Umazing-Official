@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
+import { useSearchParams } from "next/navigation"; // Import useSearchParams
+import { ShopAPI } from "@/Services"; // Import the fetchAPI function
 import BreadCrum from "@/components/BreadCrum";
 import FilterBar from "@/components/FilterBar";
 import Pagination from "@/components/Pagination";
@@ -30,6 +32,20 @@ export default function Shop() {
   useEffect(() => {
     fetchData(viewAll === "true");
   }, [viewAll]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedData = await ShopAPI(viewAll === "true");
+        setData(fetchedData);
+        console.log(fetchedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    // Call fetchData when viewAll changes
+    fetchData();
+  }, [viewAll]); // Dependency on viewAll to re-run the fetchData when it changes
 
   // Filter products by selected category value
   const filterProducts = getCategoryValue
