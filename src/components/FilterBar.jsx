@@ -4,10 +4,11 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import RangeSlider from "./RangeSlider";
 import axios from "axios";
+import { fetchCategories } from "@/services";
 
-const FilterBar = ({setGetCategoryValue}) => {
+const FilterBar = ({ setGetCategoryValue }) => {
   const [categories, setCategories] = useState([]);
- 
+
   const [filters, setFilters] = useState({
     categories: true,
     price: true,
@@ -87,15 +88,15 @@ const FilterBar = ({setGetCategoryValue}) => {
     }));
   };
 
+  // Fetch categories using the fetchCategories function
   const getAllCategories = async () => {
     try {
-      const { data } = await axios.get(
-        "http://97.74.89.204:4000/category/getAllCategories/"
-      );
-      setCategories(data.data);
-    } catch (error) {}
+      const categoriesData = await fetchCategories();
+      setCategories(categoriesData);
+    } catch (error) {
+      console.error("Failed to fetch categories:", error);
+    }
   };
-
   useEffect(() => {
     getAllCategories();
   }, []);

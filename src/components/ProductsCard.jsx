@@ -5,7 +5,7 @@ import axios from "axios";
 
 const ProductsCard = ({ product }) => {
   console.log(product);
-  
+
   const handleAddToWishlist = async () => {
     const userId = localStorage.getItem("userId"); // Get user ID from local storage
 
@@ -15,15 +15,16 @@ const ProductsCard = ({ product }) => {
     }
 
     try {
-      const response = await axios.post("http://97.74.89.204:4000/favourite/addToFavourite", {
-        UserId: userId,
-        ProductId: product.id, // Assuming `product.id` contains the product ID
-      });
+      const response = await axios.post(
+        "http://97.74.89.204:4000/favourite/addToFavourite",
+        {
+          UserId: userId,
+          ProductId: product.id, // Assuming `product.id` contains the product ID
+        }
+      );
       console.log(response);
       if (response.data.success) {
         alert("Product added to wishlist!");
-       
-        
       } else {
         alert("Failed to add product to wishlist: " + response.data.message);
       }
@@ -36,7 +37,7 @@ const ProductsCard = ({ product }) => {
   return (
     <div className="group lg:w-[280px] hover:shadow-x-[#00B207] hover:shadow-lg lg:h-[407px] border border-gray-300 rounded-xl relative hover:border-[#2C742F] sm:w-52 sm:h-80">
       <div>
-        <Link href={'/details/eecd0ca6557194f575f68e65fc62bc94'}>
+        <Link href={"/details/eecd0ca6557194f575f68e65fc62bc94"}>
           <Image
             className="w-[98%] object-cover text-center"
             width={500}
@@ -67,52 +68,57 @@ const ProductsCard = ({ product }) => {
         <div className="flex justify-between items-center px-3 pt-7">
           <div>
             <p className="text-[#4D4D4D] text-[14px]">{product.name}</p>
-            <p className="text-[16px] py-1 font-medium">$ {product.basePrice}</p>
+            <p className="text-[16px] py-1 font-medium">
+              $ {product.basePrice}
+            </p>
             <div className="flex">
-
               {/* Star rating code here */}
               <Image
-                  width={100}
-                  height={100}
-                  className="w-[12px]"
-                  src="/Star.png"
-                  alt="Star"
-                />
-                <Image
-                  width={100}
-                  height={100}
-                  className="w-[12px]"
-                  src="/Star.png"
-                  alt="Star"
-                />
-                <Image
-                  width={100}
-                  height={100}
-                  className="w-[12px]"
-                  src="/Star.png"
-                  alt="Star"
-                />
-                <Image
-                  width={100}
-                  height={100}
-                  className="w-[12px]"
-                  src="/Star.png"
-                  alt="Star"
-                />
-                <Image
-                  width={100}
-                  height={100}
-                  className="w-[12px]"
-                  src="/StarEmpty.png"
-                  alt="Empty Star"
-                />
+                width={100}
+                height={100}
+                className="w-[12px]"
+                src="/Star.png"
+                alt="Star"
+              />
+              <Image
+                width={100}
+                height={100}
+                className="w-[12px]"
+                src="/Star.png"
+                alt="Star"
+              />
+              <Image
+                width={100}
+                height={100}
+                className="w-[12px]"
+                src="/Star.png"
+                alt="Star"
+              />
+              <Image
+                width={100}
+                height={100}
+                className="w-[12px]"
+                src="/Star.png"
+                alt="Star"
+              />
+              <Image
+                width={100}
+                height={100}
+                className="w-[12px]"
+                src="/StarEmpty.png"
+                alt="Empty Star"
+              />
 
               <Image width={12} height={12} src="/Star.png" alt="Star" />
               <Image width={12} height={12} src="/Star.png" alt="Star" />
               <Image width={12} height={12} src="/Star.png" alt="Star" />
               <Image width={12} height={12} src="/Star.png" alt="Star" />
-              <Image width={12} height={12} src="/StarEmpty.png" alt="Empty Star" />
-
+              <Image
+                width={12}
+                height={12}
+                src="/StarEmpty.png"
+                alt="Empty Star"
+              />
             </div>
           </div>
 
@@ -126,6 +132,6 @@ const ProductsCard = ({ product }) => {
       </div>
     </div>
   );
-}
+};
 
 export default ProductsCard;
