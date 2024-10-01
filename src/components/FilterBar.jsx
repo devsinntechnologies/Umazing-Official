@@ -3,8 +3,11 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import RangeSlider from "./RangeSlider";
+import axios from "axios";
 
-const FilterBar = () => {
+const FilterBar = ({setGetCategoryValue}) => {
+  const [categories, setCategories] = useState([]);
+ 
   const [filters, setFilters] = useState({
     categories: true,
     price: true,
@@ -39,16 +42,6 @@ const FilterBar = () => {
     { stars: 3, label: "3.0" },
     { stars: 2, label: "2.0" },
     { stars: 1, label: "1.0" },
-  ];
-
-  const categories = [
-    "Fresh Fruits",
-    "Vegetables",
-    "Cooking",
-    "Snacks",
-    "Beverages",
-    "Beauty & Health",
-    "Bread & Bakery",
   ];
 
   const tags = [
@@ -94,6 +87,19 @@ const FilterBar = () => {
     }));
   };
 
+  const getAllCategories = async () => {
+    try {
+      const { data } = await axios.get(
+        "http://97.74.89.204:4000/category/getAllCategories/"
+      );
+      setCategories(data.data);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
+
   return (
     <aside className="w-full md:w-[300px] pl-4 pr-3 md:pr-2 mb-5 md:mb-0 font-bold bg-white">
       <button className="w-[130px] h-[45px] text-[14px] bg-[#00B207] py-[14px] rounded-[43px] text-white flex justify-center items-center gap-4 mb-8 md:mb-5">
@@ -124,9 +130,14 @@ const FilterBar = () => {
           {filters.categories && (
             <div>
               {categories.map((category, index) => (
-                <div className="flex gap-2 items-center pb-5" key={index}>
-                  <input type="radio" name="category" />
-                  <p className="text-[14px] font-medium">{category}</p>
+                <div className="flex gap-2 items-center pb-5" key={category.id}>
+                  <input
+                    type="radio"
+                    name="category"
+                    value={category.id}
+                    onChange={(e) => setGetCategoryValue(e.target.value)}
+                  />
+                  <p className="text-[14px] font-medium">{category.name}</p>
                   <span className="text-[14px] text-[#808080]">(134)</span>
                 </div>
               ))}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation"; // Import useSearchParams
+import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import BreadCrum from "@/components/BreadCrum";
 import FilterBar from "@/components/FilterBar";
@@ -10,33 +10,36 @@ import ProductsCard from "@/components/ProductsCard";
 
 export default function Shop() {
   const [data, setData] = useState([]);
-  const searchParams = useSearchParams(); // Get query parameters
-  const viewAll = searchParams.get("viewAll"); // Extract the "viewAll" query parameter
+  const [getCategoryValue, setGetCategoryValue] = useState("");
+  const searchParams = useSearchParams();
+  const viewAll = searchParams.get("viewAll");
 
   const fetchData = async (isViewAll) => {
     try {
-      // Modify the API call based on viewAll
       const endpoint = isViewAll
         ? "http://97.74.89.204:4000/category/getAllCategories?pageNo=1&pageSize=100"
         : "http://97.74.89.204:4000/product/allProducts?pageNo=1&pageSize=200";
 
       const response = await axios.get(endpoint);
       setData(response.data.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
-    // Pass viewAll parameter to fetchData to trigger different API behavior
     fetchData(viewAll === "true");
   }, [viewAll]);
+
+  // Filter products by selected category value
+  const filterProducts = getCategoryValue
+    ? data.filter((item) => item.Category?.id == getCategoryValue) // Optional chaining for Category
+    : data;
 
   return (
     <>
       <section className="flex md:flex-row flex-col my-6 w-[95vw] mx-auto">
-        <FilterBar />
+        <FilterBar setGetCategoryValue={setGetCategoryValue} />
         <main className="w-full md:w-[75%] h-full mt-2 md:mt-0">
           <div className="flex justify-between items-center mb-3 px-3 h-[45px]">
             <div className="flex gap-2 items-center">
@@ -48,7 +51,9 @@ export default function Shop() {
               </select>
             </div>
             <div className="flex gap-2">
-              <p className="font-bold text-sm md:text-base">{data.length}</p>
+              <p className="font-bold text-sm md:text-base">
+                {filterProducts.length}
+              </p>
               <p className="text-gray-500 text-sm md:text-base">
                 Results Found
               </p>
@@ -56,9 +61,13 @@ export default function Shop() {
           </div>
 
           <section className="flex justify-center items-center gap-5 flex-wrap md:ml-7 mt-5">
-            {data.map((product) => (
-              <ProductsCard key={product.id} product={product} />
-            ))}
+            {filterProducts && filterProducts.length > 0 ? (
+              filterProducts.map((product) => (
+                <ProductsCard key={product.id} product={product} />
+              ))
+            ) : (
+              <p>No products found</p>
+            )}
           </section>
         </main>
       </section>
