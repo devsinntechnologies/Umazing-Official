@@ -22,6 +22,10 @@ export default function Shop() {
 
       const response = await axios.get(endpoint);
       setData(response.data.data);
+
+      // console.log(response.data);
+
+
     } catch (error) {
       console.error("Error fetching data:", error);
     }

@@ -1,43 +1,38 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import axios from "axios"; // import axios for API calls
+import axios from "axios";
 
 const ProductsCard = ({ product }) => {
+  console.log(product);
   
-  const addToWishlist = async () => {
+  const handleAddToWishlist = async () => {
+    const userId = localStorage.getItem("userId"); // Get user ID from local storage
+
+    if (!userId) {
+      alert("Please log in to add items to your wishlist.");
+      return;
+    }
+
     try {
-      // Hardcoded or fetched UserId, replace with dynamic user ID if available
-      const userId = "48a386f7fe1072641f5af14258b709f8";  
-  
-      console.log('Adding to wishlist:', product.id);  // Check product ID
-  
-      // Prepare the payload with UserId and ProductId
-      const payload = {
+      const response = await axios.post("http://97.74.89.204:4000/favourite/addToFavourite", {
         UserId: userId,
-        ProductId: product.id
-      };
-  
-      // Send POST request to add to wishlist
-      const response = await axios.post(
-        "http://97.74.89.204:4000/favourite/addToFavourite",
-        payload,
-      );
-  
-      console.log('Response:', response);
-  
-      // Handle the response
+        ProductId: product.id, // Assuming `product.id` contains the product ID
+      });
+      console.log(response);
       if (response.data.success) {
-        alert(`${product.name} added to wishlist!`);
+        alert("Product added to wishlist!");
+       
+        
       } else {
-        alert(`Failed to add to wishlist. Message: ${response.data.message}`);
+        alert("Failed to add product to wishlist: " + response.data.message);
       }
     } catch (error) {
-      console.error("Error adding to wishlist:", error);
-      alert("Failed to add to wishlist.");
+      console.error("Error adding product to wishlist:", error);
+      alert("An error occurred while adding the product to your wishlist.");
     }
   };
-  
+
   return (
     <div className="group lg:w-[280px] hover:shadow-x-[#00B207] hover:shadow-lg lg:h-[407px] border border-gray-300 rounded-xl relative hover:border-[#2C742F] sm:w-52 sm:h-80">
       <div>
@@ -57,7 +52,7 @@ const ProductsCard = ({ product }) => {
         <div className="absolute right-[10px] top-[10px] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div
             className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center cursor-pointer items-center mb-2"
-            onClick={addToWishlist}
+            onClick={handleAddToWishlist}
           >
             <Image width={20} height={20} src="/Heart.png" alt="Favorite" />
           </div>
@@ -74,17 +69,56 @@ const ProductsCard = ({ product }) => {
             <p className="text-[#4D4D4D] text-[14px]">{product.name}</p>
             <p className="text-[16px] py-1 font-medium">$ {product.basePrice}</p>
             <div className="flex">
+
+              {/* Star rating code here */}
+              <Image
+                  width={100}
+                  height={100}
+                  className="w-[12px]"
+                  src="/Star.png"
+                  alt="Star"
+                />
+                <Image
+                  width={100}
+                  height={100}
+                  className="w-[12px]"
+                  src="/Star.png"
+                  alt="Star"
+                />
+                <Image
+                  width={100}
+                  height={100}
+                  className="w-[12px]"
+                  src="/Star.png"
+                  alt="Star"
+                />
+                <Image
+                  width={100}
+                  height={100}
+                  className="w-[12px]"
+                  src="/Star.png"
+                  alt="Star"
+                />
+                <Image
+                  width={100}
+                  height={100}
+                  className="w-[12px]"
+                  src="/StarEmpty.png"
+                  alt="Empty Star"
+                />
+
               <Image width={12} height={12} src="/Star.png" alt="Star" />
               <Image width={12} height={12} src="/Star.png" alt="Star" />
               <Image width={12} height={12} src="/Star.png" alt="Star" />
               <Image width={12} height={12} src="/Star.png" alt="Star" />
               <Image width={12} height={12} src="/StarEmpty.png" alt="Empty Star" />
+
             </div>
           </div>
 
           {/* Cart Button */}
           <div className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center items-center cursor-pointer">
-            <Link href={"/details"}>
+            <Link href="/details">
               <Image width={20} height={20} src="/bag.png" alt="Cart" />
             </Link>
           </div>

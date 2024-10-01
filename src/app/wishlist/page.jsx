@@ -1,20 +1,25 @@
-'use client'
-import React, { useState, useEffect } from "react";
+'use client';
 import BreadCrum from "@/components/BreadCrum";
 import Image from "next/image";
-import axios from "axios"; // Axios to make API calls
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const WishlistPage = () => {
-  const [wishlist, setWishlist] = useState([]);
+  const [wishlistItems, setWishlistItems] = useState([]);
 
   useEffect(() => {
-    // Fetch user's wishlist from the API
     const fetchWishlist = async () => {
       try {
-        const response = await axios.get(`http://97.74.89.204:4000/favourite/getUserFavourite/288d377a734af1556882821db39f7a32`);
-        console.log(response.data);
+        const userId = localStorage.getItem("userId"); 
+        const response = await axios.get(`http://97.74.89.204:4000/favourite/getUserFavourite/${userId}`);
         
-        setWishlist(response.data); // Assuming response contains wishlist data
+        console.log(response.data); 
+
+        if (response.data.success) {
+          setWishlistItems(response.data.data);
+        } else {
+          console.error("Failed to fetch wishlist items.");
+        }
       } catch (error) {
         console.error("Error fetching wishlist:", error);
       }
@@ -52,36 +57,48 @@ const WishlistPage = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {wishlist.length > 0 ? (
-                  wishlist.map((item, index) => (
-                    <tr key={index} className="text-sm sm:text-lg">
+                {wishlistItems && wishlistItems.length > 0 ? (
+                  wishlistItems.map(item => (
+                    <tr key={item.id} className="text-sm sm:text-lg">
                       <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <img className="h-10 w-10 rounded-full" src={item.imageUrl} alt={item.name} />
+                          <img
+                            className="h-10 w-10 rounded-full"
+                            src={item.Product.imageUrl} // Accessing the Product's imageUrl
+                            alt={item.Product.name} // Accessing the Product's name
+                          />
                           <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">{item.name}</div>
+                            <div className="text-sm font-medium text-gray-900">
+                              {item.Product.name} 
+                            </div>
                           </div>
                         </div>
                       </td>
                       <td className="table-cell px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">${item.basePrice}</div>
+                        <div className="text-sm text-gray-900">${item.Product.basePrice}</div>
+                        <div className="text-sm text-gray-500 line-through">
+                          ${item.Product.originalPrice} {/* If available */}
+                        </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-md ${item.inStock ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                          {item.inStock ? "In Stock" : "Out of Stock"}
+                        <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-md bg-green-100 text-green-700">
+                          In Stock
                         </span>
                       </td>
                       <td className="px-4 py-4 text-right text-sm font-medium">
-                        <button className={`w-[115px] py-3 text-white px-4 rounded-full ${item.inStock ? 'bg-[#00B207]' : 'bg-gray-300'}`} disabled={!item.inStock}>
+                        <button className="w-[115px] py-3 text-white px-4 rounded-full bg-[#00B207]">
                           Add to Cart
                         </button>
+                      </td>
+                      <td className="px-4 py-4 text-right text-sm font-medium">
+                        <Image src={"/close.png"} id="change" width={20} height={20} alt="close" />
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
                     <td colSpan="4" className="text-center py-4">
-                      No items in the wishlist.
+                      No items in your wishlist.
                     </td>
                   </tr>
                 )}
