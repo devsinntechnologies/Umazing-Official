@@ -1,15 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import {
-  AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+import { AppstoreOutlined, MailOutlined, SettingOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import Link from "next/link";
 import HeaderSlider from "./HeaderSlider";
 
 const items = [
+  // Other categories
   {
     label: <Link href="/fresh-fruit">Fresh Fruit</Link>,
     key: "fresh-fruit",
@@ -58,13 +55,13 @@ const items = [
   {
     key: "all-categories",
     label: (
-      <a
-        href="/all-categories"
+      <Link
+        href={{ pathname: "/shop", query: { viewAll: true } }} // Add query parameter here
         className="text-blue-500 text-lg"
         rel="noopener noreferrer"
       >
         + View all Category
-      </a>
+      </Link>
     ),
   },
 ];
@@ -84,7 +81,7 @@ const HeaderCategory = () => {
           selectedKeys={[current]}
           mode="vertical"
           items={items}
-          className="custom-sidebar-menu "
+          className="custom-sidebar-menu"
           style={{
             fontSize: "16px",
             fontWeight: "400",

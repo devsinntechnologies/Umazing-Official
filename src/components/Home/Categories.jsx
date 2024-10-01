@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { ServiceAPI } from "@/services";
+import { fetchCategories } from "@/services";
 import Image from "next/image";
 
 export default function Categories() {
@@ -10,12 +9,10 @@ export default function Categories() {
 
   const loadCategories = async () => {
     try {
-      const response = await axios.get(
-        `${ServiceAPI}/category/getAllCategories`
-      );
-      setData(response.data.data);
+      const categories = await fetchCategories();
+      setData(categories);
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      console.error("Error loading categories:", error);
     }
   };
 

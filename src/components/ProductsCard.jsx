@@ -78,6 +78,54 @@ const ProductsCard = ({ product }) => {
               <Image width={12} height={12} src="/Star.png" alt="Star" />
               <Image width={12} height={12} src="/Star.png" alt="Star" />
               <Image width={12} height={12} src="/StarEmpty.png" alt="Empty Star" />
+          <div className="flex justify-between items-center px-3 pt-7">
+            <div>
+              <p className="text-[#4D4D4D] text-[14px]">{product.name}</p>
+              <p className="text-[16px] py-1 font-medium">
+                $ {product.basePrice}
+              </p>
+              <div className="flex">
+                <Image
+                  width={100}
+                  height={100}
+                  className="w-[12px]"
+                  src="/Star.png"
+                  alt="Star"
+                />
+                <Image
+                  width={100}
+                  height={100}
+                  className="w-[12px]"
+                  src="/Star.png"
+                  alt="Star"
+                />
+                <Image
+                  width={100}
+                  height={100}
+                  className="w-[12px]"
+                  src="/Star.png"
+                  alt="Star"
+                />
+                <Image
+                  width={100}
+                  height={100}
+                  className="w-[12px]"
+                  src="/Star.png"
+                  alt="Star"
+                />
+                <Image
+                  width={100}
+                  height={100}
+                  className="w-[12px]"
+                  src="/StarEmpty.png"
+                  alt="Empty Star"
+                />
+              </div>
+            </div>
+            <div className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center items-center cursor-pointer">
+              <Link href={"/details"}>
+                <Image width={20} height={20} src="/bag.png" alt="Cart" />
+              </Link>
             </div>
           </div>
           <div className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center items-center cursor-pointer">
