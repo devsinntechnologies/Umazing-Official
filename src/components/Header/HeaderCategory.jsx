@@ -8,47 +8,47 @@ import HeaderSlider from "./HeaderSlider";
 const items = [
   // Other categories
   {
-    label: <Link href="/fresh-fruit">Fresh Fruit</Link>,
+    label: <Link href="/shop">Fresh Fruit</Link>,
     key: "fresh-fruit",
     icon: <MailOutlined color="green" />,
   },
   {
-    label: <Link href="/vegetables">Vegetables</Link>,
+    label: <Link href="/shop">Vegetables</Link>,
     key: "vegetables",
     icon: <AppstoreOutlined color="green" />,
   },
   {
-    label: <Link href="/river-fish">River Fish</Link>,
+    label: <Link href="/shop">River Fish</Link>,
     key: "river-fish",
     icon: <SettingOutlined color="green" />,
   },
   {
-    label: <Link href="/chicken-meat">Chicken & Meat</Link>,
+    label: <Link href="/shop">Chicken & Meat</Link>,
     key: "chicken-meat",
     icon: <MailOutlined color="green" />,
   },
   {
-    label: <Link href="/drink-water">Drink & Water</Link>,
+    label: <Link href="/shop">Drink & Water</Link>,
     key: "drink-water",
     icon: <AppstoreOutlined color="green" />,
   },
   {
-    label: <Link href="/yogurt-ice-cream">Yogurt & Ice Cream</Link>,
+    label: <Link href="/shop">Yogurt & Ice Cream</Link>,
     key: "yogurt-ice-cream",
     icon: <SettingOutlined color="green" />,
   },
   {
-    label: <a href="/cake-bread">Cake & Bread</a>,
+    label: <a href="/shop">Cake & Bread</a>,
     key: "cake-bread",
     icon: <MailOutlined color="green" />,
   },
   {
-    label: <Link href="/butter-cream">Butter & Cream</Link>,
+    label: <Link href="/shop">Butter & Cream</Link>,
     key: "butter-cream",
     icon: <AppstoreOutlined color="green" />,
   },
   {
-    label: <Link href="/cooking">Cooking</Link>,
+    label: <Link href="/shop">Cooking</Link>,
     key: "cooking",
     icon: <SettingOutlined color="green" />,
   },
