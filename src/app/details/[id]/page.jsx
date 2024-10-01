@@ -1,9 +1,9 @@
 "use client";
 
 import ProductsCard from "@/components/ProductsCard";
-import axios from "axios";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { fetchProductById } from "@/Services";
 
 const ProductDetails = ({ params }) => {
   const { id } = params;
@@ -14,19 +14,17 @@ const ProductDetails = ({ params }) => {
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
-    const fetchData = async (id) => {
+    const getProductDetails = async () => {
       try {
-        const { data } = await axios.get(
-          `http://97.74.89.204:4000/product/getById/${id}`
-        );
-        setProduct(data.data);
-        setSelectedImage(data.data.image);
+        const productData = await fetchProductById(id);
+        setProduct(productData);
+        setSelectedImage(productData.image);
       } catch (error) {
-        console.error(error.message);
+        console.error("Error fetching product details:", error.message);
       }
     };
 
-    fetchData(id);
+    getProductDetails();
   }, [id]);
 
   console.log(product);
@@ -65,13 +63,9 @@ const ProductDetails = ({ params }) => {
     },
   ];
 
-  function handleIncrement() {
-    setQuantity((prevQty) => prevQty + 1);
-  }
-
-  function handleDecrement() {
+  const handleIncrement = () => setQuantity((prevQty) => prevQty + 1);
+  const handleDecrement = () =>
     setQuantity((prevQty) => (prevQty > 0 ? prevQty - 1 : prevQty));
-  }
 
   console.log(selectedImage);
 

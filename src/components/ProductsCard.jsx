@@ -48,7 +48,7 @@ const ProductsCard = ({ product }) => {
           />
         </Link>
 
-        {/* Button view */}
+        {/* Wishlist and View Buttons */}
         <div className="absolute right-[10px] top-[10px] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div
             className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center cursor-pointer items-center mb-2"
@@ -63,11 +63,13 @@ const ProductsCard = ({ product }) => {
           </Link>
         </div>
 
+        {/* Product Details */}
         <div className="flex justify-between items-center px-3 pt-7">
           <div>
             <p className="text-[#4D4D4D] text-[14px]">{product.name}</p>
             <p className="text-[16px] py-1 font-medium">$ {product.basePrice}</p>
             <div className="flex">
+
               {/* Star rating code here */}
               <Image
                   width={100}
@@ -104,8 +106,17 @@ const ProductsCard = ({ product }) => {
                   src="/StarEmpty.png"
                   alt="Empty Star"
                 />
+
+              <Image width={12} height={12} src="/Star.png" alt="Star" />
+              <Image width={12} height={12} src="/Star.png" alt="Star" />
+              <Image width={12} height={12} src="/Star.png" alt="Star" />
+              <Image width={12} height={12} src="/Star.png" alt="Star" />
+              <Image width={12} height={12} src="/StarEmpty.png" alt="Empty Star" />
+
             </div>
           </div>
+
+          {/* Cart Button */}
           <div className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center items-center cursor-pointer">
             <Link href="/details">
               <Image width={20} height={20} src="/bag.png" alt="Cart" />
@@ -115,6 +126,6 @@ const ProductsCard = ({ product }) => {
       </div>
     </div>
   );
-};
+}
 
 export default ProductsCard;

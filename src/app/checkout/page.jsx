@@ -3,7 +3,6 @@ import { MdHome } from "react-icons/md";
 import { FaAngleRight } from "react-icons/fa6";
 import Image from "next/image";
 import Link from "next/link";
-
 const Checkout = () => {
   return (
     <>
