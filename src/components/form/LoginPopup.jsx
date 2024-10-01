@@ -18,33 +18,25 @@ const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      try {
-        jwt_decode(token);
-        setIsLoggedIn(true);
-      } catch (error) {
-        console.error("Token decoding error:", error);
-        setError("Error decoding token. Please log in again.");
-        localStorage.removeItem("authToken");
-        setIsLoggedIn(false);
-      }
-    } else {
-      setIsLoggedIn(false);
-    }
+    // Clear local storage and set logged in state to false on mount
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userId");
+    setIsLoggedIn(false);
   }, []);
 
-  // Use the imported login function from services.jsx
   const mutation = useMutation({
     mutationFn: login, // Use the reusable function here
     onSuccess: (data) => {
       if (data.success) {
-        // Clear any previous error
+        console.log(data);
+        
         setError("");
         setShowErrorAnimation(false); // Ensure error animation is not visible
 
-        // Set the token and update states
+        // Set the token and user ID in local storage
         localStorage.setItem("authToken", data.data.token);
+        localStorage.setItem("userId", data.data.id); // Store user ID in local storage
+
         setEmail(""); // Clear email input
         setPassword(""); // Clear password input
         setShowSuccessAnimation(true); // Show success animation
