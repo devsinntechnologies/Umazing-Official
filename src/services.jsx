@@ -6,7 +6,8 @@ export const ServiceAPI = "http://97.74.89.204:4000";
 export const fetchCategories = async () => {
   try {
     const response = await axios.get(`${ServiceAPI}/category/getAllCategories`);
-    return response.data.data;
+    console.log("Full response:", response); // <-- Add this to inspect the response structure
+    return response.data.data; // Adjust based on the actual response structure
   } catch (error) {
     console.error("Error fetching categories:", error);
     throw error;

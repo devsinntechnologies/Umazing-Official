@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchCategories } from "@/services";
+import axios from "axios"; // Import axios
 import Image from "next/image";
 
 export default function Categories() {
@@ -9,10 +9,12 @@ export default function Categories() {
 
   const loadCategories = async () => {
     try {
-      const categories = await fetchCategories();
-      setData(categories);
+      const response = await axios.get(
+        `http://97.74.89.204:4000/category/getAllCategories+`
+      );
+      setData(response.data.data);
     } catch (error) {
-      console.error("Error loading categories:", error);
+      console.error("Error fetching categories:", error);
     }
   };
 
@@ -33,14 +35,17 @@ export default function Categories() {
             className="border-[1px] border-solid border-[#E6E6E6] flex justify-center items-center flex-col gap-3 py-4  cursor-pointer transition-shadow duration-150 ease-in-out hover:border-[#2C742F] hover:shadow-md hover:shadow-[#2c742e6d]"
           >
             <Image
-              src={`http://97.74.89.204/${product.imageUrl}`}
-              alt={product.name}
+              src={
+                product.imageUrl
+                  ? `http://97.74.89.204/${product.imageUrl}`
+                  : "/placeholder-image.jpg"
+              }
+              alt={product.name || "No name available"}
               width={100}
               height={100}
               className="object-cover rounded-md mb-2 w-8"
-            ></Image>
-
-            <h3 className="text-sm">{product.name}</h3>
+            />
+            <h3 className="text-sm">{product.name || "Unknown Category"}</h3>
           </li>
         ))}
       </ul>
