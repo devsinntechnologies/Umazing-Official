@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+
 import axios from "axios";
 import { useSearchParams } from "next/navigation"; // Import useSearchParams
 import { ShopAPI } from "@/Services"; // Import the fetchAPI function
