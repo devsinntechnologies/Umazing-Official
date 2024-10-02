@@ -4,6 +4,8 @@
 
 import localFont from "next/font/local";
 import "./globals.css";
+import { ToastContainer } from "react-toastify"; // Import ToastContainer
+
 // Import Font Awesome CSS
 import {
   QueryClient,
@@ -38,6 +40,7 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable}`}>
           <Navbar />
+          <ToastContainer position="top-right" autoClose={5000} /> {/* Render the ToastContainer here */}
           {/* Uncomment the line below if you want to include the HeaderCategory */}
           {/* <HeaderCategory /> */}
           {children}

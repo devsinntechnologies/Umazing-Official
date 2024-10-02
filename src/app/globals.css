@@ -1,101 +1,86 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif; /* Ensure Poppins font is applied */
   overflow-x: hidden;
 }
-/* * Custom Sidebar Menu Styles  */
+
+/* Custom styles */
 .custom-sidebar-menu .ant-menu-item:hover, 
 .custom-sidebar-menu .ant-menu-item-active {
-    background-color: green !important; /* Green background on hover */
-    color: white;
+  background-color: green !important;
+  color: white;
 }
 
 .custom-sidebar-menu .ant-menu-item-selected {
-    background-color: green !important; /* Maintain green background for selected items */
-    color: white;
+  background-color: green !important;
+  color: white;
 }
 
 .custom-sidebar-menu .ant-menu-item a {
-    color: black !important; /* Ensure text color remains visible on hover */
+  color: black !important;
 }
 
 .custom-sidebar-menu .ant-menu-item a:hover {
-    color: white !important; /* Ensure text color remains visible on hover */
+  color: white !important;
 }
 
 .custom-sidebar-menu .ant-menu-item-selected a {
-    color: white !important; /* Change the text color when an item is selected */
-}
-#overflow::-webkit-scrollbar{
-visibility: none;
-display: none;
+  color: white !important;
 }
 
-
-  
-  .shadow {
-    box-shadow: 0px 0px 12px 0px #20b52652;
-  }
-  
-  .decoration {
-    text-decoration: line-through;
-  }
-  
-  #priceRange::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Remove WebKit's default styling */
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: green; /* Tailwind green-500 */
-    cursor: pointer;
-    position: relative;
-    top: 0px; /* Center thumb vertically */
-  }
-  
-  #priceRange::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: green; /* Tailwind green-500 */
-    cursor: pointer;
-  }
-  
-  #priceRange::-ms-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-  
-    background-color: green; /* Tailwind green-500 */
-    cursor: pointer;
-  }
-  
-  #overflow::-webkit-scrollbar{
-    visibility: none;
-    display: none;
-   
-  }
-  #change{
-    height: 20px;
-    width: 20px;
-    max-width: 20px;
-  }
-
-  .border-inline-end{
-    border:none;
+#overflow::-webkit-scrollbar {
+  visibility: hidden;
 }
-  
-  
-  
-  
-  
 
+.shadow {
+  box-shadow: 0px 0px 12px 0px #20b52652;
+}
 
+.decoration {
+  text-decoration: line-through;
+}
+
+#priceRange::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: green;
+  cursor: pointer;
+}
+
+#priceRange::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: green;
+  cursor: pointer;
+}
+
+#priceRange::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: green;
+  cursor: pointer;
+}
+
+#change {
+  height: 20px;
+  width: 20px;
+  max-width: 20px;
+}
+
+.border-inline-end {
+  border: none;
+}

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation"; // Import useSearchParams
 import { ShopAPI } from "@/Services"; // Import the fetchAPI function
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 import { fetchShopData } from "@/Services"; // Import the fetchShopData function
 
 import BreadCrum from "@/components/BreadCrum";
