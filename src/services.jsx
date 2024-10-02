@@ -44,18 +44,18 @@ export const registerUser = async (userData) => {
   }
 };
 
-// Shop API function
-export const ShopAPI = async (isViewAll) => {
+// Function to fetch data based on 'viewAll' parameter
+export const fetchShopData = async (isViewAll) => {
   try {
     const endpoint = isViewAll
       ? `${ServiceAPI}/category/getAllCategories?pageNo=1&pageSize=100`
       : `${ServiceAPI}/product/allProducts?pageNo=1&pageSize=200`;
 
     const response = await axios.get(endpoint);
-    return response.data.data; // Return the fetched data
+    return response.data.data;
   } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error; // Re-throw the error to handle it in page.jsx
+    console.error("Error fetching data from API:", error);
+    throw error; // Rethrow error for handling in the calling component
   }
 };
 

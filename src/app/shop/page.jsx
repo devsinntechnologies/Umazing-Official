@@ -1,10 +1,11 @@
 "use client";
-
 import { useEffect, useState } from "react";
-
 import axios from "axios";
 import { useSearchParams } from "next/navigation"; // Import useSearchParams
 import { ShopAPI } from "@/Services"; // Import the fetchAPI function
+import { useSearchParams } from "next/navigation";
+import { fetchShopData } from "@/Services"; // Import the fetchShopData function
+
 import BreadCrum from "@/components/BreadCrum";
 import FilterBar from "@/components/FilterBar";
 import Pagination from "@/components/Pagination";
@@ -16,32 +17,11 @@ export default function Shop() {
   const searchParams = useSearchParams();
   const viewAll = searchParams.get("viewAll");
 
-  const fetchData = async (isViewAll) => {
-    try {
-      const endpoint = isViewAll
-        ? "http://97.74.89.204:4000/category/getAllCategories?pageNo=1&pageSize=100"
-        : "http://97.74.89.204:4000/product/allProducts?pageNo=1&pageSize=200";
-
-      const response = await axios.get(endpoint);
-      setData(response.data.data);
-
-      // console.log(response.data);
-
-
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData(viewAll === "true");
-  }, [viewAll]);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetchedData = await ShopAPI(viewAll === "true");
+        const fetchedData = await fetchShopData(viewAll === "true");
         setData(fetchedData);
-        console.log(fetchedData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
