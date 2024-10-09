@@ -1,17 +1,23 @@
 "use client";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import Image from "next/image";
+// import axios from "axios";
 import { useSearchParams } from "next/navigation"; // Import useSearchParams
-import { ShopAPI } from "@/Services"; // Import the fetchAPI function
+// import { ShopAPI } from "@/Services"; // Import the fetchAPI function
 // import { useSearchParams } from "next/navigation";
-import { fetchShopData } from "@/Services"; // Import the fetchShopData function
+// import { fetchShopData } from "@/Services"; // Import the fetchShopData function
+// import BreadCrum from "@/components/BreadCrum";
 
-import BreadCrum from "@/components/BreadCrum";
+// import FilterBar from "@/components/FilterBar";
+// import Pagination from "@/components/Pagination";
+// import ProductsCard from "@/components/ProductsCard";
+import { fetchShopData } from "@/Services"; // Correct import
 import FilterBar from "@/components/FilterBar";
 import Pagination from "@/components/Pagination";
 import ProductsCard from "@/components/ProductsCard";
 
 export default function Shop() {
+  const [loader, setLoader] = useState(true); // Loader state
   const [data, setData] = useState([]);
   const [getCategoryValue, setGetCategoryValue] = useState("");
   const searchParams = useSearchParams();
@@ -19,11 +25,15 @@ export default function Shop() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoader(true);
       try {
-        const fetchedData = await fetchShopData(viewAll === "true");
-        setData(fetchedData);
+        const fetchedData = await fetchShopData();
+        console.log("Fetched shop data:", fetchedData);
+        return setData(fetchedData.data);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoader(false);
       }
     };
 
@@ -59,16 +69,27 @@ export default function Shop() {
               </p>
             </div>
           </div>
-
-          <section className="flex justify-center items-center gap-5 flex-wrap md:ml-7 mt-5">
-            {filterProducts && filterProducts.length > 0 ? (
-              filterProducts.map((product) => (
-                <ProductsCard key={product.id} product={product} />
-              ))
-            ) : (
-              <p>No products found</p>
-            )}
-          </section>
+          {loader ? (
+            <div className="flex justify-center items-center h-[50vh]">
+              <Image
+                className=" w-10 h-10 "
+                width={100}
+                height={100}
+                src={"/Images/loader.svg"}
+                alt="greenapple"
+              ></Image>
+            </div>
+          ) : (
+            <section className="flex justify-center items-center gap-5 flex-wrap md:ml-7 mt-5">
+              {filterProducts && filterProducts.length > 0 ? (
+                filterProducts.map((product) => (
+                  <ProductsCard key={product.id} product={product} />
+                ))
+              ) : (
+                <p>No products found</p>
+              )}
+            </section>
+          )}
         </main>
       </section>
 

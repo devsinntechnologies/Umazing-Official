@@ -5,11 +5,13 @@ import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { FaHeart } from "react-icons/fa";
 import { toast } from "react-toastify"; // Ensure this is imported
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 const fetchWishlist = async () => {
   const userId = localStorage.getItem("userId");
   console.log("Fetching wishlist for user ID:", userId); // Log user ID
-  const response = await axios.get(`http://97.74.89.204:4000/favourite/getUserFavourite/${userId}`);
+  const response = await axios.get(
+    `http://97.74.89.204:4000/favourite/getUserFavourite/${userId}`
+  );
 
   if (response.data.success) {
     return response.data.data;
@@ -20,16 +22,26 @@ const fetchWishlist = async () => {
 
 const addToWishlist = async (productId) => {
   const userId = localStorage.getItem("userId");
-  console.log("Adding product to wishlist for user ID:", userId, "Product ID:", productId); // Log the request
-  const response = await axios.post("http://97.74.89.204:4000/favourite/addToFavourite", {
-    UserId: userId,
-    ProductId: productId,
-  });
+  console.log(
+    "Adding product to wishlist for user ID:",
+    userId,
+    "Product ID:",
+    productId
+  ); // Log the request
+  const response = await axios.post(
+    "http://97.74.89.204:4000/favourite/addToFavourite",
+    {
+      UserId: userId,
+      ProductId: productId,
+    }
+  );
 
   if (response.data.success) {
     return { ...response.data.data, Product: { id: productId } };
   } else {
-    throw new Error("Failed to add product to wishlist: " + response.data.message);
+    throw new Error(
+      "Failed to add product to wishlist: " + response.data.message
+    );
   }
 };
 
@@ -37,7 +49,11 @@ const ProductsCard = ({ product }) => {
   const queryClient = useQueryClient();
   const [isInWishlist, setIsInWishlist] = useState(false);
 
-  const { data: wishlistItems = [], isLoading, isError } = useQuery({
+  const {
+    data: wishlistItems = [],
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["wishlist"],
     queryFn: fetchWishlist,
     enabled: !!localStorage.getItem("userId"),
@@ -57,10 +73,12 @@ const ProductsCard = ({ product }) => {
     onError: (error) => {
       console.error("Error adding to wishlist:", error); // Log error
       toast.error("Failed to add product to wishlist: " + error.message);
-    }
+    },
   });
 
-  const isProductInWishlist = wishlistItems.some(item => item.Product.id === product.id);
+  const isProductInWishlist = wishlistItems.some(
+    (item) => item.Product.id === product.id
+  );
 
   const handleAddToWishlist = () => {
     if (!localStorage.getItem("userId")) {
@@ -87,7 +105,9 @@ const ProductsCard = ({ product }) => {
             className="w-[98%] object-cover text-center"
             width={500}
             height={300}
-            src={"http://97.74.89.204/uploads/products/3067216fdd3760ec9f46aa896ce48beb.jpeg"}
+            src={
+              "http://97.74.89.204/uploads/products/3067216fdd3760ec9f46aa896ce48beb.jpeg"
+            }
             alt={product.name}
           />
         </Link>
@@ -97,7 +117,10 @@ const ProductsCard = ({ product }) => {
             className={`bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center cursor-pointer items-center mb-2`}
             onClick={handleAddToWishlist}
           >
-            <FaHeart size={22} color={isInWishlist || isProductInWishlist ? "red" : "green"} />
+            <FaHeart
+              size={22}
+              color={isInWishlist || isProductInWishlist ? "red" : "green"}
+            />
           </div>
           <Link href={`/details/${product.id}`}>
             <div className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center items-center cursor-pointer mb-2">
@@ -111,11 +134,41 @@ const ProductsCard = ({ product }) => {
             <p className="text-[#4D4D4D] text-[14px]">{product.name}</p>
             <p className="text-[16px] py-1 font-medium">${product.basePrice}</p>
             <div className="flex">
-              <Image width={100} height={100} className="w-[12px]" src="/Star.png" alt="Star" />
-              <Image width={100} height={100} className="w-[12px]" src="/Star.png" alt="Star" />
-              <Image width={100} height={100} className="w-[12px]" src="/Star.png" alt="Star" />
-              <Image width={100} height={100} className="w-[12px]" src="/Star.png" alt="Star" />
-              <Image width={100} height={100} className="w-[12px]" src="/StarEmpty.png" alt="Empty Star" />
+              <Image
+                width={100}
+                height={100}
+                className="w-[12px]"
+                src="/Star.png"
+                alt="Star"
+              />
+              <Image
+                width={100}
+                height={100}
+                className="w-[12px]"
+                src="/Star.png"
+                alt="Star"
+              />
+              <Image
+                width={100}
+                height={100}
+                className="w-[12px]"
+                src="/Star.png"
+                alt="Star"
+              />
+              <Image
+                width={100}
+                height={100}
+                className="w-[12px]"
+                src="/Star.png"
+                alt="Star"
+              />
+              <Image
+                width={100}
+                height={100}
+                className="w-[12px]"
+                src="/StarEmpty.png"
+                alt="Empty Star"
+              />
             </div>
           </div>
           <div className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center items-center cursor-pointer">

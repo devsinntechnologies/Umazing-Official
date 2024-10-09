@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import RangeSlider from "./RangeSlider";
 import axios from "axios";
-import { fetchCategories } from "@/services";
+import { fetchCategories } from "@/Services";
 
 const FilterBar = ({ setGetCategoryValue }) => {
   const [categories, setCategories] = useState([]);
@@ -87,14 +87,18 @@ const FilterBar = ({ setGetCategoryValue }) => {
       [filterName]: !prevFilters[filterName],
     }));
   };
+  const [loader, setLoader] = useState(true); // Loader state
 
   // Fetch categories using the fetchCategories function
   const getAllCategories = async () => {
+    setLoader(true);
     try {
       const categoriesData = await fetchCategories();
       setCategories(categoriesData);
     } catch (error) {
       console.error("Failed to fetch categories:", error);
+    } finally {
+      setLoader(false);
     }
   };
   useEffect(() => {
@@ -110,7 +114,7 @@ const FilterBar = ({ setGetCategoryValue }) => {
 
       <div>
         {/* Categories */}
-        <div className="h-auto border-b">
+        <div className="h-auto border-b py-3">
           <div
             className="flex justify-between items-center mb-5 cursor-pointer"
             onClick={() => handleToggle("categories")}
@@ -128,21 +132,36 @@ const FilterBar = ({ setGetCategoryValue }) => {
               }`}
             />
           </div>
-          {filters.categories && (
-            <div>
-              {categories.map((category, index) => (
-                <div className="flex gap-2 items-center pb-5" key={category.id}>
-                  <input
-                    type="radio"
-                    name="category"
-                    value={category.id}
-                    onChange={(e) => setGetCategoryValue(e.target.value)}
-                  />
-                  <p className="text-[14px] font-medium">{category.name}</p>
-                  <span className="text-[14px] text-[#808080]">(134)</span>
-                </div>
-              ))}
+          {loader ? (
+            <div className="flex justify-center items-center">
+              <Image
+                className="w-5 h-5"
+                width={100}
+                height={100}
+                src={"/Images/loader.svg"}
+                alt="greenapple"
+              />
             </div>
+          ) : (
+            filters.categories && (
+              <div>
+                {categories.map((category) => (
+                  <div
+                    className="flex gap-2 items-center pb-5"
+                    key={category.id}
+                  >
+                    <input
+                      type="radio"
+                      name="category"
+                      value={category.id}
+                      onChange={(e) => setGetCategoryValue(e.target.value)}
+                    />
+                    <p className="text-[14px] font-medium">{category.name}</p>
+                    <span className="text-[14px] text-[#808080]">(134)</span>
+                  </div>
+                ))}
+              </div>
+            )
           )}
         </div>
 

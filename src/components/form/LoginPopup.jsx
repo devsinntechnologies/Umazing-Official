@@ -7,7 +7,7 @@ import LottieSuccess from "../form/LotieSuccess.json"; // Success animation JSON
 import LottieCancel from "../form/LotieCancel.json"; // Error animation JSON
 import jwt_decode from "jwt-decode";
 import { useMutation } from "@tanstack/react-query";
-import { login } from "@/services"; // Import the login function
+import { login } from "@/Services"; // Import the login function
 
 const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
   const [email, setEmail] = useState("");
@@ -29,7 +29,7 @@ const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
     onSuccess: (data) => {
       if (data.success) {
         console.log(data);
-        
+
         setError("");
         setShowErrorAnimation(false); // Ensure error animation is not visible
 

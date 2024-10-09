@@ -6,7 +6,7 @@ import Lottie from "lottie-react";
 import Signupsuccess from "../form/LotieSuccess.json";
 import Signupcancel from "../form/LotieCancel.json";
 import { useMutation } from "@tanstack/react-query";
-import { registerUser } from "@/services";
+import { registerUser } from "@/Services";
 import Image from "next/image";
 const SignupPopup = ({ isOpen, closePopup, LoginPopup }) => {
   const [name, setName] = useState("");
