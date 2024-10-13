@@ -12,6 +12,16 @@ import Categories from "@/components/Home/Categories";
 
 export default function Home() {
   return (
-    <h1>Home</h1>
+    <div className="m-auto w-[95vw] my-5">
+     
+      <HeaderCategory />
+      <Banner />
+      <Categories />
+      <ProductSection />
+      <DealSection />
+      <BannerSection />
+      <Team />
+      <Companylogos />
+    </div>
   );
 }
