@@ -7,6 +7,7 @@ import LottieSuccess from "../form/LotieSuccess.json"; // Success animation JSON
 import LottieCancel from "../form/LotieCancel.json"; // Error animation JSON
 import jwt_decode from "jwt-decode";
 import { useMutation } from "@tanstack/react-query";
+import ForgetPassword from "@/components/auth/ForgetPassword";
 import { login } from "@/Services"; // Import the login function
 
 const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
@@ -133,12 +134,7 @@ const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
               </div>
               {error && <p className="text-red-500 text-sm">{error}</p>}
               <div className="text-right">
-                <a
-                  href="#"
-                  className="text-blue-500 hover:underline text-sm sm:text-base"
-                >
-                  Forgot password?
-                </a>
+                <ForgetPassword />
               </div>
               <button
                 type="submit"

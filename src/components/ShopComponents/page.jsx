@@ -6,6 +6,7 @@ import { fetchShopData } from "@/Services";
 import FilterBar from "@/components/FilterBar";
 import Pagination from "@/components/Pagination";
 import ProductsCard from "@/components/ProductsCard";
+import { Skeleton } from "../ui/skeleton";
 
 const ShopComponent = ({ categoryId }) => {
   const [loader, setLoader] = useState(true);
@@ -61,14 +62,15 @@ const ShopComponent = ({ categoryId }) => {
           </div>
 
           {loader ? (
-            <div className="flex justify-center items-center h-[50vh]">
-              <Image
-                className="w-10 h-10"
-                width={100}
-                height={100}
-                src={"/Images/loader.svg"}
-                alt="Loading..."
-              ></Image>
+            <div className=" grid-cols-1 sm:grid-cols-2 grid md:grid-cols-3  gap-3">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <Skeleton
+                  key={i}
+                  className="w-full group lg:h-[360px] rounded-xl relative  sm:h-80"
+                >
+                  <Skeleton className="w-[98%] h-[300px]" />
+                </Skeleton>
+              ))}
             </div>
           ) : (
             <section className="flex justify-center items-center gap-5 flex-wrap md:ml-7 mt-5">

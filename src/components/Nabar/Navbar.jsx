@@ -3,6 +3,7 @@ import NavMiddleSection from "./NavMiddleSection";
 import SignupPopup from "../form/SignupPopup";
 import LoginPopup from "../form/LoginPopup";
 import { useState } from "react";
+import Login from "@/components/auth/Login";
 
 const Navbar = () => {
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
@@ -51,12 +52,13 @@ const Navbar = () => {
               </option>
             </select>
             <div className="flex justify-between gap-3">
-              <button
+              {/* <button
                 onClick={openLoginPopup}
                 className="text-gray-500 text-xs md:text-sm"
               >
                 Login
-              </button>
+              </button> */}
+              <Login />
               <button
                 onClick={openSignupPopup}
                 className="text-gray-500 text-xs md:text-sm"
@@ -71,11 +73,11 @@ const Navbar = () => {
         <NavMiddleSection />
       </div>
 
-      <LoginPopup
+      {/* <LoginPopup
         isOpen={isLoginPopupOpen}
         closePopup={closePopup}
         openSignupPopup={openSignupPopup}
-      />
+      /> */}
       <SignupPopup
         isOpen={isSignupPopupOpen}
         closePopup={closePopup}
