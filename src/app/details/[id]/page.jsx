@@ -207,7 +207,7 @@ const ProductDetails = ({ params }) => {
             <div>
               <p className="text-[14px] font-bold">
                 Category :
-                <span className="text-[#808080] font-normal">Vegetables</span>
+                <span className="text-[#808080] font-normal"> Vegetables</span>
               </p>
               <div className="flex gap-2 mt-3">
                 <p className="text-[14px] font-bold">Tags :</p>

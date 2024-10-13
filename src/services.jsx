@@ -45,9 +45,34 @@ export const registerUser = async (userData) => {
 };
 
 // Fetch data based on 'viewAll' parameter using GetAPI
-export const fetchShopData = async () => {
-  return await GetAPI("product/allProducts?pageNo=1&pageSize=200"); // Makes the GET request using the GetAPI function
+export const fetchShopData = async (categoryId, pageNo, pageSize) => {
+  if (categoryId) {
+    return await GetAPI(
+      `product/allProducts?CategoryId=${categoryId}&pageNo=${pageNo}&pageSize=${pageSize}`
+    );
+  } else {
+    return await GetAPI(
+      `product/allProducts?pageNo=${pageNo}&pageSize=${pageSize}`
+    );
+  }
+  // Makes the GET request using the GetAPI function
 };
+
+// export const fetchProductsByCategoryId = async (categoryId) => {
+//   try {
+//     const response = await axios.get(
+//       `http://97.74.89.204:4000/product/allProducts?CategoryId=${categoryId}&pageNo=1&pageSize=2`
+//     );
+//     console.log("Response data from API:", response.data); // Log response data
+//     return response.data.data; // Return just the data
+//   } catch (error) {
+//     console.error(
+//       "Error fetching products:",
+//       error.response?.data || error.message
+//     ); // Log detailed error
+//     throw error; // Rethrow error for handling in the calling function
+//   }
+// };
 
 // Fetch product by ID using GetAPI
 export const fetchProductById = async (id) => {

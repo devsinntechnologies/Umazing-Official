@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { SlEnvolopeLetter } from "react-icons/sl";
 import { FaFacebookF } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa6";
@@ -7,12 +7,14 @@ import { FaPinterestP } from "react-icons/fa";
 
 const FooterTopSection = () => {
   return (
-    <div className=''>
+    <div className="">
       <div className="text-white w-[95vw] bg-black mx-auto flex flex-col md:flex-row items-center justify-between mt-10 p-6 space-y-4 md:space-y-0 md:space-x-4">
         <div className="flex items-center space-x-6">
-          <SlEnvolopeLetter color='green' size={40}/>
+          <SlEnvolopeLetter color="green" size={40} />
           <div>
-            <h2 className="text-lg font-semibold">Subscribe to our Newsletter</h2>
+            <h2 className="text-lg font-semibold">
+              Subscribe to our Newsletter
+            </h2>
             <p className="text-sm text-gray-400">
               Pellentesque eu nibh eget mauris congue mattis mattis.
             </p>
@@ -29,22 +31,34 @@ const FooterTopSection = () => {
           </button>
         </div>
         <div className="flex items-center space-x-3">
-          <a href="#" className="text-gray-400 hover:text-white hover:bg-green-600 p-2 rounded-3xl duration-300">
-            <FaFacebookF/>
+          <a
+            href="#"
+            className="text-gray-400 hover:text-white hover:bg-green-600 p-2 rounded-3xl duration-300"
+          >
+            <FaFacebookF />
           </a>
-          <a href="#" className="text-gray-400 hover:text-white hover:bg-green-600 p-2 rounded-3xl duration-300">
-            <FaXTwitter/>
+          <a
+            href="#"
+            className="text-gray-400 hover:text-white hover:bg-green-600 p-2 rounded-3xl duration-300"
+          >
+            <FaXTwitter />
           </a>
-          <a href="#" className="text-gray-400 hover:text-white hover:bg-green-600 p-2 rounded-3xl duration-300">
-            <FaInstagram/>
+          <a
+            href="#"
+            className="text-gray-400 hover:text-white hover:bg-green-600 p-2 rounded-3xl duration-300"
+          >
+            <FaInstagram />
           </a>
-          <a href="#" className="text-gray-400 hover:text-white hover:bg-green-600 p-2 rounded-3xl duration-300">
-            <FaPinterestP/>
+          <a
+            href="#"
+            className="text-gray-400 hover:text-white hover:bg-green-600 p-2 rounded-3xl duration-300"
+          >
+            <FaPinterestP />
           </a>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default FooterTopSection;
