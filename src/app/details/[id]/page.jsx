@@ -4,6 +4,7 @@ import ProductsCard from "@/components/ProductsCard";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { fetchProductById } from "@/Services";
+import { Skeleton } from "@/components/ui/skeleton"; // Skeleton loader import
 
 const ProductDetails = ({ params }) => {
   const { id } = params;
@@ -12,15 +13,19 @@ const ProductDetails = ({ params }) => {
   const [selectedImage, setSelectedImage] = useState("/preview.png");
   const [quantity, setQuantity] = useState(0);
   const [product, setProduct] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     const getProductDetails = async () => {
+      setLoader(true);
       try {
         const productData = await fetchProductById(id);
         setProduct(productData);
         setSelectedImage(productData.image);
       } catch (error) {
         console.error("Error fetching product details:", error.message);
+      } finally {
+        setLoader(false);
       }
     };
 
@@ -356,16 +361,28 @@ const ProductDetails = ({ params }) => {
         </div>
 
         {/* Related Products */}
-        <div className="lg:h-[477px] w-full mt-16">
+        <div className=" w-full mt-16">
           <h1 className="lg:text-[30px] text-[23px] font-medium md:font-bold text-center">
             Related Products
           </h1>
           {/* Products */}
-          <div className="lg:h-[407px] w-full flex flex-wrap md:flex-nowrap justify-center md:justify-evenly items-center gap-2 sm:gap-4  mt-8">
-            {products.map((item, index) => [
-              <ProductsCard key={index} product={item} />,
-            ])}
-          </div>
+          {loader ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <Skeleton
+                  key={i}
+                  className="w-full group lg:h-[360px] rounded-xl sm:h-80"
+                  active
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="lg:h-[407px] w-full flex flex-wrap md:flex-nowrap justify-center md:justify-evenly items-center gap-2 sm:gap-4 mt-8">
+              {products.map((item, index) => (
+                <ProductsCard key={index} product={item} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </main>

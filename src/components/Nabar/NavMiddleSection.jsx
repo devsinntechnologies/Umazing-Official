@@ -22,7 +22,7 @@ const NavMiddleSection = () => {
     <div>
       <header className="bg-white">
         {/* Top Section */}
-        <div className="container w-[95vw] mx-auto px-2 py-3 flex justify-between items-center">
+        <div className=" w-[95vw] mx-auto px-2 py-3 flex justify-between items-center">
           {/* Logo Section */}
           <div>
             <Link href={"/"}>
@@ -60,7 +60,7 @@ const NavMiddleSection = () => {
 
         {/* Bottom Navigation */}
         <nav>
-          <div className="container bg-black w-[95vw] mx-auto flex items-center py-2 lg:py-0 px-6">
+          <div className=" bg-black w-[95vw] mx-auto flex items-center py-2 lg:py-0 px-6">
             {/* All Categories Button */}
             <div className="hidden lg:flex">
               <div className="bg-green-600 p-3">

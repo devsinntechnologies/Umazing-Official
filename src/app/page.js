@@ -12,7 +12,7 @@ import Categories from "@/components/Home/Categories";
 
 export default function Home() {
   return (
-    <div className="m-auto w-[95vw] my-5">
+    <div>
      
       <HeaderCategory />
       <Banner />

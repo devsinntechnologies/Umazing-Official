@@ -98,11 +98,11 @@ const ProductsCard = ({ product }) => {
   if (isError) return <div>Error fetching wishlist items.</div>;
 
   return (
-    <div className="group lg:w-[280px] hover:shadow-x-[#00B207] hover:shadow-lg lg:h-[407px] border border-gray-300 rounded-xl relative hover:border-[#2C742F] sm:w-52 sm:h-80">
+    <div className="group lg:w-[280px] hover:shadow-x-[#00B207] hover:shadow-lg lg:h-[407px] border border-gray-300 rounded-xl relative hover:border-[#2C742F] sm:w-52 sm:h-80 ">
       <div>
         <Link href={`/details/${product.id}`}>
           <Image
-            className="w-[98%] object-cover text-center"
+            className="w-full  rounded-t-xl "
             width={500}
             height={300}
             src={

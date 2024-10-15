@@ -2,7 +2,7 @@ import React from "react";
 
 export const Companylogos = () => {
   return (
-    <div className=" flex gap-20 flex-wrap justify-center items-center p-10 border-[1px] border-solid border-[#E6E6E6] my-10">
+    <div className="w-[95vw] mx-auto  flex gap-20 flex-wrap justify-center items-center p-10 border-[1px] border-solid border-[#E6E6E6] my-10">
       <div className="border-r-2 border-solid w-40 ">
         <h1 className="italic text-2xl text-gray-400">Steps</h1>
       </div>

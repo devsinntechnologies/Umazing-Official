@@ -2,6 +2,7 @@
 import BreadCrum from "@/components/BreadCrum";
 import React from "react";
 import { MdOutlineCancel } from "react-icons/md";
+import { Skeleton } from "antd";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchWishlistItems, removeWishlistItemById } from "@/Services"; // Import API functions
@@ -55,7 +56,60 @@ const WishlistPage = () => {
     mutation.mutate(favouriteId); // Call mutation to remove item
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    if (isLoading) {
+      return (
+        <div>
+          <BreadCrum />
+          <main className="container md:w-[83%] mx-auto px-4 md:px-6 lg:px-8 py-8 mt-20">
+            <h1 className="text-2xl font-semibold mb-6 text-center">
+              My Wishlist
+            </h1>
+            <div className="shadow overflow-auto border-b border-gray-200 sm:rounded-lg">
+              <table className="w-[95%] divide-y divide-gray-200 table-fixed">
+                <thead>
+                  <tr>
+                    <th className="w-[170px] md:w-1/3 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Product
+                    </th>
+                    <th className="w-[150px] md:w-1/4 table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Price
+                    </th>
+                    <th className="w-[150px] md:w-1/4 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Stock Status
+                    </th>
+                    <th className="w-[150px] md:w-1/6 px-4 py-3"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <tr key={index}>
+                      <td className="px-4 sm:px-6 py-4">
+                        <div className="flex items-center">
+                          <Skeleton.Avatar active size="large" />
+                          <div className="ml-4">
+                            <Skeleton.Input active size="small" />
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <Skeleton.Input active size="small" />
+                      </td>
+                      <td className="px-6 py-4">
+                        <Skeleton.Button active size="small" shape="round" />
+                      </td>
+                      <td className="px-4 py-4">
+                        <Skeleton.Button active size="small" />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </main>
+        </div>
+      );
+    }
   if (isError) return <div>Error fetching wishlist items</div>;
 
   return (

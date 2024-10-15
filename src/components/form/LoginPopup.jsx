@@ -133,7 +133,7 @@ const LoginPopup = ({ isOpen, closePopup, openSignupPopup }) => {
                 />
               </div>
               {error && <p className="text-red-500 text-sm">{error}</p>}
-              <div className="text-right">
+              <div className="text-right cursor-pointer">
                 <ForgetPassword />
               </div>
               <button
