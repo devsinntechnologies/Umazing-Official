@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaEnvelope, FaLock } from "lucide-react";
+import { MailIcon, LockKeyhole } from "lucide-react";
 import { useLoginMutation } from "@/hooks/UseAuth";
 import { useDispatch } from "react-redux";
 import { setLogin } from "@/slice/authSlice";
@@ -56,7 +56,7 @@ const Login = ({ onForgetPassword, onSignup }) => {
     <>
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="flex items-center border border-gray-300 p-2 rounded-md">
-          <FaEnvelope className="text-gray-500 mr-2" />
+          <MailIcon className="text-gray-500 mr-2" />
           <input
             type="email"
             className="w-full focus:outline-none text-sm sm:text-base"
@@ -67,7 +67,7 @@ const Login = ({ onForgetPassword, onSignup }) => {
           />
         </div>
         <div className="flex items-center border border-gray-300 p-2 rounded-md">
-          <FaLock className="text-gray-500 mr-2" />
+          <LockKeyhole className="text-gray-500 mr-2" />
           <input
             type="password"
             className="w-full focus:outline-none text-sm sm:text-base"
@@ -89,7 +89,7 @@ const Login = ({ onForgetPassword, onSignup }) => {
         </div>
         <button
           type="submit"
-          className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 text-sm sm:text-base"
+          className="w-full bg-primary text-white py-2 rounded-full text-sm sm:text-base"
         >
           Login
         </button>
@@ -99,10 +99,10 @@ const Login = ({ onForgetPassword, onSignup }) => {
         <p>Or</p>
       </div>
       <div className="space-y-2">
-        <button className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 text-sm sm:text-base">
+        <button className="w-full text-primary py-2 rounded-full hover:bg-primary hover:text-white border border-primary text-sm sm:text-base">
           Login with Google
         </button>
-        <button className="w-full bg-gray-500 text-white py-2 rounded-md hover:bg-gray-600 text-sm sm:text-base">
+        <button className="w-full text-primary py-2 rounded-full hover:bg-primary hover:text-white border border-primary text-sm sm:text-base">
           Login with Mobile number
         </button>
       </div>

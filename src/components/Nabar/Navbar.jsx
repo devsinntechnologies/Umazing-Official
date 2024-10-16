@@ -3,7 +3,7 @@ import NavMiddleSection from "./NavMiddleSection";
 // import SignupPopup from "../form/SignupPopup";
 // import LoginPopup from "../form/LoginPopup";
 // import { useState } from "react";
-import AuthDialog from "../auth";
+import AuthDialog from "../auth/AuthDialog";
 
 const Navbar = () => {
   // const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);

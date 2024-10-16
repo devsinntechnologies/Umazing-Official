@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { FaEnvelope, FaLock, FaUser, FaPhone } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
-import { CalendarIcon, EyeClosedIcon, EyeIcon } from "lucide-react";
+import { CalendarIcon, EyeClosedIcon, EyeIcon, MailIcon, LockKeyhole, User2, Phone } from "lucide-react";
 import { format } from "date-fns";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
@@ -128,7 +127,7 @@ const Signup = ({ onBack, onSignupSuccess }) => {
     <>
       <form className="space-y-4" onSubmit={signup}>
         <div className="flex items-center border border-gray-300 p-2 rounded-md">
-          <FaUser className="text-gray-500 mr-2" />
+          <User2 className="text-gray-500 mr-2" />
           <input
             type="text"
             placeholder="Enter your name"
@@ -139,7 +138,7 @@ const Signup = ({ onBack, onSignupSuccess }) => {
         </div>
 
         <div className="flex items-center border border-gray-300 p-2 rounded-md">
-          <FaEnvelope className="text-gray-500 mr-2" />
+          <MailIcon className="text-gray-500 mr-2" />
           <input
             type="email"
             placeholder="Enter your email"
@@ -149,7 +148,7 @@ const Signup = ({ onBack, onSignupSuccess }) => {
           />
         </div>
         <div className="relative w-full flex items-center border border-gray-300 p-2 rounded-md">
-          <FaLock className="text-gray-500 mr-2" />
+          <LockKeyhole className="text-gray-500 mr-2" />
           <input
            type={showPassword ? "text" : "password"}
             placeholder="Enter your password"
@@ -171,7 +170,7 @@ const Signup = ({ onBack, onSignupSuccess }) => {
         </div>
 
         <div className="flex items-center border border-gray-300 p-2 rounded-md">
-          <FaPhone className="text-gray-500 mr-2" />
+          <Phone className="text-gray-500 mr-2" />
           <input
             type="tel"
             placeholder="Enter your phone number"
