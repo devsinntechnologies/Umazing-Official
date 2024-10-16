@@ -11,7 +11,7 @@ import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
 const DealSection = () => {
   return (
-    <div className="w-full grid gap-5 justify-between grid-cols-1 sm:grid-cols-2  xl:grid-cols-4">
+    <div className="w-[95vw] mx-auto   grid gap-5 justify-between grid-cols-1 sm:grid-cols-2  xl:grid-cols-4">
       <div className="w-full flex flex-col gap-5">
         <h1 className="font-medium text-lg">Hot Deals</h1>
         <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">

@@ -4,7 +4,7 @@ import { FaArrowRight } from "react-icons/fa";
 
 export const Banner = () => {
   return (
-    <div className="w-full grid grid-cols-1 gap-5   sm:grid-cols-2 lg:grid-cols-3 h-100 pt-5">
+    <div className="w-[95vw] mx-auto  grid grid-cols-1 gap-5   sm:grid-cols-2 lg:grid-cols-3 h-100 pt-5">
       <div className=" mydiv1 w-full bg-slate-400 flex justify-start items-center flex-col gap-5  pb-56  px-10 pt-10 rounded-xl bg-[url('/Images/bg1.png')] bg-cover	bg-bottom	 h-100">
         <p className="font-medium text-sm  text-white">Best Deals</p>
         <h1 className="font-semibold text-[24px] text-white  xl:text-[32px]">

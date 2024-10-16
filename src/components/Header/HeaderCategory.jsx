@@ -1,105 +1,3 @@
-// "use client";
-// import React, { useState } from "react";
-// import {
-//   AppstoreOutlined,
-//   MailOutlined,
-//   SettingOutlined,
-// } from "@ant-design/icons";
-// import { Menu } from "antd";
-// import Link from "next/link";
-// import HeaderSlider from "./HeaderSlider";
-
-// const items = [
-//   // Other categories
-//   {
-//     label: <Link href="/shop">Fresh Fruit</Link>,
-//     key: "fresh-fruit",
-//     icon: <MailOutlined color="green" />,
-//   },
-//   {
-//     label: <Link href="/shop">Vegetables</Link>,
-//     key: "vegetables",
-//     icon: <AppstoreOutlined color="green" />,
-//   },
-//   {
-//     label: <Link href="/shop">River Fish</Link>,
-//     key: "river-fish",
-//     icon: <SettingOutlined color="green" />,
-//   },
-//   {
-//     label: <Link href="/shop">Chicken & Meat</Link>,
-//     key: "chicken-meat",
-//     icon: <MailOutlined color="green" />,
-//   },
-//   {
-//     label: <Link href="/shop">Drink & Water</Link>,
-//     key: "drink-water",
-//     icon: <AppstoreOutlined color="green" />,
-//   },
-//   {
-//     label: <Link href="/shop">Yogurt & Ice Cream</Link>,
-//     key: "yogurt-ice-cream",
-//     icon: <SettingOutlined color="green" />,
-//   },
-//   {
-//     label: <a href="/shop">Cake & Bread</a>,
-//     key: "cake-bread",
-//     icon: <MailOutlined color="green" />,
-//   },
-//   {
-//     label: <Link href="/shop">Butter & Cream</Link>,
-//     key: "butter-cream",
-//     icon: <AppstoreOutlined color="green" />,
-//   },
-//   {
-//     label: <Link href="/shop">Cooking</Link>,
-//     key: "cooking",
-//     icon: <SettingOutlined color="green" />,
-//   },
-//   {
-//     key: "all-categories",
-//     label: (
-//       <Link
-//         href={{ pathname: "/shop", query: { viewAll: true } }} // Add query parameter here
-//         className="text-blue-500 text-lg"
-//         rel="noopener noreferrer"
-//       >
-//         + View all Category
-//       </Link>
-//     ),
-//   },
-// ];
-
-// const HeaderCategory = () => {
-//   const [current, setCurrent] = useState("vegetables");
-
-//   const onClick = (e) => {
-//     setCurrent(e.key);
-//   };
-
-//   return (
-//     <div className="flex w-[95vw] gap-5 mx-auto">
-//       <div className="w-[278px] hidden lg:flex border-[1px] border-gray-300 p-2">
-//         <Menu
-//           onClick={onClick}
-//           selectedKeys={[current]}
-//           mode="vertical"
-//           items={items}
-//           className="custom-sidebar-menu"
-//           style={{
-//             fontSize: "16px",
-//             fontWeight: "400",
-//             borderInlineEnd: "none",
-//           }}
-//         />
-//       </div>
-//       <HeaderSlider />
-//     </div>
-//   );
-// };
-
-// export default HeaderCategory;
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -107,16 +5,21 @@ import Image from "next/image";
 import { fetchCategories } from "@/Services";
 import HeaderSlider from "./HeaderSlider";
 import Link from "next/link"; // Import Link from Next.js
+import { Skeleton } from "@/components/ui/skeleton"; // Import skeleton loader
 
 export default function HeaderCategory() {
   const [data, setData] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   const loadCategories = async () => {
+    setLoader(true);
     try {
       const response = await fetchCategories();
       setData(response); // Set fetched data
     } catch (error) {
       console.error("Error fetching categories:", error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -125,12 +28,24 @@ export default function HeaderCategory() {
   }, []);
 
   return (
-    <div className=" flex  justify-center items-center gap-2 ">
+    <div className="w-[95vw] mx-auto mt-4 flex justify-center items-center gap-2">
+      {/* Conditionally render loader or category list */}
       <ul className="hidden w-[19vw] lg:flex flex-col gap-2 justify-center border-[1px] border-solid border-black py-2 px-2">
-        {data &&
+        {loader ? (
+          // Render skeletons while data is loading
+          <div className="flex flex-col gap-2">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <li key={i} className="w-full border-[#E6E6E6] px-2">
+                <Skeleton className="w-full h-10 rounded-md" />
+              </li>
+            ))}
+          </div>
+        ) : (
+          // Render categories after loading is complete
+          data &&
           data.map((category, index) => (
             <Link href={`/shop/${category.id}`} key={index}>
-              <li className="w-full border-[#E6E6E6] flex justify-around items-center px-2  gap-6 cursor-pointer transition-shadow duration-150 ease-in-out hover:bg-[#2C742F] hover:rounded-md hover:text-white">
+              <li className="w-full border-[#E6E6E6] flex justify-around items-center px-2 gap-6 cursor-pointer transition-shadow duration-150 ease-in-out hover:bg-[#2C742F] hover:rounded-md hover:text-white">
                 <Image
                   src={
                     category.imageUrl
@@ -147,7 +62,8 @@ export default function HeaderCategory() {
                 </h3>
               </li>
             </Link>
-          ))}
+          ))
+        )}
       </ul>
       <HeaderSlider />
     </div>

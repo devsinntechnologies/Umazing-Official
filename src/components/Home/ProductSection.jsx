@@ -9,7 +9,7 @@ import { FaArrowRight } from "react-icons/fa";
 import Image from "next/image";
 export const ProductSection = () => {
   return (
-    <div className="flex justify-center items-center flex-col pb-10 gap-5">
+    <div className="w-[95vw] mx-auto   flex justify-center items-center flex-col pb-10 gap-5">
       <p className="font-medium text-sm text-[#00B207]">Products</p>
       <h1 className="font-semibold text-xl sm:text-2xl md:text-3xlxl lg:text-4xl">
         Our Featured Products
