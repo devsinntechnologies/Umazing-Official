@@ -1,28 +1,28 @@
 import { IoLocationOutline } from "react-icons/io5";
 import NavMiddleSection from "./NavMiddleSection";
-import SignupPopup from "../form/SignupPopup";
-import LoginPopup from "../form/LoginPopup";
-import { useState } from "react";
-import Login from "@/components/auth/Login";
+// import SignupPopup from "../form/SignupPopup";
+// import LoginPopup from "../form/LoginPopup";
+// import { useState } from "react";
+import AuthDialog from "../auth";
 
 const Navbar = () => {
-  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
-  const [isSignupPopupOpen, setIsSignupPopupOpen] = useState(false);
+  // const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
+  // const [isSignupPopupOpen, setIsSignupPopupOpen] = useState(false);
 
-  const openLoginPopup = () => {
-    setIsLoginPopupOpen(true);
-    setIsSignupPopupOpen(false);
-  };
+  // const openLoginPopup = () => {
+  //   setIsLoginPopupOpen(true);
+  //   setIsSignupPopupOpen(false);
+  // };
 
-  const openSignupPopup = () => {
-    setIsSignupPopupOpen(true);
-    setIsLoginPopupOpen(false);
-  };
+  // const openSignupPopup = () => {
+  //   setIsSignupPopupOpen(true);
+  //   setIsLoginPopupOpen(false);
+  // };
 
-  const closePopup = () => {
-    setIsLoginPopupOpen(false);
-    setIsSignupPopupOpen(false);
-  };
+  // const closePopup = () => {
+  //   setIsLoginPopupOpen(false);
+  //   setIsSignupPopupOpen(false);
+  // };
 
   return (
     <>
@@ -52,19 +52,19 @@ const Navbar = () => {
               </option>
             </select>
             <div className="flex justify-between gap-3">
-              <button
+              {/* <button
                 onClick={openLoginPopup}
                 className="text-gray-500 text-xs md:text-sm"
               >
                 Login
-              </button>
-              {/* <Login /> */}
-              <button
+              </button> */}
+              <AuthDialog/>
+              {/* <button
                 onClick={openSignupPopup}
                 className="text-gray-500 text-xs md:text-sm"
               >
                 Signup
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -73,16 +73,16 @@ const Navbar = () => {
         <NavMiddleSection />
       </div>
 
-      <LoginPopup
+      {/* <LoginPopup
         isOpen={isLoginPopupOpen}
         closePopup={closePopup}
         openSignupPopup={openSignupPopup}
-      />
-      <SignupPopup
+      /> */}
+      {/* <SignupPopup
         isOpen={isSignupPopupOpen}
         closePopup={closePopup}
         LoginPopup={openLoginPopup}
-      />
+      /> */}
 
       {/* Extra space to accommodate the fixed navbar */}
       <div className="h-[166px]"></div>
