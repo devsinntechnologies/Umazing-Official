@@ -8,6 +8,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import Image from "next/image";
 import ecobazaar from "../../app/images/ecobazaar.jpg";
 import Link from "next/link";
+import Logo from "../layout/Logo";
 
 const NavMiddleSection = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for hamburger menu
@@ -24,12 +25,13 @@ const NavMiddleSection = () => {
         {/* Top Section */}
         <div className=" w-[95vw] mx-auto px-2 py-3 flex justify-between items-center">
           {/* Logo Section */}
-          <div>
+          {/* <div>
             <Link href={"/"}>
               {" "}
               <Image src={ecobazaar} width={150} height={50} />
             </Link>
-          </div>
+          </div> */}
+          <Logo />
 
           {/* Search Bar */}
           <div className="items-center hidden lg:flex w-1/2 bg-gray-100 rounded overflow-hidden">

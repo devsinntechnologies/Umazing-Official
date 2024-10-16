@@ -19,10 +19,7 @@ function ForgetPassword() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <div className="flex flex-col gap-3 justify-between items-center mb-4">
-            <Image src={ecobazaar} width={150} alt="EcoBazaar Logo" />
-            <DialogTitle>Forget Password</DialogTitle>
-          </div>
+          <DialogTitle>Forget Password</DialogTitle>
         </DialogHeader>
         <div className="flex items-center space-x-2">
           <div className="grid flex-1 gap-2">
@@ -30,8 +27,16 @@ function ForgetPassword() {
           </div>
           <button>Submit</button>
         </div>
-      </DialogContent>
-    </Dialog>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white py-2 px-4 rounded-md"
+        >
+          Submit
+        </button>
+      </div>
+      {successMessage && <p className="text-green-500">{successMessage}</p>}
+    </form>
   );
-}
+};
+
 export default ForgetPassword;
