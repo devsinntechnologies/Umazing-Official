@@ -130,9 +130,9 @@ const NavMiddleSection = () => {
                   2
                 </span>
               </Link>
-              <a href="#" className="text-white hover:text-gray-300">
+              <Link href="/profile" className="text-white hover:text-gray-300">
                 <CiUser size={30} />
-              </a>
+              </Link>
             </div>
           </div>
 
