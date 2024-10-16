@@ -1,9 +1,10 @@
+import { useState } from "react";
 import { FaEnvelope } from "react-icons/fa";
+import axios from "axios";
 import ecobazaar from "../../app/images/ecobazaar.jpg";
 import Image from "next/image";
 import { useState } from "react";
 import ResetPassword from "./ResetPassword";
-
 import {
   Dialog,
   DialogContent,
@@ -14,12 +15,24 @@ import {
 
 function ForgetPassword() {
   const [email, setEmail] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your form submission logic here
-    setSuccessMessage("A reset link has been sent to your email.");
+    try {
+      const response = await axios.post(
+        "http://97.74.89.204:4000/auth/forgot-password",
+        {
+          email,
+        }
+      );
+      setSuccess("Password reset link sent to your email.");
+      setError(null);
+    } catch (err) {
+      setError("Failed to send reset link. Please try again.");
+      setSuccess(null);
+    }
   };
 
   return (
@@ -31,26 +44,27 @@ function ForgetPassword() {
         <DialogHeader>
           <DialogTitle>Forget Password</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex items-center space-x-2">
-            <FaEnvelope className="text-gray-500" />
+        <div className="flex items-center space-x-2 flex-col gap-4 relative">
+          <div className="w-full flex items-center border border-gray-300 p-2 rounded-md">
+            <FaEnvelope className="text-gray-500 mr-2" />
             <input
               type="email"
-              placeholder="Enter Your Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 border border-gray-300 px-3 py-2 rounded-md"
+              className="w-full focus:outline-none text-sm sm:text-base"
+              placeholder="Enter your Email"
+              // value={password}
               required
             />
           </div>
+
+          <div className="text-right w-[98%] cursor-pointer"></div>
+
           <button
             type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded-md"
+            className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 text-sm sm:text-base "
           >
             Submit
           </button>
-        </form>
-        {successMessage && <p className="text-green-500">{successMessage}</p>}
+        </div>
       </DialogContent>
     </Dialog>
   );
