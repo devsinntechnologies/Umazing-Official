@@ -12,9 +12,7 @@ const HeaderSlider = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full">
-        <Skeleton className="w-full h-full" />
-      </div>
+        <Skeleton className="w-full h-full"/>
     );
   }
 

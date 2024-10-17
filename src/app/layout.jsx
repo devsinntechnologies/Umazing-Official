@@ -13,6 +13,8 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { Toaster } from "@/components/ui/toaster"
+import Link from "next/link";
+import { Plus } from "lucide-react";
 // import HeaderCategory from "@/components/Header/HeaderCategory"; 
 
 config.autoAddCss = false;
@@ -39,13 +41,16 @@ export default function RootLayout({ children }) {
           <title>Umazing</title>
           <link rel="icon/svg" href="/icon.svg" />
         </head>
-        <body className={`${poppins.variable} w-screen min-h-screen`}>
+        <body className={`${poppins.variable} w-screen min-h-screen px-8`}>
      <Provider>
           <Navbar />
           <ToastContainer position="top-right" autoClose={5000} /> {/* Render the ToastContainer here */}
           {/* <HeaderCategory /> */}
           {children}
           <Footer />
+          <div className="">
+            <Link href="/seller" className="fixed bottom-8 right-8 p-4 rounded-full bg-primary text-white z-[50]"><Plus size={32}/></Link>
+          </div>
           <Toaster />
      </Provider>
         </body>

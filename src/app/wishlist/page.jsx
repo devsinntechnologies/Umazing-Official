@@ -5,7 +5,7 @@ import { MdOutlineCancel } from "react-icons/md";
 import { Skeleton } from "antd";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchWishlistItems, removeWishlistItemById } from "@/Services"; // Import API functions
+import { fetchWishlistItems, removeWishlistItemById } from "@/services"; // Import API functions
 
 // Function to fetch wishlist items
 const fetchWishlist = async () => {

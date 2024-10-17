@@ -8,7 +8,7 @@ import { FaPinterestP } from "react-icons/fa";
 const FooterTopSection = () => {
   return (
     <div className="">
-      <div className="text-white w-[95vw] bg-black mx-auto flex flex-col md:flex-row items-center justify-between mt-10 p-6 space-y-4 md:space-y-0 md:space-x-4">
+      <div className="text-white w-full bg-black flex flex-col md:flex-row items-center justify-between mt-10 p-6 space-y-4 md:space-y-0 md:space-x-4">
         <div className="flex items-center space-x-6">
           <SlEnvolopeLetter color="green" size={40} />
           <div>

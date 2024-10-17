@@ -12,7 +12,7 @@ import Categories from "@/components/Home/Categories";
 
 export default function Home() {
   return (
-    <div className="w-full px-8">
+    <div className="w-full">
       <HeaderCategory />
       <Banner />
       <Categories />

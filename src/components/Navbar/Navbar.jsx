@@ -64,12 +64,12 @@ const Navbar = () => {
                 PKR
               </option>
             </select>
-            <div className="flex justify-between gap-3">
+            <div className="flex justify-between gap-3 min-h-10">
              {isLoggedIn && userData ? <div className="min-w-10 flex items-center gap-3">
               <Image src={`http://97.74.89.204/${userData?.imageUrl}`} alt="" width={40} height={40} className="size-10 rounded-full bg-primary"/>
               <h3>{userData.name}</h3>
               <hr />
-              <button className="bg-primary px-4 py-2 rounded-full text-white text-xs md:text-sm">
+              <button className="bg-primary px-4 py-1.5 rounded-full text-white text-xs md:text-sm">
           Logout
         </button>
               </div> : <AuthDialog />}
@@ -80,7 +80,7 @@ const Navbar = () => {
         <NavMiddleSection />
       </div>
       {/* Extra space to accommodate the fixed navbar */}
-      <div className="h-[166px]"></div>
+      <div className="h-[192px]"></div>
     </>
   );
 };

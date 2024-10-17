@@ -28,11 +28,11 @@ const NavMiddleSection = () => {
           {/* Logo Section */}
           <Logo />
           {/* Search Bar */}
-          <div className="items-center hidden lg:flex w-1/2 bg-gray-100 rounded overflow-hidden">
+          <div className="items-center hidden lg:flex w-1/2 bg-gray-100 rounded-full overflow-hidden">
             <input
               type="text"
               placeholder="Search"
-              className="w-full p-2 text-sm border-none outline-none bg-transparent"
+              className="w-full px-4 py-2 text-sm border-none outline-none bg-transparent"
             />
             <button className="bg-primary text-white px-4 py-2">
               Search

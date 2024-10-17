@@ -37,7 +37,7 @@ const AuthDialog = () => {
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogOpenChange} className="relative">
       <DialogTrigger asChild>
-        <button onClick={() => setIsOpen(true)} className="bg-primary px-4 py-2 rounded-full text-white text-xs md:text-sm">
+        <button onClick={() => setIsOpen(true)} className="bg-primary px-4 py-1.5 rounded-full text-white text-xs md:text-sm">
           Login
         </button>
       </DialogTrigger>
