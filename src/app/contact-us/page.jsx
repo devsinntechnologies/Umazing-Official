@@ -6,7 +6,7 @@ import { FaAngleRight } from "react-icons/fa6";
 const Contact = () => {
   return (
     <div className="bg-slate-100 w-[95vw] mx-auto">
-      <div className="h-[25vh] flex flex-col justify-center items-center gap-5 bg-slate-300 md:h-[20vh]  xl:h-[50vh]">
+      <div className="h-[25vh] flex flex-col justify-center items-center gap-5 bg-[teal] md:h-[20vh]  xl:h-[50vh] text-white">
         <h1 className="text-2xl font-bold	text-center sm:text-3xl">Contact</h1>
         <div className="flex gap-5 flex-wrap items-center">
           <Link href="/">
@@ -94,7 +94,7 @@ const Contact = () => {
                 id="message"
               ></textarea>
             </div>
-            <button className="py-3 px-4 text-xl bg-green-600 w-1/2 text-white rounded-lg">
+            <button className="py-3 px-4 text-xl bg-primary w-1/2 text-white rounded-lg">
               Submit
             </button>
           </div>

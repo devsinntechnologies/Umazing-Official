@@ -107,7 +107,7 @@ const FilterBar = ({ setGetCategoryValue }) => {
 
   return (
     <aside className="w-full md:w-[300px] pl-4 pr-3 md:pr-2 mb-5 md:mb-0 font-bold bg-white">
-      <button className="w-[130px] h-[45px] text-[14px] bg-[#00B207] py-[14px] rounded-[43px] text-white flex justify-center items-center gap-4 mb-8 md:mb-5">
+      <button className="w-[130px] h-[45px] text-[14px] bg-primary py-[14px] rounded-[43px] text-white flex justify-center items-center gap-4 mb-8 md:mb-5">
         Filter
         <Image width={20} height={20} src="/Filter.png" alt="Filter Icon" />
       </button>
@@ -215,7 +215,7 @@ const FilterBar = ({ setGetCategoryValue }) => {
             <>
               {rating.map((rating, index) => (
                 <div className="flex gap-2 items-center pb-5" key={index}>
-                  <input className="text-[#00B207]" type="checkbox" />
+                  <input className="text-[teal]" type="checkbox" />
                   <div className="flex gap-1">
                     {Array.from({ length: 5 }, (_, starIndex) => (
                       <Image

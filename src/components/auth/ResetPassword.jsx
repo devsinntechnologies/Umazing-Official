@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import axios from "axios";
-import ecobazaar from "../../app/images/ecobazaar.jpg";
+// import ecobazaar from "../../app/images/ecobazaar.jpg";
 import Image from "next/image";
 import {
   Dialog,
@@ -16,6 +16,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import Logo from "../layout/Logo";
 
 function ResetPassword() {
   const [otp, setOtp] = useState(""); // Capture OTP input
@@ -88,7 +89,7 @@ function ResetPassword() {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <div className="flex flex-col gap-3 justify-between items-center mb-4">
-            <Image src={ecobazaar} width={150} alt="EcoBazaar Logo" />
+            <Logo />
             <DialogTitle>Reset Password</DialogTitle>
           </div>
         </DialogHeader>
@@ -129,7 +130,7 @@ function ResetPassword() {
 
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 text-sm sm:text-base"
+            className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary text-sm sm:text-base"
             onClick={handleSubmit}
             disabled={!isOtpVerified} // Disable submit button until OTP is verified
           >

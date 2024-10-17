@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { IoCameraOutline } from "react-icons/io5";
+
 import {
   Accordion,
   AccordionContent,
@@ -17,7 +18,7 @@ const Profile = () => {
   return (
     <div className="w-[100vw] mx-auto py-10 flex flex-col gap-8 px-5 md:w-[80vw] md:px-0">
       <div className="flex items-center gap-5 flex-col md:flex-row">
-        <div className="bg-slate-300 rounded-full flex justify-center items-center w-[40vw] h-[40vw] xs:w-[30vw] xs:h-[30vw] sm:w-[20vw] sm:h-[20vw] md:w-[15vw] md:h-[15vw] lg:w-[10vw] lg:h-[10vw]">
+        <div className="bg-slate-300 rounded-full flex justify-center items-center w-[120px] h-[120px] ">
           <IoCameraOutline className="text-4xl" />
         </div>
         <h3 className="font-semibold text-center md:text-left">{name}</h3>

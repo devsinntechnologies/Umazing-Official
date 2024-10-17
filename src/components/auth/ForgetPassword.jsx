@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { FaEnvelope } from "react-icons/fa";
+import { Mail } from "lucide-react";
+
 import axios from "axios";
-import ecobazaar from "../../app/images/ecobazaar.jpg";
+// import ecobazaar from "../../app/images/ecobazaar.jpg";
 import Image from "next/image";
 import ResetPassword from "./ResetPassword";
+import Logo from "../layout/Logo";
 import {
   Dialog,
   DialogContent,
@@ -42,7 +44,7 @@ function ForgetPassword() {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <div className="flex flex-col gap-3 justify-between items-center mb-4">
-            <Image src={ecobazaar} width={150} alt="EcoBazaar Logo" />
+            <Logo />
             <DialogTitle>Forget Password</DialogTitle>
           </div>
         </DialogHeader>
@@ -51,7 +53,7 @@ function ForgetPassword() {
           className="flex items-center space-x-2 flex-col gap-4 relative"
         >
           <div className="w-full flex items-center border border-gray-300 p-2 rounded-md">
-            <FaEnvelope className="text-gray-500 mr-2" />
+            <Mail className="text-gray-500 mr-2" />
             <input
               type="email"
               className="w-full focus:outline-none text-sm sm:text-base"
@@ -63,11 +65,11 @@ function ForgetPassword() {
           </div>
 
           {error && <div className="text-red-500 text-sm">{error}</div>}
-          {success && <div className="text-green-500 text-sm">{success}</div>}
+          {success && <div className="text-primary text-sm">{success}</div>}
 
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 text-sm sm:text-base"
+            className="w-full bg-primary text-white py-2 rounded-md hover:primary text-sm sm:text-base"
           >
             <ResetPassword />
           </button>

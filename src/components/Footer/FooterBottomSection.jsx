@@ -1,6 +1,6 @@
-import React from 'react';
-import pay from '../../app/images/pay.png';
-import Image from 'next/image';
+import React from "react";
+import pay from "../../../public/Images/pay.png";
+import Image from "next/image";
 
 const FooterBottomSection = () => {
   return (
@@ -10,7 +10,6 @@ const FooterBottomSection = () => {
         <p className="text-gray-500 text-sm text-center md:text-left">
           Ecobazar eCommerce © 2021. All Rights Reserved
         </p>
-
         {/* Payment Icons */}
         <div className="flex items-center justify-center md:justify-end space-x-2">
           <Image src={pay} width={300} />

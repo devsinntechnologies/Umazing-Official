@@ -229,7 +229,7 @@ const Checkout = () => {
               </label>
             </div>
 
-            <button className="py-3 bg-[#00B207] text-white rounded-full">
+            <button className="py-3 bg-primary text-white rounded-full">
               Place Order
             </button>
           </div>
