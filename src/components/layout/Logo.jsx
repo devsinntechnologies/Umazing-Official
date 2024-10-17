@@ -8,13 +8,13 @@ const Logo = ()=>{
   //  const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
   return (
     <div className="flex items-center justify-between sm:w-52 h-auto gap-3 px-2">
-    {isLoggedIn && 
+    {/* {isLoggedIn && 
      <div
        className="size-12 flex items-center justify-center"
        onClick={toggleSidebar}
      >
        <Menu size={28} />
-     </div>}
+     </div>} */}
      <Link
        href="/"
        className="w-[40px] sm:w-[145px] items-baseline md:items-center justify-center flex "

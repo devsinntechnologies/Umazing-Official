@@ -10,11 +10,9 @@ import {
   ChevronDown,
 } from "lucide-react";
 import Image from "next/image";
-// import ecobazaar from "../../app/images/ecobazaar.jpg";
 import Link from "next/link";
 import Logo from "../layout/Logo";
 import { useSelector } from "react-redux";
-import Image from "next/image";
 
 const NavMiddleSection = () => {
   const userData = useSelector((state)=> state.authSlice.userProfile)
@@ -133,7 +131,7 @@ const NavMiddleSection = () => {
                 </span>
               </Link>
               <Link href="/profile" className="text-white hover:text-gray-300">
-                {userData?.imageUrl ? <div className="size-8 rounded-full shadow-lg"><Image src={`http://97.74.89.204/${userData.imageUrl}`} alt="" width={40} height={40} className="size-8 rounded-full"/></div> :<CiUser size={30} />}
+                {userData?.imageUrl ? <div className="size-8 rounded-full shadow-lg"><Image src={`http://97.74.89.204/${userData.imageUrl}`} alt="" width={40} height={40} className="size-8 rounded-full"/></div> :<User size={30} />}
               </Link>
             </div>
           </div>
