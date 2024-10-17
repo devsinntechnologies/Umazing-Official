@@ -15,6 +15,7 @@ import Footer from "@/components/Footer/Footer";
 import { Toaster } from "@/components/ui/toaster"
 import Link from "next/link";
 import { Plus } from "lucide-react";
+import { usePathname } from "next/navigation";
 // import HeaderCategory from "@/components/Header/HeaderCategory"; 
 
 config.autoAddCss = false;
@@ -34,6 +35,8 @@ const poppins = Poppins({
 const queryClient = new QueryClient();
 
 export default function RootLayout({ children }) {
+  const hidePlusButtonPaths = ['/seller', '/seller/addProduct', '/seller/products'];
+  const pathname = usePathname()
   return (
     <QueryClientProvider client={queryClient}>
      <html lang="en">
@@ -48,9 +51,13 @@ export default function RootLayout({ children }) {
           {/* <HeaderCategory /> */}
           {children}
           <Footer />
-          <div className="">
-            <Link href="/seller" className="fixed bottom-8 right-8 p-4 rounded-full bg-primary text-white z-[50]"><Plus size={32}/></Link>
-          </div>
+          {!hidePlusButtonPaths.includes(pathname) && (
+              <div>
+                <Link href="/seller" className="fixed bottom-8 right-8 p-4 rounded-full bg-primary text-white z-[50]">
+                  <Plus size={32} />
+                </Link>
+              </div>
+            )}
           <Toaster />
      </Provider>
         </body>
