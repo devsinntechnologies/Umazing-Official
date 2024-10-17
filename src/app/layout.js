@@ -10,7 +10,7 @@ import {
 } from '@tanstack/react-query';
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
-import Navbar from "@/components/Nabar/Navbar";
+import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { Toaster } from "@/components/ui/toaster"
 // import HeaderCategory from "@/components/Header/HeaderCategory"; 
@@ -34,22 +34,22 @@ const queryClient = new QueryClient();
 export default function RootLayout({ children }) {
   return (
     <QueryClientProvider client={queryClient}>
-     <Provider>
      <html lang="en">
         <head>
           <title>Umazing</title>
           <link rel="icon/svg" href="/icon.svg" />
         </head>
-        <body className={`${poppins.variable}`}>
+        <body className={`${poppins.variable} w-screen min-h-screen`}>
+     <Provider>
           <Navbar />
           <ToastContainer position="top-right" autoClose={5000} /> {/* Render the ToastContainer here */}
           {/* <HeaderCategory /> */}
           {children}
           <Footer />
           <Toaster />
+     </Provider>
         </body>
       </html>
-     </Provider>
     </QueryClientProvider>
   );
 }

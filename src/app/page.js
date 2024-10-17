@@ -12,8 +12,7 @@ import Categories from "@/components/Home/Categories";
 
 export default function Home() {
   return (
-    <div>
-     
+    <div className="w-full px-8">
       <HeaderCategory />
       <Banner />
       <Categories />

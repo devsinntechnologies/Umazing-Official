@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { fetchCategories } from "@/Services";
+import { fetchCategories } from "@/services";
 import HeaderSlider from "./HeaderSlider";
 import Link from "next/link"; // Import Link from Next.js
 import { Skeleton } from "@/components/ui/skeleton"; // Import skeleton loader
@@ -28,9 +28,9 @@ export default function HeaderCategory() {
   }, []);
 
   return (
-    <div className="w-[95vw] mx-auto mt-4 flex justify-center items-center gap-2">
+    <div className="w-full mt-4 flex justify-center items-center gap-2 h-[260px] md:h-[340px] lg:h-[400px]">
       {/* Conditionally render loader or category list */}
-      <ul className="hidden w-[19vw] lg:flex flex-col gap-2 justify-center border-[1px] border-solid border-black py-2 px-2">
+      <ul className="hidden w-[19vw] h-full overflow-scroll lg:flex flex-col gap-2 justify-center border-[1px] border-solid border-black py-2 px-2">
         {loader ? (
           // Render skeletons while data is loading
           <div className="flex flex-col gap-2">

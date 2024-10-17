@@ -6,7 +6,7 @@ import { setLogin } from "@/slice/authSlice";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 
-const Login = ({ onForgetPassword, onSignup }) => {
+const Login = ({ onForgetPassword, onSignup, onLoginSuccess }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [login, { isSuccess, error: loginError, data: responseData, isLoading }] = useLoginMutation();
@@ -29,6 +29,7 @@ const Login = ({ onForgetPassword, onSignup }) => {
           duration: 2000,
         });
         dispatch(setLogin({ token: responseData?.data.token }));
+        onLoginSuccess(); // Close the dialog after success
         router.push('/');
       } else {
         toast({
@@ -45,7 +46,7 @@ const Login = ({ onForgetPassword, onSignup }) => {
         duration: 2000,
       });
     }
-  }, [isSuccess, isLoading, loginError, responseData, toast, dispatch, router]);
+  }, [isSuccess, isLoading, loginError, responseData, toast, dispatch, router, onLoginSuccess]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

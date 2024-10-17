@@ -142,6 +142,10 @@ body {
     @apply border-border;
   }
   body {
+    position: relative;
     @apply bg-background text-foreground;
+  }
+  ::-webkit-scrollbar{
+    display: none;
   }
 }

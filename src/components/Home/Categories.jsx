@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { fetchCategories } from "@/Services";
+import { fetchCategories } from "@/services";
 import Link from "next/link"; // Import Link from Next.js
 import { Skeleton } from "@/components/ui/skeleton"; // Skeleton loader import
 

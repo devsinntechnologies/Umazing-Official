@@ -1,4 +1,5 @@
 import { clsx } from "clsx";
+import { jwtDecode } from "jwt-decode";
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs) {

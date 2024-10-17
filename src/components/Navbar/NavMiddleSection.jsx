@@ -5,12 +5,13 @@ import { MdCancel } from "react-icons/md";
 import { IoCartOutline } from "react-icons/io5";
 import { CiHeart, CiUser } from "react-icons/ci";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import Image from "next/image";
-import ecobazaar from "../../app/images/ecobazaar.jpg";
 import Link from "next/link";
 import Logo from "../layout/Logo";
+import { useSelector } from "react-redux";
+import Image from "next/image";
 
 const NavMiddleSection = () => {
+  const userData = useSelector((state)=> state.authSlice.userProfile)
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for hamburger menu
   const [ishamburgerOpen, setIshamburgerOpen] = useState(false);
 
@@ -21,18 +22,11 @@ const NavMiddleSection = () => {
 
   return (
     <div>
-      <header className="bg-white">
+      <header className="bg-white w-full">
         {/* Top Section */}
-        <div className=" w-[95vw] mx-auto px-2 py-3 flex justify-between items-center">
+        <div className="w-full px-2 py-3 flex justify-between items-center">
           {/* Logo Section */}
-          {/* <div>
-            <Link href={"/"}>
-              {" "}
-              <Image src={ecobazaar} width={150} height={50} />
-            </Link>
-          </div> */}
           <Logo />
-
           {/* Search Bar */}
           <div className="items-center hidden lg:flex w-1/2 bg-gray-100 rounded overflow-hidden">
             <input
@@ -40,7 +34,7 @@ const NavMiddleSection = () => {
               placeholder="Search"
               className="w-full p-2 text-sm border-none outline-none bg-transparent"
             />
-            <button className="bg-green-600 text-white px-4 py-2">
+            <button className="bg-primary text-white px-4 py-2">
               Search
             </button>
           </div>
@@ -62,7 +56,7 @@ const NavMiddleSection = () => {
 
         {/* Bottom Navigation */}
         <nav>
-          <div className=" bg-black w-[95vw] mx-auto flex items-center py-2 lg:py-0 px-6">
+          <div className=" bg-black w-full flex items-center py-2 lg:py-0 px-6">
             {/* All Categories Button */}
             <div className="hidden lg:flex">
               <div className="bg-green-600 p-3">
@@ -133,7 +127,7 @@ const NavMiddleSection = () => {
                 </span>
               </Link>
               <Link href="/profile" className="text-white hover:text-gray-300">
-                <CiUser size={30} />
+                {userData?.imageUrl ? <div className="size-8 rounded-full shadow-lg"><Image src={`http://97.74.89.204/${userData.imageUrl}`} alt="" width={40} height={40} className="size-8 rounded-full"/></div> :<CiUser size={30} />}
               </Link>
             </div>
           </div>

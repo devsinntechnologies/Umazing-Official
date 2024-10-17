@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import Image from "next/image";
 import {
   Dialog,
   DialogContent,
@@ -38,7 +37,7 @@ const AuthDialog = () => {
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogOpenChange} className="relative">
       <DialogTrigger asChild>
-        <button onClick={() => setIsOpen(true)} className="text-destructive text-xs md:text-sm">
+        <button onClick={() => setIsOpen(true)} className="bg-primary px-4 py-2 rounded-full text-white text-xs md:text-sm">
           Login
         </button>
       </DialogTrigger>
@@ -69,6 +68,7 @@ const AuthDialog = () => {
           <Login
             onForgetPassword={() => setCurrentView("forgetPassword")}
             onSignup={() => setCurrentView("signup")}
+            onLoginSuccess={() => setIsOpen(false)} // Close dialog on login success
           />
         )}
 

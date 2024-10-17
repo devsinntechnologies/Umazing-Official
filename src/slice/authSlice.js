@@ -10,17 +10,17 @@ const getTokenFromLocalStorage = () => {
         return { 
           token, 
           user: { id: decoded.id, email: decoded.email }, 
-          isLoggedIn: true 
+          isLoggedIn: true,
+          userProfile: null // Initialize user profile state
         };
       }
     }
   }
-  return { token: null, user: null, isLoggedIn: false };
+  return { token: null, user: null, isLoggedIn: false, userProfile: null };
 };
 
 const initialState = getTokenFromLocalStorage();
 
-console.log(initialState);
 export const authSlice = createSlice({
   name: 'authSlice',
   initialState,
@@ -45,10 +45,14 @@ export const authSlice = createSlice({
       state.token = null;
       state.user = null;
       state.isLoggedIn = false;
+      state.userProfile = null; // Reset profile data on logout
       localStorage.removeItem('token');
+    },
+    setUserProfile: (state, action) => {
+      state.userProfile = action.payload; // Store the user profile data in state
     },
   },
 });
 
-export const { setLogin, logOut } = authSlice.actions;
+export const { setLogin, logOut, setUserProfile } = authSlice.actions;
 export default authSlice.reducer;
