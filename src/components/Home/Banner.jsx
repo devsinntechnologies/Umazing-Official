@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
-import { FaArrowRight } from "react-icons/fa";
+
+import { MoveRight } from "lucide-react";
 
 export const Banner = () => {
   return (
@@ -54,9 +55,9 @@ export const Banner = () => {
 
         <Link href={"/shop"}>
           {" "}
-          <button className="flex gap-3 items-center bg-white rounded-full text-[#00B207] py-[14px] px-10 font-semibold text-sm">
+          <button className="flex gap-3 items-center bg-white rounded-full text-primary py-[14px] px-10 font-semibold text-sm">
             Shop Now
-            <FaArrowRight />
+            <MoveRight />
           </button>
         </Link>
       </div>
@@ -71,9 +72,9 @@ export const Banner = () => {
         <div></div>
         <Link href={"/shop"}>
           {" "}
-          <button className="flex gap-3 items-center bg-white rounded-full text-[#00B207] py-[14px] px-10 font-semibold text-sm">
+          <button className="flex gap-3 items-center bg-white rounded-full text-primary py-[14px] px-10 font-semibold text-sm">
             Shop Now
-            <FaArrowRight />
+            <MoveRight />
           </button>
         </Link>
       </div>
@@ -91,9 +92,9 @@ export const Banner = () => {
         <div></div>
         <Link href={"/shop"}>
           {" "}
-          <button className="flex gap-3 items-center bg-white rounded-full text-[#00B207] py-[14px] px-10 font-semibold text-sm">
+          <button className="flex gap-3 items-center bg-white rounded-full text-primary py-[14px] px-10 font-semibold text-sm">
             Shop Now
-            <FaArrowRight />
+            <MoveRight />
           </button>
         </Link>
       </div>

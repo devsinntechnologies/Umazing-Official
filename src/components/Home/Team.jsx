@@ -5,6 +5,7 @@ import {
   FaPinterest,
   FaInstagram,
 } from "react-icons/fa";
+import { Facebook, Twitter, Instagram } from "lucide-react";
 
 import Image from "next/image";
 
@@ -13,7 +14,7 @@ export const Team = () => {
     <>
       <div className=" w-[95vw] mx-auto   flex justify-center items-center flex-col pb-10 gap-5">
         <div className="flex flex-col gap-5 justify-center items-center pb-5">
-          <p className="font-medium text-sm text-[#00B207]">Team</p>
+          <p className="font-medium text-sm text-primary">Team</p>
           <h1 className="font-semibold text-xl sm:text-2xl md:text-3xl lg:text-4xl">
             Our Professional Members
           </h1>
@@ -37,10 +38,15 @@ export const Team = () => {
             </div>
 
             <div className="absolute top-20 left-1/2 transform -translate-x-1/2 hidden gap-3 justify-center items-center text-white group-hover:flex opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100">
-              <FaFacebookF className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
-              <FaTwitter className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
-              <FaPinterest className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
-              <FaInstagram className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
+              <div className="rounded-full  hover:bg-[teal]  p-[6px] ">
+                <Facebook className=" rounded-full text-4xl  " />
+              </div>
+              <div className="rounded-full  hover:bg-[teal]  p-[6px] ">
+                <Twitter className=" rounded-full text-4xl  " />
+              </div>
+              <div className="rounded-full  hover:bg-[teal] p-[6px] ">
+                <Instagram className=" rounded-full text-4xl  " />
+              </div>
             </div>
           </div>
           <div className="group relative w-full border-[1px] border-solid border-[#E6E6E6] cursor-pointer transition-shadow duration-200 ease-in-out hover:shadow-md hover:shadow-[#00000010]">
@@ -59,11 +65,16 @@ export const Team = () => {
               <p>Ceo & Founder</p>
             </div>
 
-            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 hidden gap-3 justify-center items-center text-white group-hover:flex opacity-0 transition-opacity ease-in-out group-hover:opacity-100 duration-300">
-              <FaFacebookF className="rounded-full text-4xl p-2 transition-all hover:bg-[#00B207] " />
-              <FaTwitter className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
-              <FaPinterest className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
-              <FaInstagram className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
+            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 hidden gap-3 justify-center items-center text-white group-hover:flex opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100">
+              <div className="rounded-full  hover:bg-[teal]  p-[6px] ">
+                <Facebook className=" rounded-full text-4xl  " />
+              </div>
+              <div className="rounded-full  hover:bg-[teal]  p-[6px] ">
+                <Twitter className=" rounded-full text-4xl  " />
+              </div>
+              <div className="rounded-full  hover:bg-[teal] p-[6px] ">
+                <Instagram className=" rounded-full text-4xl  " />
+              </div>
             </div>
           </div>
           <div className="group relative w-full border-[1px] border-solid border-[#E6E6E6] cursor-pointer transition-shadow duration-200 ease-in-out hover:shadow-md hover:shadow-[#00000010]">
@@ -82,11 +93,16 @@ export const Team = () => {
               <p>Ceo & Founder</p>
             </div>
 
-            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 hidden gap-3 justify-center items-center text-white group-hover:flex opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
-              <FaFacebookF className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
-              <FaTwitter className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
-              <FaPinterest className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
-              <FaInstagram className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
+            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 hidden gap-3 justify-center items-center text-white group-hover:flex opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100">
+              <div className="rounded-full  hover:bg-[teal]  p-[6px] ">
+                <Facebook className=" rounded-full text-4xl  " />
+              </div>
+              <div className="rounded-full  hover:bg-[teal]  p-[6px] ">
+                <Twitter className=" rounded-full text-4xl  " />
+              </div>
+              <div className="rounded-full  hover:bg-[teal] p-[6px] ">
+                <Instagram className=" rounded-full text-4xl  " />
+              </div>
             </div>
           </div>
           <div className="group relative w-full border-[1px] border-solid border-[#E6E6E6] cursor-pointer transition-shadow duration-200 ease-in-out hover:shadow-md hover:shadow-[#00000010]">
@@ -105,11 +121,16 @@ export const Team = () => {
               <p>Ceo & Founder</p>
             </div>
 
-            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 hidden gap-3 justify-center items-center text-white group-hover:flex opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
-              <FaFacebookF className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
-              <FaTwitter className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
-              <FaPinterest className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
-              <FaInstagram className="rounded-full text-4xl p-2 hover:bg-[#00B207]" />
+            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 hidden gap-3 justify-center items-center text-white group-hover:flex opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100">
+              <div className="rounded-full  hover:bg-[teal]  p-[6px] ">
+                <Facebook className=" rounded-full text-4xl  " />
+              </div>
+              <div className="rounded-full  hover:bg-[teal]  p-[6px] ">
+                <Twitter className=" rounded-full text-4xl  " />
+              </div>
+              <div className="rounded-full  hover:bg-[teal] p-[6px] ">
+                <Instagram className=" rounded-full text-4xl  " />
+              </div>
             </div>
           </div>
         </div>

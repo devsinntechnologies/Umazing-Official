@@ -1,4 +1,5 @@
-import { IoLocationOutline } from "react-icons/io5";
+// import { IoLocationOutline } from "react-icons/io5";
+import { MapPin } from "lucide-react";
 import NavMiddleSection from "./NavMiddleSection";
 // import SignupPopup from "../form/SignupPopup";
 // import LoginPopup from "../form/LoginPopup";
@@ -29,7 +30,7 @@ const Navbar = () => {
       <div className="fixed w-full top-0 left-0 right-0 z-50 bg-white">
         <div className="flex flex-wrap md:flex-nowrap w-[95vw] mx-auto justify-between p-2 border-b-2 border-gray-200">
           <div className="flex items-center gap-2">
-            <IoLocationOutline color="#6b7280" size={24} />
+            <MapPin color="#6b7280" size={24} />
             <p className="text-gray-500 text-xs md:text-sm">
               Store Location: Lincoln-344, Illinois, Chicago, USA
             </p>
@@ -58,7 +59,7 @@ const Navbar = () => {
               >
                 Login
               </button> */}
-              <AuthDialog/>
+              <AuthDialog />
               {/* <button
                 onClick={openSignupPopup}
                 className="text-gray-500 text-xs md:text-sm"

@@ -45,7 +45,7 @@ export default function HeaderCategory() {
           data &&
           data.map((category, index) => (
             <Link href={`/shop/${category.id}`} key={index}>
-              <li className="w-full border-[#E6E6E6] flex justify-around items-center px-2 gap-6 cursor-pointer transition-shadow duration-150 ease-in-out hover:bg-[#2C742F] hover:rounded-md hover:text-white">
+              <li className="w-full border-[#E6E6E6] flex justify-around items-center px-2 gap-6 cursor-pointer transition-shadow duration-150 ease-in-out hover:bg-primary hover:rounded-md hover:text-white">
                 <Image
                   src={
                     category.imageUrl

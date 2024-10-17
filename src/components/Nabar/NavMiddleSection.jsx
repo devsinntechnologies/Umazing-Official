@@ -1,12 +1,16 @@
 "use client";
 import React, { useState } from "react";
-import { FaBars, FaPhoneAlt } from "react-icons/fa";
-import { MdCancel } from "react-icons/md";
-import { IoCartOutline } from "react-icons/io5";
-import { CiHeart, CiUser } from "react-icons/ci";
-import { RiArrowDropDownLine } from "react-icons/ri";
+import {
+  Phone,
+  Menu,
+  Heart,
+  ShoppingCart,
+  User,
+  CircleX,
+  ChevronDown,
+} from "lucide-react";
 import Image from "next/image";
-import ecobazaar from "../../app/images/ecobazaar.jpg";
+// import ecobazaar from "../../app/images/ecobazaar.jpg";
 import Link from "next/link";
 import Logo from "../layout/Logo";
 
@@ -38,16 +42,14 @@ const NavMiddleSection = () => {
             <input
               type="text"
               placeholder="Search"
-              className="w-full p-2 text-sm border-none outline-none bg-transparent"
+              className="w-full p-2 texxt-sm border-none outline-none bg-transparent"
             />
-            <button className="bg-green-600 text-white px-4 py-2">
-              Search
-            </button>
+            <button className="bg-primary text-white px-4 py-2">Search</button>
           </div>
 
           {/* Contact Info */}
           <div className="flex gap-2 items-center space-x-1 text-gray-500 text-sm">
-            <FaPhoneAlt size={20} /> {/* Reduced icon size for small screens */}
+            <Phone size={25} /> {/* Reduced icon size for small screens */}
             <div className="flex flex-col">
               {/* Adjusting the font size for different screen sizes */}
               <span className="text-[8px] sm:text-[10px] md:text-xs">
@@ -65,12 +67,12 @@ const NavMiddleSection = () => {
           <div className=" bg-black w-[95vw] mx-auto flex items-center py-2 lg:py-0 px-6">
             {/* All Categories Button */}
             <div className="hidden lg:flex">
-              <div className="bg-green-600 p-3">
-                <FaBars color="white" size={24} />
+              <div className="bg-primary p-3">
+                <Menu color="white" size={24} />
               </div>
               <div className="bg-[#393e46] p-3">
                 <span className="text-white flex items-center">
-                  All Categories <RiArrowDropDownLine size={24} />
+                  All Categories <ChevronDown size={20} />
                 </span>
               </div>
             </div>
@@ -78,9 +80,9 @@ const NavMiddleSection = () => {
             {/* Hamburger icon */}
             <div className="hamburger_icon flex lg:hidden" onClick={toggleMenu}>
               {ishamburgerOpen ? (
-                <MdCancel color="white" size={24} />
+                <CircleX color="white" size={24} />
               ) : (
-                <FaBars color="white" size={24} />
+                <Menu color="white" size={24} />
               )}
             </div>
 
@@ -121,19 +123,19 @@ const NavMiddleSection = () => {
             {/* Icons Section */}
             <div className="flex items-center ml-auto space-x-4">
               <Link href="/wishlist" className="text-white hover:text-gray-300">
-                <CiHeart size={30} />
+                <Heart size={30} />
               </Link>
               <Link
                 href="/cart"
                 className="relative text-white hover:text-gray-300"
               >
-                <IoCartOutline size={30} />
-                <span className="absolute -top-1 -right-2 bg-green-600 text-xs rounded-full px-1">
+                <ShoppingCart size={30} />
+                <span className="absolute -top-1 -right-2 bg-primary text-xs rounded-full px-1">
                   2
                 </span>
               </Link>
               <Link href="/profile" className="text-white hover:text-gray-300">
-                <CiUser size={30} />
+                <User size={30} />
               </Link>
             </div>
           </div>
@@ -141,7 +143,7 @@ const NavMiddleSection = () => {
           {isMenuOpen ? (
             <div className="w-full bg-black absolute top-0 left-0 h-screen z-50">
               <div className="flex justify-end p-4">
-                <MdCancel color="white" size={30} onClick={toggleMenu} />
+                <CircleX color="white" size={30} onClick={toggleMenu} />
               </div>
 
               {/* Navigation Links */}

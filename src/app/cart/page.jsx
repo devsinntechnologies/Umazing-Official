@@ -1,6 +1,7 @@
 import React from "react";
-import cartimage from "../images/cartimage.jpg"; // Ensure this path is correct
-import { CiHome } from "react-icons/ci";
+// import cartimage from "../public/Images/cartimage.jpg"; // Ensure this path is correct
+import { House } from "lucide-react";
+
 import CartSection from "./CartSection";
 
 const Page = () => {
@@ -10,7 +11,7 @@ const Page = () => {
         {/* Background Image */}
         <div
           className="w-full h-full bg-cover bg-left-top"
-          style={{ backgroundImage: `url(${cartimage.src})` }}
+          // style={{ backgroundImage: `url(${cartimage.src})` }}
           aria-label="Cart Banner"
         />
 
@@ -20,7 +21,7 @@ const Page = () => {
         {/* Breadcrumb Navigation */}
         <div className="absolute left-6 inset-0 flex items-center gap-3 text-white">
           <span className="flex items-center gap-1">
-            <CiHome size={20} />
+            <House size={20} />
             <p className="text-lg text-gray-400">{">"}</p>
           </span>
           <span className="text-green-500">Shopping cart</span>

@@ -3,9 +3,11 @@ import Link from "next/link";
 import React, { useState } from "react";
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { FaHeart } from "react-icons/fa";
+// import { FaHeart } from "react-icons/fa";
 import { toast } from "react-toastify"; // Ensure this is imported
 import "react-toastify/dist/ReactToastify.css";
+import { Heart, Eye, ShoppingBag } from "lucide-react";
+
 const fetchWishlist = async () => {
   const userId = localStorage.getItem("userId");
   console.log("Fetching wishlist for user ID:", userId); // Log user ID
@@ -117,14 +119,14 @@ const ProductsCard = ({ product }) => {
             className={`bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center cursor-pointer items-center mb-2`}
             onClick={handleAddToWishlist}
           >
-            <FaHeart
+            <Heart
               size={22}
-              color={isInWishlist || isProductInWishlist ? "red" : "green"}
+              color={isInWishlist || isProductInWishlist ? "red" : "Teal"}
             />
           </div>
           <Link href={`/details/${product.id}`}>
             <div className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center items-center cursor-pointer mb-2">
-              <Image width={20} height={20} src="/see.png" alt="View" />
+              <Eye width={20} height={20} color="teal" />
             </div>
           </Link>
         </div>
@@ -173,7 +175,7 @@ const ProductsCard = ({ product }) => {
           </div>
           <div className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center items-center cursor-pointer">
             <Link href={`/details/${product.id}`}>
-              <Image width={20} height={20} src="/bag.png" alt="Cart" />
+              <ShoppingBag width={20} height={20} />
             </Link>
           </div>
         </div>

@@ -3,7 +3,7 @@
 import ProductsCard from "@/components/ProductsCard";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { fetchProductById } from "@/Services";
+import { fetchProductById } from "@/services";
 import { Skeleton } from "@/components/ui/skeleton"; // Skeleton loader import
 
 const ProductDetails = ({ params }) => {
@@ -88,7 +88,7 @@ const ProductDetails = ({ params }) => {
                 <Image
                   key={index}
                   className={`cursor-pointer ${
-                    selectedImage === img ? "border-[#00B207] border" : ""
+                    selectedImage === img ? "border-primary border" : ""
                   }`}
                   src={img}
                   alt=""
@@ -118,7 +118,7 @@ const ProductDetails = ({ params }) => {
               <h1 className="text-[25px] lg:text-[36px] font-semibold">
                 {product.name}
               </h1>
-              <div className="w-[71px] h-[29px] rounded-[4px] bg-[#20B52633] text-[#2C742F] text-[14px] py-[4px] px-[8px]">
+              <div className="w-[71px] h-[29px] rounded-[4px] bg-primary text-white text-[14px] py-[4px] px-[8px]">
                 In Stock
               </div>
             </div>
@@ -162,7 +162,7 @@ const ProductDetails = ({ params }) => {
               <div className="flex items-center gap-3">
                 <p className="text-[14px]">Share item :</p>
                 <div className="flex items-center gap-5">
-                  <div className="w-[40px] h-[40px] rounded-full bg-[#00B207] flex justify-center items-center">
+                  <div className="w-[40px] h-[40px] rounded-full bg-primary flex justify-center items-center">
                     <Image src="/facebook.png" alt="" width={20} height={20} />
                   </div>
                   <Image src="/instagram .png" alt="" width={20} height={20} />
@@ -197,7 +197,7 @@ const ProductDetails = ({ params }) => {
                   <Image src="/plus.png" alt="" width={10} height={10} />
                 </button>
               </div>
-              <button className="h-[51px] w-[300px] text-sm lg:w-[447px] bg-[#00B207] text-white text-[16px] font-semibold flex justify-center items-center gap-3 lg:gap-4 rounded-[43px]">
+              <button className="h-[51px] w-[300px] text-sm lg:w-[447px] bg-primary text-white text-[16px] font-semibold flex justify-center items-center gap-3 lg:gap-4 rounded-[43px]">
                 Add to Cart
                 <Image src="/bagg.png" alt="" width={20} height={20} />
               </button>
@@ -241,7 +241,7 @@ const ProductDetails = ({ params }) => {
             <nav className="flex justify-center items-center space-x-4 text-center">
               <a
                 href="#"
-                className=" border-b-2 border-green-500 py-2 font-bold text-sm lg:text-base"
+                className=" border-b-2 border-primary py-2 font-bold text-sm lg:text-base"
               >
                 Descriptions
               </a>
@@ -273,7 +273,7 @@ const ProductDetails = ({ params }) => {
               {/* Bullet Points */}
               <ul className="mt-4 space-y-2">
                 <li className="flex items-start space-x-2">
-                  <span className="w-[18px] h-[18px] rounded-full bg-[#00B207] flex justify-center items-center">
+                  <span className="w-[18px] h-[18px] rounded-full bg-primary flex justify-center items-center">
                     <Image
                       width={10}
                       height={10}
@@ -286,7 +286,7 @@ const ProductDetails = ({ params }) => {
                   </span>
                 </li>
                 <li className="flex items-start space-x-2">
-                  <span className="w-[18px] h-[18px] rounded-full bg-[#00B207] flex justify-center items-center">
+                  <span className="w-[18px] h-[18px] rounded-full bg-primary flex justify-center items-center">
                     <Image width={10} height={10} src="/check.png" alt="heck" />
                   </span>
                   <span className="text-[14px] md:text-[16px]">
@@ -294,7 +294,7 @@ const ProductDetails = ({ params }) => {
                   </span>
                 </li>
                 <li className="flex items-start space-x-2">
-                  <span className="w-[18px] h-[18px] rounded-full bg-[#00B207] flex justify-center items-center">
+                  <span className="w-[18px] h-[18px] rounded-full bg-primary flex justify-center items-center">
                     <Image width={10} height={10} src="/check.png" alt="heck" />
                   </span>
                   <span className="text-[14px] md:text-[16px]">
@@ -302,7 +302,7 @@ const ProductDetails = ({ params }) => {
                   </span>
                 </li>
                 <li className="flex items-start space-x-2">
-                  <span className="w-[18px] h-[18px] rounded-full bg-[#00B207] flex justify-center items-center">
+                  <span className="w-[18px] h-[18px] rounded-full bg-primary flex justify-center items-center">
                     <Image width={10} height={10} src="/check.png" alt="heck" />
                   </span>
                   <span className="text-[14px] md:text-[16px]">

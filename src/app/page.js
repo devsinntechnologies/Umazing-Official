@@ -9,6 +9,7 @@ import { BannerSection } from "@/components/Home/BannerSection";
 import { Team } from "@/components/Home/Team";
 import { Companylogos } from "@/components/Home/Companylogos";
 import Categories from "@/components/Home/Categories";
+import Testimonial from "@/components/Home/Testimonial";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <ProductSection />
       <DealSection />
       <BannerSection />
+      <Testimonial/>
       <Team />
       <Companylogos />
     </div>

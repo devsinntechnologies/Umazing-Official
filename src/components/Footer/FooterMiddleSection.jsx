@@ -1,7 +1,7 @@
-import React from 'react';
-import { SiOverleaf } from 'react-icons/si';
-import footerpic from '../../app/images/footerpic.png';
-import Image from 'next/image';
+import React from "react";
+import footerpic from "../../../public/Images/footerpic.png";
+import Image from "next/image";
+import Logo from "../layout/Logo";
 
 const FooterMiddleSection = () => {
   return (
@@ -10,19 +10,19 @@ const FooterMiddleSection = () => {
         {/* Left Section - Brand Info */}
         <div className="col-span-1 md:col-span-2">
           <div className="flex items-center space-x-2 mb-4">
-            <SiOverleaf size={40} color="green" />
-            <h2 className="text-3xl font-bold text-gray-800">Ecobazar</h2>
+            <Logo />
+            {/* <h2 className="text-3xl font-bold text-gray-800">Umazing</h2> */}
           </div>
           <p className="text-sm text-gray-500 mb-4">
             Morbi cursus porttitor enim lobortis molestie. Duis gravida turpis
             dui, eget bibendum magna congue nec.
           </p>
           <div className="flex space-x-4">
-            <p className="text-gray-700 font-semibold border-b-2 border-green-600 pb-2">
+            <p className="text-gray-700 font-semibold border-b-2 border-primary pb-2">
               (219) 555-0114
             </p>
             <span className="text-gray-500">or</span>
-            <p className="font-semibold border-b-2 border-green-600 pb-2">
+            <p className="font-semibold border-b-2 border-primary pb-2">
               Proxy@gmail.com
             </p>
           </div>

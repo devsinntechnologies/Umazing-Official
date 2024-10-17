@@ -1,16 +1,13 @@
 import React from "react";
 import Link from "next/link";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBagShopping, faStar } from "@fortawesome/free-solid-svg-icons";
-import { faEye, faHeart } from "@fortawesome/free-solid-svg-icons";
-import { FaArrowRight } from "react-icons/fa";
-
 import Image from "next/image";
+
+import { MoveRight, Heart, Eye, ShoppingBag } from "lucide-react";
+
 export const ProductSection = () => {
   return (
     <div className="w-[95vw] mx-auto   flex justify-center items-center flex-col pb-10 gap-5">
-      <p className="font-medium text-sm text-[#00B207]">Products</p>
+      <p className="font-medium text-sm text-primary">Products</p>
       <h1 className="font-semibold text-xl sm:text-2xl md:text-3xlxl lg:text-4xl">
         Our Featured Products
       </h1>
@@ -21,13 +18,13 @@ export const ProductSection = () => {
 
           <Link href={"/shop"}>
             {" "}
-            <button className="flex gap-3 items-center bg-white rounded-full text-[#00B207] py-[14px] px-5 font-semibold text-sm">
+            <button className="flex gap-3 items-center bg-white rounded-full text-primary py-[14px] px-5 font-semibold text-sm">
               Shop Now
-              <FaArrowRight />
+              <MoveRight />
             </button>
           </Link>
         </div>
-        <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
+        <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-md hover:shadow-primary ">
           <Image
             className="w-full"
             width={246}
@@ -40,38 +37,58 @@ export const ProductSection = () => {
             <div className="flex justify-between w-full">
               <div className="flex flex-col gap-2">
                 <h1 className="text-base font-medium">$14.99</h1>
-                <div className="flex gap-1">
-                  <FontAwesomeIcon icon={faStar} className="text-[#FF8A00]" />
-                  <FontAwesomeIcon icon={faStar} className="text-[#FF8A00]" />
-                  <FontAwesomeIcon icon={faStar} className="text-[#FF8A00]" />
-                  <FontAwesomeIcon icon={faStar} className="text-[#FF8A00]" />
-                  <FontAwesomeIcon icon={faStar} className="text-[#CCCCCC]" />
+                <div className="flex">
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/Star.png"
+                    alt="Star"
+                  />
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/Star.png"
+                    alt="Star"
+                  />
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/Star.png"
+                    alt="Star"
+                  />
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/Star.png"
+                    alt="Star"
+                  />
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/StarEmpty.png"
+                    alt="Empty Star"
+                  />
                 </div>
               </div>
               <Link href={"/details"}>
                 {" "}
-                <FontAwesomeIcon
-                  icon={faBagShopping}
-                  className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
-                />
+                <ShoppingBag />
               </Link>
             </div>
             <div className=" flex-col gap-4 absolute top-7 right-5 hidden group-hover:flex  ">
-              <FontAwesomeIcon
-                icon={faEye}
-                className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 text-sm"
-              />
+              <Eye color="teal" />
               <Link href={"/wishlist"}>
-                {" "}
-                <FontAwesomeIcon
-                  icon={faHeart}
-                  className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 "
-                />
+                <Heart color="teal" />
               </Link>
             </div>
           </div>
         </div>
-        <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
+        <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-md hover:shadow-primary ">
           <Image
             className=" w-full 	"
             width={246}
@@ -84,38 +101,59 @@ export const ProductSection = () => {
             <div className="flex justify-between w-full">
               <div className="flex flex-col gap-2">
                 <h1 className="text-base font-medium">$14.99</h1>
-                <div className="flex gap-1">
-                  <FontAwesomeIcon icon={faStar} className="text-[#FF8A00]" />
-                  <FontAwesomeIcon icon={faStar} className="text-[#FF8A00]" />
-                  <FontAwesomeIcon icon={faStar} className="text-[#FF8A00]" />
-                  <FontAwesomeIcon icon={faStar} className="text-[#FF8A00]" />
-                  <FontAwesomeIcon icon={faStar} className="text-[#CCCCCC]" />
+                <div className="flex">
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/Star.png"
+                    alt="Star"
+                  />
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/Star.png"
+                    alt="Star"
+                  />
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/Star.png"
+                    alt="Star"
+                  />
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/Star.png"
+                    alt="Star"
+                  />
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/StarEmpty.png"
+                    alt="Empty Star"
+                  />
                 </div>
               </div>
               <Link href={"/details"}>
                 {" "}
-                <FontAwesomeIcon
-                  icon={faBagShopping}
-                  className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
-                />
+                <ShoppingBag />
               </Link>
             </div>
             <div className=" flex-col gap-4 absolute top-7 right-5 hidden group-hover:flex  ">
-              <FontAwesomeIcon
-                icon={faEye}
-                className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 text-sm"
-              />
+              <Eye color="teal" />
               <Link href={"/wishlist"}>
                 {" "}
-                <FontAwesomeIcon
-                  icon={faHeart}
-                  className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 "
-                />
+                <Heart color="teal" />
               </Link>
             </div>
           </div>
         </div>
-        <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
+        <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-md hover:shadow-primary ">
           <Image
             className=" w-full 	"
             width={246}
@@ -128,38 +166,59 @@ export const ProductSection = () => {
             <div className="flex justify-between w-full">
               <div className="flex flex-col gap-2">
                 <h1 className="text-base font-medium">$14.99</h1>
-                <div className="flex gap-1">
-                  <FontAwesomeIcon icon={faStar} className="text-[#FF8A00]" />
-                  <FontAwesomeIcon icon={faStar} className="text-[#FF8A00]" />
-                  <FontAwesomeIcon icon={faStar} className="text-[#FF8A00]" />
-                  <FontAwesomeIcon icon={faStar} className="text-[#FF8A00]" />
-                  <FontAwesomeIcon icon={faStar} className="text-[#CCCCCC]" />
+                <div className="flex">
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/Star.png"
+                    alt="Star"
+                  />
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/Star.png"
+                    alt="Star"
+                  />
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/Star.png"
+                    alt="Star"
+                  />
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/Star.png"
+                    alt="Star"
+                  />
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/StarEmpty.png"
+                    alt="Empty Star"
+                  />
                 </div>
               </div>
               <Link href={"/details"}>
                 {" "}
-                <FontAwesomeIcon
-                  icon={faBagShopping}
-                  className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
-                />
+                <ShoppingBag />
               </Link>
             </div>
             <div className=" flex-col gap-4 absolute top-7 right-5 hidden group-hover:flex  ">
-              <FontAwesomeIcon
-                icon={faEye}
-                className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 text-sm"
-              />
+              <Eye color="teal" />
               <Link href={"/wishlist"}>
                 {" "}
-                <FontAwesomeIcon
-                  icon={faHeart}
-                  className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 "
-                />
+                <Heart color="teal" />
               </Link>
             </div>
           </div>
         </div>
-        <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-[#2C742F]  hover:shadow-md hover:shadow-[#2c742e6d] ">
+        <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-md hover:shadow-primary ">
           <Image
             className=" w-full   	"
             width={246}
@@ -172,33 +231,54 @@ export const ProductSection = () => {
             <div className="flex justify-between w-full">
               <div className="flex flex-col gap-2">
                 <h1 className="text-base font-medium">$14.99</h1>
-                <div className="flex gap-1">
-                  <FontAwesomeIcon icon={faStar} className="text-[#FF8A00]" />
-                  <FontAwesomeIcon icon={faStar} className="text-[#FF8A00]" />
-                  <FontAwesomeIcon icon={faStar} className="text-[#FF8A00]" />
-                  <FontAwesomeIcon icon={faStar} className="text-[#FF8A00]" />
-                  <FontAwesomeIcon icon={faStar} className="text-[#CCCCCC]" />
+                <div className="flex">
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/Star.png"
+                    alt="Star"
+                  />
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/Star.png"
+                    alt="Star"
+                  />
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/Star.png"
+                    alt="Star"
+                  />
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/Star.png"
+                    alt="Star"
+                  />
+                  <Image
+                    width={100}
+                    height={100}
+                    className="w-[12px]"
+                    src="/StarEmpty.png"
+                    alt="Empty Star"
+                  />
                 </div>
               </div>
               <Link href={"/details"}>
                 {" "}
-                <FontAwesomeIcon
-                  icon={faBagShopping}
-                  className="rounded-full bg-[#F2F2F2] border-[1px] border-solid border-[#F2F2F2] py-[18px] px-5 text-xl group-hover:bg-[#00B207]"
-                />
+                <ShoppingBag />
               </Link>
             </div>
             <div className=" flex-col gap-4 absolute top-7 right-5 hidden group-hover:flex  ">
-              <FontAwesomeIcon
-                icon={faEye}
-                className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 text-sm"
-              />
+              <Eye color="teal" />
               <Link href={"/wishlist"}>
                 {" "}
-                <FontAwesomeIcon
-                  icon={faHeart}
-                  className="rounded-full border-[1px] border-solid border-[#9a9292] p-3 "
-                />
+                <Heart color="teal" />
               </Link>
             </div>
           </div>

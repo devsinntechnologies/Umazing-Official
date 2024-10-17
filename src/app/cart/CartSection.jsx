@@ -1,8 +1,10 @@
 "use client";
 import Image from "next/image";
-import capsi from "../images/capsi.jpg";
-import { MdOutlineCancel } from "react-icons/md";
-import red from "../images/red.jpg";
+import capsi from "../../../public/Images/capsi.jpg";
+
+import { CircleX } from "lucide-react";
+
+import red from "../../../public/Images/red.jpg";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -115,7 +117,7 @@ const CartSection = () => {
                 <p className="text-lg font-medium">
                   ${(item.price * item.quantity).toFixed(2)}
                 </p>
-                <MdOutlineCancel
+                <CircleX
                   onClick={() => removeItem(item.id)}
                   className="text-gray-400 hover:text-red-500 text-2xl"
                 />
@@ -129,7 +131,7 @@ const CartSection = () => {
           <button className="px-6 py-3 bg-gray-200 rounded-lg text-gray-700 hover:bg-gray-300 w-full sm:w-auto">
             Return to shop
           </button>
-          <button className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 w-full sm:w-auto">
+          <button className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary w-full sm:w-auto">
             Update Cart
           </button>
         </div>
@@ -167,7 +169,7 @@ const CartSection = () => {
         </div>
 
         <Link href="/checkout">
-          <button className="mt-6 w-full py-3 bg-green-500 text-white rounded-lg hover:bg-green-600">
+          <button className="mt-6 w-full py-3 bg-primary text-white rounded-lg hover:bg-primary">
             Proceed to checkout
           </button>
         </Link>
