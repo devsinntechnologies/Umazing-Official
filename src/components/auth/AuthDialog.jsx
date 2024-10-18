@@ -9,6 +9,7 @@ import {
 import ForgetPassword from "@/components/auth/ForgetPassword";
 import Signup from "@/components/auth/Signup";
 import Login from "@/components/auth/Login";
+import ResetPassword from "@/components/auth/ResetPassword"; // Import ResetPassword component
 import Logo from "../layout/Logo";
 import { ArrowLeftIcon } from "lucide-react";
 
@@ -18,12 +19,11 @@ const AuthDialog = () => {
 
   const handleSignup = (formData) => {
     console.log("Signup Data:", formData);
-    setCurrentView("login");
+    setCurrentView("login"); // Move back to login after successful signup
   };
 
   const handleForgetPassword = (email) => {
-    console.log("Forget Password Data:", email);
-    setCurrentView("login");
+    setCurrentView("resetPassword"); // Move to reset password after successful password reset request
   };
 
   const handleDialogOpenChange = (open) => {
@@ -36,8 +36,8 @@ const AuthDialog = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogOpenChange} className="relative">
-      <DialogTrigger asChild>
-        <button onClick={() => setIsOpen(true)} className="bg-primary px-4 py-1.5 rounded-full text-white text-xs md:text-sm">
+      <DialogTrigger asChild className="h-fit items-center">
+        <button onClick={() => setIsOpen(true)} className="bg-primary px-4 py-2 rounded-full text-white text-sm md:text-base">
           Login
         </button>
       </DialogTrigger>
@@ -50,17 +50,19 @@ const AuthDialog = () => {
             <h2 className="text-lg font-bold text-center">
               {currentView === "login" && "Login with your email & password"}
               {currentView === "signup" && "Create a new account"}
-              {currentView === "forgetPassword" && "Reset Your Password"}
+              {currentView === "forgetPassword" && "Enter Your Email"}
+              {currentView === "resetPassword" && "Reset Your Password"}
             </h2>
           </DialogTitle>
         </DialogHeader>
 
-        {(currentView === "forgetPassword" || currentView === "signup") && (
+        {/* Back Button Logic for Signup, Forget Password, and Reset Password views */}
+        {(currentView === "forgetPassword" || currentView === "signup" || currentView === "resetPassword") && (
           <button
             onClick={() => setCurrentView("login")}
             className="absolute top-2 left-2 size-10 p-2 text-primary shadow-md rounded-full flex items-center justify-center"
           >
-           <ArrowLeftIcon size={20} />
+            <ArrowLeftIcon size={20} />
           </button>
         )}
 
@@ -74,15 +76,22 @@ const AuthDialog = () => {
 
         {currentView === "signup" && (
           <Signup
-            onBack={() => setCurrentView("login")}
-            onSignupSuccess={handleSignup}
+            onBack={() => setCurrentView("login")} // Navigate back to login from signup
+            onSignupSuccess={handleSignup} // On successful signup, go back to login
           />
         )}
 
         {currentView === "forgetPassword" && (
           <ForgetPassword
-            onBack={() => setCurrentView("login")}
-            onSubmitSuccess={handleForgetPassword}
+            onBack={() => setCurrentView("login")} // Navigate back to login from forget password
+            onSubmitSuccess={handleForgetPassword} // On successful reset password request, go to reset password view
+          />
+        )}
+
+        {currentView === "resetPassword" && (
+          <ResetPassword
+            onBack={() => setCurrentView("login")} // Navigate back to login from reset password
+            onResetSuccess={() => setIsOpen(false)} // Close dialog on successful password reset
           />
         )}
       </DialogContent>

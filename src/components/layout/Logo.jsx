@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const Logo = ()=>{
   //  const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
   return (
-    <div className="flex items-center justify-between sm:w-52 h-auto gap-3 px-2">
+    <div className="flex items-center justify-between h-auto gap-3 px-2">
     {/* {isLoggedIn && 
      <div
        className="size-12 flex items-center justify-center"

@@ -1,81 +1,66 @@
-import { useState } from "react";
-import { Mail } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Mail, Loader } from "lucide-react"; // Import loader icon for loading state
+import { useToast } from "@/hooks/use-toast";
+import { useForgotPasswordMutation } from "@/hooks/UseAuth";
 
-import axios from "axios";
-// import ecobazaar from "../../app/images/ecobazaar.jpg";
-import Image from "next/image";
-import ResetPassword from "./ResetPassword";
-import Logo from "../layout/Logo";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-
-function ForgetPassword() {
+function ForgetPassword({ onSubmitSuccess }) {
+  const [forgotPassword, { isSuccess, error, isLoading, data: responseData }] = useForgotPasswordMutation();
   const [email, setEmail] = useState("");
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const { toast } = useToast(); // Initialize toast
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://97.74.89.204:4000/auth/forgot-password",
-        {
-          email,
-        }
-      );
-      setSuccess("Password reset link sent to your email.");
-      setError(null);
-    } catch (err) {
-      setError("Failed to send reset link. Please try again.");
-      setSuccess(null);
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent form default behavior
+    forgotPassword({ email }); // Send the email to the backend
   };
 
+  // Use useEffect to trigger toast notifications after successful or failed requests
+  useEffect(() => {
+    if (isSuccess && responseData?.success) {
+      toast({
+        title: "Success",
+        description: responseData.message,
+        duration: 2000,
+      });
+      onSubmitSuccess(email); // Move to ResetPassword dialog, but don't close dialog
+    } else if (responseData && responseData.success === false) {
+      toast({
+        title: "Error",
+        description: responseData.message || "Email does not exist.",
+        duration: 2000,
+      });
+    }
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: error.message || "An error occurred.",
+        duration: 2000,
+      });
+    }
+  }, [isSuccess, responseData, error, toast, onSubmitSuccess, email]);
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <div>Forget Password</div>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <div className="flex flex-col gap-3 justify-between items-center mb-4">
-            <Logo />
-            <DialogTitle>Forget Password</DialogTitle>
-          </div>
-        </DialogHeader>
-        <form
-          onSubmit={handleSubmit}
-          className="flex items-center space-x-2 flex-col gap-4 relative"
-        >
-          <div className="w-full flex items-center border border-gray-300 p-2 rounded-md">
-            <Mail className="text-gray-500 mr-2" />
-            <input
-              type="email"
-              className="w-full focus:outline-none text-sm sm:text-base"
-              placeholder="Enter your Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
+    <form onSubmit={handleSubmit} className="flex items-center flex-col gap-4">
+      <div className="w-full flex items-center border border-gray-300 p-2 rounded-md">
+        <Mail className="text-gray-500 mr-2" />
+        <input
+          type="email"
+          className="w-full focus:outline-none text-sm sm:text-base"
+          placeholder="Enter your Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </div>
 
-          {error && <div className="text-red-500 text-sm">{error}</div>}
-          {success && <div className="text-primary text-sm">{success}</div>}
-
-          <button
-            type="submit"
-            className="w-full bg-primary text-white py-2 rounded-md hover:primary text-sm sm:text-base"
-          >
-            <ResetPassword />
-          </button>
-        </form>
-      </DialogContent>
-    </Dialog>
+      <button
+        type="submit" // Ensure button submits the form
+        className="w-full bg-primary text-white py-2 rounded-md flex justify-center items-center"
+        disabled={isLoading} // Disable button while loading
+      >
+        {isLoading ? <Loader className="animate-spin" size={16} /> : "Submit"}
+      </button>
+    </form>
   );
 }
 

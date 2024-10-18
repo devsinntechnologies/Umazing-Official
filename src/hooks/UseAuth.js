@@ -41,7 +41,7 @@ export const auth = createApi({
     }),
     checkOtp: builder.mutation({
       query: (otpData) => ({
-        url: 'check-otp',  // Use kebab-case for consistency
+        url: '/checkOtp',
         method: 'POST',
         body: otpData,
       }),

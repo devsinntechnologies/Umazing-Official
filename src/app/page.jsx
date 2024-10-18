@@ -1,6 +1,5 @@
 // Home.js
 "use client";
-
 import HeaderCategory from "@/components/Header/HeaderCategory";
 import { Banner } from "@/components/Home/Banner";
 import { ProductSection } from "@/components/Home/ProductSection";

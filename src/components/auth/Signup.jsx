@@ -226,7 +226,7 @@ const Signup = ({ onBack, onSignupSuccess }) => {
 
         <button
           type="submit"
-          className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600"
+          className="w-full bg-primary text-white py-2 rounded-md"
         >
           Register
         </button>

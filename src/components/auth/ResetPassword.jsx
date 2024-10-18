@@ -1,120 +1,159 @@
-import { useState } from "react";
+"use client";
 
-import axios from "axios";
-// import ecobazaar from "../../app/images/ecobazaar.jpg";
-import Image from "next/image";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { useCheckOtpMutation, useResetPasswordMutation } from "@/hooks/UseAuth";
+import { CheckCircle, Loader } from "lucide-react";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import Logo from "../layout/Logo";
 
-function ResetPassword() {
-  const [otp, setOtp] = useState(""); // Capture OTP input
-  const [password, setPassword] = useState(""); // Capture password input
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
-  const [isOtpVerified, setIsOtpVerified] = useState(false); // State to track OTP verification
+function ResetPassword({ onBack }) {
+  const [checkOtp, { isLoading: otpLoading }] = useCheckOtpMutation();
+  const [resetPassword, { isSuccess: isResetSuccess, error: resetError, isLoading: resetLoading, data: resetResponseData }] = useResetPasswordMutation();
+  const [otp, setOtp] = useState(""); // OTP as a single state
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const { toast } = useToast(); // Initialize toast
+  const [isOtpVerified, setIsOtpVerified] = useState(false);
 
-  const handleOTPChange = (e, index) => {
-    const otpArray = [...otp];
-    otpArray[index] = e.target.value;
-    setOtp(otpArray.join(""));
+  const handleOtpChange = (newValue) => {
+    setOtp(newValue);
   };
 
-  const verifyOtp = async () => {
-    try {
-      const response = await axios.post("http://localhost:5000/auth/checkOtp", {
-        otp, // Ensure the OTP is correctly passed in the body
+  const verifyOtp = () => {
+    if (otp.length === 4) {
+      checkOtp({ otp }) // Send OTP for verification
+        .then(response => {
+          if (response?.data?.success) {
+            setIsOtpVerified(true);
+            toast({
+              title: "OTP Verified",
+              description: "You can now reset your password.",
+              duration: 2000,
+            });
+          } else {
+            setIsOtpVerified(false);
+            toast({
+              title: "Invalid OTP",
+              description: "Please try again.",
+              duration: 2000,
+            });
+          }
+        })
+        .catch(() => {
+          toast({
+            title: "Error",
+            description: "Error during OTP verification. Please try again.",
+            duration: 2000,
+          });
+        });
+    } else {
+      toast({
+        title: "Error",
+        description: "OTP must be 4 digits.",
+        duration: 2000,
       });
-
-      if (response.data.valid) {
-        // Check if the response indicates a valid OTP
-        setIsOtpVerified(true); // Mark OTP as verified
-        setError(null);
-        setSuccess("OTP verified successfully.");
-      } else {
-        setError("Invalid OTP. Please try again.");
-        setSuccess(null);
-      }
-    } catch (err) {
-      console.error("Error during OTP verification:", err);
-      setError("An error occurred while verifying the OTP. Please try again.");
-      setSuccess(null);
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!isOtpVerified) {
-      setError("Please verify the OTP first.");
+
+    // Validation checks
+    if (!password || !confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Please fill in both password fields.",
+        variant: "destructive", // Show destructive toast
+        duration: 2000,
+      });
       return;
     }
-    try {
-      const response = await axios.post(
-        "http://97.74.89.204:4000/auth/reset-password",
-        {
-          otp,
-          password,
-        }
-      );
-      if (response.data.success) {
-        // Check if the password reset was successful
-        setSuccess("Password has been reset successfully.");
-        setError(null);
-      } else {
-        setError("Failed to reset the password. Please try again.");
-        setSuccess(null);
-      }
-    } catch (err) {
-      setError("Failed to reset the password. Please try again.");
-      setSuccess(null);
+
+    if (password.length < 6) {
+      toast({
+        title: "Error",
+        description: "Password must be at least 6 characters long.",
+        variant: "destructive", // Show destructive toast
+        duration: 2000,
+      });
+      return;
     }
+
+    if (password !== confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Passwords do not match.",
+        variant: "destructive", // Show destructive toast
+        duration: 2000,
+      });
+      return;
+    }
+
+    resetPassword({ otp, password }) // Send OTP and password to reset password
+      .then(() => {
+        if (isResetSuccess && resetResponseData?.success) {
+          toast({
+            title: "Success",
+            description: resetResponseData.message,
+            duration: 2000,
+          });
+          onBack(); // Move to login
+        }
+      })
+      .catch(() => {
+        toast({
+          title: "Error",
+          description: resetError?.message || "Failed to reset password.",
+          variant: "destructive", // Show destructive toast
+          duration: 2000,
+        });
+      });
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <div>Submit</div>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <div className="flex flex-col gap-3 justify-between items-center mb-4">
-            <Logo />
-            <DialogTitle>Reset Password</DialogTitle>
-          </div>
-        </DialogHeader>
-        <div className="w-full flex justify-center items-center flex-col gap-3">
-          <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
-            <InputOTPGroup>
-              {[0, 1, 2, 3].map((index) => (
-                <InputOTPSlot
-                  key={index}
-                  index={index}
-                  className="w-[65px]"
-                  onChange={(e) => handleOTPChange(e, index)} // Update OTP
-                />
-              ))}
-            </InputOTPGroup>
-          </InputOTP>
-
-          <button
-            type="button"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 text-sm sm:text-base"
-            onClick={verifyOtp} // Verify OTP before allowing password reset
-          >
-            Verify OTP
-          </button>
-
+    <div className="w-full flex flex-col gap-3">
+      {/* OTP Input using InputOTPControlled */}
+     <div className="flex items-center justify-center">
+     <InputOTP
+        maxLength={4} // Limit OTP to 4 digits
+        value={otp}
+        onChange={handleOtpChange}
+      >
+        <InputOTPGroup>
+          {Array.from({ length: 4 }, (_, index) => (
+            <InputOTPSlot 
+              key={index}
+              index={index} 
+              aria-label={`OTP slot ${index + 1}`} // Accessibility enhancement
+            />
+          ))}
+        </InputOTPGroup>
+      </InputOTP>
+     </div>
+     <button
+  type="button"
+  className="w-full bg-primary text-white py-2 rounded-md flex justify-center items-center"
+  onClick={verifyOtp}
+  disabled={otpLoading || isOtpVerified} // Disable while verifying OTP or if already verified
+>
+  {otpLoading ? (
+    <Loader className="animate-spin" size={16} />
+  ) : isOtpVerified ? (
+    <>
+      <CheckCircle className="mr-2" /> {/* Icon for verified status */}
+      <h3 className="text-sm">Verified</h3> {/* Status text */}
+    </>
+  ) : (
+    "Verify OTP" // Default text
+  )}
+</button>
+      {/* Only show password fields if OTP is verified */}
+      {isOtpVerified && (
+        <>
           <input
             type="password"
             placeholder="Enter New Password"
@@ -122,23 +161,28 @@ function ResetPassword() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            disabled={!isOtpVerified} // Disable password input until OTP is verified
           />
 
-          {error && <div className="text-red-500 text-sm">{error}</div>}
-          {success && <div className="text-green-500 text-sm">{success}</div>}
+          <input
+            type="password"
+            placeholder="Confirm New Password"
+            className="w-full border border-gray-300 p-2 rounded-md"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
 
           <button
             type="submit"
-            className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary text-sm sm:text-base"
+            className="w-full bg-primary text-white py-2 rounded-md flex justify-center items-center"
             onClick={handleSubmit}
-            disabled={!isOtpVerified} // Disable submit button until OTP is verified
+            disabled={resetLoading} // Disable button while loading
           >
-            Submit
+            {resetLoading ? <Loader className="animate-spin" size={16} /> : "Submit"}
           </button>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </>
+      )}
+    </div>
   );
 }
 

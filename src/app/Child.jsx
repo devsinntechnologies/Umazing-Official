@@ -1,47 +1,36 @@
-// @ts-nocheck
 "use client";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store/store";
-import { setSidebarVisibility } from "@/store/sidebar";
+import { useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
-import SideBar from "@/components/header/SideBar";
+import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer/Footer";
+import Link from "next/link";
+import { Plus } from "lucide-react";
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 
-export default function Child({ children }: { children: React.ReactNode }) {
-  const isLoggedIn = useSelector((state: RootState) => state.authSlice.isLoggedIn);
-  const isSidebarOpen = useSelector((state: RootState) => state.sidebar.isOpen);
-  const dispatch = useDispatch();
+const queryClient = new QueryClient();
 
-  const { pathname } = usePathname();
-  const sidebarClass = isLoggedIn && (isSidebarOpen ? "sm:ml-sidebarOpen" : "sm:ml-sidebarClosed"); // Hide if not logged in
-
-  useEffect(() => {
-    if (window.innerWidth > 768) {
-      dispatch(setSidebarVisibility(false));
-    }
-  }, [pathname, dispatch]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 768) {
-        dispatch(setSidebarVisibility(true));
-      } else {
-        dispatch(setSidebarVisibility(false));
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Check initial window size
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [dispatch]);
+export default function Child({ children }) {
+  const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
+  const hidePlusButtonPaths = ['/seller', '/seller/addProduct', '/seller/products'];
+  const pathname = usePathname();
 
   return (
-    <div className={`flex-1 relative pb-16 md:py-6 ${sidebarClass} top-16 md:top-20 left-0 min-h-[calc(100vh-56px)] md:min-h-[calc(100vh-80px)]`}>
-      {isLoggedIn && <SideBar />} {/* Render SideBar only if logged in */}
+    <>
+    <QueryClientProvider client={queryClient}>
+      <Navbar />
       {children}
-    </div>
+      <Footer />
+      {isLoggedIn && !hidePlusButtonPaths.includes(pathname) && (
+        <div>
+          <Link href="/seller" className="fixed bottom-8 right-8 p-4 rounded-full bg-primary text-white z-[50]">
+            <Plus size={28} />
+          </Link>
+        </div>
+      )}
+    </QueryClientProvider>
+    </>
   );
 }
