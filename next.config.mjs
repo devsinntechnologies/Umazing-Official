@@ -6,7 +6,7 @@ const nextConfig = {
         protocol: 'http',
         hostname: '97.74.89.204',
         // port: '4000',
-        pathname: '/uploads/**',
+        // pathname: '/*/**',
       },
       // {
       //   protocol: 'https',
