@@ -4,8 +4,8 @@ import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import Image from "next/image";
-import salad from "../../../public/Images/salad.png";
-import Link from "next/link";
+// import salad from "../../../public/Images/salad.png";
+// import Link from "next/link";
 import { useGetAllOffersQuery } from "@/hooks/UseOffers";
 import { Skeleton } from "@/components/ui/skeleton"; // Assuming you're using Shadcn's Skeleton
 
@@ -13,9 +13,7 @@ const HeaderSlider = () => {
   const { data: offers, isLoading, isError } = useGetAllOffersQuery();
 
   if (isLoading) {
-    return (
-        <Skeleton className="w-full h-full"/>
-    );
+    return <Skeleton className="w-full h-full" />;
   }
 
   if (isError || !offers?.data?.length) {

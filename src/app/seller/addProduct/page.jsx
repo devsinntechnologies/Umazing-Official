@@ -24,21 +24,29 @@ import {
 //   TableHeader,
 //   TableRow,
 // } from "@/components/ui/table";
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/hooks/use-toast";
 import Success from "@/components/misc/Success";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import withAuth from "@/components/hoc/withAuth";
 
-
 const Page = () => {
   const { toast } = useToast();
   const router = useRouter();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const { data: categories, isErrorCategories, isLoadingCategories } = useGetCategoriesQuery();
-  const { data: attributesData, isErrorAttributes, isLoadingAttributes } = useGetAllAttributesQuery();
-  const [addProduct, { isSuccess, error, data: responseData, isLoading }] = useAddProductMutation();
+  const {
+    data: categories,
+    isErrorCategories,
+    isLoadingCategories,
+  } = useGetCategoriesQuery();
+  const {
+    data: attributesData,
+    isErrorAttributes,
+    isLoadingAttributes,
+  } = useGetAllAttributesQuery();
+  const [addProduct, { isSuccess, error, data: responseData, isLoading }] =
+    useAddProductMutation();
 
   const handleModalClose = () => {
     if (responseData?.data?.product?.id) {
@@ -141,7 +149,6 @@ const Page = () => {
   //   setIsAttrTable(false)
   // }, [attributes]);
 
-
   const [images, setImages] = useState([]);
   const fileInputRef = useRef(null);
 
@@ -178,7 +185,6 @@ const Page = () => {
       fileInputRef.current.click();
     }
   };
-
 
   // const handleAddAttribute = () => {
   //   setAttributes((prevAttributes) => [
@@ -221,8 +227,6 @@ const Page = () => {
   //   );
   // };
 
-
-
   // const getAttributeValues = (attributeId) => {
   //   const attribute = attributesData?.data.find((attr) => attr.id === attributeId);
   //   return attribute ? attribute.Attribute_Values : [];
@@ -232,11 +236,9 @@ const Page = () => {
     const { name, type, value, checked } = e.target;
     setProductDetails((prevDetails) => ({
       ...prevDetails,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
-
-
 
   const [productDetails, setProductDetails] = useState({
     name: "",
@@ -250,10 +252,8 @@ const Page = () => {
     categoryId: "",
     regularPrice: "",
     stockQuantity: "1",
-    variants: [{
-    }],
+    variants: [{}],
   });
-
 
   const validateForm = () => {
     const requiredFields = [
@@ -271,7 +271,9 @@ const Page = () => {
       if (!productDetails[field]) {
         toast({
           variant: "destructive",
-          description: `${field.charAt(0).toUpperCase() + field.slice(1)} is required`,
+          description: `${
+            field.charAt(0).toUpperCase() + field.slice(1)
+          } is required`,
         });
         return false;
       }
@@ -294,7 +296,7 @@ const Page = () => {
     formData.append("CategoryId", productDetails.categoryId);
     formData.append("claim", productDetails.claim);
     for (let i = 0; i < images.length; i++) {
-      formData.append("images", images[i].file)
+      formData.append("images", images[i].file);
     }
 
     // if (showVariants) {
@@ -307,8 +309,7 @@ const Page = () => {
     //   console.log("formData :")
     //   console.log(key, value);
     // }
-    addProduct(formData)
-
+    addProduct(formData);
   };
 
   const handleContinueAdding = () => {
@@ -334,7 +335,9 @@ const Page = () => {
 
   return (
     <div className="px-4 sm:px-8 bg-background">
-      <h3 className="text-3xl font-bold text-primary cursor-pointer" >Add Product</h3>
+      <h3 className="text-3xl font-bold text-primary cursor-pointer">
+        Add Product
+      </h3>
       <div className="flex flex-col-reverse lg:flex-row justify-between items-start m-1 p-5">
         <form className="w-full lg:w-2/3" onSubmit={(e) => e.preventDefault()}>
           <div className="mb-4">
@@ -441,7 +444,11 @@ const Page = () => {
             <DropdownMenu>
               <DropdownMenuTrigger className="w-full outline-none border-none">
                 <div className="w-full h-12 rounded-md mt-2 border border-gray-500 px-3 py-2 flex items-center justify-between cursor-pointer">
-                  {productDetails.categoryId ? categories?.data.find(category => category.id === productDetails.categoryId)?.name : "Select Category"}
+                  {productDetails.categoryId
+                    ? categories?.data.find(
+                        (category) => category.id === productDetails.categoryId
+                      )?.name
+                    : "Select Category"}
                   <span>&#x25BC;</span>
                 </div>
               </DropdownMenuTrigger>
@@ -454,7 +461,15 @@ const Page = () => {
                   <DropdownMenuItem>Error loading categories</DropdownMenuItem>
                 ) : (
                   categories?.data.map((category) => (
-                    <DropdownMenuItem key={category.id} onClick={() => setProductDetails(prevDetails => ({ ...prevDetails, categoryId: category.id }))}>
+                    <DropdownMenuItem
+                      key={category.id}
+                      onClick={() =>
+                        setProductDetails((prevDetails) => ({
+                          ...prevDetails,
+                          categoryId: category.id,
+                        }))
+                      }
+                    >
                       {category.name}
                     </DropdownMenuItem>
                   ))
@@ -462,7 +477,7 @@ const Page = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-{/* 
+          {/* 
           <div className="w-full">
             <div className="my-4 flex items-center">
               <input
@@ -662,8 +677,9 @@ const Page = () => {
               {images.map((image, index) => (
                 <div
                   key={index}
-                  className={`relative w-24 h-24 border rounded-md flex items-center justify-center ${index === 0 ? "border-blue-500" : ""
-                    }`}
+                  className={`relative w-24 h-24 border rounded-md flex items-center justify-center ${
+                    index === 0 ? "border-blue-500" : ""
+                  }`}
                 >
                   <Image
                     src={image.src}
@@ -698,18 +714,29 @@ const Page = () => {
             </div>
           </div>
         </div>
-
       </div>
 
       {showSuccessModal && (
         <div className="z-50 w-screen h-screen flex items-center justify-center bg-gray-900 bg-opacity-50 fixed top-0 left-0">
           <div className="w-[290px] h-[300px] mx-2 sm:mx-0 sm:w-[420px] sm:h-[380px] flex items-center flex-col justify-around rounded-lg bg-secondary px-2 py-3 sm:p-5 shadow-lg">
             <Success />
-            <p className="text-sm sm:text-base font-medium py-2 mx-auto w-fit">Your Product has been listed successfully!</p>
+            <p className="text-sm sm:text-base font-medium py-2 mx-auto w-fit">
+              Your Product has been listed successfully!
+            </p>
             <div className="flex items-center justify-center gap-3">
-              <Button className="mx-auto bg-primary text-white" variant={"outline"} onClick={handleModalClose}>View Product
+              <Button
+                className="mx-auto bg-primary text-white"
+                variant={"outline"}
+                onClick={handleModalClose}
+              >
+                View Product
               </Button>
-              <Button className="mx-auto" onClick={handleContinueAdding} variant={"outline"}>Continue Adding
+              <Button
+                className="mx-auto"
+                onClick={handleContinueAdding}
+                variant={"outline"}
+              >
+                Continue Adding
               </Button>
             </div>
           </div>

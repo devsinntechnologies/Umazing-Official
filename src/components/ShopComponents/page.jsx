@@ -2,7 +2,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { fetchShopData } from "@/Services";
+import { fetchShopData } from "@/services";
 import FilterBar from "@/components/FilterBar";
 import Pagination from "@/components/Pagination";
 import ProductsCard from "@/components/ProductsCard";

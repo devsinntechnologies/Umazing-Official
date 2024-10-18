@@ -23,14 +23,18 @@ const Navbar = () => {
   }, [userId, isLoggedIn]);
 
   // Fetch user profile data once userId is available
-  const { data: userProfile, error, isLoading } = useGetUserProfileQuery(userId, {
-    skip: !triggerFetch,  // Skip API call if triggerFetch is false
+  const {
+    data: userProfile,
+    error,
+    isLoading,
+  } = useGetUserProfileQuery(userId, {
+    skip: !triggerFetch, // Skip API call if triggerFetch is false
   });
 
   useEffect(() => {
     if (userProfile) {
       console.log("User Profile Data:", userProfile);
-      dispatch(setUserProfile(userProfile.data));  // Store profile data in Redux
+      dispatch(setUserProfile(userProfile.data)); // Store profile data in Redux
     }
     if (error) {
       console.error("Error fetching user profile:", error);
@@ -65,14 +69,24 @@ const Navbar = () => {
               </option>
             </select>
             <div className="flex justify-between gap-3 min-h-10">
-             {isLoggedIn && userData ? <div className="min-w-10 flex items-center gap-3">
-              <Image src={`http://97.74.89.204/${userData?.imageUrl}`} alt="" width={40} height={40} className="size-10 rounded-full bg-primary"/>
-              <h3>{userData.name}</h3>
-              <hr />
-              <button className="bg-primary px-4 py-1.5 rounded-full text-white text-xs md:text-sm">
-          Logout
-        </button>
-              </div> : <AuthDialog />}
+              {isLoggedIn && userData ? (
+                <div className="min-w-10 flex items-center gap-3">
+                  <Image
+                    src={`http://97.74.89.204/${userData?.imageUrl}`}
+                    alt=""
+                    width={40}
+                    height={40}
+                    className="size-10 rounded-full bg-primary"
+                  />
+                  <h3>{userData.name}</h3>
+                  <hr />
+                  <button className="bg-primary px-4 py-1.5 rounded-full text-white text-xs md:text-sm">
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <AuthDialog />
+              )}
             </div>
           </div>
         </div>
