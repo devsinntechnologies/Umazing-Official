@@ -1,23 +1,26 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon, EyeClosedIcon, EyeIcon, MailIcon, LockKeyhole, User2, Phone } from "lucide-react";
 import { format } from "date-fns";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { useToast } from "@/hooks/use-toast";
+import { useSignupMutation } from "@/hooks/UseAuth";
 
 const Signup = ({ onBack, onSignupSuccess }) => {
+  const [signupData, { isSuccess, error, data: responseData, isLoading }] = useSignupMutation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState(""); // Added Confirm Password state
   const [phoneNo, setPhoneNo] = useState("");
   const [gender, setGender] = useState("male");
   const [dob, setDob] = useState(null);
   const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
-
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // Added state for confirm password visibility
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -29,10 +32,41 @@ const Signup = ({ onBack, onSignupSuccess }) => {
     return phoneRegex.test(phoneNo);
   };
 
+  useEffect(() => {
+    if (isLoading) {
+      toast({
+        title: "Signing up",
+        description: "Please wait while we create your account.",
+        duration: 2000,
+      });
+    } else if (isSuccess) {
+      if (responseData?.success) {
+        toast({
+          title: "Registration Successful",
+          description: "You can now log in.",
+          duration: 2000,
+        });
+        onBack(); // Move to login
+      } else {
+        toast({
+          title: "Registration Failed",
+          description: responseData?.message || "Failed to register.",
+          duration: 2000,
+        });
+      }
+    } else if (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to register.",
+        duration: 2000,
+      });
+    }
+  }, [isSuccess, isLoading, error, responseData, toast, onBack]);
+
   const validateForm = () => {
     if (!name) {
       toast({
-        // title: "Form Error",
         description: "Name is required.",
         variant: "destructive",
         duration: 2000,
@@ -41,7 +75,6 @@ const Signup = ({ onBack, onSignupSuccess }) => {
     }
     if (!email) {
       toast({
-        // title: "Form Error",
         description: "Email is required.",
         variant: "destructive",
         duration: 2000,
@@ -50,7 +83,6 @@ const Signup = ({ onBack, onSignupSuccess }) => {
     }
     if (!validateEmail(email)) {
       toast({
-        // title: "Form Error",
         description: "Please enter a valid email address.",
         variant: "destructive",
         duration: 2000,
@@ -59,7 +91,6 @@ const Signup = ({ onBack, onSignupSuccess }) => {
     }
     if (!password) {
       toast({
-        // title: "Form Error",
         description: "Password is required.",
         variant: "destructive",
         duration: 2000,
@@ -68,8 +99,15 @@ const Signup = ({ onBack, onSignupSuccess }) => {
     }
     if (password.length < 6) {
       toast({
-        // title: "Form Error",
         description: "Password must be at least 6 characters long.",
+        variant: "destructive",
+        duration: 2000,
+      });
+      return false;
+    }
+    if (password !== confirmPassword) {
+      toast({
+        description: "Passwords do not match.",
         variant: "destructive",
         duration: 2000,
       });
@@ -77,7 +115,6 @@ const Signup = ({ onBack, onSignupSuccess }) => {
     }
     if (!phoneNo) {
       toast({
-        // title: "Form Error",
         description: "Phone number is required.",
         variant: "destructive",
         duration: 2000,
@@ -86,7 +123,6 @@ const Signup = ({ onBack, onSignupSuccess }) => {
     }
     if (!validatePhoneNumber(phoneNo)) {
       toast({
-        // title: "Form Error",
         description: "Phone number must contain only numbers.",
         variant: "destructive",
         duration: 2000,
@@ -95,7 +131,6 @@ const Signup = ({ onBack, onSignupSuccess }) => {
     }
     if (!dob) {
       toast({
-        // title: "Form Error",
         description: "Date of birth is required.",
         variant: "destructive",
         duration: 2000,
@@ -119,8 +154,9 @@ const Signup = ({ onBack, onSignupSuccess }) => {
       dob: dob ? format(dob, "yyyy-MM-dd") : "",
     };
 
-    console.log("Signup Form Data:", formData);
-    onSignupSuccess(formData); // Trigger parent callback with form data
+    // console.log("Signup Form Data:", formData);
+    signupData(formData)
+    // onSignupSuccess(formData); // Trigger parent callback with form data
   };
 
   return (
@@ -150,7 +186,7 @@ const Signup = ({ onBack, onSignupSuccess }) => {
         <div className="relative w-full flex items-center border border-gray-300 p-2 rounded-md">
           <LockKeyhole className="text-gray-500 mr-2" />
           <input
-           type={showPassword ? "text" : "password"}
+            type={showPassword ? "text" : "password"}
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -162,9 +198,29 @@ const Signup = ({ onBack, onSignupSuccess }) => {
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="w-6 absolute inset-y-0 right-3 flex items-center justify-center text-gray-600"
-              // aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
               {showPassword ? <EyeIcon /> : <EyeClosedIcon />}
+            </button>
+          )}
+        </div>
+
+        <div className="relative w-full flex items-center border border-gray-300 p-2 rounded-md">
+          <LockKeyhole className="text-gray-500 mr-2" />
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            placeholder="Confirm your password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="w-full focus:outline-none"
+          />
+          {/* Show/Hide Confirm Password Button */}
+          {confirmPassword && (
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="w-6 absolute inset-y-0 right-3 flex items-center justify-center text-gray-600"
+            >
+              {showConfirmPassword ? <EyeIcon /> : <EyeClosedIcon />}
             </button>
           )}
         </div>

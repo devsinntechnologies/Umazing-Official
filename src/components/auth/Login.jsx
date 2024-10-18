@@ -25,12 +25,11 @@ const Login = ({ onForgetPassword, onSignup, onLoginSuccess }) => {
       if (responseData?.success) {
         toast({
           title: "Login Successful",
-          description: "Redirecting to dashboard",
+          description: "",
           duration: 2000,
         });
         dispatch(setLogin({ token: responseData?.data.token }));
         onLoginSuccess(); // Close the dialog after success
-        router.push('/');
       } else {
         toast({
           title: "Login Failed",

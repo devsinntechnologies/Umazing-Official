@@ -80,7 +80,7 @@ const Navbar = () => {
         <NavMiddleSection />
       </div>
       {/* Extra space to accommodate the fixed navbar */}
-      <div className="h-[172px]"></div>
+      <div className="h-[124px]"></div>
     </>
   );
 };
