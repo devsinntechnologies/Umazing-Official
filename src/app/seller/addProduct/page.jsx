@@ -334,7 +334,7 @@ const Page = () => {
   };
 
   return (
-    <div className="px-4 sm:px-8 bg-background">
+    <div className="w-full px-2 sm:px-3 bg-background">
       <h3 className="text-3xl font-bold text-primary cursor-pointer">
         Add Product
       </h3>
