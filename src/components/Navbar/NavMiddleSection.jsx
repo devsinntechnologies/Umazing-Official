@@ -49,7 +49,7 @@ const NavMiddleSection = () => {
 
         {/* Bottom Navigation */}
         <nav>
-          <div className=" bg-black w-full flex items-center py-2 lg:py-0 px-6">
+          <div className=" hidden bg-black w-full  items-center py-2 lg:py-0 px-6">
             {/* All Categories Button */}
             <div className="hidden lg:flex">
               <div className="bg-primary p-3">

@@ -21,16 +21,11 @@ export default function Child({ children }) {
     <>
     <QueryClientProvider client={queryClient}>
       <Navbar />
+      <div className="px-2 sm:px-4 md:px-6 lg:px-8 w-full">
       {children}
       <Footer />
-      {isLoggedIn && !hidePlusButtonPaths.includes(pathname) && (
-        <div>
-          <Link href="/seller" className="fixed bottom-8 right-8 p-4 rounded-full bg-primary text-white z-[50]">
-            <Plus size={28} />
-          </Link>
-        </div>
-      )}
-    </QueryClientProvider>
+      </div> 
+      </QueryClientProvider>
     </>
   );
 }

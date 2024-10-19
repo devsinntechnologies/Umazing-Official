@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
           <link rel="icon" type="image/svg" href="/icon.svg" />
         </head>
         {/* Also change Padding of navbar */}
-        <body className={`${poppins.variable} w-screen min-h-screen px-2 sm:px-4 md:px-6 lg:px-8`}>
+        <body className={`${poppins.variable} w-screen min-h-screen `}>
           <Provider>
             <Child>
               {children}

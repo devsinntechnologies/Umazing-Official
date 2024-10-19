@@ -39,7 +39,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="fixed w-full top-0 left-0 right-0 z-50 bg-white px-2 sm:px-4 md:px-6 lg:px-8">
+      <div className= "sticky shadow-sm w-full top-0 left-0 right-0 z-50 bg-white px-2 sm:px-4 md:px-6 lg:px-8">
         {/* <div className="w-full flex flex-wrap md:flex-nowrap justify-between p-2 border-b-2 border-gray-200">
           <div className="flex items-center gap-2">
             <IoLocationOutline color="#6b7280" size={24} />
@@ -80,7 +80,7 @@ const Navbar = () => {
         <NavMiddleSection />
       </div>
       {/* Extra space to accommodate the fixed navbar */}
-      <div className="h-[124px]"></div>
+      <div className=""></div>
     </>
   );
 };
