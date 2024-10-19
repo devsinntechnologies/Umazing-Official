@@ -9,39 +9,50 @@ import {
 import ForgetPassword from "@/components/auth/ForgetPassword";
 import Signup from "@/components/auth/Signup";
 import Login from "@/components/auth/Login";
-import ResetPassword from "@/components/auth/ResetPassword"; // Import ResetPassword component
+import ResetPassword from "@/components/auth/ResetPassword";
 import Logo from "../layout/Logo";
 import { ArrowLeftIcon } from "lucide-react";
 
-const AuthDialog = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentView, setCurrentView] = useState("login"); // Tracks the current view
+const AuthDialog = ({ isOpen: externalIsOpen, setIsOpen: externalSetIsOpen, useTrigger = true }) => {
+  // If external control is provided, use it; otherwise, use internal state.
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const [currentView, setCurrentView] = useState("login");
   const [resetEmail, setResetEmail] = useState("");
+
+  const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
+  const setIsOpen = externalSetIsOpen || setInternalIsOpen;
+
+  // Handle dialog open/close change
+  const handleDialogOpenChange = (open) => {
+    setIsOpen(open); // This will work whether controlled externally or internally
+    if (!open) {
+      setCurrentView("login"); // Reset view to "login" when dialog is closed
+    }
+  };
+
   const handleSignup = (formData) => {
     console.log("Signup Data:", formData);
-    setCurrentView("login"); // Move back to login after successful signup
+    setCurrentView("login");
   };
 
   const handleForgetPassword = (email) => {
     setCurrentView("resetPassword");
-    setResetEmail(email)
-  };
-
-  const handleDialogOpenChange = (open) => {
-    setIsOpen(open);
-    if (!open) {
-      // Reset to login when the dialog is closed
-      setCurrentView("login");
-    }
+    setResetEmail(email);
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogOpenChange} className="relative">
-      <DialogTrigger asChild className="h-fit items-center">
-        <button onClick={() => setIsOpen(true)} className="bg-primary px-4 py-2 rounded-full text-white text-sm md:text-base">
-          Login
-        </button>
-      </DialogTrigger>
+      {useTrigger && ( // Render the button trigger only when using internally (like in navbar)
+        <DialogTrigger asChild>
+          <button
+            onClick={() => setIsOpen(true)}  // Open the dialog via button click
+            className="bg-primary px-4 py-2 rounded-full text-white text-sm md:text-base"
+          >
+            Login
+          </button>
+        </DialogTrigger>
+      )}
+
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>
@@ -57,7 +68,7 @@ const AuthDialog = () => {
           </DialogTitle>
         </DialogHeader>
 
-        {/* Back Button Logic for Signup, Forget Password, and Reset Password views */}
+        {/* Back button logic */}
         {(currentView === "forgetPassword" || currentView === "signup" || currentView === "resetPassword") && (
           <button
             onClick={() => setCurrentView("login")}
@@ -77,22 +88,22 @@ const AuthDialog = () => {
 
         {currentView === "signup" && (
           <Signup
-            onBack={() => setCurrentView("login")} // Navigate back to login from signup
-            onSignupSuccess={handleSignup} // On successful signup, go back to login
+            onBack={() => setCurrentView("login")}
+            onSignupSuccess={handleSignup}
           />
         )}
 
         {currentView === "forgetPassword" && (
           <ForgetPassword
-            onBack={() => setCurrentView("login")} // Navigate back to login from forget password
-            onSubmitSuccess={handleForgetPassword} // On successful reset password request, go to reset password view
+            onBack={() => setCurrentView("login")}
+            onSubmitSuccess={handleForgetPassword}
           />
         )}
 
         {currentView === "resetPassword" && (
           <ResetPassword
-            onBack={() => setCurrentView("login")} // Navigate back to login from reset password
-            onResetSuccess={() => setIsOpen(false)} // Close dialog on successful password reset
+            onBack={() => setCurrentView("login")}
+            onResetSuccess={() => setIsOpen(false)}
             email={resetEmail}
           />
         )}

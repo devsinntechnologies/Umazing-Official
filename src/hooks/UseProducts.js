@@ -23,7 +23,10 @@ export const products = createApi({
       query: (id) => `/getById/${id}`,
     }),
     deleteProductById: builder.mutation({
-      query: (id) => `/deleteById//${id}`,
+      query: (id) => ({
+        url: `/deleteById//${id}`,
+        method: 'DELETE',
+      }),
     }),
     getAllVariants: builder.query({
       query: () => `getAllVariants`,

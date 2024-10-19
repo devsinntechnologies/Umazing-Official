@@ -1,171 +1,153 @@
+"use client";
+import { useToast } from "@/hooks/use-toast";
+import {
+  useGetUserFavouriteQuery,
+  useAddToFavouriteMutation,
+  useRemoveFromFavouriteMutation,
+} from "@/hooks/UseFavourite";
+import { Trash2, Heart, ShoppingCart } from "lucide-react"; // Import ShoppingCart
 import Image from "next/image";
-import Link from "next/link";
-import React, { useState } from "react";
-import axios from "axios";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-// import { FaHeart } from "react-icons/fa";
-import { toast } from "react-toastify"; // Ensure this is imported
-import "react-toastify/dist/ReactToastify.css";
-import { Trash, Eye, ShoppingBag, Star } from "lucide-react";
-
-const fetchWishlist = async () => {
-  const userId = localStorage.getItem("userId");
-  console.log("Fetching wishlist for user ID:", userId); // Log user ID
-  const response = await axios.get(
-    `http://97.74.89.204:4000/favourite/getUserFavourite/${userId}`
-  );
-
-  if (response.data.success) {
-    return response.data.data;
-  } else {
-    throw new Error("Failed to fetch wishlist items.");
-  }
-};
-
-const addToWishlist = async (productId) => {
-  const userId = localStorage.getItem("userId");
-  console.log(
-    "Adding product to wishlist for user ID:",
-    userId,
-    "Product ID:",
-    productId
-  ); // Log the request
-  const response = await axios.post(
-    "http://97.74.89.204:4000/favourite/addToFavourite",
-    {
-      UserId: userId,
-      ProductId: productId,
-    }
-  );
-
-  if (response.data.success) {
-    return { ...response.data.data, Product: { id: productId } };
-  } else {
-    throw new Error(
-      "Failed to add product to wishlist: " + response.data.message
-    );
-  }
-};
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { usePathname } from "next/navigation";
 
 const ProductsCard = ({ product }) => {
-  const queryClient = useQueryClient();
-  const [isInWishlist, setIsInWishlist] = useState(false);
+  const { toast } = useToast();
+  const userId = useSelector((state) => state.authSlice.user.id);
+  const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
+  const pathname = usePathname();
 
-  const {
-    data: wishlistItems = [],
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["wishlist"],
-    queryFn: fetchWishlist,
-    enabled: !!localStorage.getItem("userId"),
+  // Fetch user favourites
+  const { data: favouriteData, refetch: refetchFavourites } = useGetUserFavouriteQuery(userId, {
+    skip: !isLoggedIn,
   });
 
-  const mutation = useMutation({
-    mutationFn: addToWishlist,
-    onSuccess: (newItem) => {
-      console.log("Product added to wishlist:", newItem); // Log on success
-      queryClient.setQueryData(["wishlist"], (oldWishlist) => [
-        ...oldWishlist,
-        newItem,
-      ]);
-      setIsInWishlist(true);
-      toast.success("Product added to your wishlist!");
-    },
-    onError: (error) => {
-      console.error("Error adding to wishlist:", error); // Log error
-      toast.error("Failed to add product to wishlist: " + error.message);
-    },
-  });
+  const [addToFavourite, { isSuccess: addSuccess, isError: addError }] = useAddToFavouriteMutation();
+  const [removeFromFavourite, { isSuccess: removeSuccess, isError: removeError }] = useRemoveFromFavouriteMutation();
 
-  const isProductInWishlist = wishlistItems.some(
-    (item) => item.Product.id === product.id
-  );
+  const [isProductInWishlist, setIsProductInWishlist] = useState(false);
+  const [favouriteId, setFavouriteId] = useState(null);
 
-  const handleAddToWishlist = () => {
-    if (!localStorage.getItem("userId")) {
-      toast.warn("Please log in to add items to your wishlist.");
-      return;
+  // Check if the product is in the user's wishlist and set the favouriteId
+  useEffect(() => {
+    if (favouriteData && favouriteData.data) {
+      const favourite = favouriteData.data.find(item => item.Product.id === product.id);
+      if (favourite) {
+        setIsProductInWishlist(true);
+        setFavouriteId(favourite.id); // Set the favourite ID from the data
+      } else {
+        setIsProductInWishlist(false);
+        setFavouriteId(null);
+      }
     }
+  }, [favouriteData, product.id]);
 
-    if (isProductInWishlist) {
-      toast.info("This product is already in your wishlist.");
-      return;
+  const handleRemove = async () => {
+    if (!favouriteId) return;
+
+    try {
+      await removeFromFavourite(favouriteId);
+      refetchFavourites();
+    } catch (error) {
+      console.error("Failed to remove from wishlist:", error);
     }
-
-    mutation.mutate(product.id);
   };
 
-  if (isLoading) return <div>Loading wishlist...</div>;
-  if (isError) return <div>Error fetching wishlist items.</div>;
+  const handleAddToFavorites = async () => {
+    if (!isLoggedIn) {
+      toast.warn("Please log in to add to your wishlist.");
+      return;
+    }
+
+    try {
+      await addToFavourite({ UserId: userId, ProductId: product.id });
+      refetchFavourites();
+    } catch (error) {
+      console.error("Failed to add to wishlist:", error);
+    }
+  };
+
+  const handleAddToCart = () => {
+    console.log(`Adding product to cart with ID: ${product.Product.id}`); // Log product ID
+    // Implement the add to cart functionality here if needed
+  };
+
+  // Handle toast notifications for add/remove success and errors
+  useEffect(() => {
+    if (addSuccess) {
+      toast({
+        title: "Added",
+        description: "Item added to your wishlist successfully.",
+        status: "success",
+      });
+    }
+
+    if (removeSuccess) {
+      toast({
+        title: "Removed",
+        description: "Item removed from your wishlist successfully.",
+        status: "success",
+      });
+    }
+
+    if (addError || removeError) {
+      toast({
+        title: "Error",
+        description: "Failed to update wishlist. Please try again.",
+        status: "error",
+      });
+    }
+  }, [addSuccess, removeSuccess, addError, removeError, toast]);
+
+  const handleDelete = () => {
+    console.log(`Deleting product with ID: ${product.Product.id}`);
+  };
+
+  const showTrashIcon = pathname === "/seller" || pathname === "/seller/products";
 
   return (
-    <Link href={`/details/${product.id}`}>
-    <div className="group  hover:shadow-x-[#00B207] hover:shadow-lg h-auto border border-gray-300 rounded-sm relative hover:border-[#2C742F] w-full ">
-
-      <div>
-        <Link href={`/details/${product.id}`}>
-          <Image
-            className="w-full  rounded-t-sm "
-            width={500}
-            height={300}
-            src={
-              "http://97.74.89.204/uploads/products/3067216fdd3760ec9f46aa896ce48beb.jpeg"
-            }
-            alt={product.name}
-          />
-        </Link>
-
-        <div className="absolute right-[10px] top-[10px] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div
-            className={`bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center cursor-pointer items-center mb-2`}
-            onClick={handleAddToWishlist}
+    <div className="hover:shadow-lg h-auto border border-border rounded-sm relative hover:border-primary w-full flex flex-col">
+      <Image
+        className="w-full h-[200px] object-cover"
+        width={500}
+        height={300}
+        src={product.Product_Images[0]?.imageUrl ? `http://97.74.89.204/${product.Product_Images[0]?.imageUrl}` : ""}
+        alt={product.name}
+      />
+      <div className="w-full space-y-2 px-3 py-2">
+      <h3 className="text-base font-semibold transition duration-200 text-primary">{product.name}</h3>
+      <p className="text-gray-600">${product.basePrice}</p>
+      {/* Add to Cart button */}
+      {!showTrashIcon && (
+        <button
+          className="w-fit text-sm px-3 py-2 bg-primary text-white rounded-full "
+          onClick={handleAddToCart} // Add to Cart functionality
+        >
+          Add to cart
+        </button>
+      )}
+      </div>
+      <div className="absolute top-2 right-2 flex items-center">
+        {showTrashIcon && (
+          <button
+            className="p-2 rounded-full bg-gray-200 mr-2"
+            onClick={handleDelete}
           >
-            <Trash 
-              size={22}
-              color={isInWishlist || isProductInWishlist ? "red" : "red"}
-            />
-          </div>
-          {/* <Link href={`/details/${product.id}`}>
-            <div className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center items-center cursor-pointer mb-2">
-              <Eye width={20} height={20} color="teal" />
-            </div>
-          </Link> */}
-        </div>
-
-        <div className="flex justify-between items-center px-3 py-3">
-          <div>
-            <p className="text-primary text-[12px]  font-semibold">{product.name}</p>
-            <p className="text-[12px] py-1 font-medium ">${product.basePrice}</p>
-            <div className="flex">
-            <Star
-            size={12}
-            color= "#4D4D4D" 
-            />
-              <Star
-            size={12}
-            color= "#4D4D4D" 
-            />
-               <Star
-            size={12}
-            color= "#4D4D4D" 
-            />
-               <Star
-            size={12}
-            color= "#4D4D4D" 
-            />
-               <Star
-            size={12}
-            color= "#4D4D4D" 
-            />
-
-            </div>
-          </div>
-         
-        </div>
+            <Trash2 size={20} className="text-destructive"/>
+          </button>
+        )}
+        <button
+          className="p-2 rounded-full bg-gray-200"
+          onClick={isProductInWishlist ? handleRemove : handleAddToFavorites}
+        >
+          {isProductInWishlist ? (
+            <Heart size={20} color="red" />
+          ) : (
+            <Heart size={20} color="gray" />
+          )}
+        </button>
       </div>
     </div>
-    </Link>
   );
 };
 

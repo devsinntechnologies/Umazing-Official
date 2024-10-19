@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import ProductsCard from "@/components/ProductsCard"; // Ensure this path is correct
 import axios from "axios";
 import Pagination from "@/components/Pagination";
+import withAuth from "@/components/hoc/withAuth";
 
 const Page = () => {
   const [products, setProducts] = useState([]);
@@ -62,4 +63,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default withAuth(Page);
