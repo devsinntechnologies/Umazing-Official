@@ -6,7 +6,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 // import { FaHeart } from "react-icons/fa";
 import { toast } from "react-toastify"; // Ensure this is imported
 import "react-toastify/dist/ReactToastify.css";
-import { Heart, Eye, ShoppingBag } from "lucide-react";
+import { Trash, Eye, ShoppingBag, Star } from "lucide-react";
 
 const fetchWishlist = async () => {
   const userId = localStorage.getItem("userId");
@@ -100,11 +100,13 @@ const ProductsCard = ({ product }) => {
   if (isError) return <div>Error fetching wishlist items.</div>;
 
   return (
-    <div className="group lg:w-[280px] hover:shadow-x-[#00B207] hover:shadow-lg lg:h-[407px] border border-gray-300 rounded-xl relative hover:border-[#2C742F] sm:w-52 sm:h-80 ">
+    <Link href={`/details/${product.id}`}>
+    <div className="group  hover:shadow-x-[#00B207] hover:shadow-lg h-auto border border-gray-300 rounded-sm relative hover:border-[#2C742F] w-full ">
+
       <div>
         <Link href={`/details/${product.id}`}>
           <Image
-            className="w-full  rounded-t-xl "
+            className="w-full  rounded-t-sm "
             width={500}
             height={300}
             src={
@@ -119,68 +121,51 @@ const ProductsCard = ({ product }) => {
             className={`bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center cursor-pointer items-center mb-2`}
             onClick={handleAddToWishlist}
           >
-            <Heart
+            <Trash 
               size={22}
-              color={isInWishlist || isProductInWishlist ? "red" : "Teal"}
+              color={isInWishlist || isProductInWishlist ? "red" : "red"}
             />
           </div>
-          <Link href={`/details/${product.id}`}>
+          {/* <Link href={`/details/${product.id}`}>
             <div className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center items-center cursor-pointer mb-2">
               <Eye width={20} height={20} color="teal" />
             </div>
-          </Link>
+          </Link> */}
         </div>
 
-        <div className="flex justify-between items-center px-3 pt-7">
+        <div className="flex justify-between items-center px-3 py-3">
           <div>
-            <p className="text-[#4D4D4D] text-[14px]">{product.name}</p>
-            <p className="text-[16px] py-1 font-medium">${product.basePrice}</p>
+            <p className="text-primary text-[12px]  font-semibold">{product.name}</p>
+            <p className="text-[12px] py-1 font-medium ">${product.basePrice}</p>
             <div className="flex">
-              <Image
-                width={100}
-                height={100}
-                className="w-[12px]"
-                src="/Star.png"
-                alt="Star"
-              />
-              <Image
-                width={100}
-                height={100}
-                className="w-[12px]"
-                src="/Star.png"
-                alt="Star"
-              />
-              <Image
-                width={100}
-                height={100}
-                className="w-[12px]"
-                src="/Star.png"
-                alt="Star"
-              />
-              <Image
-                width={100}
-                height={100}
-                className="w-[12px]"
-                src="/Star.png"
-                alt="Star"
-              />
-              <Image
-                width={100}
-                height={100}
-                className="w-[12px]"
-                src="/StarEmpty.png"
-                alt="Empty Star"
-              />
+            <Star
+            size={12}
+            color= "#4D4D4D" 
+            />
+              <Star
+            size={12}
+            color= "#4D4D4D" 
+            />
+               <Star
+            size={12}
+            color= "#4D4D4D" 
+            />
+               <Star
+            size={12}
+            color= "#4D4D4D" 
+            />
+               <Star
+            size={12}
+            color= "#4D4D4D" 
+            />
+
             </div>
           </div>
-          <div className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center items-center cursor-pointer">
-            <Link href={`/details/${product.id}`}>
-              <ShoppingBag width={20} height={20} />
-            </Link>
-          </div>
+         
         </div>
       </div>
     </div>
+    </Link>
   );
 };
 

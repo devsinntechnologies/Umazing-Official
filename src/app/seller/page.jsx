@@ -26,9 +26,9 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-5 justify-center">
+    <div className="flex flex-col w-full gap-5 ">
       {/* Header Section */}
-      <h1 className="text-3xl font-bold text-primary items-start">
+      <h1 className="text-3xl font-semibold text-primary items-start">
         Welcome Back, Admin
       </h1>
 
@@ -73,7 +73,7 @@ const Page = () => {
 
       {/* Products Grid */}
       {!error && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-full">
           {products.slice(0, 6).map((product) => (
             <ProductsCard key={product.id} product={product} />
           ))}
