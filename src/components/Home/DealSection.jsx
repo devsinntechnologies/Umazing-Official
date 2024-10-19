@@ -10,7 +10,7 @@ const DealSection = () => {
     <div className="w-[95vw] mx-auto   grid gap-5 justify-between grid-cols-1 sm:grid-cols-2  xl:grid-cols-4">
       <div className="w-full flex flex-col gap-5">
         <h1 className="font-medium text-lg">Hot Deals</h1>
-        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-md hover:shadow-primary ">
+        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-sm hover:shadow-primary ">
           <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
             <Image
               className=" w-26 h-20 "
@@ -76,7 +76,7 @@ const DealSection = () => {
             </div>
           </div>
         </div>
-        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-md hover:shadow-primary ">
+        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-sm hover:shadow-primary ">
           <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
             <Image
               className=" w-26 h-20 "
@@ -142,7 +142,7 @@ const DealSection = () => {
             </div>
           </div>
         </div>
-        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary hover:shadow-md hover:shadow-primary">
+        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary hover:shadow-sm hover:shadow-primary">
           <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
             <Image
               className=" w-26 h-20 "
@@ -211,7 +211,7 @@ const DealSection = () => {
       </div>
       <div className="w-full flex flex-col gap-5">
         <h1 className="font-medium text-lg">Best Seller</h1>
-        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-md hover:shadow-primary ">
+        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-sm hover:shadow-primary ">
           <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
             <Image
               className=" w-26 h-20 "
@@ -277,7 +277,7 @@ const DealSection = () => {
             </div>
           </div>
         </div>
-        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-md hover:shadow-primary ">
+        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-sm hover:shadow-primary ">
           <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
             <Image
               className=" w-26 h-20 "
@@ -343,7 +343,7 @@ const DealSection = () => {
             </div>
           </div>
         </div>
-        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-md hover:shadow-primary ">
+        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-sm hover:shadow-primary ">
           <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
             <Image
               className=" w-26 h-20 "
@@ -412,7 +412,7 @@ const DealSection = () => {
       </div>
       <div className="w-full flex flex-col gap-5">
         <h1 className="font-medium text-lg">Top Rated</h1>
-        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-md hover:shadow-primary ">
+        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-sm hover:shadow-primary ">
           <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
             <Image
               className=" w-26 h-20 "
@@ -478,7 +478,7 @@ const DealSection = () => {
             </div>
           </div>
         </div>
-        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-md hover:shadow-primary">
+        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-sm hover:shadow-primary">
           <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
             <Image
               className=" w-26 h-20 "
@@ -544,7 +544,7 @@ const DealSection = () => {
             </div>
           </div>
         </div>
-        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary hover:shadow-md hover:shadow-primary ">
+        <div className=" group col-span-4 bg-white cursor-pointer  transition-shadow duration-150	ease-in-out hover:border-primary hover:shadow-sm hover:shadow-primary ">
           <div className="flex gap-5 justify-center items-center border-solid border-[1px] py-3 border-[#E6E6E6] ">
             <Image
               className=" w-26 h-20 "

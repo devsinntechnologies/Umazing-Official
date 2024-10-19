@@ -21,7 +21,6 @@ export default function Categories() {
       setLoader(false); // Stop loader after fetch completes or error occurs
     }
   };
-
   useEffect(() => {
     loadCategories(); // Call fetch on component mount
   }, []);
@@ -47,7 +46,7 @@ export default function Categories() {
           {data &&
             data.map((category, index) => (
               <Link key={index} href={`/shop/${category.id}`}>
-                <li className="border-[1px] border-solid border-[#E6E6E6] flex justify-center items-center flex-col gap-3 py-4 cursor-pointer transition-shadow duration-150 ease-in-out hover:border-primary hover:shadow-md hover:shadow-primary">
+                <li className="border-[1px] border-solid border-[#E6E6E6] flex justify-center items-center flex-col gap-3 py-4 cursor-pointer transition-shadow duration-150 ease-in-out hover:border-primary hover:shadow-sm hover:shadow-primary">
                   <Image
                     src={
                       category.imageUrl
@@ -57,7 +56,7 @@ export default function Categories() {
                     alt={category.name || "No name available"}
                     width={100}
                     height={100}
-                    className="object-cover rounded-md mb-2 w-8"
+                    className="object-cover rounded-md mb-2 w-8 "
                   />
                   <h3 className="text-sm">
                     {category.name || "Unknown Category"}

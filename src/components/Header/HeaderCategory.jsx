@@ -10,7 +10,6 @@ import { Skeleton } from "@/components/ui/skeleton"; // Import skeleton loader
 export default function HeaderCategory() {
   const [data, setData] = useState([]);
   const [loader, setLoader] = useState(true);
-
   const loadCategories = async () => {
     setLoader(true);
     try {
@@ -45,7 +44,7 @@ export default function HeaderCategory() {
           data &&
           data.map((category, index) => (
             <Link href={`/shop/${category.id}`} key={index}>
-              <li className="w-full border-[#E6E6E6] flex justify-around items-center px-2 gap-6 cursor-pointer transition-shadow duration-150 ease-in-out hover:bg-primary hover:rounded-md hover:text-white">
+              <li className=" group w-full border-[#E6E6E6] flex justify-around items-center px-2 gap-6 cursor-pointer transition-shadow duration-150 ease-in-out hover:bg-primary hover:rounded-md hover:text-white">
                 <Image
                   src={
                     category.imageUrl
@@ -55,7 +54,7 @@ export default function HeaderCategory() {
                   alt={category.name || "No name available"}
                   width={100}
                   height={100}
-                  className="object-cover rounded-md mb-2 w-8"
+                  className="object-cover rounded-md mb-2 w-8 group-hover:filter group-hover:invert group-hover:brightness-0 group-hover:contrast-100"
                 />
                 <h3 className="text-sm text-left flex-grow">
                   {category.name || "Unknown Category"}
