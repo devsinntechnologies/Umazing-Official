@@ -123,7 +123,7 @@ const WishlistPage = () => {
 
           <div
             id="overflow"
-            className="shadow overflow-auto border-b border-gray-200 sm:rounded-lg "
+            className="shadow-sm shadow-primary overflow-auto border-b border-gray-200 sm:rounded-lg "
           >
             <table className="w-[95%] divide-y divide-gray-200 table-fixed">
               <thead>

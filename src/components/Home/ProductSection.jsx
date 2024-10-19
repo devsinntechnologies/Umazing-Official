@@ -24,7 +24,7 @@ export const ProductSection = () => {
             </button>
           </Link>
         </div>
-        <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-md hover:shadow-primary ">
+        <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-sm hover:shadow-primary ">
           <Image
             className="w-full"
             width={246}
@@ -88,7 +88,7 @@ export const ProductSection = () => {
             </div>
           </div>
         </div>
-        <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-md hover:shadow-primary ">
+        <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-sm hover:shadow-primary ">
           <Image
             className=" w-full 	"
             width={246}
@@ -153,7 +153,7 @@ export const ProductSection = () => {
             </div>
           </div>
         </div>
-        <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-md hover:shadow-primary ">
+        <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-sm hover:shadow-primary ">
           <Image
             className=" w-full 	"
             width={246}
@@ -218,7 +218,7 @@ export const ProductSection = () => {
             </div>
           </div>
         </div>
-        <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-md hover:shadow-primary ">
+        <div className=" group w-full border-[1px] border-solid border-[#E6E6E6] flex flex-col justify-center relative  gap-5   py-5 cursor-pointer transition-shadow duration-150	ease-in-out hover:border-primary  hover:shadow-sm hover:shadow-primary ">
           <Image
             className=" w-full   	"
             width={246}
