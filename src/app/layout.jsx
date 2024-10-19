@@ -3,8 +3,6 @@ import "./globals.css";
 import Provider from "./Provider";
 import { Toaster } from "@/components/ui/toaster"
 import Child from "./Child";
-import Head from "next/head";
-
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -20,10 +18,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
       <html lang="en">
-        <Head>
-          <title>Umazing</title>
-          <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-        </Head>
+        <head>
+          <title>Umazing Official</title>
+          <link rel="icon" type="image/svg" href="/icon.svg" />
+        </head>
         {/* Also change Padding of navbar */}
         <body className={`${poppins.variable} w-screen min-h-screen px-2 sm:px-4 md:px-6 lg:px-8`}>
           <Provider>
