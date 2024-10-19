@@ -14,14 +14,14 @@ export default function Home() {
   return (
     <div className="w-full">
       <HeaderCategory />
-      <Banner />
+      {/* <Banner /> */}
       <Categories />
-      <ProductSection />
-      <DealSection />
-      <BannerSection />
-      <Testimonial/>
-      <Team />
-      <Companylogos />
+      {/* <ProductSection /> */}
+      {/* <DealSection /> */}
+      {/* <BannerSection /> */}
+      {/* <Testimonial/> */}
+      {/* <Team /> */}
+      {/* <Companylogos /> */}
     </div>
   );
 }

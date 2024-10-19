@@ -1,51 +1,58 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ProductsCard from "@/components/ProductsCard"; // Ensure this path is correct
-import axios from "axios";
-import Pagination from "@/components/Pagination";
+import Pagination from "@/components/Pagination"; // Ensure this path is correct
+import { useGetAllProductsQuery } from "@/hooks/UseProducts"; // Adjust the path as needed
+import { Skeleton } from "@/components/ui/skeleton"; // Adjust the path as needed
 import withAuth from "@/components/hoc/withAuth";
 
 const Page = () => {
   const [products, setProducts] = useState([]);
-  const [error, setError] = useState(null);
   const [pageNo, setPageNo] = useState(1); // Current page number
   const pageSize = 9; // Number of products to show per page
   const [totalPages, setTotalPages] = useState(1); // Total pages for pagination
 
+  const queryParams = {
+    pageNo,
+    pageSize,
+  };
+
+  const { data: productsData, isLoading, isError } = useGetAllProductsQuery(queryParams);
+
   useEffect(() => {
-    // Fetch products from the API
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(
-          "http://97.74.89.204:4000/product/getAllProducts"
-        );
-        setProducts(response.data.data); // Adjust based on actual API structure
-        setTotalPages(Math.ceil(response.data.data.length / pageSize)); // Calculate total pages
-      } catch (err) {
-        setError("Failed to fetch products.");
-      }
-    };
+    if (productsData?.success) {
+      setProducts(productsData.data);
+      setTotalPages(productsData.totalPages); // Assuming your API provides total pages
+    }
+  }, [productsData]);
 
-    fetchProducts();
-  }, []);
-
-  // Calculate the index of the first and last product on the current page
-  const firstProductIndex = (pageNo - 1) * pageSize;
-  const lastProductIndex = firstProductIndex + pageSize;
-  const currentProducts = products.slice(firstProductIndex, lastProductIndex); // Slice the products for the current page
+  // Calculate the starting and ending index for the products to display
+  const startIndex = (pageNo - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
 
   return (
     <div className="flex flex-col gap-5 justify-center w-full">
-      <h1 className="text-3xl font-bold text-primary items-start">
-        All Products
-      </h1>
-      {/* Error Message */}
-      {error && <div>{error}</div>}
+      <h1 className="text-3xl font-bold text-primary">All Products</h1>
+
+      {/* Loading & Error States */}
+      {isLoading && (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {[...Array(pageSize)].map((_, index) => (
+            <Skeleton key={index} className="w-full h-[200px]" />
+          ))}
+        </div>
+      )}
+
+      {isError && (
+        <div className="text-red-500 text-lg">
+          Error loading products. Please try again.
+        </div>
+      )}
 
       {/* Products Grid */}
-      {!error && (
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 w-full">
-          {currentProducts.map((product) => (
+      {!isLoading && !isError && products.length > 0 && (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {products.slice(startIndex, endIndex).map((product) => (
             <ProductsCard key={product.id} product={product} />
           ))}
         </div>
