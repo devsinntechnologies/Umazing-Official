@@ -5,6 +5,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { fetchProductById } from "@/services";
 import { Skeleton } from "@/components/ui/skeleton"; // Skeleton loader import
+import { Minus, Plus, ShoppingCart, Star, Instagram, Facebook, Twitter, Heart } from "lucide-react";
 
 const ProductDetails = ({ params }) => {
   const { id } = params;
@@ -83,7 +84,7 @@ const ProductDetails = ({ params }) => {
           <div className="w-full lg:w-1/2 h-auto lg:h-[558px] flex lg:flex-row flex-col-reverse justify-center items-center lg:justify-between">
             {/* Thumbnails */}
 
-            <div className="w-[70px] lg:w-[80px] flex lg:flex-col justify-center gap-8 lg:gap-4">
+            {/* <div className="w-[70px] lg:w-[80px] flex lg:flex-col justify-center gap-8 lg:gap-4">
               {images.map((img, index) => (
                 <Image
                   key={index}
@@ -97,7 +98,7 @@ const ProductDetails = ({ params }) => {
                   onClick={() => setSelectedImage(img)}
                 />
               ))}
-            </div>
+            </div> */}
 
             {/* Preview Image */}
             <div className="w-[350px] sm:w-[400px] lg:w-[556px] ml-6">
@@ -118,19 +119,37 @@ const ProductDetails = ({ params }) => {
               <h1 className="text-[25px] lg:text-[36px] font-semibold">
                 {product.name}
               </h1>
-              <div className="w-[71px] h-[29px] rounded-[4px] bg-primary text-white text-[14px] py-[4px] px-[8px]">
+             <div className="flex justify-between w-full">
+             <div className="w-[71px] h-[29px] rounded-[4px] bg-primary text-white text-[14px] py-[4px] px-[8px]">
                 In Stock
               </div>
+              <div><Heart /></div>
+             </div>
             </div>
 
             {/* Ratings and other product details */}
             <div className="flex items-center gap-3 my-2">
               <div className="flex">
-                <Image src="/Star.png" alt="" width={18} height={18} />
-                <Image src="/Star.png" alt="" width={18} height={18} />
-                <Image src="/Star.png" alt="" width={18} height={18} />
-                <Image src="/Star.png" alt="" width={18} height={18} />
-                <Image src="/Star.png" alt="" width={18} height={18} />
+              <Star
+            size={12}
+            color= "#4D4D4D" 
+            />
+              <Star
+            size={12}
+            color= "#4D4D4D" 
+            />
+               <Star
+            size={12}
+            color= "#4D4D4D" 
+            />
+               <Star
+            size={12}
+            color= "#4D4D4D" 
+            />
+               <Star
+            size={12}
+            color= "#4D4D4D" 
+            />
               </div>
               <p className="text-[#666666] text-[14px]">4 review</p>
               <p className="text-[14px]">
@@ -162,12 +181,9 @@ const ProductDetails = ({ params }) => {
               <div className="flex items-center gap-3">
                 <p className="text-[14px]">Share item :</p>
                 <div className="flex items-center gap-5">
-                  <div className="w-[40px] h-[40px] rounded-full bg-primary flex justify-center items-center">
-                    <Image src="/facebook.png" alt="" width={20} height={20} />
-                  </div>
-                  <Image src="/instagram .png" alt="" width={20} height={20} />
-                  <Image src="/ling.png" alt="" width={20} height={20} />
-                  <Image src="/twitter.png" alt="" width={20} height={20} />
+                  <Facebook width={20} height={20} className="hover:w-[40px] hover:h-[40px] hover:px-2 hover:py-2 hover:rounded-full hover:bg-primary" />
+                                   <Instagram width={20} height={20} className="hover:w-[40px] hover:h-[40px] hover:px-2 hover:py-2 hover:rounded-full hover:bg-primary"/>
+                  <Twitter width={20} height={20} className="hover:w-[40px] hover:h-[40px] hover:px-2 hover:py-2 hover:rounded-full hover:bg-primary"/>
                 </div>
               </div>
             </div>
@@ -185,25 +201,25 @@ const ProductDetails = ({ params }) => {
                 <button
                   className="w-[34px] h-[34px] bg-[#F2F2F2] rounded-full flex justify-center items-center"
                   onClick={handleDecrement}
-                  disabled={quantity === 0}
+                  disabled={quantity === 1}
                 >
-                  <Image src="/minus.png" alt="" width={10} height={10} />
+                  <Minus width={10} height={10} />
                 </button>
                 <div>{quantity}</div>
                 <button
                   className="w-[34px] h-[34px] bg-[#F2F2F2] rounded-full flex justify-center items-center"
                   onClick={handleIncrement}
                 >
-                  <Image src="/plus.png" alt="" width={10} height={10} />
+                 <Plus width={10} height={10}/>
                 </button>
               </div>
               <button className="h-[51px] w-[300px] text-sm lg:w-[447px] bg-primary text-white text-[16px] font-semibold flex justify-center items-center gap-3 lg:gap-4 rounded-[43px]">
                 Add to Cart
-                <Image src="/bagg.png" alt="" width={20} height={20} />
+                <ShoppingCart width={20} height={20} />
               </button>
-              <div className="w-[40px] h-[40px] rounded-full border border-[#F2F2F2] bg-[#F2F2F2] flex justify-center items-center">
+              {/* <div className="w-[40px] h-[40px] rounded-full border border-[#F2F2F2] bg-[#F2F2F2] flex justify-center items-center">
                 <Image src="/Heart.png" alt="" width={20} height={20} />
-              </div>
+              </div> */}
             </div>
 
             <div className="w-full lg:w-[647px] my-6 border border-[#E6E6E6]"></div>
@@ -377,7 +393,7 @@ const ProductDetails = ({ params }) => {
               ))}
             </div>
           ) : (
-            <div className="lg:h-[407px] w-full flex flex-wrap md:flex-nowrap justify-center md:justify-evenly items-center gap-2 sm:gap-4 mt-8">
+            <div className="lg:h-[407px] w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-4 mt-8">
               {products.map((item, index) => (
                 <ProductsCard key={index} product={item} />
               ))}
