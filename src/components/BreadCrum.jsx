@@ -39,7 +39,7 @@ const BreadCrum = () => {
           <BreadcrumbItem>
             <BreadcrumbLink
               href="/"
-              className="text-lg md:text-xl  flex gap-3 items-center"
+              className="text-sm md:text-base flex gap-3 items-center"
             >
               <House /> Home
             </BreadcrumbLink>
@@ -51,10 +51,10 @@ const BreadCrum = () => {
 
             return (
               <React.Fragment key={index}>
-                <BreadcrumbSeparator className="text-lg md:text-xl " />
+                <BreadcrumbSeparator className="text-sm md:text-base " />
                 <BreadcrumbItem>
                   {isLast ? (
-                    <BreadcrumbPage className=" text-lg md:text-xl">
+                    <BreadcrumbPage className=" text-sm md:text-base">
                       {segment}
                     </BreadcrumbPage>
                   ) : (

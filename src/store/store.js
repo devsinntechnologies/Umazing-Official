@@ -7,6 +7,7 @@ import { categories } from '@/hooks/UseCategories';
 import { attribute } from '@/hooks/UseAttributes';
 import { notifications } from '@/hooks/UseNotifications';
 import { offer } from '@/hooks/UseOffers';
+import { favourite } from '@/hooks/UseFavourite';
 
 export const makeStore = () => {
   return configureStore({
@@ -18,9 +19,10 @@ export const makeStore = () => {
       [attribute.reducerPath]: attribute.reducer,
       [offer.reducerPath]: offer.reducer,
       [notifications.reducerPath]: notifications.reducer,
+      [favourite.reducerPath]: favourite.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(auth.middleware, offer.middleware, products.middleware, categories.middleware, attribute.middleware, notifications.middleware),
+      getDefaultMiddleware().concat(auth.middleware, offer.middleware, products.middleware, categories.middleware, attribute.middleware, notifications.middleware, favourite.middleware),
   });
 };
 
