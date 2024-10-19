@@ -20,7 +20,7 @@ const Signup = ({ onBack, onSignupSuccess }) => {
   const [dob, setDob] = useState(null);
   const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // Added state for confirm password visibility
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); 
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

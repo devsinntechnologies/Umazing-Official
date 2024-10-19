@@ -1,23 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { useCheckOtpMutation, useResetPasswordMutation } from "@/hooks/UseAuth";
-import { CheckCircle, Loader } from "lucide-react";
+import { useCheckOtpMutation, useResetPasswordMutation, useForgotPasswordMutation } from "@/hooks/UseAuth";
+import { CheckCircle, EyeClosedIcon, EyeIcon, Loader, LockKeyhole } from "lucide-react";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 
-function ResetPassword({ onBack }) {
+function ResetPassword({ onBack, email }) {
   const [checkOtp, { isLoading: otpLoading }] = useCheckOtpMutation();
   const [resetPassword, { isSuccess: isResetSuccess, error: resetError, isLoading: resetLoading, data: resetResponseData }] = useResetPasswordMutation();
-  const [otp, setOtp] = useState(""); // OTP as a single state
+  const [forgotPassword, { isLoading: forgotPasswordLoading }] = useForgotPasswordMutation(); // Forgot password API
+  const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const { toast } = useToast(); // Initialize toast
+  const { toast } = useToast();
   const [isOtpVerified, setIsOtpVerified] = useState(false);
+  const [resendTimer, setResendTimer] = useState(60); // Timer for resend OTP
+  const [isResendDisabled, setIsResendDisabled] = useState(false); // Disable resend button initially
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Timer logic for resend button
+  useEffect(() => {
+    let timer;
+    if (resendTimer > 0) {
+      timer = setTimeout(() => setResendTimer((prev) => prev - 1), 1000);
+    } else {
+      setIsResendDisabled(false); // Enable resend button when timer ends
+    }
+    return () => clearTimeout(timer);
+  }, [resendTimer]);
 
   const handleOtpChange = (newValue) => {
     setOtp(newValue);
@@ -59,6 +75,39 @@ function ResetPassword({ onBack }) {
     }
   };
 
+  const handleResendOtp = () => {
+    if (isResendDisabled) return;
+
+    setIsResendDisabled(true);
+    setResendTimer(120); // Reset the timer to 2 minutes for next resend
+
+    forgotPassword({ email }) // Send email for OTP
+      .then(response => {
+        if (response?.data?.success) {
+          toast({
+            title: "OTP Sent",
+            description: response.data.message || "A new OTP has been sent to your email.",
+            duration: 2000,
+          });
+        } else {
+          toast({
+            title: "Error",
+            description: "Failed to resend OTP. Please try again later.",
+            variant: "destructive",
+            duration: 2000,
+          });
+        }
+      })
+      .catch(() => {
+        toast({
+          title: "Error",
+          description: "Error sending OTP. Please try again.",
+          variant: "destructive",
+          duration: 2000,
+        });
+      });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -67,7 +116,7 @@ function ResetPassword({ onBack }) {
       toast({
         title: "Error",
         description: "Please fill in both password fields.",
-        variant: "destructive", // Show destructive toast
+        variant: "destructive",
         duration: 2000,
       });
       return;
@@ -77,7 +126,7 @@ function ResetPassword({ onBack }) {
       toast({
         title: "Error",
         description: "Password must be at least 6 characters long.",
-        variant: "destructive", // Show destructive toast
+        variant: "destructive",
         duration: 2000,
       });
       return;
@@ -87,7 +136,7 @@ function ResetPassword({ onBack }) {
       toast({
         title: "Error",
         description: "Passwords do not match.",
-        variant: "destructive", // Show destructive toast
+        variant: "destructive",
         duration: 2000,
       });
       return;
@@ -108,7 +157,7 @@ function ResetPassword({ onBack }) {
         toast({
           title: "Error",
           description: resetError?.message || "Failed to reset password.",
-          variant: "destructive", // Show destructive toast
+          variant: "destructive",
           duration: 2000,
         });
       });
@@ -116,67 +165,104 @@ function ResetPassword({ onBack }) {
 
   return (
     <div className="w-full flex flex-col gap-3">
-      {/* OTP Input using InputOTPControlled */}
-     <div className="flex items-center justify-center">
-     <InputOTP
-        maxLength={4} // Limit OTP to 4 digits
-        value={otp}
-        onChange={handleOtpChange}
+      {/* OTP Input */}
+      <div className="flex items-center justify-center">
+        <InputOTP
+          maxLength={4} // Limit OTP to 4 digits
+          value={otp}
+          onChange={handleOtpChange}
+          disabled={isOtpVerified || otpLoading}
+        >
+          <InputOTPGroup className="gap-3">
+            {Array.from({ length: 4 }, (_, index) => (
+              <InputOTPSlot 
+              className='border'
+                key={index}
+                index={index} 
+                aria-label={`OTP slot ${index + 1}`}
+              />
+            ))}
+          </InputOTPGroup>
+        </InputOTP>
+      </div>
+
+      {/* Resend OTP button with timer */}
+      {!isOtpVerified &&  <button
+        type="button"
+        className={`w-full ${isResendDisabled ? "bg-gray-200": "bg-primary text-white"} py-2 rounded-md`}
+        onClick={handleResendOtp}
+        disabled={isResendDisabled || forgotPasswordLoading} // Disable resend if on timer or loading
       >
-        <InputOTPGroup>
-          {Array.from({ length: 4 }, (_, index) => (
-            <InputOTPSlot 
-              key={index}
-              index={index} 
-              aria-label={`OTP slot ${index + 1}`} // Accessibility enhancement
-            />
-          ))}
-        </InputOTPGroup>
-      </InputOTP>
-     </div>
-     <button
-  type="button"
-  className="w-full bg-primary text-white py-2 rounded-md flex justify-center items-center"
-  onClick={verifyOtp}
-  disabled={otpLoading || isOtpVerified} // Disable while verifying OTP or if already verified
->
-  {otpLoading ? (
-    <Loader className="animate-spin" size={16} />
-  ) : isOtpVerified ? (
-    <>
-      <CheckCircle className="mr-2" /> {/* Icon for verified status */}
-      <h3 className="text-sm">Verified</h3> {/* Status text */}
-    </>
-  ) : (
-    "Verify OTP" // Default text
-  )}
-</button>
-      {/* Only show password fields if OTP is verified */}
+        {forgotPasswordLoading ? <Loader className="animate-spin" size={16} /> : `Resend OTP (${resendTimer}s)`}
+      </button>}
+
+      <button
+        type="button"
+        className="w-full bg-primary text-white py-2 rounded-md flex justify-center items-center"
+        onClick={verifyOtp}
+        disabled={otpLoading || isOtpVerified} // Disable while verifying OTP or if already verified
+      >
+        {otpLoading ? (
+          <Loader className="animate-spin" size={16} />
+        ) : isOtpVerified ? (
+          <>
+            <CheckCircle className="mr-2" />
+            <h3 className="text-sm">Verified</h3>
+          </>
+        ) : (
+          "Verify OTP"
+        )}
+      </button>
+
+      {/* Show password fields if OTP is verified */}
       {isOtpVerified && (
         <>
+       <div className="relative w-full flex items-center border border-gray-300 p-2 rounded-md">
+          <LockKeyhole className="text-gray-500 mr-2" />
           <input
-            type="password"
-            placeholder="Enter New Password"
-            className="w-full border border-gray-300 p-2 rounded-md"
+            type={showPassword ? "text" : "password"}
+            placeholder="Enter new password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
+            className="w-full focus:outline-none"
           />
+          {/* Show/Hide Password Button */}
+          {password && (
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="w-6 absolute inset-y-0 right-3 flex items-center justify-center text-gray-600"
+            >
+              {showPassword ? <EyeIcon /> : <EyeClosedIcon />}
+            </button>
+          )}
+        </div>
 
+        <div className="relative w-full flex items-center border border-gray-300 p-2 rounded-md">
+          <LockKeyhole className="text-gray-500 mr-2" />
           <input
-            type="password"
-            placeholder="Confirm New Password"
-            className="w-full border border-gray-300 p-2 rounded-md"
+            type={showConfirmPassword ? "text" : "password"}
+            placeholder="Confirm your password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            required
+            className="w-full focus:outline-none"
           />
-
+          {/* Show/Hide Confirm Password Button */}
+          {confirmPassword && (
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="w-6 absolute inset-y-0 right-3 flex items-center justify-center text-gray-600"
+            >
+              {showConfirmPassword ? <EyeIcon /> : <EyeClosedIcon />}
+            </button>
+          )}
+        </div>
           <button
             type="submit"
             className="w-full bg-primary text-white py-2 rounded-md flex justify-center items-center"
             onClick={handleSubmit}
-            disabled={resetLoading} // Disable button while loading
+            disabled={resetLoading}
           >
             {resetLoading ? <Loader className="animate-spin" size={16} /> : "Submit"}
           </button>

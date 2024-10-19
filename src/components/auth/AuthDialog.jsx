@@ -16,14 +16,15 @@ import { ArrowLeftIcon } from "lucide-react";
 const AuthDialog = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentView, setCurrentView] = useState("login"); // Tracks the current view
-
+  const [resetEmail, setResetEmail] = useState("");
   const handleSignup = (formData) => {
     console.log("Signup Data:", formData);
     setCurrentView("login"); // Move back to login after successful signup
   };
 
   const handleForgetPassword = (email) => {
-    setCurrentView("resetPassword"); // Move to reset password after successful password reset request
+    setCurrentView("resetPassword");
+    setResetEmail(email)
   };
 
   const handleDialogOpenChange = (open) => {
@@ -92,6 +93,7 @@ const AuthDialog = () => {
           <ResetPassword
             onBack={() => setCurrentView("login")} // Navigate back to login from reset password
             onResetSuccess={() => setIsOpen(false)} // Close dialog on successful password reset
+            email={resetEmail}
           />
         )}
       </DialogContent>
