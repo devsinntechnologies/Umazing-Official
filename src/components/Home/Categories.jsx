@@ -46,7 +46,7 @@ export default function Categories() {
           {data &&
             data.map((category, index) => (
               <Link key={index} href={`/shop/${category.id}`}>
-                <li className=" rounded-xl border border-solid border-border flex justify-center items-center flex-col gap-3 py-4 cursor-pointer transition-shadow duration-150 ease-in-out hover:border-primary hover:shadow-sm hover:shadow-primary">
+                <li className=" rounded-full bg-secondary border border-solid border-border flex justify-center items-center flex-col gap-3 py-4 cursor-pointer transition-shadow duration-150 ease-in-out hover:border-primary hover:shadow-md hover:shadow-primary">
                   <Image
                     src={
                       category.imageUrl
