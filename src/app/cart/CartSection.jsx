@@ -1,10 +1,6 @@
 "use client";
 import Image from "next/image";
-import capsi from "../../../public/Images/capsi.jpg";
-
 import { CircleX } from "lucide-react";
-
-import red from "../../../public/Images/red.jpg";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -15,14 +11,14 @@ const CartSection = () => {
       name: "Green Capsicum",
       price: 14.0,
       quantity: 5,
-      image: capsi,
+      image: "",
     },
     {
       id: 2,
       name: "Red Capsicum",
       price: 14.0,
       quantity: 1,
-      image: red,
+      image: "",
     },
   ]);
 

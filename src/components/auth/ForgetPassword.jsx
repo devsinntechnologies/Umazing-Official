@@ -25,7 +25,7 @@ function ForgetPassword({ onSubmitSuccess }) {
     } else if (responseData && responseData.success === false) {
       toast({
         title: "Error",
-        description: responseData.message || "Email does not exist.",
+        description: responseData.message ,
         duration: 2000,
       });
     }

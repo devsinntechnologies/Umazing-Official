@@ -7,12 +7,9 @@ export const favourite = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL}/favourite/`,
     prepareHeaders: (headers, { getState, endpoint }) => {
-      // Only add the token if the endpoint is not 'login' or 'signup'
-      if (endpoint !== 'login' && endpoint !== 'signup') {
-        const token = localStorage.getItem('token'); // Fetch token from localStorage
+        const token = localStorage.getItem('token');
         if (token) {
           headers.set('Authorization', `Bearer ${token}`);
-        }
       }
       return headers;
     },

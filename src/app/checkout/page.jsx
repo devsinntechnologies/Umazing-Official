@@ -1,9 +1,5 @@
 "use client";
-import React from "react";
-import { MdHome } from "react-icons/md";
-import { FaAngleRight } from "react-icons/fa6";
 import Image from "next/image";
-import Link from "next/link";
 import BreadCrum from "@/components/BreadCrum";
 const Checkout = () => {
   return (

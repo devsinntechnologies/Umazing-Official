@@ -1,26 +1,21 @@
 // Home.js
 "use client";
-import HeaderCategory from "@/components/Header/HeaderCategory";
-import { Banner } from "@/components/Home/Banner";
 import ProductSection from "@/components/Home/ProductSection";
-import DealSection from "@/components/Home/DealSection";
-import { BannerSection } from "@/components/Home/BannerSection";
-import { Team } from "@/components/Home/Team";
-import { Companylogos } from "@/components/Home/Companylogos";
 import Categories from "@/components/Home/Categories";
-import Testimonial from "@/components/Home/Testimonial";
+import HeaderSlider from "@/components/Header/HeaderSlider";
 
 export default function Home() {
   return (
     <div className="w-full">
-      <HeaderCategory />
+      <div className="w-full mt-4 flex justify-center items-center gap-2 h-[260px] md:h-[340px] lg:h-[400px]">
+      <HeaderSlider />
+    </div>
       {/* <Banner /> */}
       <Categories />
       <ProductSection />
       {/* <DealSection /> */}
       {/* <BannerSection /> */}
       {/* <Testimonial/> */}
-      {/* <Team /> */}
       {/* <Companylogos /> */}
     </div>
   );

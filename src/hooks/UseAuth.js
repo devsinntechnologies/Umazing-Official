@@ -1,17 +1,17 @@
-import { BASE_URL } from '@/lib/constants';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BASE_URL } from "@/lib/constants";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Define a service using a base URL and expected endpoints
 export const auth = createApi({
-  reducerPath: 'auth',
+  reducerPath: "auth",
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL}/auth/`,
     prepareHeaders: (headers, { getState, endpoint }) => {
       // Only add the token if the endpoint is not 'login' or 'signup'
-      if (endpoint !== 'login' && endpoint !== 'signup') {
-        const token = localStorage.getItem('token'); // Fetch token from localStorage
+      if (endpoint !== "login" && endpoint !== "signup") {
+        const token = localStorage.getItem("token"); // Fetch token from localStorage
         if (token) {
-          headers.set('Authorization', `Bearer ${token}`);
+          headers.set("Authorization", `Bearer ${token}`);
         }
       }
       return headers;
@@ -20,36 +20,36 @@ export const auth = createApi({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (loginData) => ({
-        url: 'login',
-        method: 'POST',
+        url: "login",
+        method: "POST",
         body: loginData,
       }),
     }),
     signup: builder.mutation({
       query: (signupData) => ({
-        url: 'register',
-        method: 'POST',
+        url: "register",
+        method: "POST",
         body: signupData,
       }),
     }),
     forgotPassword: builder.mutation({
       query: (forgotPasswordData) => ({
-        url: 'forgot-password',
-        method: 'POST',
+        url: "forgot-password",
+        method: "POST",
         body: forgotPasswordData,
       }),
     }),
     checkOtp: builder.mutation({
       query: (otpData) => ({
-        url: '/checkOtp',
-        method: 'POST',
+        url: "/checkOtp",
+        method: "POST",
         body: otpData,
       }),
     }),
     resetPassword: builder.mutation({
       query: (resetPasswordData) => ({
-        url: 'reset-password',
-        method: 'POST',
+        url: "reset-password",
+        method: "POST",
         body: resetPasswordData,
       }),
     }),
@@ -58,22 +58,22 @@ export const auth = createApi({
     }),
     updateProfile: builder.mutation({
       query: (updateData) => ({
-        url: 'update-profile',
-        method: 'POST',
+        url: "update-profile",
+        method: "POST",
         body: updateData,
       }),
     }),
     addUserAddress: builder.mutation({
       query: (addressData) => ({
-        url: 'addUserAddress',
-        method: 'POST',
+        url: "addUserAddress",
+        method: "POST",
         body: addressData,
       }),
     }),
     deleteAddressById: builder.mutation({
       query: (id) => ({
-        url: `delete-address/${id}`,  // Use consistent URL formatting
-        method: 'DELETE',
+        url: `delete-address/${id}`, // Use consistent URL formatting
+        method: "DELETE",
       }),
     }),
   }),

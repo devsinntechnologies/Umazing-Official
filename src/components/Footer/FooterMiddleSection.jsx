@@ -1,5 +1,3 @@
-import React from "react";
-import footerpic from "../../../public/Images/footerpic.png";
 import Image from "next/image";
 import Logo from "../layout/Logo";
 import Link from "next/link";
@@ -69,7 +67,7 @@ const FooterMiddleSection = () => {
           <h3 className="font-semibold text-gray-800">Download Mobile App</h3>
           <div className="flex">
             <a href="#">
-              <Image src={footerpic} width={400} />
+              <Image src='/images/playStore.png' width={400} alt="" height={100} />
             </a>
           </div>
         </div>

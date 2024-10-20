@@ -17,7 +17,7 @@ const Profile = () => {
   const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
   const userId = useSelector((state) => state.authSlice.user?.id);
   const [triggerFetch, setTriggerFetch] = useState(false);
-  
+
   const { toast } = useToast(); // Initialize toast
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Profile = () => {
 
   // Fetch user profile data once userId is available
   const { data: userProfile, error, isLoading, refetch } = useGetUserProfileQuery(userId, {
-    skip: !triggerFetch,  // Skip API call if triggerFetch is false
+    skip: !triggerFetch, // Skip API call if triggerFetch is false
   });
 
   useEffect(() => {
@@ -37,9 +37,14 @@ const Profile = () => {
     }
     if (error) {
       console.error("Error fetching user profile:", error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch profile data. Please try again.",
+        variant: "destructive",
+      });
     }
-  }, [userProfile, error]);
-  
+  }, [userProfile, error, toast]);
+
   const [updateProfile] = useUpdateProfileMutation();
   const [addUserAddress] = useAddUserAddressMutation();
 
@@ -57,45 +62,52 @@ const Profile = () => {
     }
   }, [userProfile]);
 
-  const handleUpdateProfile = () => {
+  const handleUpdateProfile = async () => {
     const updateData = { name, email, dob: birthday }; // Collecting the data to send
-    
+
     console.log("Update data being sent:", updateData); // Log the data before sending
 
-    toast.loading("Updating profile...");
     updateProfile(updateData)
       .unwrap()
       .then((response) => {
         console.log("API response:", response); // Log the API response
-        toast.success("Profile updated successfully!");
+        toast({
+          title: "Success",
+          description: "Profile updated successfully!",
+          status: "success",
+        });
         refetch(); // Optionally refetch user data after successful update
       })
-      .catch((error) => {
-        console.error("Error during profile update:", error); // Log any errors
+      .catch((err) => {
+        console.error("Error during profile update:", err); // Log any errors
         toast({
           title: "Error",
-          description: "Failed to update profile. Please try again.",
+          description: "Failed to update profile.",
           variant: "destructive",
         });
       });
   };
 
-  const handleAddAddress = () => {
+  const handleAddAddress = async () => {
     console.log("New address being added:", newAddress); // Log the new address
 
     addUserAddress({ address: newAddress })
       .unwrap()
       .then((response) => {
         console.log("Add address API response:", response); // Log the API response
-        toast.success("Address added successfully!");
+        toast({
+          title: "Success",
+          description: "Address added successfully.",
+          status: "success",
+        });
         setNewAddress(""); // Clear the input field
         refetch(); // Optionally refetch user profile to get updated addresses
       })
-      .catch((error) => {
-        console.error("Error adding address:", error); // Log any errors
+      .catch((err) => {
+        console.error("Error adding address:", err); // Log any errors
         toast({
           title: "Error",
-          description: "Failed to add address. Please try again.",
+          description: "Failed to add address.",
           variant: "destructive",
         });
       });
@@ -202,4 +214,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default withAuth(Profile);

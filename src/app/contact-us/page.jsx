@@ -1,9 +1,6 @@
 "use client";
-import React from "react";
-import Link from "next/link";
-import { IoIosHome } from "react-icons/io";
-import { FaAngleRight } from "react-icons/fa6";
 import BreadCrum from "@/components/BreadCrum";
+import Image from "next/image";
 
 const Contact = () => {
   return (
@@ -13,10 +10,11 @@ const Contact = () => {
         <div className="flex w-full justify-center gap-6 py-12 flex-wrap-reverse ">
           <div className="bg-white w-full rounded-lg shadow-md px-5 py-6 flex flex-col gap-10 md:w-[40vw] xl:w-[35vw] ">
             <div className="w-full">
-              <img
+              <Image
                 className="w-full"
                 src="https://pickbazar-react.vercel.app/_next/static/media/contact-illustration.2f6adc05.svg"
-              ></img>
+                alt="Contact Illustration"
+              />
             </div>
             <div className="address flex flex-col gap-3">
               <h3 className="text-lg font-medium	text-slate-950">Address</h3>
