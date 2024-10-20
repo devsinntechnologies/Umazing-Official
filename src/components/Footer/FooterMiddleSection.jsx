@@ -7,9 +7,10 @@ import Link from "next/link";
 const FooterMiddleSection = () => {
   return (
     <div className="w-[95vw] mx-auto py-10">
-      <div className="w-full mx-auto grid grid-cols-1 md:grid-cols-6 gap-6">
+      <div className="w-full  grid grid-cols-1  md:grid-cols-5 gap-6">
         {/* Left Section - Brand Info */}
-        <div className="col-span-1 md:col-span-2  sapce-y-4">
+        <div className="col-span-1 md:col-span-2 w-full sapce-y-4">
+
           <div className="flex items-center  mb-4 ">
             <Logo />
           </div>
@@ -21,7 +22,7 @@ const FooterMiddleSection = () => {
           <div className="flex space-x-4">
             <a
               href="tel:+923154031364"
-              className="font-semibold border-b-2 border-primary pb-2"
+              className="font-semibold border-b-2 border-primary "
             >
               +923154031364
             </a>
@@ -29,7 +30,7 @@ const FooterMiddleSection = () => {
           <div className="flex space-x-4">
             <a
               href="mailto:umazingofficial@gmail.com"
-              className="font-semibold border-b-2 border-primary pb-2"
+              className="font-semibold border-b-2 border-primary pt-2"
             >
               umazingofficial@gmail.com
             </a>
@@ -37,7 +38,7 @@ const FooterMiddleSection = () => {
         </div>
 
         {/* Center Sections - Links */}
-        <div className="col-span-1 md:col-span-1 space-y-2">
+        <div className="col-span-1 md:col-span-1 w-full space-y-2">
           <h3 className="font-semibold text-gray-800 mb-5">My Account</h3>
           <ul className="text-gray-600 flex flex-col gap-4">
             <Link href="/seller">
@@ -51,7 +52,7 @@ const FooterMiddleSection = () => {
             </Link>
           </ul>
         </div>
-        <div className="col-span-1 md:col-span-1 space-y-2">
+        <div className="col-span-1 md:col-span-1 w-full space-y-2">
           <h3 className="font-semibold text-gray-800 mb-5">Helps</h3>
           <ul className="text-gray-600 flex flex-col gap-4">
             <Link href="/contact-us">
@@ -64,7 +65,7 @@ const FooterMiddleSection = () => {
         </div>
 
         {/* Right Section - Download Mobile App */}
-        <div className="col-span-1 md:col-span-1 flex flex-col space-y-4">
+        <div className="col-span-1 md:col-span-1 flex w-full flex-col space-y-4">
           <h3 className="font-semibold text-gray-800">Download Mobile App</h3>
           <div className="flex">
             <a href="#">
