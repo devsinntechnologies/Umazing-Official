@@ -56,9 +56,16 @@ export const auth = createApi({
     getUserProfile: builder.query({
       query: (id) => `get-user-profile/${id}`,
     }),
+    updateProfile: builder.mutation({
+      query: (updateData) => ({
+        url: 'update-profile',
+        method: 'POST',
+        body: updateData,
+      }),
+    }),
     addUserAddress: builder.mutation({
       query: (addressData) => ({
-        url: 'add-user-address',  // Use kebab-case for consistency
+        url: 'addUserAddress',
         method: 'POST',
         body: addressData,
       }),
@@ -79,6 +86,7 @@ export const {
   useCheckOtpMutation,
   useResetPasswordMutation,
   useGetUserProfileQuery,
+  useUpdateProfileMutation,
   useAddUserAddressMutation,
   useDeleteAddressByIdMutation,
 } = auth;

@@ -9,7 +9,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useGetAllProductsQuery } from "@/hooks/UseProducts";
 
 const Page = () => {
-  const userName = useSelector((state) => state.authSlice.userProfile.name);
+  const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn)
+  const userName = useSelector((state) => state.authSlice?.userProfile?.name);
   const pageNo = "1";        //number
   const pageSize = "12";   //number
   const queryParams = {

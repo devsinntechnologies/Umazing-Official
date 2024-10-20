@@ -13,7 +13,7 @@ import { usePathname } from "next/navigation";
 
 const ProductsCard = ({ product }) => {
   const { toast } = useToast();
-  const userId = useSelector((state) => state.authSlice.user.id);
+  const userId = useSelector((state) => state.authSlice?.user?.id);
   const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
   const pathname = usePathname();
 
@@ -100,7 +100,7 @@ const ProductsCard = ({ product }) => {
   }, [addSuccess, removeSuccess, addError, removeError, toast]);
 
   const handleDelete = () => {
-    console.log(`Deleting product with ID: ${product.Product.id}`);
+    console.log(`Deleting product with ID: ${product.id}`);
   };
 
   const showTrashIcon = pathname === "/seller" || pathname === "/seller/products";

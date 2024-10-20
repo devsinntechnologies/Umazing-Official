@@ -1,18 +1,24 @@
-"use client"
-import BreadCrum from "@/components/BreadCrum";
-import { useToast } from "@/hooks/use-toast";
-import { useGetUserFavouriteQuery, useRemoveFromFavouriteMutation } from "@/hooks/UseFavourite";
-import { Trash2 } from "lucide-react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+"use client"; // Add this line at the top
 
-const Page = () => {
-  const { toast } = useToast(); // Initialize toast notifications
-  const userId = useSelector((state) => state.authSlice.user.id);
+import React, { useState, useEffect } from "react";
+import { Camera } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import BreadCrum from "@/components/BreadCrum";
+import { useGetUserProfileQuery, useUpdateProfileMutation, useAddUserAddressMutation } from "@/hooks/UseAuth"; // Adjust the import path
+import { useSelector } from "react-redux";
+import { useToast } from "@/hooks/use-toast";
+
+const Profile = () => {
   const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
+  const userId = useSelector((state) => state.authSlice.user?.id);
   const [triggerFetch, setTriggerFetch] = useState(false);
-  const [wishlist, setWishlist] = useState([]);
+
+  const { toast } = useToast(); // Initialize toast
 
   useEffect(() => {
     if (userId && isLoggedIn) {
@@ -20,146 +26,192 @@ const Page = () => {
     }
   }, [userId, isLoggedIn]);
 
-  const { isSuccess: fetchSuccess, isError: fetchError, data: wishlistItems, isLoading: fetchLoading, refetch } = useGetUserFavouriteQuery(userId, {
-    skip: !triggerFetch,
+  // Fetch user profile data once userId is available
+  const { data: userProfile, error, isLoading, refetch } = useGetUserProfileQuery(userId, {
+    skip: !triggerFetch, // Skip API call if triggerFetch is false
   });
 
-  const [removeFromFavourite, { isSuccess: removeSuccess, isError: removeError, isLoading: removeLoading }] = useRemoveFromFavouriteMutation();
-
-  // Update the wishlist when new items are fetched
   useEffect(() => {
-    if (wishlistItems?.data) {
-      setWishlist(wishlistItems.data);
+    if (userProfile) {
+      console.log("User Profile Data:", userProfile);
     }
-  }, [wishlistItems]);
-
-  // Handle removal from wishlist
-  const handleRemove = (favouriteId) => {
-    // Optimistically remove the item from the wishlist
-    setWishlist((prevWishlist) => prevWishlist.filter((item) => item.id !== favouriteId));
-    // Trigger the mutation to remove from favourite
-    removeFromFavourite(favouriteId);
-  };
-
-  // useEffect to handle toast notifications for removal success and error
-  useEffect(() => {
-    if (removeSuccess) {
-      // Show success toast when item is successfully removed
-      toast({
-        title: "Removed",
-        description: "Item removed from your wishlist successfully.",
-        status: "success",
-      });
-
-      // Refetch the updated wishlist
-      refetch();
-    }
-    
-    if (removeError) {
-      // Show error toast if there's an error during removal
+    if (error) {
+      console.error("Error fetching user profile:", error);
       toast({
         title: "Error",
-        description: "Failed to remove item from wishlist. Please try again.",
-        status: "error",
+        description: "Failed to fetch profile data. Please try again.",
+        variant: "destructive",
       });
-
-      // Optionally refetch to restore the correct state
-      refetch();
     }
-  }, [removeSuccess, removeError, toast, refetch]);
+  }, [userProfile, error, toast]);
 
-  if (fetchLoading) {
-    return (
-      <div>
-        {/* Skeleton Loading UI */}
-      </div>
-    );
-  }
+  const [updateProfile] = useUpdateProfileMutation();
+  const [addUserAddress] = useAddUserAddressMutation();
 
-  if (fetchError) {
-    return <div>Error fetching wishlist items</div>;
-  }
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [newAddress, setNewAddress] = useState("");
+
+  // Update state when userProfile data is fetched
+  useEffect(() => {
+    if (userProfile) {
+      setName(userProfile.data.name);
+      setEmail(userProfile.data.email);
+      setBirthday(userProfile.data.dob);
+    }
+  }, [userProfile]);
+
+  const handleUpdateProfile = async () => {
+    const updateData = { name, email, dob: birthday }; // Collecting the data to send
+
+    console.log("Update data being sent:", updateData); // Log the data before sending
+
+    updateProfile(updateData)
+      .unwrap()
+      .then((response) => {
+        console.log("API response:", response); // Log the API response
+        toast({
+          title: "Success",
+          description: "Profile updated successfully!",
+          status: "success",
+        });
+        refetch(); // Optionally refetch user data after successful update
+      })
+      .catch((err) => {
+        console.error("Error during profile update:", err); // Log any errors
+        toast({
+          title: "Error",
+          description: "Failed to update profile.",
+          variant: "destructive",
+        });
+      });
+  };
+
+  const handleAddAddress = async () => {
+    console.log("New address being added:", newAddress); // Log the new address
+
+    addUserAddress({ address: newAddress })
+      .unwrap()
+      .then((response) => {
+        console.log("Add address API response:", response); // Log the API response
+        toast({
+          title: "Success",
+          description: "Address added successfully.",
+          status: "success",
+        });
+        setNewAddress(""); // Clear the input field
+        refetch(); // Optionally refetch user profile to get updated addresses
+      })
+      .catch((err) => {
+        console.error("Error adding address:", err); // Log any errors
+        toast({
+          title: "Error",
+          description: "Failed to add address.",
+          variant: "destructive",
+        });
+      });
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error fetching profile data</div>;
 
   return (
-    <>
+    <div className="w-full py-10 flex flex-col gap-8 px-5">
       <BreadCrum />
-      <div>
-        <main className="container md:w-[83%] mx-auto px-4 md:px-6 lg:px-8 py-8 mt-20">
-          <h1 className="text-2xl font-semibold mb-6 text-center">My Wishlist</h1>
+      <div className="flex items-center gap-5 flex-col md:flex-row">
+        <div className="bg-slate-300 rounded-full flex justify-center items-center w-[120px] h-[120px] ">
+          <Camera className="text-4xl" />
+        </div>
+        <h3 className="font-semibold text-center md:text-left">{name}</h3>
+      </div>
 
-          <div id="overflow" className="shadow-sm shadow-primary overflow-auto border-b border-gray-200 sm:rounded-lg ">
-            <table className="w-[95%] divide-y divide-gray-200 table-fixed">
-              <thead>
-                <tr>
-                  <th className="w-[170px] md:w-1/3 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Product
-                  </th>
-                  <th className="w-[150px] md:w-1/4 table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Price
-                  </th>
-                  <th className="w-[150px] md:w-1/4 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Stock Status
-                  </th>
-                  <th className="w-[150px] md:w-1/6 px-4 py-3"></th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {wishlist.length > 0 ? (
-                  wishlist.map((item) => (
-                    <tr key={item.id} className="text-sm sm:text-lg">
-                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <Image
-                            className="size-10 rounded-full"
-                            src={`http://97.74.89.204/${item.Product.Product_Images[0]?.imageUrl}`}
-                            alt={item.Product.name}
-                            width={40}
-                            height={40}
-                          />
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">
-                              {item.Product.name}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="table-cell px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
-                          ${item.Product.basePrice}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-md bg-green-100 text-green-700">
-                          In Stock
-                        </span>
-                      </td>
-                      <td className="p-4 text-right ">
-                        <button className="py-2 text-white px-4 rounded-full bg-primary text-sm">
-                          Add to Cart
-                        </button>
-                      </td>
-                      <td className="px-4 py-4 text-right text-sm font-medium text-destructive">
-                        <Trash2
-                          size={24}
-                          onClick={() => handleRemove(item.id)}
-                        />
-                      </td>
-                    </tr>
+      <div className="flex flex-col gap-4">
+        <h1 className="font-bold text-2xl sm:text-3xl">Account</h1>
+
+        {/* Name Section */}
+        <div className="flex justify-between items-center px-3 border-b-[1px] border-solid border-black pb-3 pt-4 sm:pt-6">
+          <div className="flex flex-col sm:flex-row">
+            <h3 className="font-semibold text-base sm:text-lg">Name: &nbsp;</h3>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="text-base sm:text-lg border-b-2 border-transparent focus:border-primary focus:outline-none"
+            />
+          </div>
+          <button onClick={handleUpdateProfile} className="text-primary font-semibold text-sm sm:text-base">
+            Save
+          </button>
+        </div>
+
+        {/* Email Section */}
+        <div className="flex justify-between items-center px-3 border-b-[1px] border-solid border-black pb-3 pt-4 sm:pt-6">
+          <div className="flex flex-col sm:flex-row">
+            <h3 className="font-semibold text-base sm:text-lg">Email: &nbsp;</h3>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="text-base sm:text-lg border-b-2 border-transparent focus:border-primary focus:outline-none"
+            />
+          </div>
+          <button onClick={handleUpdateProfile} className="text-primary font-semibold text-sm sm:text-base">
+            Save
+          </button>
+        </div>
+
+        {/* Accordion Section */}
+        <Accordion type="single" collapsible className="border-b-[1px] border-solid border-black">
+          <AccordionItem value="item-1" className="px-3">
+            <AccordionTrigger className="text-base sm:text-lg">Address</AccordionTrigger>
+            <AccordionContent>
+              <div className="flex justify-between items-center flex-col gap-4">
+                {userProfile?.data?.addresses?.length ? (
+                  userProfile.data.addresses.map((address) => (
+                    <div key={address.id} className="flex justify-between items-center py-3 sm:py-4 bg-slate-100 px-3 rounded-lg w-full">
+                      <h3 className="font-normal text-sm sm:text-base">{address.address}</h3>
+                      <p className="text-primary font-semibold text-sm sm:text-base cursor-pointer">Edit</p>
+                    </div>
                   ))
                 ) : (
-                  <tr>
-                    <td colSpan="4" className="text-center py-4">
-                      No items in your wishlist.
-                    </td>
-                  </tr>
+                  <div className="flex justify-center items-center py-3 sm:py-4 bg-slate-100 px-3 rounded-lg w-full">
+                    <h3 className="font-normal text-sm sm:text-base">No addresses added yet.</h3>
+                  </div>
                 )}
-              </tbody>
-            </table>
+                <input
+                  type="text"
+                  value={newAddress}
+                  onChange={(e) => setNewAddress(e.target.value)}
+                  placeholder="Add a new address"
+                  className="border-b-2 border-transparent focus:border-primary focus:outline-none w-full"
+                />
+                <button onClick={handleAddAddress} className="mt-4 sm:mt-6 px-4 py-2 sm:px-5 sm:py-3 bg-green-500 text-white rounded-lg hover:bg-green-600">
+                  Add
+                </button>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+        {/* Birthday Section */}
+        <div className="flex justify-between items-center px-3 border-b-[1px] border-solid border-black pb-3 pt-4 sm:pt-6">
+          <div className="flex flex-col sm:flex-row">
+            <h3 className="font-semibold text-base sm:text-lg">Birthday: &nbsp;</h3>
+            <input
+              type="date"
+              value={birthday}
+              onChange={(e) => setBirthday(e.target.value)}
+              className="text-base sm:text-lg border-b-2 border-transparent focus:border-primary focus:outline-none"
+            />
           </div>
-        </main>
+          <button onClick={handleUpdateProfile} className="text-primary font-semibold text-sm sm:text-base">
+            Save
+          </button>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default Page;
+export default Profile;
