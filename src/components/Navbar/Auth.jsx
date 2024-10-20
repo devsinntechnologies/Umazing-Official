@@ -12,8 +12,9 @@ import { setUserProfile } from "@/slice/authSlice";
 import { logOut } from "@/slice/authSlice";
 import AuthDialog from "../auth/AuthDialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
+import { cn } from "@/lib/utils";
 
-const Auth = () => {
+const Auth = ({className}) => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.authSlice.user?.id);
   const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
@@ -46,9 +47,9 @@ const Auth = () => {
   }, [userProfile, error, dispatch]);
 
   return (
-    <div className="flex gap-2 items-center space-x-1 text-gray-500 text-sm">
+    <div className={`${cn(className)} flex gap-2 items-center space-x-1 text-gray-500 text-sm`}>
       {isLoggedIn ?
-        <div className="flex  items-center gap-3 min-h-10">
+        <div className="flex items-center gap-3 min-h-10">
           <Link href='/wishlist' className="size-8 md:size-10 rounded-full text-primary font-bold flex items-center justify-center"><Heart className="font-bold" /></Link>
           <Link href='/cart' className="size-8 md:size-10 rounded-full text-primary font-bold flex items-center justify-center"><ShoppingCart className="font-bold" /></Link>
           {/* <div className="size-8 md:size-10 rounded-full text-primary font-bold flex items-center justify-center"><Bell className="font-bold" /></div> */}

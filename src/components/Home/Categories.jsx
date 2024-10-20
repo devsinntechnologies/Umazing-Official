@@ -26,7 +26,7 @@ export default function Categories() {
   }, []);
 
   return (
-    <div className=" w-[95vw] mx-auto  flex justify-center items-center flex-col gap-8 py-10">
+    <div className="w-full flex justify-center items-center flex-col gap-8 py-10">
       <p className="font-medium text-xl text-primary">Category</p>
       <h1 className="font-semibold text-xl sm:text-2xl md:text-3xlxl lg:text-4xl">
         Shop by Top Categories

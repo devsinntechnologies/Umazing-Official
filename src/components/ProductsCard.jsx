@@ -5,7 +5,7 @@ import {
   useAddToFavouriteMutation,
   useRemoveFromFavouriteMutation,
 } from "@/hooks/UseFavourite";
-import { Trash2, Heart, ShoppingCart } from "lucide-react"; // Import ShoppingCart
+import { Trash2, Heart } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -141,7 +141,7 @@ const ProductsCard = ({ product }) => {
           onClick={isProductInWishlist ? handleRemove : handleAddToFavorites}
         >
           {isProductInWishlist ? (
-            <Heart size={20} color="red" />
+            <Heart size={20} color="red" fill="red"/>
           ) : (
             <Heart size={20} color="gray" />
           )}

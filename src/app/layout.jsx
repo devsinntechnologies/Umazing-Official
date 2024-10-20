@@ -1,4 +1,4 @@
-import { Poppins } from "next/font/google";
+import { Poppins, Roboto_Condensed } from "next/font/google";
 import "./globals.css";
 import Provider from "./Provider";
 import { Toaster } from "@/components/ui/toaster";

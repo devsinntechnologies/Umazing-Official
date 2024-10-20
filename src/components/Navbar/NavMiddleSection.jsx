@@ -35,16 +35,12 @@ const NavMiddleSection = () => {
           {/* Logo Section */}
           <div className="w-full md:w-fit flex items-center justify-between md:justify-center">
             <Logo />
-            <div className="block md:hidden">
-              <Auth />
-            </div>
+              <Auth className="block md:hidden"/>
           </div>
           {/* Search Bar */}
           <Searchbar />
           {/* Contact Info */}
-          <div className="hidden md:block">
-            <Auth />
-          </div>
+            <Auth className="hidden md:block"/>
         </div>
       </header>
     </div>
