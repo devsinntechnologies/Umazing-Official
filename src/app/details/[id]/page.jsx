@@ -6,6 +6,8 @@ import React, { useEffect, useState } from "react";
 import { fetchProductById } from "@/services";
 import { Skeleton } from "@/components/ui/skeleton"; // Skeleton loader import
 import { Minus, Plus, ShoppingCart, Star, Instagram, Facebook, Twitter, Heart } from "lucide-react";
+import Swiper from "@/components/Swiper";
+
 
 const ProductDetails = ({ params }) => {
   const { id } = params;
@@ -76,12 +78,12 @@ const ProductDetails = ({ params }) => {
   console.log(selectedImage);
 
   return (
-    <main className="w-full flex justify-center items-center overflow-hidden px-3 my-10">
-      <section className="my-6 w-full lg:w-[90vw]">
+    <main className="w-full flex justify-center items-center overflow-hidden  my-10">
+      <section className="my-6 w-[90vw]">
         {/* Product Details */}
 
-        <div className="flex lg:flex-row flex-col gap-10">
-          <div className="w-full lg:w-1/2 h-auto lg:h-[558px] flex lg:flex-row flex-col-reverse justify-center items-center lg:justify-between">
+        <div className="flex md:flex-row flex-col gap-5">
+          <div className="w-full md:w-1/2 h-auto lg:h-[558px] flex lg:flex-row flex-col-reverse justify-center items-center lg:justify-between">
             {/* Thumbnails */}
 
             {/* <div className="w-[70px] lg:w-[80px] flex lg:flex-col justify-center gap-8 lg:gap-4">
@@ -101,7 +103,7 @@ const ProductDetails = ({ params }) => {
             </div> */}
 
             {/* Preview Image */}
-            <div className="w-[350px] sm:w-[400px] lg:w-[556px] ml-6">
+            {/* <div className="w-[350px] sm:w-[400px] lg:w-[556px] ml-6">
               <Image
                 src={
                   "http://97.74.89.204/uploads/products/3067216fdd3760ec9f46aa896ce48beb.jpeg"
@@ -110,15 +112,16 @@ const ProductDetails = ({ params }) => {
                 width={506}
                 height={506}
               />
-            </div>
+            </div> */}
+            <Swiper/>
           </div>
 
           {/* Product Information */}
-          <div className="w-full lg:w-1/2 h-auto lg:h-[501px]">
+          <div className="w-full md:w-1/2 h-auto lg:h-[501px]">
             <div className="flex items-center gap-3">
-              <h1 className="text-[25px] lg:text-[36px] font-semibold">
+              {/* <h1 className="text-[25px] lg:text-[36px] font-semibold">
                 {product.name}
-              </h1>
+              </h1> */}
              <div className="flex justify-between w-full">
              <div className="w-[71px] h-[29px] rounded-[4px] bg-primary text-white text-[14px] py-[4px] px-[8px]">
                 In Stock
