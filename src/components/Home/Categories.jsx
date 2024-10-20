@@ -42,26 +42,28 @@ export default function Categories() {
           ))}
         </div>
       ) : (
-        <ul className="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-8 justify-center gap-3 items-center w-[95%] mx-auto my-5">
+        <ul className="overflow-x-scroll grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 justify-center gap-3 items-center w-full mx-auto my-5">
           {data &&
             data.map((category, index) => (
               <Link key={index} href={`/shop/${category.id}`}>
-                <li className=" rounded-xl border border-solid border-border flex justify-center items-center flex-col gap-3 py-4 cursor-pointer transition-shadow duration-150 ease-in-out hover:border-primary hover:shadow-sm hover:shadow-primary">
-                  <Image
-                    src={
-                      category.imageUrl
-                        ? `http://97.74.89.204/${category.imageUrl}`
-                        : "/placeholder-image.jpg"
-                    }
-                    alt={category.name || "No name available"}
-                    width={100}
-                    height={100}
-                    className="object-cover rounded-md mb-2 w-8 "
-                  />
-                  <h3 className="text-sm">
+                <div className="w-[148px] flex items-center flex-col justify-center space-y-3">
+                  <div className="rounded-full bg-secondary px-4 py-4 border border-border gap-6 cursor-pointer size-32 transition-shadow duration-150 ease-in-out hover:border-primary">
+                    <Image
+                      src={
+                        category.imageUrl
+                          ? `http://97.74.89.204/${category.imageUrl}`
+                          : "/placeholder-image.jpg"
+                      }
+                      alt={category.name || "No name available"}
+                      width={80}
+                      height={80}
+                      className="object-cover w-full h-full size-20"
+                    />
+                  </div>
+                  <h3 className="text-sm w-full text-center">
                     {category.name || "Unknown Category"}
                   </h3>
-                </li>
+                </div>
               </Link>
             ))}
         </ul>
