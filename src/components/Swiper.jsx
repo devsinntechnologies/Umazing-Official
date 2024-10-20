@@ -41,16 +41,19 @@ const Gallery = () => {
         spaceBetween={10}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[Navigation, Thumbs]} // Registering modules in the component itself
-        className="w-full h-96"
+        className="w-full h-80"
+
       >
         {Product_Images.map((image, index) => (
-          <SwiperSlide key={index}>
+        <div className="h-20 bg-primary">
+            <SwiperSlide key={index}>
             <img 
               src={`http://97.74.89.204/${image.imageUrl}`} 
               alt={`Image ${index}`} 
               className="w-full h-full object-cover" 
             />
           </SwiperSlide>
+        </div>
         ))}
       </Swiper>
 

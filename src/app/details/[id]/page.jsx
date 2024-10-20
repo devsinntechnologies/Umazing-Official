@@ -14,7 +14,7 @@ const ProductDetails = ({ params }) => {
   console.log(id);
 
   const [selectedImage, setSelectedImage] = useState("/preview.png");
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState([]);
   const [loader, setLoader] = useState(true);
 
