@@ -50,7 +50,7 @@ const Page = () => {
 
   const handleModalClose = () => {
     if (responseData?.data?.product?.id) {
-      router.push(`/products/product/${responseData.data.product.id}`);
+      router.push(`/details/${responseData.data.product.id}`);
     }
     setShowSuccessModal(false);
   };
