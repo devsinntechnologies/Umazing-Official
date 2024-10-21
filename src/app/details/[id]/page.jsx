@@ -6,6 +6,11 @@ import React, { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton"; // Skeleton loader import
 import { Minus, Plus, ShoppingCart, Star, Instagram, Facebook, Twitter, Heart } from "lucide-react";
 import Swiper from "@/components/Swiper";
+import SelectSize from "@/components/singleProduct/SelectSize";
+import SelectColor from "@/components/singleProduct/SelectColor";
+import { Rating } from "@mui/material";
+
+
 
 
 const ProductDetails = ({ params }) => {
@@ -66,7 +71,7 @@ const ProductDetails = ({ params }) => {
         {/* Product Details */}
 
         <div className="flex flex-col gap-5">
-          <div className="w-full md:w-1/2 h-auto lg:h-[558px] flex lg:flex-row flex-col-reverse justify-center items-center lg:justify-between">
+          <div className="w-full  h-auto flex md:flex-row flex-col justify-center items-center lg:justify-between">
             {/* Thumbnails */}
 
             {/* <div className="w-[70px] lg:w-[80px] flex lg:flex-col justify-center gap-8 lg:gap-4">
@@ -86,7 +91,7 @@ const ProductDetails = ({ params }) => {
             </div> */}
 
             {/* Preview Image */}
-            <div className="w-[350px] sm:w-[400px] lg:w-[556px] ml-6">
+            <div className="w-full md:w-[50%] ">
               {/* <div className="w-[350px] sm:w-[400px] lg:w-[556px] ml-6">
               <Image
                 src={
@@ -102,25 +107,21 @@ const ProductDetails = ({ params }) => {
             </div>
 
             {/* Product Information */}
-            <div className="w-full md:w-1/2 h-auto lg:h-[501px]">
-              <div className="flex items-center gap-3">
-                <h1 className="text-[25px] lg:text-[36px] font-semibold">
-                  {/* <h1 className="text-[25px] lg:text-[36px] font-semibold">
-                {product.name}
-                </h1> */}
-                </h1>
-                <div className="flex justify-between w-full">
-                  <div className="w-[71px] h-[29px] rounded-[4px] bg-primary text-white text-[14px] py-[4px] px-[8px]">
-                    In Stock
+            <div className="w-full md:w-[50%] h-auto lg:h-[501px]">
+           
+                
+              
+                  <div className=" rounded-[4px]  text-primary text-2xl font-bold ">
+                    {/* {products.name} */}
+                  Man Shirts
                   </div>
-                  <div><Heart /></div>
-                </div>
-              </div>
-
+                  
+              
+              
               {/* Ratings and other product details */}
               <div className="flex items-center gap-3 my-2">
                 <div className="flex">
-                  <Star
+                  {/* <Star
                     size={12}
                     color="#4D4D4D"
                   />
@@ -139,7 +140,8 @@ const ProductDetails = ({ params }) => {
                   <Star
                     size={12}
                     color="#4D4D4D"
-                  />
+                  /> */}
+                  <Rating/>
                 </div>
                 <p className="text-[#666666] text-[14px]">4 review</p>
                 <p className="text-[14px]">
@@ -161,7 +163,7 @@ const ProductDetails = ({ params }) => {
               </div>
 
               {/* Other product information */}
-              <div className="w-full lg:w-[647px] my-5 border border-[#E6E6E6]"></div>
+              {/* <div className="w-full lg:w-[647px] my-5 border border-[#E6E6E6]"></div>
 
               <div className="flex flex-col lg:flex-row justify-between px-3 gap-4 lg:gap-0">
                 <div className="flex items-center gap-2">
@@ -171,23 +173,33 @@ const ProductDetails = ({ params }) => {
                 <div className="flex items-center gap-3">
                   <p className="text-[14px]">Share item :</p>
                   <div className="flex items-center gap-5">
-                    <Facebook width={20} height={20} className="hover:w-[40px] hover:h-[40px] hover:px-2 hover:py-2 hover:rounded-full hover:bg-primary" />
-                    <Instagram width={20} height={20} className="hover:w-[40px] hover:h-[40px] hover:px-2 hover:py-2 hover:rounded-full hover:bg-primary" />
-                    <Twitter width={20} height={20} className="hover:w-[40px] hover:h-[40px] hover:px-2 hover:py-2 hover:rounded-full hover:bg-primary" />
+                    <Facebook width={20} height={20} className="hover:shadow-lg" />
+                    <Instagram width={20} height={20} className="hover:shadow-lg" />
+                    <Twitter width={20} height={20} className="hover:shadow-lg" />
                   </div>
                 </div>
+              </div> */}
+              <div className="my-4">
+                <h1 className="font-semibold text-md">Product Description</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cum ullam sapiente nihil nesciunt recusandae aut totam, tempore sit impedit enim esse ea facilis ipsum blanditiis! Ipsam natus assumenda ducimus illum nihil illo, quidem quibusdam?</p>
               </div>
-              <div className="w-full lg::w-[568px] mt-4">
+              <div className="w-full lg:w-[647px] my-5 border border-[#E6E6E6]"></div>
+              <div className="flex px-3 gap-4">
+               
+               <SelectColor/>
+               <SelectSize/>
+              </div>
+              {/* <div className="w-full lg::w-[568px] mt-4">
                 <p className="text-[14px] md:text-[16px] text-[#808080]">
                   {product.longDescription}
                 </p>
-              </div>
+              </div> */}
 
               <div className="w-full lg:w-[647px] my-5 border border-[#E6E6E6]"></div>
 
               {/* Add to cart */}
-              <div className="flex items-center justify-between space-x-2 px-1 lg:px-3">
-                <div className="h-[50px] w-[124px] border border-[#E6E6E6] p-[8px] rounded-[170px] flex gap-2 lg:gap-0 items-center justify-between py-2">
+              <div className="flex items-center w-full justify-between space-x-2 px-1 lg:px-3">
+                <div className="h-[50px] w-[25%] border border-[#E6E6E6] p-[8px] rounded-[170px] flex gap-2 lg:gap-0 items-center justify-between py-2">
                   <button
                     className="w-[34px] h-[34px] bg-[#F2F2F2] rounded-full flex justify-center items-center"
                     onClick={handleDecrement}
@@ -203,10 +215,13 @@ const ProductDetails = ({ params }) => {
                     <Plus width={10} height={10} />
                   </button>
                 </div>
-                <button className="h-[51px] w-[300px] text-sm lg:w-[447px] bg-primary text-white text-[16px] font-semibold flex justify-center items-center gap-3 lg:gap-4 rounded-[43px]">
+                <button className="h-[51px] w-[55%] text-sm lg:w-[347px] bg-primary text-white text-[16px] font-semibold flex justify-center items-center gap-3 lg:gap-4 rounded-[43px]">
                   Add to Cart
                   <ShoppingCart width={20} height={20} />
                 </button>
+                <div className="bg-primary h-[51px] w-[20%] flex justify-center items-center rounded-[43px]"><Heart 
+                color="white"
+                /></div>
                 {/* <div className="w-[40px] h-[40px] rounded-full border border-[#F2F2F2] bg-[#F2F2F2] flex justify-center items-center">
                 <Image src="/Heart.png" alt="" width={20} height={20} />
               </div> */}

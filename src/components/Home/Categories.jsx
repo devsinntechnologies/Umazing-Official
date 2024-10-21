@@ -28,7 +28,7 @@ const Categories = ()=> {
       ) : isError ? (
         <p className="text-red-500">Error loading categories. Please try again.</p>
       ) : (
-        <ul className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 justify-center gap-3 items-center w-full mx-auto my-5">
+        <ul className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 justify-center gap-3 items-center w-full mx-auto my-5">
           {categoriesData?.data?.map((category, index) => (
             <Link key={index} href={`/shop/${category.id}`}>
               <div className="w-[148px] flex items-center flex-col justify-center space-y-3">
