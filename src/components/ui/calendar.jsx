@@ -8,18 +8,20 @@ import { buttonVariants } from "@/components/ui/button";
 
 function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
   const currentYear = new Date().getFullYear()
+  const fromYear = 1960;
+  const toYear = currentYear - 10;
   
   return (
     <DayPicker
       captionLayout="dropdown"
-      fromYear={1960}
-      toYear={currentYear}
+      fromYear={fromYear}
+      toYear={toYear}
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
       classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
-        caption: "flex justify-between pt-1 relative items-center",
+        caption: "flex justify-between pt-1 relative items-center justify-between w-full gap-2",
         caption_label: "text-sm font-medium hidden",
         nav: "space-x-1 flex items-center",
         nav_button: cn(
@@ -44,9 +46,9 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
         day_outside: "text-muted-foreground opacity-50",
         day_disabled: "text-muted-foreground opacity-50",
         caption_dropdowns: "flex items-center justify-between gap-2", // Customize dropdown container
-        dropdown: "px-2 py-1 border border-gray-300 rounded-md text-sm bg-white", // Style for dropdowns
-        dropdown_month: "w-28", // Set width for month dropdown
-        dropdown_year: "w-20", // Set width for year dropdown
+        dropdown: "px-2 py-1 border border-gray-300 rounded-md text-sm bg-white w-full", // Style for dropdowns
+        dropdown_month: "w-1/2", // Set width for month dropdown
+        dropdown_year: "w-1/2", // Set width for year dropdown
         day_hidden: "invisible",
         ...classNames,
       }}
