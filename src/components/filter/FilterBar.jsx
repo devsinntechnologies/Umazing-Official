@@ -11,7 +11,8 @@ const FilterBar = () => {
   const searchParams = useSearchParams();
 
   // Fetch categories and offers data
-  const { data: categories, isLoading: isLoadingCategories } = useGetCategoriesQuery();
+  const { data: categories, isLoading: isLoadingCategories } =
+    useGetCategoriesQuery();
   const { data: offers, isLoading: isLoadingOffers } = useGetAllOffersQuery();
 
   // Initialize filter states from search parameters
@@ -75,7 +76,10 @@ const FilterBar = () => {
                   value={category.id}
                   checked={selectedParams.categoryId === category.id}
                   onChange={(e) =>
-                    setSelectedParams({ ...selectedParams, categoryId: e.target.value })
+                    setSelectedParams({
+                      ...selectedParams,
+                      categoryId: e.target.value,
+                    })
                   }
                   className="accent-primary"
                 />
@@ -119,7 +123,10 @@ const FilterBar = () => {
                   value={offer.id}
                   checked={selectedParams.offerId === offer.id}
                   onChange={(e) =>
-                    setSelectedParams({ ...selectedParams, offerId: e.target.value })
+                    setSelectedParams({
+                      ...selectedParams,
+                      offerId: e.target.value,
+                    })
                   }
                   className="accent-primary"
                 />
@@ -153,7 +160,12 @@ const FilterBar = () => {
             name="condition"
             value="New"
             checked={selectedParams.condition === "New"}
-            onChange={(e) => setSelectedParams({ ...selectedParams, condition: e.target.value })}
+            onChange={(e) =>
+              setSelectedParams({
+                ...selectedParams,
+                condition: e.target.value,
+              })
+            }
             className="accent-primary"
           />
           <p>New</p>
@@ -164,7 +176,12 @@ const FilterBar = () => {
             name="condition"
             value="Used"
             checked={selectedParams.condition === "Used"}
-            onChange={(e) => setSelectedParams({ ...selectedParams, condition: e.target.value })}
+            onChange={(e) =>
+              setSelectedParams({
+                ...selectedParams,
+                condition: e.target.value,
+              })
+            }
             className="accent-primary"
           />
           <p>Used</p>
@@ -191,7 +208,9 @@ const FilterBar = () => {
         <input
           type="text"
           value={selectedParams.city}
-          onChange={(e) => setSelectedParams({ ...selectedParams, city: e.target.value })}
+          onChange={(e) =>
+            setSelectedParams({ ...selectedParams, city: e.target.value })
+          }
           className="border rounded px-2 py-1 w-full"
           placeholder="Enter city"
         />
@@ -219,14 +238,18 @@ const FilterBar = () => {
             type="number"
             placeholder="Min Price"
             value={selectedParams.minPrice}
-            onChange={(e) => setSelectedParams({ ...selectedParams, minPrice: e.target.value })}
+            onChange={(e) =>
+              setSelectedParams({ ...selectedParams, minPrice: e.target.value })
+            }
             className="border rounded px-2 py-1"
           />
           <input
             type="number"
             placeholder="Max Price"
             value={selectedParams.maxPrice}
-            onChange={(e) => setSelectedParams({ ...selectedParams, maxPrice: e.target.value })}
+            onChange={(e) =>
+              setSelectedParams({ ...selectedParams, maxPrice: e.target.value })
+            }
             className="border rounded px-2 py-1"
           />
         </div>
@@ -265,7 +288,9 @@ const FilterBar = () => {
           <input
             type="checkbox"
             checked={selectedParams.claim}
-            onChange={(e) => setSelectedParams({ ...selectedParams, claim: e.target.checked })}
+            onChange={(e) =>
+              setSelectedParams({ ...selectedParams, claim: e.target.checked })
+            }
             className="accent-primary"
           />
           <p>Claimable Products</p>

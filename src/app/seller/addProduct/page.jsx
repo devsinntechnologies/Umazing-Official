@@ -15,6 +15,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 // import {
 //   Table,
 //   TableBody,
@@ -371,7 +379,7 @@ const Page = () => {
               value={productDetails.longDescription}
               onChange={handleInputChange}
               rows={3}
-              className="w-full h-36 pl-2 pt-2 mt-2 border rounded-md border-gray-500"
+              className=" w-full h-36 pl-2 pt-2 mt-2 border rounded-md border-gray-500"
               placeholder="Type long description here"
             />
           </div>
@@ -383,9 +391,10 @@ const Page = () => {
                 name="basePrice"
                 value={productDetails.basePrice}
                 onChange={handleInputChange}
-                className="w-full h-12 rounded-md pl-2 mt-2 border border-gray-500"
-                type="text"
+                className=" w-full h-12 rounded-md px-2 mt-2 border border-gray-500"
+                type="number"
                 placeholder="Enter base price"
+                min="0"
               />
             </div>
             <div className="w-full sm:w-1/2">
@@ -394,14 +403,15 @@ const Page = () => {
                 name="baseQuantity"
                 value={productDetails.baseQuantity}
                 onChange={handleInputChange}
-                className="w-full h-12 rounded-md pl-2 mt-2 border border-gray-500"
-                type="text"
+                className="  base w-full h-12 rounded-md px-2 mt-2 border border-gray-500"
+                type="number"
                 placeholder="Enter base quantity"
+                min="0"
               />
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row mb-4 gap-3">
+          <div className="flex flex-col sm:flex-row mb-4  gap-3 pt-1  ">
             <div className="w-full sm:w-1/2">
               <label className="text-sm">City</label>
               <input
@@ -413,16 +423,32 @@ const Page = () => {
                 placeholder="Enter city"
               />
             </div>
-            <div className="w-full sm:w-1/2">
-              <label className="text-sm">Condition</label>
-              <input
+
+            {/* <input
                 name="condition"
                 value={productDetails.condition}
                 onChange={handleInputChange}
                 className="w-full h-12 rounded-md pl-2 mt-2 border border-gray-500"
                 type="text"
                 placeholder="Enter condition"
-              />
+              /> */}
+            <div className="w-full sm:w-1/2 flex flex-col gap-2">
+              <label className="text-sm mt-1">Condition</label>
+              <Select
+                value={productDetails.condition}
+                onValueChange={(value) =>
+                  handleInputChange({ target: { name: "condition", value } })
+                }
+                className="w-full  rounded-md pl-2   border border-gray-500  focus:outline-none"
+              >
+                <SelectTrigger className="w-full h-[70%]">
+                  <SelectValue placeholder="Select Condition" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="new">New</SelectItem>
+                  <SelectItem value="used">Used</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
@@ -654,7 +680,7 @@ const Page = () => {
         <div className="w-full lg:w-1/3 lg:ml-10 mt-10 lg:mt-0">
           <div className="mb-4">
             <div
-              className="w-full h-[264px] border overflow-hidden rounded-md mt-2 flex flex-wrap gap-2 items-center justify-center cursor-pointer"
+              className=" w-full h-[264px] border overflow-hidden rounded-md mt-2 flex flex-wrap gap-2 items-center justify-center cursor-pointer"
               onClick={handlePlaceholderClick}
             >
               {images.length === 0 ? (
