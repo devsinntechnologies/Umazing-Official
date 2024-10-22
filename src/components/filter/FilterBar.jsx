@@ -20,7 +20,8 @@ const FilterBar = () => {
   const searchParams = useSearchParams();
 
   // Fetch categories and offers data
-  const { data: categories, isLoading: isLoadingCategories } = useGetCategoriesQuery();
+  const { data: categories, isLoading: isLoadingCategories } =
+    useGetCategoriesQuery();
   const { data: offers, isLoading: isLoadingOffers } = useGetAllOffersQuery();
 
   // Initialize filter states from search parameters
@@ -505,7 +506,9 @@ const FilterBar = () => {
           <input
             type="checkbox"
             checked={selectedParams.claim}
-            onChange={(e) => setSelectedParams({ ...selectedParams, claim: e.target.checked })}
+            onChange={(e) =>
+              setSelectedParams({ ...selectedParams, claim: e.target.checked })
+            }
             className="accent-primary"
           />
           <p>Claimable Products</p>

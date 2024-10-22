@@ -1,8 +1,11 @@
-"use client"
+"use client";
 import BreadCrum from "@/components/BreadCrum";
 import withAuth from "@/components/hoc/withAuth";
 import { useToast } from "@/hooks/use-toast";
-import { useGetUserFavouriteQuery, useRemoveFromFavouriteMutation } from "@/hooks/UseFavourite";
+import {
+  useGetUserFavouriteQuery,
+  useRemoveFromFavouriteMutation,
+} from "@/hooks/UseFavourite";
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -21,11 +24,24 @@ const Page = () => {
     }
   }, [userId, isLoggedIn]);
 
-  const { isSuccess: fetchSuccess, isError: fetchError, data: wishlistItems, isLoading: fetchLoading, refetch } = useGetUserFavouriteQuery(userId, {
+  const {
+    isSuccess: fetchSuccess,
+    isError: fetchError,
+    data: wishlistItems,
+    isLoading: fetchLoading,
+    refetch,
+  } = useGetUserFavouriteQuery(userId, {
     skip: !triggerFetch,
   });
 
-  const [removeFromFavourite, { isSuccess: removeSuccess, isError: removeError, isLoading: removeLoading }] = useRemoveFromFavouriteMutation();
+  const [
+    removeFromFavourite,
+    {
+      isSuccess: removeSuccess,
+      isError: removeError,
+      isLoading: removeLoading,
+    },
+  ] = useRemoveFromFavouriteMutation();
 
   // Update the wishlist when new items are fetched
   useEffect(() => {
@@ -37,7 +53,9 @@ const Page = () => {
   // Handle removal from wishlist
   const handleRemove = (favouriteId) => {
     // Optimistically remove the item from the wishlist
-    setWishlist((prevWishlist) => prevWishlist.filter((item) => item.id !== favouriteId));
+    setWishlist((prevWishlist) =>
+      prevWishlist.filter((item) => item.id !== favouriteId)
+    );
     // Trigger the mutation to remove from favourite
     removeFromFavourite(favouriteId);
   };
@@ -55,7 +73,7 @@ const Page = () => {
       // Refetch the updated wishlist
       refetch();
     }
-    
+
     if (removeError) {
       // Show error toast if there's an error during removal
       toast({
@@ -70,11 +88,7 @@ const Page = () => {
   }, [removeSuccess, removeError, toast, refetch]);
 
   if (fetchLoading) {
-    return (
-      <div>
-        {/* Skeleton Loading UI */}
-      </div>
-    );
+    return <div>{/* Skeleton Loading UI */}</div>;
   }
 
   if (fetchError) {
@@ -85,11 +99,16 @@ const Page = () => {
     <>
       <BreadCrum />
       <div>
-        <main className="container md:w-[83%] mx-auto px-4 md:px-6 lg:px-8 py-8 mt-20">
-          <h1 className="text-2xl font-semibold mb-6 text-center">My Wishlist</h1>
+        <main className="container md:w-[85%] mx-auto px-4 md:px-6 lg:px-8 py-8 mt-4">
+          <h1 className="text-2xl font-semibold mb-6 text-center">
+            My Wishlist
+          </h1>
 
-          <div id="overflow" className="shadow-sm shadow-primary overflow-auto border-b border-gray-200 sm:rounded-lg ">
-            <table className="w-[95%] divide-y divide-gray-200 table-fixed">
+          <div
+            id="overflow"
+            className="shadow-sm shadow-primary overflow-auto border-b border-gray-200 sm:rounded-lg "
+          >
+            <table className="w-[100%] divide-y divide-gray-200 table-fixed">
               <thead>
                 <tr>
                   <th className="w-[170px] md:w-1/3 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -109,7 +128,7 @@ const Page = () => {
                   wishlist.map((item) => (
                     <tr key={item.id} className="text-sm sm:text-lg">
                       <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
+                        <div className="flex items-center overflow-hidden xl:overflow-visible">
                           <Image
                             className="size-10 rounded-full"
                             src={`http://97.74.89.204/${item.Product.Product_Images[0]?.imageUrl}`}
@@ -126,7 +145,7 @@ const Page = () => {
                       </td>
                       <td className="table-cell px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">
-                          ${item.Product.basePrice}
+                          Rs. {item.Product.basePrice}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -134,17 +153,17 @@ const Page = () => {
                           In Stock
                         </span>
                       </td>
-                      <td className="p-4 text-right ">
-                        <button className="py-2 text-white px-4 rounded-full bg-primary text-sm">
+                      <td className="py-4 text-right flex gap-3 items-center ">
+                        <button className="py-2 text-white px-3 rounded-full bg-primary text-sm">
                           Add to Cart
                         </button>
-                      </td>
-                      <td className="px-4 py-4 text-right text-sm font-medium text-destructive">
                         <Trash2
+                          className=" font-medium text-destructive cursor-pointer"
                           size={24}
                           onClick={() => handleRemove(item.id)}
                         />
                       </td>
+                      {/* <td className="px-4 py-4 text-right text-sm font-medium text-destructive"></td> */}
                     </tr>
                   ))
                 ) : (
