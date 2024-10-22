@@ -70,6 +70,14 @@ export const auth = createApi({
         body: addressData,
       }),
     }),
+
+    changePassword: builder.mutation({
+      query: (passwordData, id) => ({
+        url: `change-password${id}`,
+        method: "POST",
+        body: passwordData,
+      }),
+    }),
     deleteAddressById: builder.mutation({
       query: (id) => ({
         url: `delete-address/${id}`, // Use consistent URL formatting
@@ -88,5 +96,6 @@ export const {
   useGetUserProfileQuery,
   useUpdateProfileMutation,
   useAddUserAddressMutation,
+  useChangePasswordMutation,
   useDeleteAddressByIdMutation,
 } = auth;

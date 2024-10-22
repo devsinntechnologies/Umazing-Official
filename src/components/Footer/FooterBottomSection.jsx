@@ -12,12 +12,12 @@ const FooterBottomSection = () => {
         </p>
         {/* Payment Icons */}
         <div className="flex items-center justify-center md:justify-end space-x-2 md:mr-16">
-          <Image
-            src="/Images/cards.png"
+          {/* <Image
+            src="/images/cards.png"
             width={100}
             height={100}
             className="h-8"
-          />
+          /> */}
         </div>
       </div>
     </div>

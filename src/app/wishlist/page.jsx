@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const Page = () => {
-  const { toast } = useToast(); // Initialize toast notifications
+  const { toast } = useToast();
   const userId = useSelector((state) => state.authSlice?.user?.id);
   const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
   const [triggerFetch, setTriggerFetch] = useState(false);

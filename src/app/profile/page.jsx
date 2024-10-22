@@ -12,6 +12,8 @@ import BreadCrum from "@/components/BreadCrum";
 import { useGetUserProfileQuery, useUpdateProfileMutation, useAddUserAddressMutation } from "@/hooks/UseAuth"; // Adjust the import path
 import { useSelector } from "react-redux";
 import { useToast } from "@/hooks/use-toast";
+import withAuth from "@/components/hoc/withAuth";
+import Image from "next/image";
 
 const Profile = () => {
   const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
@@ -33,6 +35,10 @@ const Profile = () => {
 
   useEffect(() => {
     if (userProfile) {
+      toast({
+        description: "Login Successfully",
+        variant: "",
+      });
       console.log("User Profile Data:", userProfile);
     }
     if (error) {
@@ -45,8 +51,8 @@ const Profile = () => {
     }
   }, [userProfile, error, toast]);
 
-  const [updateProfile] = useUpdateProfileMutation();
-  const [addUserAddress] = useAddUserAddressMutation();
+  const [updateProfile ,{ data:responseData , isLoading:UpdatingProfile}] = useUpdateProfileMutation();
+  const [addUserAddress ] = useAddUserAddressMutation();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -120,8 +126,9 @@ const Profile = () => {
     <div className="w-full py-10 flex flex-col gap-8 px-5">
       <BreadCrum />
       <div className="flex items-center gap-5 flex-col md:flex-row">
-        <div className="bg-slate-300 rounded-full flex justify-center items-center w-[120px] h-[120px] ">
-          <Camera className="text-4xl" />
+        <div className="bg-slate-300 rounded-full flex justify-center items-center w-[120px] h-[120px] overflow-hidden">
+          {/* <Camera className="text-4xl" /> */}
+          <Image src={`http://97.74.89.204/${userProfile?.data?.imageUrl}`} width={100} height={100} alt="" className="w-full h-full"/>
         </div>
         <h3 className="font-semibold text-center md:text-left">{name}</h3>
       </div>

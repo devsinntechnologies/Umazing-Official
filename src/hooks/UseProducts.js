@@ -26,6 +26,13 @@ export const products = createApi({
         return `allProducts?${queryString}`;
       },
     }),
+    getUserProducts: builder.query({
+      query: (params) => {
+        const queryString = new URLSearchParams(params).toString();
+        // console.log("API Route Products", queryString);
+        return `getUserProducts?${queryString}`;
+      },
+    }),
 
     getProductById: builder.query({
       query: (id) => `/getById/${id}`,
@@ -59,6 +66,7 @@ export const products = createApi({
 
 export const {
   useGetAllProductsQuery,
+  useGetUserProductsQuery,
   useGetProductsQuery,
   useGetProductByIdQuery,
   useDeleteProductByIdMutation,

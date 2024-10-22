@@ -1,14 +1,10 @@
 "use client";
-import React from "react";
-// import cartimage from "../public/Images/cartimage.jpg"; // Ensure this path is correct
-import { House } from "lucide-react";
-
-import CartSection from "./CartSection";
+import CartSection from "../../components/cart/CartSection";
 import BreadCrum from "@/components/BreadCrum";
 
 const Page = () => {
   return (
-    <div className="w-[95vw] mx-auto">
+    <div className="w-full">
       <BreadCrum />
       {/* Cart Content */}
       <div>

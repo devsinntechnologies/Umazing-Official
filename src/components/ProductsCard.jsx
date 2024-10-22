@@ -32,6 +32,7 @@ const ProductsCard = ({ product }) => {
 
   // Check if the product is in the user's wishlist and set the favouriteId
   useEffect(() => {
+   if(isLoggedIn){
     if (favouriteData && favouriteData.data) {
       const favourite = favouriteData.data.find((item) => item.Product.id === product.id);
       if (favourite) {
@@ -42,9 +43,27 @@ const ProductsCard = ({ product }) => {
         setFavouriteId(null);
       }
     }
-  }, [favouriteData, product.id]);
+   }
+  }, [favouriteData, product.id, isLoggedIn]);
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setIsProductInWishlist(false); // Reset the wishlist state when logged out
+      setFavouriteId(null);
+    }
+  }, [isLoggedIn]);
+  
   const handleRemove = async () => {
+    if (!isLoggedIn) {
+      toast({
+        title: "Not Logged In",
+        description: "Please log in",
+        vatiant:"destructive"
+      });
+      setIsDialogOpen(true);
+      return;
+    }
+
     if (!favouriteId) return;
 
     toast({
@@ -87,7 +106,7 @@ const ProductsCard = ({ product }) => {
   };
 
   const handleAddToCart = () => {
-    console.log(`Adding product to cart with ID: ${product.Product.id}`); // Log product ID
+    console.log(`Adding product to cart with ID: ${product.id}`); // Log product ID
     // Implement the add to cart functionality here if needed
   };
 
