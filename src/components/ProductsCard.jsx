@@ -1,89 +1,195 @@
+"use client";
+import { useToast } from "@/hooks/use-toast";
+import {
+  useGetUserFavouriteQuery,
+  useAddToFavouriteMutation,
+  useRemoveFromFavouriteMutation,
+} from "@/hooks/UseFavourite";
+import { Trash2, Heart, Loader2 } from "lucide-react"; // Loader icon from Lucide
 import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { usePathname } from "next/navigation";
+import AuthDialog from "./auth/AuthDialog";
 
 const ProductsCard = ({ product }) => {
+  const { toast } = useToast();
+  const userId = useSelector((state) => state.authSlice?.user?.id);
+  const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
+  const pathname = usePathname();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  // Fetch user favourites
+  const { data: favouriteData, refetch: refetchFavourites } = useGetUserFavouriteQuery(userId, {
+    skip: !isLoggedIn,
+  });
+
+  const [addToFavourite, { isSuccess: addSuccess, isLoading: addingToFav, isError: addError }] = useAddToFavouriteMutation();
+  const [removeFromFavourite, { isSuccess: removeSuccess, isLoading: removingFromFav, isError: removeError }] = useRemoveFromFavouriteMutation();
+
+  const [isProductInWishlist, setIsProductInWishlist] = useState(false);
+  const [favouriteId, setFavouriteId] = useState(null);
+
+  // Check if the product is in the user's wishlist and set the favouriteId
+  useEffect(() => {
+   if(isLoggedIn){
+    if (favouriteData && favouriteData.data) {
+      const favourite = favouriteData.data.find((item) => item.Product.id === product.id);
+      if (favourite) {
+        setIsProductInWishlist(true);
+        setFavouriteId(favourite.id); // Set the favourite ID from the data
+      } else {
+        setIsProductInWishlist(false);
+        setFavouriteId(null);
+      }
+    }
+   }
+  }, [favouriteData, product.id, isLoggedIn]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setIsProductInWishlist(false); // Reset the wishlist state when logged out
+      setFavouriteId(null);
+    }
+  }, [isLoggedIn]);
+  
+  const handleRemove = async () => {
+    if (!isLoggedIn) {
+      toast({
+        title: "Not Logged In",
+        description: "Please log in",
+        vatiant:"destructive"
+      });
+      setIsDialogOpen(true);
+      return;
+    }
+
+    if (!favouriteId) return;
+
+    toast({
+      title: "Removing",
+      description: "Removing item from your wishlist...",
+      status: "loading", // Show loading toast
+    });
+
+    try {
+      await removeFromFavourite(favouriteId);
+      refetchFavourites();
+    } catch (error) {
+      console.error("Failed to remove from wishlist:", error);
+    }
+  };
+
+  const handleAddToFavorites = async () => {
+    if (!isLoggedIn) {
+      toast({
+        title: "Not Logged In",
+        description: "Please log in",
+        vatiant:"destructive"
+      });
+      setIsDialogOpen(true);
+      return;
+    }
+
+    toast({
+      title: "Adding",
+      description: "Adding item to your wishlist...",
+      status: "loading", // Show loading toast
+    });
+
+    try {
+      await addToFavourite({ UserId: userId, ProductId: product.id });
+      refetchFavourites();
+    } catch (error) {
+      console.error("Failed to add to wishlist:", error);
+    }
+  };
+
+  const handleAddToCart = () => {
+    console.log(`Adding product to cart with ID: ${product.id}`); // Log product ID
+    // Implement the add to cart functionality here if needed
+  };
+
+  // Handle toast notifications for add/remove success and errors
+  useEffect(() => {
+    if (addSuccess) {
+      toast({
+        title: "Added",
+        description: "Item added to your wishlist successfully.",
+        status: "success",
+      });
+    }
+
+    if (removeSuccess) {
+      toast({
+        title: "Removed",
+        description: "Item removed from your wishlist successfully.",
+        status: "success",
+      });
+    }
+
+    if (addError || removeError) {
+      toast({
+        title: "Error",
+        description: "Failed to update wishlist. Please try again.",
+        status: "error",
+      });
+    }
+  }, [addSuccess, removeSuccess, addError, removeError, toast]);
+
+  const handleDelete = () => {
+    console.log(`Deleting product with ID: ${product.id}`);
+  };
+
+  const showTrashIcon = pathname === "/seller" || pathname === "/seller/products";
+
   return (
-    <>
-      <div className="group lg:w-[280px]  hover:shadow-x-[#00B207] hover:shadow-lg lg:h-[407px] border border-gray-300 rounded-xl relative hover:border-[#2C742F] sm:w-52 sm:h-80 ">
-        <div>
-          <Link href={`/details/eecd0ca6557194f575f68e65fc62bc94`}>
-            <Image
-              className="w-[98%] object-cover text-center"
-              width={500}
-              height={300}
-              src={
-                "http://97.74.89.204/uploads/products/3067216fdd3760ec9f46aa896ce48beb.jpeg"
-              }
-              alt={product.name}
-            />
-          </Link>
-
-          {/* Button view */}
-          <div className="absolute right-[10px] top-[10px] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <Link href={"/wishlist"}>
-              <div className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center cursor-pointer items-center mb-2">
-                <Image width={20} height={20} src="/Heart.png" alt="Favorite" />
-              </div>
-            </Link>
-            <Link href="/details">
-              <div className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center items-center cursor-pointer mb-2">
-                <Image width={20} height={20} src="/see.png" alt="View" />
-              </div>
-            </Link>
-          </div>
-
-          <div className="flex justify-between items-center px-3 pt-7">
-            <div>
-              <p className="text-[#4D4D4D] text-[14px]">{product.name}</p>
-              <p className="text-[16px] py-1 font-medium">$ {product.basePrice}</p>
-              <div className="flex">
-                <Image
-                  width={100}
-                  height={100}
-                  className="w-[12px]"
-                  src="/Star.png"
-                  alt="Star"
-                />
-                <Image
-                  width={100}
-                  height={100}
-                  className="w-[12px]"
-                  src="/Star.png"
-                  alt="Star"
-                />
-                <Image
-                  width={100}
-                  height={100}
-                  className="w-[12px]"
-                  src="/Star.png"
-                  alt="Star"
-                />
-                <Image
-                  width={100}
-                  height={100}
-                  className="w-[12px]"
-                  src="/Star.png"
-                  alt="Star"
-                />
-                <Image
-                  width={100}
-                  height={100}
-                  className="w-[12px]"
-                  src="/StarEmpty.png"
-                  alt="Empty Star"
-                />
-              </div>
-            </div>
-            <div className="bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex justify-center items-center cursor-pointer">
-              <Link href={"/details"}>
-                <Image width={20} height={20} src="/bag.png" alt="Cart" />
-              </Link>
-            </div>
-          </div>
-        </div>
+    <div className="hover:shadow-lg h-auto border border-border rounded-sm relative hover:border-primary w-full flex flex-col">
+        <AuthDialog isOpen={isDialogOpen} setIsOpen={setIsDialogOpen} useTrigger={false} />
+      <Image
+        className="w-full h-[200px] object-cover"
+        width={500}
+        height={300}
+        src={product?.Product_Images[0]?.imageUrl ? `http://97.74.89.204/${product?.Product_Images[0]?.imageUrl}` : ""}
+        alt={product.name}
+      />
+      <div className="w-full space-y-2 px-3 py-2">
+        <h3 className="text-base font-semibold transition duration-200 text-primary">{product.name}</h3>
+        <p className="text-gray-600">${product.basePrice}</p>
+        {/* Add to Cart button */}
+        {!showTrashIcon && (
+          <button
+            className="w-fit text-sm px-3 py-2 bg-primary text-white rounded-full "
+            onClick={handleAddToCart} // Add to Cart functionality
+          >
+            Add to cart
+          </button>
+        )}
       </div>
-    </>
+      <div className="absolute top-2 right-2 flex items-center">
+        {showTrashIcon && (
+          <button
+            className="p-2 rounded-full bg-gray-200 mr-2"
+            onClick={handleDelete}
+          >
+            <Trash2 size={20} className="text-destructive" />
+          </button>
+        )}
+        <button
+          className="p-2 rounded-full bg-gray-200"
+          onClick={isProductInWishlist ? handleRemove : handleAddToFavorites}
+        >
+          {/* Show loader while adding/removing */}
+          {addingToFav || removingFromFav ? (
+            <Loader2 size={20} className="animate-spin text-gray-500" />
+          ) : isProductInWishlist ? (
+            <Heart size={20} color="red" fill="red" />
+          ) : (
+            <Heart size={20} color="gray" />
+          )}
+        </button>
+      </div>
+    </div>
   );
 };
 

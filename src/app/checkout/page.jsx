@@ -1,22 +1,11 @@
-import React from "react";
-import { MdHome } from "react-icons/md";
-import { FaAngleRight } from "react-icons/fa6";
+"use client";
 import Image from "next/image";
-import Link from "next/link";
-
+import BreadCrum from "@/components/BreadCrum";
 const Checkout = () => {
   return (
     <>
-      <div className="h-20 w-[95vw] mt-1 mx-auto bg-gray-400 bg-[url('/Images/banner.jpg')] bg-cover bg-bottom flex justify-start text-[#999999] items-center px-5 lg:px-10 ">
-        <div className="flex gap-4 items-center justify-center  ">
-          <MdHome className="text-2xl cursor-pointer" />
-          <p className="font-normal text-base cursor-pointer">Shopping Cart</p>
-          <FaAngleRight />
-          <p className="font-normal text-base text-[#00B207] cursor-pointer">
-            Checkout
-          </p>
-        </div>
-      </div>
+      <BreadCrum />
+
       <div className="flex w-full p-5 gap-10 flex-wrap md:flex-nowrap lg:px-10">
         <div className="w-full flex flex-col gap-5 md:w-[60%]">
           <h1 className="font-medium text-2xl">Billing Information</h1>
@@ -230,7 +219,7 @@ const Checkout = () => {
               </label>
             </div>
 
-            <button className="py-3 bg-[#00B207] text-white rounded-full">
+            <button className="py-3 bg-primary text-white rounded-full">
               Place Order
             </button>
           </div>

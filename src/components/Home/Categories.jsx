@@ -1,52 +1,59 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { ServiceAPI } from "@/services";
 import Image from "next/image";
+import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useGetCategoriesQuery } from "@/hooks/UseCategories";
 
-export default function Categories() {
-  const [data, setData] = useState([]);
-
-  const loadCategories = async () => {
-    try {
-      const response = await axios.get(
-        `${ServiceAPI}/category/getAllCategories`
-      );
-      setData(response.data.data);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
-
-  useEffect(() => {
-    loadCategories();
-  }, []);
+const Categories = ()=> {
+  const { data: categoriesData, isLoading, isError } = useGetCategoriesQuery(); // Use the hook for fetching categories
 
   return (
-    <div className="flex justify-center items-center flex-col gap-8 py-10">
-      <p className="font-medium text-sm text-[#00B207]">Category</p>
-      <h1 className="font-semibold text-xl sm:text-2xl md:text-3xlxl lg:text-4xl">
+    <div className="w-full flex justify-center items-center flex-col gap-8 py-10">
+      <p className="font-medium text-xl text-primary">Category</p>
+      <h1 className="font-semibold text-xl sm:text-2xl md:text-3xl lg:text-4xl">
         Shop by Top Categories
       </h1>
-      <ul className="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-8 justify-center gap-3 items-center w-[95%] mx-auto my-5">
-        {data.map((product, index) => (
-          <li
-            key={index}
-            className="border-[1px] border-solid border-[#E6E6E6] flex justify-center items-center flex-col gap-3 py-4  cursor-pointer transition-shadow duration-150 ease-in-out hover:border-[#2C742F] hover:shadow-md hover:shadow-[#2c742e6d]"
-          >
-            <Image
-              src={`http://97.74.89.204/${product.imageUrl}`}
-              alt={product.name}
-              width={100}
-              height={100}
-              className="object-cover rounded-md mb-2 w-8"
-            ></Image>
 
-            <h3 className="text-sm">{product.name}</h3>
-          </li>
-        ))}
-      </ul>
+      {/* Conditionally render loading state or categories */}
+      {isLoading ? (
+        <div className="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-8 gap-3 w-full mx-auto">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="w-full h-28 rounded-xl relative">
+              <Skeleton className="w-full h-full" />
+            </div>
+          ))}
+        </div>
+      ) : isError ? (
+        <p className="text-red-500">Error loading categories. Please try again.</p>
+      ) : (
+        <ul className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 justify-center gap-3 items-center w-full mx-auto my-5">
+          {categoriesData?.data?.map((category, index) => (
+            <Link key={index} href={`/shop/${category.id}`}>
+              <div className="w-[148px] flex items-center flex-col justify-center space-y-3">
+                <div className="rounded-full bg-secondary px-4 py-4 border border-border gap-6 cursor-pointer size-32 transition-shadow duration-150 ease-in-out hover:border-primary">
+                  <Image
+                    src={
+                      category.imageUrl
+                        ? `http://97.74.89.204/${category.imageUrl}`
+                        : "/placeholder-image.jpg"
+                    }
+                    alt={category.name || "No name available"}
+                    width={80}
+                    height={80}
+                    className="object-cover w-full h-full size-20"
+                  />
+                </div>
+                <h3 className="text-sm w-full text-center">
+                  {category.name || "Unknown Category"}
+                </h3>
+              </div>
+            </Link>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
+export default Categories

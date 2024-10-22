@@ -1,70 +1,73 @@
-import React from 'react';
-import { SiOverleaf } from 'react-icons/si';
-import footerpic from '../../app/images/footerpic.png';
-import Image from 'next/image';
+import Image from "next/image";
+import Logo from "../layout/Logo";
+import Link from "next/link";
 
 const FooterMiddleSection = () => {
   return (
     <div className="w-[95vw] mx-auto py-10">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-6 gap-6">
+      <div className="w-full  grid grid-cols-1  md:grid-cols-5 gap-6">
         {/* Left Section - Brand Info */}
-        <div className="col-span-1 md:col-span-2">
-          <div className="flex items-center space-x-2 mb-4">
-            <SiOverleaf size={40} color="green" />
-            <h2 className="text-3xl font-bold text-gray-800">Ecobazar</h2>
+        <div className="col-span-1 md:col-span-2 w-full sapce-y-4">
+
+          <div className="flex items-center  mb-4 ">
+            <Logo />
           </div>
           <p className="text-sm text-gray-500 mb-4">
             Morbi cursus porttitor enim lobortis molestie. Duis gravida turpis
             dui, eget bibendum magna congue nec.
           </p>
+
           <div className="flex space-x-4">
-            <p className="text-gray-700 font-semibold border-b-2 border-green-600 pb-2">
-              (219) 555-0114
-            </p>
-            <span className="text-gray-500">or</span>
-            <p className="font-semibold border-b-2 border-green-600 pb-2">
-              Proxy@gmail.com
-            </p>
+            <a
+              href="tel:+923154031364"
+              className="font-semibold border-b-2 border-primary "
+            >
+              +923154031364
+            </a>
+          </div>
+          <div className="flex space-x-4">
+            <a
+              href="mailto:umazingofficial@gmail.com"
+              className="font-semibold border-b-2 border-primary pt-2"
+            >
+              umazingofficial@gmail.com
+            </a>
           </div>
         </div>
 
         {/* Center Sections - Links */}
-        <div className="col-span-1 md:col-span-1 space-y-2">
+        <div className="col-span-1 md:col-span-1 w-full space-y-2">
           <h3 className="font-semibold text-gray-800 mb-5">My Account</h3>
-          <ul className="text-gray-600 flex gap-4 flex-col space-y-1">
-            <li>My Account</li>
-            <li>Order History</li>
-            <li>Shopping Cart</li>
-            <li>Wishlist</li>
+          <ul className="text-gray-600 flex flex-col gap-4">
+            <Link href="/seller">
+              <li className="hover:text-primary">Sell</li>
+            </Link>
+            <Link href="/profile">
+              <li className="hover:text-primary">Account</li>
+            </Link>
+            <Link href="/wishlist">
+              <li className="hover:text-primary">Wishlist</li>
+            </Link>
           </ul>
         </div>
-
-        <div className="col-span-1 md:col-span-1 space-y-2">
+        <div className="col-span-1 md:col-span-1 w-full space-y-2">
           <h3 className="font-semibold text-gray-800 mb-5">Helps</h3>
-          <ul className="text-gray-600 flex gap-4 flex-col space-y-1">
-            <li>Contact</li>
-            <li>FAQs</li>
-            <li>Terms & Condition</li>
-            <li>Privacy Policy</li>
-          </ul>
-        </div>
-
-        <div className="col-span-1 md:col-span-1 space-y-2">
-          <h3 className="font-semibold text-gray-800 mb-5">Proxy</h3>
-          <ul className="text-gray-600 flex gap-4 flex-col space-y-1">
-            <li>About</li>
-            <li>Shop</li>
-            <li>Product</li>
-            <li>Track Order</li>
+          <ul className="text-gray-600 flex flex-col gap-4">
+            <Link href="/contact-us">
+              <li className="hover:text-primary">Contact</li>
+            </Link>
+            <li className="hover:text-primary">FAQs</li>
+            <li className="hover:text-primary">Terms & Condition</li>
+            <li className="hover:text-primary">Privacy Policy</li>
           </ul>
         </div>
 
         {/* Right Section - Download Mobile App */}
-        <div className="col-span-1 md:col-span-1 flex flex-col space-y-4">
+        <div className="col-span-1 md:col-span-1 flex w-full flex-col space-y-4">
           <h3 className="font-semibold text-gray-800">Download Mobile App</h3>
           <div className="flex">
             <a href="#">
-              <Image src={footerpic} width={400} />
+              <Image src='/images/playStore.png' width={400} alt="" height={100} />
             </a>
           </div>
         </div>

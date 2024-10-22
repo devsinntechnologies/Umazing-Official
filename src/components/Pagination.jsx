@@ -2,11 +2,12 @@
 
 import React from "react";
 
-const Pagination = ({ totalPages, currentPage, onPageChange }) => {
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
+const Pagination = ({ totalPages, currentPage, onPageChange }) => {
   const generatePagination = () => {
     const paginationArray = [];
-    if (totalPages <= 1) return paginationArray; 
+    if (totalPages <= 1) return paginationArray;
 
     paginationArray.push(1);
 
@@ -36,13 +37,11 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
     <nav>
       <ul className="inline-flex md:gap-1 text-base h-10 items-center">
         {/* Previous button */}
-        <li
-          className="w-[36px] h-[36px] bg-[#F2F2F2] rounded-full p-[8px] flex justify-center items-center"
-        >
+        <li className="w-[36px] h-[36px] bg-[#F2F2F2] rounded-full p-[8px] flex justify-center items-center">
           <button
             onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
           >
-            <img src="/left.png" alt="Previous" />
+            <ChevronLeft />
           </button>
         </li>
 
@@ -51,9 +50,7 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
           <li
             key={index}
             className={`w-[40px] h-[40px] ${
-              page === currentPage
-                ? "bg-[#00B207] text-white"
-                : "text-[#666666]"
+              page === currentPage ? "bg-[teal] text-white" : "text-[#666666]"
             } rounded-full p-[8px] flex justify-center items-center`}
           >
             {typeof page === "number" ? (
@@ -71,7 +68,7 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
               currentPage < totalPages && onPageChange(currentPage + 1)
             }
           >
-            <img src="/right.png" alt="Next" />
+            <ChevronRight />
           </button>
         </li>
       </ul>

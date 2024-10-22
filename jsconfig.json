@@ -2,6 +2,8 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"]
-    }
-  }
+    },
+    "jsx": "react-jsx"  // Add this line to handle JSX in React 17+
+  },
+  "include": ["src/**/*"]  // Ensures the config is applied to your source files
 }
