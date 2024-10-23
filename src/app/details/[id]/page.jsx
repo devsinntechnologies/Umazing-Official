@@ -9,6 +9,7 @@ import Swiper from "@/components/Swiper";
 import SelectSize from "@/components/singleProduct/SelectSize";
 import SelectColor from "@/components/singleProduct/SelectColor";
 import { useGetAllProductsQuery } from "@/hooks/UseProducts";
+import TabComponent from "@/components/singleProduct/TabContent";
 
 
 
@@ -17,15 +18,15 @@ import { useGetAllProductsQuery } from "@/hooks/UseProducts";
 const ProductDetails = ({ params }) => {
   const { id } = params;
   console.log(id);
-  const pageNo =  "1";        
-  const pageSize =  "8";   
+  const pageNo = "1";
+  const pageSize = "8";
   const categoryId = "4051eb3ece5de28e4b7521a0a42957eb";
   const queryParams = {
     pageNo,
     pageSize,
     categoryId,
   };
-  const { data:item, isLoading, isError } = useGetAllProductsQuery(queryParams);
+  const { data: item, isLoading, isError } = useGetAllProductsQuery(queryParams);
 
   const [selectedImage, setSelectedImage] = useState("/preview.png");
   const [quantity, setQuantity] = useState(0);
@@ -118,16 +119,16 @@ const ProductDetails = ({ params }) => {
 
             {/* Product Information */}
             <div className="w-full md:w-[50%] h-auto lg:h-[501px]">
-           
-                
-              
-                  <div className=" rounded-[4px]  text-primary text-2xl font-bold ">
-                    {/* {products.name} */}
-                  Man Shirts
-                  </div>
-                  
-              
-              
+
+
+
+              <div className=" rounded-[4px]  text-primary text-2xl font-bold ">
+                {/* {products.name} */}
+                Man Shirts
+              </div>
+
+
+
               {/* Ratings and other product details */}
               <div className="flex items-center gap-3 my-2">
                 <div className="flex">
@@ -194,10 +195,10 @@ const ProductDetails = ({ params }) => {
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cum ullam sapiente nihil nesciunt recusandae aut totam, tempore sit impedit enim esse ea facilis ipsum blanditiis! Ipsam natus assumenda ducimus illum nihil illo, quidem quibusdam?</p>
               </div>
               <div className="w-full lg:w-[647px] my-5 border border-[#E6E6E6]"></div>
-              <div className="flex px-3 gap-4">
-               
-               <SelectColor/>
-               <SelectSize/>
+              <div className=" space-y-4 px-3 gap-4">
+              <SelectSize />
+                <SelectColor />
+                
               </div>
               {/* <div className="w-full lg::w-[568px] mt-4">
                 <p className="text-[14px] md:text-[16px] text-[#808080]">
@@ -229,8 +230,8 @@ const ProductDetails = ({ params }) => {
                   Add to Cart
                   <ShoppingCart width={20} height={20} />
                 </button>
-                <div className="bg-primary h-[51px] w-[20%] flex justify-center items-center rounded-[43px]"><Heart 
-                color="white"
+                <div className="bg-primary h-[51px] w-[20%] flex justify-center items-center rounded-[43px]"><Heart
+                  color="white"
                 /></div>
                 {/* <div className="w-[40px] h-[40px] rounded-full border border-[#F2F2F2] bg-[#F2F2F2] flex justify-center items-center">
                 <Image src="/Heart.png" alt="" width={20} height={20} />
@@ -245,7 +246,7 @@ const ProductDetails = ({ params }) => {
                   Category :
                   <span className="text-[#808080] font-normal"> Vegetables</span>
                 </p>
-                <div className="flex gap-2 mt-3">
+                {/* <div className="flex gap-2 mt-3">
                   <p className="text-[14px] font-bold">Tags :</p>
                   <div className="space-x-1">
                     <span className="text-[#808080] font-normal text-[14px]">
@@ -261,14 +262,14 @@ const ProductDetails = ({ params }) => {
                       Cabbage
                     </span>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
 
-          <div className="container mx-auto mt-10 md:pl-8 lg:mt-0">
+          <div className="w-full  mt-5 flex justify-center">
             {/* Tabs Section */}
-            <div className="border-b border-gray-200">
+            {/* <div className="border-b border-gray-200">
               <nav className="flex justify-center items-center space-x-4 text-center">
                 <a
                   href="#"
@@ -276,19 +277,16 @@ const ProductDetails = ({ params }) => {
                 >
                   Descriptions
                 </a>
-                <a href="#" className="text-gray-500 py-2 text-sm lg:text-base">
-                  Additional Information
-                </a>
-                <a href="#" className="text-gray-500 py-2 text-sm lg:text-base">
+                            <a href="#" className="text-gray-500 py-2 text-sm lg:text-base">
                   Customer Feedback
                 </a>
               </nav>
-            </div>
-
+            </div> */}
+<TabComponent/>
             {/* Content Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 my-10">
+          
               {/* Left Text Content */}
-              <div className="text-gray-700">
+              {/* <div className="text-gray-700 w-full py-10">
                 <p className="text-[14px] md:text-[16px]">
                   Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet
                   at posuere ac, viverra at mauris. Maecenas tincidunt ligula a
@@ -301,54 +299,14 @@ const ProductDetails = ({ params }) => {
                   viverra velit, pellentesque tristique neque mi eget nulla.
                 </p>
 
-                {/* Bullet Points */}
-                <ul className="mt-4 space-y-2">
-                  <li className="flex items-start space-x-2">
-                    <span className="w-[18px] h-[18px] rounded-full bg-primary flex justify-center items-center">
-                      <Image
-                        width={10}
-                        height={10}
-                        src="/check.png"
-                        alt="check"
-                      />
-                    </span>
-                    <span className="text-[14px] md:text-[16px]">
-                      100 g of fresh leaves provided.
-                    </span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <span className="w-[18px] h-[18px] rounded-full bg-primary flex justify-center items-center">
-                      <Image width={10} height={10} src="/check.png" alt="heck" />
-                    </span>
-                    <span className="text-[14px] md:text-[16px]">
-                      Aliquam ac est at augue volutpat elementum.
-                    </span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <span className="w-[18px] h-[18px] rounded-full bg-primary flex justify-center items-center">
-                      <Image width={10} height={10} src="/check.png" alt="heck" />
-                    </span>
-                    <span className="text-[14px] md:text-[16px]">
-                      Quisque nec enim eget sapien molestie.
-                    </span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <span className="w-[18px] h-[18px] rounded-full bg-primary flex justify-center items-center">
-                      <Image width={10} height={10} src="/check.png" alt="heck" />
-                    </span>
-                    <span className="text-[14px] md:text-[16px]">
-                      Proin convallis odio volutpat finibus posuere.
-                    </span>
-                  </li>
-                </ul>
                 <p className="text-[14px] md:text-[16px] mt-3">
                   Lorem ipsum kwjife rw,nfiorw fiwlrdolor sixercixcepturi eligendi
                   ratione, consectetur quos, asperiores cumque?
                 </p>
-              </div>
+              </div> */}
 
               {/* Right Image Content */}
-              <div className="relative lg:w-[536px]">
+              {/* <div className="relative lg:w-[536px]">
                 <Image
                   width={800}
                   height={800}
@@ -357,7 +315,7 @@ const ProductDetails = ({ params }) => {
                   className="rounded-lg w-full h-[300px]"
                 />
 
-                {/* Discount & Organic Info */}
+               
                 <div className="mt-4 flex lg:space-x-8 space-x-0 border rounded-lg py-4 md:p-4 p-0 w-full">
                   <div className="flex items-center space-x-2">
                     <Image
@@ -387,12 +345,12 @@ const ProductDetails = ({ params }) => {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </div> */}
+          
           </div>
 
           {/* Related Products */}
-          <div className=" w-full mt-16">
+          <div className=" w-full mt-8">
             <h1 className="lg:text-[30px] text-[23px] font-medium md:font-bold text-center">
               Related Products
             </h1>
@@ -408,7 +366,7 @@ const ProductDetails = ({ params }) => {
                 ))}
               </div>
             ) : (
-              <div className="lg:h-[407px] w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-4 mt-8">
+              <div className="lg:h-auto w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-4 mt-8">
                 {item?.data?.map((item, index) => (
                   <ProductsCard key={index} product={item} />
                 ))}
