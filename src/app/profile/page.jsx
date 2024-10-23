@@ -137,8 +137,18 @@ const Profile = () => {
       });
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error fetching profile data</div>;
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-[80vh]">
+        Loading...
+      </div>
+    );
+  if (error)
+    return (
+      <div className="flex justify-center items-center h-[80vh]">
+        Error fetching profile data
+      </div>
+    );
 
   return (
     <div className="w-full py-10 flex flex-col gap-8 px-5">
