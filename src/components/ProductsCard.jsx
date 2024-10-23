@@ -135,7 +135,8 @@ const ProductsCard = ({ product }) => {
         alt={product.name}
       />
       <div className="w-full space-y-2 text-center pt-3">
-        <h3 className="text-sm font-semibold transition duration-200 text-primary">{product.name}</h3>
+        <h3 className="text-sm font-semibold h-10 transition duration-200 text-primary truncate-multiline">{product.name}</h3>
+
         <p className="text-gray-600">${product.basePrice}</p>
         {/* Add to Cart button */}
         {!showTrashIcon && (

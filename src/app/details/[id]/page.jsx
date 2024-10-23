@@ -8,7 +8,8 @@ import { Minus, Plus, ShoppingCart, Star, Instagram, Facebook, Twitter, Heart } 
 import Swiper from "@/components/Swiper";
 import SelectSize from "@/components/singleProduct/SelectSize";
 import SelectColor from "@/components/singleProduct/SelectColor";
-import { Rating } from "@mui/material";
+import { useGetAllProductsQuery } from "@/hooks/UseProducts";
+
 
 
 
@@ -16,6 +17,15 @@ import { Rating } from "@mui/material";
 const ProductDetails = ({ params }) => {
   const { id } = params;
   console.log(id);
+  const pageNo =  "1";        
+  const pageSize =  "8";   
+  const categoryId = "4051eb3ece5de28e4b7521a0a42957eb";
+  const queryParams = {
+    pageNo,
+    pageSize,
+    categoryId,
+  };
+  const { data:item, isLoading, isError } = useGetAllProductsQuery(queryParams);
 
   const [selectedImage, setSelectedImage] = useState("/preview.png");
   const [quantity, setQuantity] = useState(0);
@@ -121,10 +131,6 @@ const ProductDetails = ({ params }) => {
               {/* Ratings and other product details */}
               <div className="flex items-center gap-3 my-2">
                 <div className="flex">
-                  {/* <Star
-                    size={12}
-                    color="#4D4D4D"
-                  />
                   <Star
                     size={12}
                     color="#4D4D4D"
@@ -140,8 +146,12 @@ const ProductDetails = ({ params }) => {
                   <Star
                     size={12}
                     color="#4D4D4D"
-                  /> */}
-                  <Rating/>
+                  />
+                  <Star
+                    size={12}
+                    color="#4D4D4D"
+                  />
+                  {/* <Rating/> */}
                 </div>
                 <p className="text-[#666666] text-[14px]">4 review</p>
                 <p className="text-[14px]">
@@ -387,7 +397,7 @@ const ProductDetails = ({ params }) => {
               Related Products
             </h1>
             {/* Products */}
-            {loader ? (
+            {isLoading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
                 {Array.from({ length: 4 }).map((_, i) => (
                   <Skeleton
@@ -399,7 +409,7 @@ const ProductDetails = ({ params }) => {
               </div>
             ) : (
               <div className="lg:h-[407px] w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-4 mt-8">
-                {products.map((item, index) => (
+                {item?.data?.map((item, index) => (
                   <ProductsCard key={index} product={item} />
                 ))}
               </div>
