@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useToast } from '@/hooks/use-toast';
-import AuthDialog from '@/components/auth/AuthDialog'; // Import your dialog component
-import { LockIcon } from 'lucide-react'; // Import an icon from lucide-react
-import { useRouter } from 'next/navigation'; // Import Next.js router
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useToast } from "@/hooks/use-toast";
+import AuthDialog from "@/components/auth/AuthDialog"; // Import your dialog component
+import { LockIcon } from "lucide-react"; // Import an icon from lucide-react
+import { useRouter } from "next/navigation"; // Import Next.js router
 
 const withAuth = (WrappedComponent) => {
   const Auth = (props) => {
@@ -15,8 +15,8 @@ const withAuth = (WrappedComponent) => {
     useEffect(() => {
       if (!token) {
         toast({
-          title: 'Not logged in',
-          description: 'Please login first',
+          title: "Not logged in",
+          description: "Please login first",
           duration: 2000,
         });
         setIsDialogOpen(true); // Open the login dialog if not logged in
@@ -25,7 +25,7 @@ const withAuth = (WrappedComponent) => {
 
     const handleRedirectHome = () => {
       setIsDialogOpen(false);
-      router.push('/');
+      router.push("/");
     };
 
     if (token) {
@@ -33,14 +33,20 @@ const withAuth = (WrappedComponent) => {
     }
 
     return (
-      <div className="flex flex-col items-center justify-center space-y-4 w-full">
+      <div className="flex flex-col items-center justify-center space-y-4 w-full h-[80vh]">
         {/* Authentication Dialog */}
-        <AuthDialog isOpen={isDialogOpen} setIsOpen={setIsDialogOpen} useTrigger={false} />
+        <AuthDialog
+          isOpen={isDialogOpen}
+          setIsOpen={setIsDialogOpen}
+          useTrigger={false}
+        />
 
         {/* Lock Icon and Message */}
         <div className="flex items-center justify-center space-x-2">
           <LockIcon className="text-primary h-8 w-8" />
-          <span className="text-lg font-semibold text-gray-700">You are not logged in!</span>
+          <span className="text-lg font-semibold text-gray-700">
+            You are not logged in!
+          </span>
         </div>
 
         {/* Redirect Button */}
