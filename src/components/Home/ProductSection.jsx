@@ -16,7 +16,7 @@ const ProductSection = () => {
     pageSize,
   };
 
-  const { data: productsData, isLoading, isError } = useGetAllProductsQuery(queryParams);
+  const { data: productsData, isLoading, isError } = useGetAllProductsQuery(queryParams);  
 
   useEffect(() => {
     if (productsData?.success) {

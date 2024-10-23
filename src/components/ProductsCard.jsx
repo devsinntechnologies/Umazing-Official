@@ -141,7 +141,7 @@ const ProductsCard = ({ product }) => {
     console.log(`Deleting product with ID: ${product.id}`);
   };
 
-  const showTrashIcon = pathname === "/seller" || pathname === "/seller/products";
+  const isSeller = pathname === "/seller" || pathname === "/seller/products";
 
   return (
     <div className="hover:shadow-lg h-auto border border-border rounded-sm relative hover:border-primary w-full flex flex-col">
@@ -153,12 +153,12 @@ const ProductsCard = ({ product }) => {
         src={product?.Product_Images[0]?.imageUrl ? `http://97.74.89.204/${product?.Product_Images[0]?.imageUrl}` : ""}
         alt={product.name}
       />
-      <div className="w-full space-y-2 text-center pt-3">
+      <div className="w-full space-y-2 p-2">
         <h3 className="text-sm font-semibold h-10 transition duration-200 text-primary truncate-multiline">{product.name}</h3>
 
         <p className="text-gray-600">${product.basePrice}</p>
         {/* Add to Cart button */}
-        {!showTrashIcon && (
+        {!isSeller && (
           <button
             className="w-full text-sm  bg-primary py-3 text-white rounded-b-sm "
             onClick={handleAddToCart} // Add to Cart functionality
@@ -168,7 +168,7 @@ const ProductsCard = ({ product }) => {
         )}
       </div>
       <div className="absolute top-2 right-2 flex items-center">
-        {showTrashIcon && (
+        {isSeller && (
           <button
             className="p-2 rounded-full bg-gray-200 mr-2"
             onClick={handleDelete}
@@ -176,7 +176,7 @@ const ProductsCard = ({ product }) => {
             <Trash2 size={20} className="text-destructive" />
           </button>
         )}
-        <button
+       {!isSeller &&  <button
           className="p-2 rounded-full bg-gray-200"
           onClick={isProductInWishlist ? handleRemove : handleAddToFavorites}
         >
@@ -188,7 +188,7 @@ const ProductsCard = ({ product }) => {
           ) : (
             <Heart size={20} color="gray" />
           )}
-        </button>
+        </button>}
       </div>
     </div>
   );
