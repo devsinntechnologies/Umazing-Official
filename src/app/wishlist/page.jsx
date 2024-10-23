@@ -108,16 +108,16 @@ const Page = () => {
             id="overflow"
             className="shadow-sm shadow-primary overflow-auto border-b border-gray-200 sm:rounded-lg "
           >
-            <table className="w-[100%] divide-y divide-gray-200 table-fixed">
+            <table className="w-full divide-y divide-gray-200 ">
               <thead>
                 <tr>
                   <th className="w-[170px] md:w-1/3 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Product
                   </th>
-                  <th className="w-[150px] md:w-1/4 table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="w-[150px] md:w-1/4 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Price
                   </th>
-                  <th className="w-[150px] md:w-1/4 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="w-[150px] md:w-1/4 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                     Stock Status
                   </th>
                   <th className="w-[150px] md:w-1/6 px-4 py-3"></th>
@@ -143,7 +143,7 @@ const Page = () => {
                           </div>
                         </div>
                       </td>
-                      <td className="table-cell px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">
                           Rs. {item.Product.basePrice}
                         </div>
@@ -153,17 +153,20 @@ const Page = () => {
                           In Stock
                         </span>
                       </td>
-                      <td className="py-4 text-right flex gap-3 items-center ">
-                        <button className="py-2 text-white px-3 rounded-full bg-primary text-sm">
-                          Add to Cart
-                        </button>
-                        <Trash2
-                          className=" font-medium text-destructive cursor-pointer"
-                          size={24}
-                          onClick={() => handleRemove(item.id)}
-                        />
+                      <td className="py-4 whitespace-nowrap">
+                        <div className="flex gap-3 w-full">
+                          <button className="w-full py-2 text-white px-3 rounded-full bg-primary text-sm">
+                            Add to Cart
+                          </button>
+                          <div className="mt-2 flex justify-end pr-7">
+                            <Trash2
+                              className="text-destructive cursor-pointer"
+                              size={24}
+                              onClick={() => handleRemove(item.id)}
+                            />
+                          </div>
+                        </div>
                       </td>
-                      {/* <td className="px-4 py-4 text-right text-sm font-medium text-destructive"></td> */}
                     </tr>
                   ))
                 ) : (

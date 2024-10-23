@@ -9,11 +9,23 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import BreadCrum from "@/components/BreadCrum";
-import { useGetUserProfileQuery, useUpdateProfileMutation, useAddUserAddressMutation } from "@/hooks/UseAuth"; // Adjust the import path
+import {
+  useGetUserProfileQuery,
+  useUpdateProfileMutation,
+  useAddUserAddressMutation,
+} from "@/hooks/UseAuth"; // Adjust the import path
 import { useSelector } from "react-redux";
 import { useToast } from "@/hooks/use-toast";
 import withAuth from "@/components/hoc/withAuth";
 import Image from "next/image";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Profile = () => {
   const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
@@ -29,7 +41,12 @@ const Profile = () => {
   }, [userId, isLoggedIn]);
 
   // Fetch user profile data once userId is available
-  const { data: userProfile, error, isLoading, refetch } = useGetUserProfileQuery(userId, {
+  const {
+    data: userProfile,
+    error,
+    isLoading,
+    refetch,
+  } = useGetUserProfileQuery(userId, {
     skip: !triggerFetch, // Skip API call if triggerFetch is false
   });
 
@@ -51,8 +68,9 @@ const Profile = () => {
     }
   }, [userProfile, error, toast]);
 
-  const [updateProfile ,{ data:responseData , isLoading:UpdatingProfile}] = useUpdateProfileMutation();
-  const [addUserAddress ] = useAddUserAddressMutation();
+  const [updateProfile, { data: responseData, isLoading: UpdatingProfile }] =
+    useUpdateProfileMutation();
+  const [addUserAddress] = useAddUserAddressMutation();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -128,7 +146,13 @@ const Profile = () => {
       <div className="flex items-center gap-5 flex-col md:flex-row">
         <div className="bg-slate-300 rounded-full flex justify-center items-center w-[120px] h-[120px] overflow-hidden">
           {/* <Camera className="text-4xl" /> */}
-          <Image src={`http://97.74.89.204/${userProfile?.data?.imageUrl}`} width={100} height={100} alt="" className="w-full h-full"/>
+          <Image
+            src={`http://97.74.89.204/${userProfile?.data?.imageUrl}`}
+            width={100}
+            height={100}
+            alt=""
+            className="w-full h-full"
+          />
         </div>
         <h3 className="font-semibold text-center md:text-left">{name}</h3>
       </div>
@@ -137,65 +161,107 @@ const Profile = () => {
         <h1 className="font-bold text-2xl sm:text-3xl">Account</h1>
 
         {/* Name Section */}
-        <div className="flex justify-between items-center px-3 border-b-[1px] border-solid border-black pb-3 pt-4 sm:pt-6">
-          <div className="flex flex-col sm:flex-row">
-            <h3 className="font-semibold text-base sm:text-lg">Name: &nbsp;</h3>
+        <div className="flex  justify-between items-center px-3 border-b-[1px] border-solid border-black pb-3 pt-4 sm:pt-6">
+          <div className="flex  w-full flex-col sm:flex-row">
+            <h3 className="font-semibold text-base sm:text-lg mr-2">Name: </h3>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="text-base sm:text-lg border-b-2 border-transparent focus:border-primary focus:outline-none"
+              className="border-b-2 border-transparent focus:border-primary focus:outline-none flex-grow w-full"
             />
           </div>
-          <button onClick={handleUpdateProfile} className="text-primary font-semibold text-sm sm:text-base">
-            Save
+          <button
+            // onClick={handleUpdateProfile}
+            className="mt-3 sm:mt-0 sm:ml-3  text-primary font-semibold text-sm sm:text-base"
+          >
+            Edit
           </button>
         </div>
 
         {/* Email Section */}
         <div className="flex justify-between items-center px-3 border-b-[1px] border-solid border-black pb-3 pt-4 sm:pt-6">
-          <div className="flex flex-col sm:flex-row">
-            <h3 className="font-semibold text-base sm:text-lg">Email: &nbsp;</h3>
+          <div className="flex flex-col sm:flex-row  w-full">
+            <h3 className="font-semibold text-base sm:text-lg mr-2">Email: </h3>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="text-base sm:text-lg border-b-2 border-transparent focus:border-primary focus:outline-none"
+              className="text-base sm:text-lg border-b-2 border-transparent focus:border-primary focus:outline-none flex-grow w-full"
             />
           </div>
-          <button onClick={handleUpdateProfile} className="text-primary font-semibold text-sm sm:text-base">
+          <button
+            onClick={handleUpdateProfile}
+            className="ml-3 text-primary font-semibold text-sm sm:text-base"
+          >
             Save
           </button>
         </div>
 
         {/* Accordion Section */}
-        <Accordion type="single" collapsible className="border-b-[1px] border-solid border-black">
+        <Accordion
+          type="single"
+          collapsible
+          className="border-b-[1px] border-solid border-black"
+        >
           <AccordionItem value="item-1" className="px-3">
-            <AccordionTrigger className="text-base sm:text-lg">Address</AccordionTrigger>
+            <AccordionTrigger className="text-base sm:text-lg">
+              Address
+            </AccordionTrigger>
             <AccordionContent>
               <div className="flex justify-between items-center flex-col gap-4">
                 {userProfile?.data?.addresses?.length ? (
                   userProfile.data.addresses.map((address) => (
-                    <div key={address.id} className="flex justify-between items-center py-3 sm:py-4 bg-slate-100 px-3 rounded-lg w-full">
-                      <h3 className="font-normal text-sm sm:text-base">{address.address}</h3>
-                      <p className="text-primary font-semibold text-sm sm:text-base cursor-pointer">Edit</p>
+                    <div
+                      key={address.id}
+                      className="flex justify-between items-center py-3 sm:py-4 bg-slate-100 px-3 rounded-lg w-full"
+                    >
+                      <h3 className="font-normal text-sm sm:text-base">
+                        {address.address}
+                      </h3>
+                      <p className="text-primary font-semibold text-sm sm:text-base cursor-pointer">
+                        Edit
+                      </p>
                     </div>
                   ))
                 ) : (
                   <div className="flex justify-center items-center py-3 sm:py-4 bg-slate-100 px-3 rounded-lg w-full">
-                    <h3 className="font-normal text-sm sm:text-base">No addresses added yet.</h3>
+                    <h3 className="font-normal text-sm sm:text-base">
+                      No addresses added yet.
+                    </h3>
                   </div>
                 )}
-                <input
+                {/* <input
                   type="text"
                   value={newAddress}
                   onChange={(e) => setNewAddress(e.target.value)}
                   placeholder="Add a new address"
                   className="border-b-2 border-transparent focus:border-primary focus:outline-none w-full"
-                />
-                <button onClick={handleAddAddress} className="mt-4 sm:mt-6 px-4 py-2 sm:px-5 sm:py-3 bg-green-500 text-white rounded-lg hover:bg-green-600">
+                /> */}
+                {/* <button
+                  onClick={handleAddAddress}
+                  className="mt-4 sm:mt-6 px-4 py-2 sm:px-5 sm:py-3 bg-green-500 text-white rounded-lg hover:bg-green-600"
+                >
                   Add
-                </button>
+                </button> */}
+                <Dialog>
+                  <DialogTrigger className="mt-4 sm:mt-6 px-4 py-2 sm:px-5 sm:py-3 bg-primary text-white rounded-lg ">
+                    Add
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogDescription className="py-10">
+                        <input
+                          type="text"
+                          value={newAddress}
+                          onChange={(e) => setNewAddress(e.target.value)}
+                          placeholder="Add a new address"
+                          className="border-b-2 border-transparent focus:border-primary focus:outline-none w-full"
+                        />
+                      </DialogDescription>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
               </div>
             </AccordionContent>
           </AccordionItem>
@@ -204,7 +270,9 @@ const Profile = () => {
         {/* Birthday Section */}
         <div className="flex justify-between items-center px-3 border-b-[1px] border-solid border-black pb-3 pt-4 sm:pt-6">
           <div className="flex flex-col sm:flex-row">
-            <h3 className="font-semibold text-base sm:text-lg">Birthday: &nbsp;</h3>
+            <h3 className="font-semibold text-base sm:text-lg">
+              Birthday: &nbsp;
+            </h3>
             <input
               type="date"
               value={birthday}
@@ -212,7 +280,41 @@ const Profile = () => {
               className="text-base sm:text-lg border-b-2 border-transparent focus:border-primary focus:outline-none"
             />
           </div>
-          <button onClick={handleUpdateProfile} className="text-primary font-semibold text-sm sm:text-base">
+          <button
+            onClick={handleUpdateProfile}
+            className="text-primary font-semibold text-sm sm:text-base"
+          >
+            Save
+          </button>
+        </div>
+
+        {/* Phone Section */}
+        <div className="flex justify-between items-center px-3 border-b-[1px] border-solid border-black pb-3 pt-4 sm:pt-6">
+          <div className="flex items-center w-full">
+            <h3 className="font-semibold text-base sm:text-lg mr-2">Phone: </h3>
+            <input
+              type="tel"
+              className="text-base sm:text-lg border-b-2 border-transparent focus:border-primary focus:outline-none flex-grow w-full"
+              placeholder="+92 111 222 333"
+            />{" "}
+          </div>
+          <button className="ml-3 text-primary font-semibold text-sm sm:text-base">
+            Save
+          </button>
+        </div>
+
+        {/* Phone Section */}
+        <div className="flex justify-between items-center px-3 border-b-[1px] border-solid border-black pb-3 pt-4 sm:pt-6">
+          <div className="flex items-center w-full">
+            <h3 className="font-semibold text-base sm:text-lg mr-2">
+              Gendar:{" "}
+            </h3>
+            <input
+              type="text"
+              className="text-base sm:text-lg border-b-2 border-transparent focus:border-primary focus:outline-none flex-grow w-full"
+            />
+          </div>
+          <button className="ml-3 text-primary font-semibold text-sm sm:text-base">
             Save
           </button>
         </div>

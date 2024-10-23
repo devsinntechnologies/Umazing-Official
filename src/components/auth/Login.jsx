@@ -9,7 +9,10 @@ import { useToast } from "@/hooks/use-toast";
 const Login = ({ onForgetPassword, onSignup, onLoginSuccess }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [login, { isSuccess, error: loginError, data: responseData, isLoading }] = useLoginMutation();
+  const [
+    login,
+    { isSuccess, error: loginError, data: responseData, isLoading },
+  ] = useLoginMutation();
   const dispatch = useDispatch();
   const router = useRouter();
   const { toast } = useToast();
@@ -45,7 +48,16 @@ const Login = ({ onForgetPassword, onSignup, onLoginSuccess }) => {
         duration: 2000,
       });
     }
-  }, [isSuccess, isLoading, loginError, responseData, toast, dispatch, router, onLoginSuccess]);
+  }, [
+    isSuccess,
+    isLoading,
+    loginError,
+    responseData,
+    toast,
+    dispatch,
+    router,
+    onLoginSuccess,
+  ]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
