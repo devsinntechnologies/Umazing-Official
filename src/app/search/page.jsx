@@ -7,10 +7,10 @@ import { useParams } from "next/navigation";
 const Page = () => {
   return (
     <div className="flex-col md:flex-row w-full flex py-4 gap-4 h-screen overflow-hidden">
-      <FilterBar/>
+      <FilterBar />
       <FilterProducts />
     </div>
-);
+  );
 };
 
 export default Page;
