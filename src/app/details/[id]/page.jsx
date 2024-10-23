@@ -6,11 +6,27 @@ import React, { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton"; // Skeleton loader import
 import { Minus, Plus, ShoppingCart, Star, Instagram, Facebook, Twitter, Heart } from "lucide-react";
 import Swiper from "@/components/Swiper";
+import SelectSize from "@/components/singleProduct/SelectSize";
+import SelectColor from "@/components/singleProduct/SelectColor";
+import { useGetAllProductsQuery } from "@/hooks/UseProducts";
+import TabComponent from "@/components/singleProduct/TabContent";
+
+
+
 
 
 const ProductDetails = ({ params }) => {
   const { id } = params;
   console.log(id);
+  const pageNo = "1";
+  const pageSize = "8";
+  const categoryId = "4051eb3ece5de28e4b7521a0a42957eb";
+  const queryParams = {
+    pageNo,
+    pageSize,
+    categoryId,
+  };
+  const { data: item, isLoading, isError } = useGetAllProductsQuery(queryParams);
 
   const [selectedImage, setSelectedImage] = useState("/preview.png");
   const [quantity, setQuantity] = useState(0);
@@ -66,7 +82,7 @@ const ProductDetails = ({ params }) => {
         {/* Product Details */}
 
         <div className="flex flex-col gap-5">
-          <div className="w-full md:w-1/2 h-auto lg:h-[558px] flex lg:flex-row flex-col-reverse justify-center items-center lg:justify-between">
+          <div className="w-full  h-auto flex md:flex-row flex-col justify-center items-center lg:justify-between">
             {/* Thumbnails */}
 
             {/* <div className="w-[70px] lg:w-[80px] flex lg:flex-col justify-center gap-8 lg:gap-4">
@@ -86,7 +102,7 @@ const ProductDetails = ({ params }) => {
             </div> */}
 
             {/* Preview Image */}
-            <div className="w-[350px] sm:w-[400px] lg:w-[556px] ml-6">
+            <div className="w-full md:w-[50%] ">
               {/* <div className="w-[350px] sm:w-[400px] lg:w-[556px] ml-6">
               <Image
                 src={
@@ -102,20 +118,16 @@ const ProductDetails = ({ params }) => {
             </div>
 
             {/* Product Information */}
-            <div className="w-full md:w-1/2 h-auto lg:h-[501px]">
-              <div className="flex items-center gap-3">
-                <h1 className="text-[25px] lg:text-[36px] font-semibold">
-                  {/* <h1 className="text-[25px] lg:text-[36px] font-semibold">
-                {product.name}
-                </h1> */}
-                </h1>
-                <div className="flex justify-between w-full">
-                  <div className="w-[71px] h-[29px] rounded-[4px] bg-primary text-white text-[14px] py-[4px] px-[8px]">
-                    In Stock
-                  </div>
-                  <div><Heart /></div>
-                </div>
+            <div className="w-full md:w-[50%] h-auto lg:h-[501px]">
+
+
+
+              <div className=" rounded-[4px]  text-primary text-2xl font-bold ">
+                {/* {products.name} */}
+                Man Shirts
               </div>
+
+
 
               {/* Ratings and other product details */}
               <div className="flex items-center gap-3 my-2">
@@ -140,6 +152,7 @@ const ProductDetails = ({ params }) => {
                     size={12}
                     color="#4D4D4D"
                   />
+                  {/* <Rating/> */}
                 </div>
                 <p className="text-[#666666] text-[14px]">4 review</p>
                 <p className="text-[14px]">
@@ -161,7 +174,7 @@ const ProductDetails = ({ params }) => {
               </div>
 
               {/* Other product information */}
-              <div className="w-full lg:w-[647px] my-5 border border-[#E6E6E6]"></div>
+              {/* <div className="w-full lg:w-[647px] my-5 border border-[#E6E6E6]"></div>
 
               <div className="flex flex-col lg:flex-row justify-between px-3 gap-4 lg:gap-0">
                 <div className="flex items-center gap-2">
@@ -171,23 +184,33 @@ const ProductDetails = ({ params }) => {
                 <div className="flex items-center gap-3">
                   <p className="text-[14px]">Share item :</p>
                   <div className="flex items-center gap-5">
-                    <Facebook width={20} height={20} className="hover:w-[40px] hover:h-[40px] hover:px-2 hover:py-2 hover:rounded-full hover:bg-primary" />
-                    <Instagram width={20} height={20} className="hover:w-[40px] hover:h-[40px] hover:px-2 hover:py-2 hover:rounded-full hover:bg-primary" />
-                    <Twitter width={20} height={20} className="hover:w-[40px] hover:h-[40px] hover:px-2 hover:py-2 hover:rounded-full hover:bg-primary" />
+                    <Facebook width={20} height={20} className="hover:shadow-lg" />
+                    <Instagram width={20} height={20} className="hover:shadow-lg" />
+                    <Twitter width={20} height={20} className="hover:shadow-lg" />
                   </div>
                 </div>
+              </div> */}
+              <div className="my-4">
+                <h1 className="font-semibold text-md">Product Description</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cum ullam sapiente nihil nesciunt recusandae aut totam, tempore sit impedit enim esse ea facilis ipsum blanditiis! Ipsam natus assumenda ducimus illum nihil illo, quidem quibusdam?</p>
               </div>
-              <div className="w-full lg::w-[568px] mt-4">
+              <div className="w-full lg:w-[647px] my-5 border border-[#E6E6E6]"></div>
+              <div className=" space-y-4 px-3 gap-4">
+              <SelectSize />
+                <SelectColor />
+                
+              </div>
+              {/* <div className="w-full lg::w-[568px] mt-4">
                 <p className="text-[14px] md:text-[16px] text-[#808080]">
                   {product.longDescription}
                 </p>
-              </div>
+              </div> */}
 
               <div className="w-full lg:w-[647px] my-5 border border-[#E6E6E6]"></div>
 
               {/* Add to cart */}
-              <div className="flex items-center justify-between space-x-2 px-1 lg:px-3">
-                <div className="h-[50px] w-[124px] border border-[#E6E6E6] p-[8px] rounded-[170px] flex gap-2 lg:gap-0 items-center justify-between py-2">
+              <div className="flex items-center w-full justify-between space-x-2 px-1 lg:px-3">
+                <div className="h-[50px] w-[25%] border border-[#E6E6E6] p-[8px] rounded-[170px] flex gap-2 lg:gap-0 items-center justify-between py-2">
                   <button
                     className="w-[34px] h-[34px] bg-[#F2F2F2] rounded-full flex justify-center items-center"
                     onClick={handleDecrement}
@@ -203,10 +226,13 @@ const ProductDetails = ({ params }) => {
                     <Plus width={10} height={10} />
                   </button>
                 </div>
-                <button className="h-[51px] w-[300px] text-sm lg:w-[447px] bg-primary text-white text-[16px] font-semibold flex justify-center items-center gap-3 lg:gap-4 rounded-[43px]">
+                <button className="h-[51px] w-[55%] text-sm lg:w-[347px] bg-primary text-white text-[16px] font-semibold flex justify-center items-center gap-3 lg:gap-4 rounded-[43px]">
                   Add to Cart
                   <ShoppingCart width={20} height={20} />
                 </button>
+                <div className="bg-primary h-[51px] w-[20%] flex justify-center items-center rounded-[43px]"><Heart
+                  color="white"
+                /></div>
                 {/* <div className="w-[40px] h-[40px] rounded-full border border-[#F2F2F2] bg-[#F2F2F2] flex justify-center items-center">
                 <Image src="/Heart.png" alt="" width={20} height={20} />
               </div> */}
@@ -220,7 +246,7 @@ const ProductDetails = ({ params }) => {
                   Category :
                   <span className="text-[#808080] font-normal"> Vegetables</span>
                 </p>
-                <div className="flex gap-2 mt-3">
+                {/* <div className="flex gap-2 mt-3">
                   <p className="text-[14px] font-bold">Tags :</p>
                   <div className="space-x-1">
                     <span className="text-[#808080] font-normal text-[14px]">
@@ -236,14 +262,14 @@ const ProductDetails = ({ params }) => {
                       Cabbage
                     </span>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
 
-          <div className="container mx-auto mt-10 md:pl-8 lg:mt-0">
+          <div className="w-full  mt-5 flex justify-center">
             {/* Tabs Section */}
-            <div className="border-b border-gray-200">
+            {/* <div className="border-b border-gray-200">
               <nav className="flex justify-center items-center space-x-4 text-center">
                 <a
                   href="#"
@@ -251,19 +277,16 @@ const ProductDetails = ({ params }) => {
                 >
                   Descriptions
                 </a>
-                <a href="#" className="text-gray-500 py-2 text-sm lg:text-base">
-                  Additional Information
-                </a>
-                <a href="#" className="text-gray-500 py-2 text-sm lg:text-base">
+                            <a href="#" className="text-gray-500 py-2 text-sm lg:text-base">
                   Customer Feedback
                 </a>
               </nav>
-            </div>
-
+            </div> */}
+<TabComponent/>
             {/* Content Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 my-10">
+          
               {/* Left Text Content */}
-              <div className="text-gray-700">
+              {/* <div className="text-gray-700 w-full py-10">
                 <p className="text-[14px] md:text-[16px]">
                   Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet
                   at posuere ac, viverra at mauris. Maecenas tincidunt ligula a
@@ -276,54 +299,14 @@ const ProductDetails = ({ params }) => {
                   viverra velit, pellentesque tristique neque mi eget nulla.
                 </p>
 
-                {/* Bullet Points */}
-                <ul className="mt-4 space-y-2">
-                  <li className="flex items-start space-x-2">
-                    <span className="w-[18px] h-[18px] rounded-full bg-primary flex justify-center items-center">
-                      <Image
-                        width={10}
-                        height={10}
-                        src="/check.png"
-                        alt="check"
-                      />
-                    </span>
-                    <span className="text-[14px] md:text-[16px]">
-                      100 g of fresh leaves provided.
-                    </span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <span className="w-[18px] h-[18px] rounded-full bg-primary flex justify-center items-center">
-                      <Image width={10} height={10} src="/check.png" alt="heck" />
-                    </span>
-                    <span className="text-[14px] md:text-[16px]">
-                      Aliquam ac est at augue volutpat elementum.
-                    </span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <span className="w-[18px] h-[18px] rounded-full bg-primary flex justify-center items-center">
-                      <Image width={10} height={10} src="/check.png" alt="heck" />
-                    </span>
-                    <span className="text-[14px] md:text-[16px]">
-                      Quisque nec enim eget sapien molestie.
-                    </span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <span className="w-[18px] h-[18px] rounded-full bg-primary flex justify-center items-center">
-                      <Image width={10} height={10} src="/check.png" alt="heck" />
-                    </span>
-                    <span className="text-[14px] md:text-[16px]">
-                      Proin convallis odio volutpat finibus posuere.
-                    </span>
-                  </li>
-                </ul>
                 <p className="text-[14px] md:text-[16px] mt-3">
                   Lorem ipsum kwjife rw,nfiorw fiwlrdolor sixercixcepturi eligendi
                   ratione, consectetur quos, asperiores cumque?
                 </p>
-              </div>
+              </div> */}
 
               {/* Right Image Content */}
-              <div className="relative lg:w-[536px]">
+              {/* <div className="relative lg:w-[536px]">
                 <Image
                   width={800}
                   height={800}
@@ -332,7 +315,7 @@ const ProductDetails = ({ params }) => {
                   className="rounded-lg w-full h-[300px]"
                 />
 
-                {/* Discount & Organic Info */}
+               
                 <div className="mt-4 flex lg:space-x-8 space-x-0 border rounded-lg py-4 md:p-4 p-0 w-full">
                   <div className="flex items-center space-x-2">
                     <Image
@@ -362,17 +345,17 @@ const ProductDetails = ({ params }) => {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </div> */}
+          
           </div>
 
           {/* Related Products */}
-          <div className=" w-full mt-16">
+          <div className=" w-full mt-8">
             <h1 className="lg:text-[30px] text-[23px] font-medium md:font-bold text-center">
               Related Products
             </h1>
             {/* Products */}
-            {loader ? (
+            {isLoading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
                 {Array.from({ length: 4 }).map((_, i) => (
                   <Skeleton
@@ -383,8 +366,8 @@ const ProductDetails = ({ params }) => {
                 ))}
               </div>
             ) : (
-              <div className="lg:h-[407px] w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-4 mt-8">
-                {products.map((item, index) => (
+              <div className="lg:h-auto w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-4 mt-8">
+                {item?.data?.map((item, index) => (
                   <ProductsCard key={index} product={item} />
                 ))}
               </div>

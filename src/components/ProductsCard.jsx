@@ -153,13 +153,14 @@ const ProductsCard = ({ product }) => {
         src={product?.Product_Images[0]?.imageUrl ? `http://97.74.89.204/${product?.Product_Images[0]?.imageUrl}` : ""}
         alt={product.name}
       />
-      <div className="w-full space-y-2 px-3 py-2">
-        <h3 className="text-base font-semibold transition duration-200 text-primary">{product.name}</h3>
+      <div className="w-full space-y-2 text-center pt-3">
+        <h3 className="text-sm font-semibold h-10 transition duration-200 text-primary truncate-multiline">{product.name}</h3>
+
         <p className="text-gray-600">${product.basePrice}</p>
         {/* Add to Cart button */}
         {!showTrashIcon && (
           <button
-            className="w-fit text-sm px-3 py-2 bg-primary text-white rounded-full "
+            className="w-full text-sm  bg-primary py-3 text-white rounded-b-sm "
             onClick={handleAddToCart} // Add to Cart functionality
           >
             Add to cart

@@ -9,33 +9,27 @@ const Sidebar = () => {
 
   const getLinkClass = (path) =>
     pathname === path
-      ? "bg-primary text-white w-full rounded-sm py-1"
-      : "hover:bg-primary hover:text-white w-full rounded-sm py-1";
+      ? "lg:bg-primary lg:text-white text-primary border border-solid-primary lg:border-hidden rounded-sm lg:rounded-md py-1"
+      : "hover:bg-primary hover:text-white rounded-full lg:rounded-sm py-1";
 
   return (
-    <div className="lg:w-[230px] w-full flex justify-start items-center  lg:flex-col gap-3 bg-[#f3f4f6] mt-0 lg:mt-0 py-3 text-start shadow-sm shadow-primary border-[1px] border-solid border-primary rounded-md px-2 overflow-x-auto whitespace-nowrap  ">
-      <h1 className="text-2xl font-semibold lg:flex hidden md:px-3 ">Seller</h1>
+    <div className="lg:w-[230px] w-full flex  lg:flex-col gap-3 lg:bg-[#f3f4f6] mt-0 lg:mt-0 py-1 text-start lg:shadow-sm lg:shadow-primary lg:border-[1px] lg:border-solid lg:border-primary lg:rounded-md md:px-2">
+      <h1 className="text-2xl font-semibold lg:flex hidden md:px-3">Seller</h1> 
       <Link href="/seller" className={getLinkClass("/seller")}>
-        <div className="flex md:gap-3 text-md text-center sm:text-lg gap-2 md:px-3 py-1 px-2  items-center justify-center lg:items-start lg:justify-start ">
-          <LayoutDashboard />
+        <div className="flex md:gap-3 text-md text-center lg:text-lg sm:text-md text-xs gap-2 md:px-3 py-1 px-2 items-center ">
+          <LayoutDashboard className="hidden sm:flex" />
           Dashboard
         </div>
       </Link>
-      <Link
-        href="/seller/products"
-        className={getLinkClass("/seller/products")}
-      >
-        <div className="flex md:gap-3 text-md text-center sm:text-lg gap-2 md:px-3 py-1 px-2  items-center justify-center lg:items-start lg:justify-start">
-          <Package />
+      <Link href="/seller/products" className={getLinkClass("/seller/products")}>
+        <div className="flex md:gap-3 text-md text-center lg:text-lg sm:text-md text-xs gap-2 md:px-3 py-1 px-2 items-center ">
+          <Package className="hidden sm:flex"/>
           All Products
         </div>
       </Link>
-      <Link
-        href="/seller/addProduct"
-        className={getLinkClass("/seller/addProduct")}
-      >
-        <div className="flex md:gap-3 text-md text-center sm:text-lg gap-2 md:px-3 py-1 px-2  items-center justify-center lg:items-start lg:justify-start">
-          <PackagePlus />
+      <Link href="/seller/addProduct" className={getLinkClass("/seller/addProduct")}>
+        <div className="flex md:gap-3 text-md text-center lg:text-lg sm:text-md text-xs gap-2 md:px-3 py-1 px-2 items-center">
+          <PackagePlus className="hidden sm:flex"/>
           Add Products
         </div>
       </Link>
