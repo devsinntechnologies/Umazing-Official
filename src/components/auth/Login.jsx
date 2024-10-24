@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MailIcon, LockKeyhole } from "lucide-react";
+import { MailIcon, LockKeyhole, EyeClosedIcon, EyeIcon } from "lucide-react";
 import { useLoginMutation } from "@/hooks/UseAuth";
 import { useDispatch } from "react-redux";
 import { setLogin } from "@/slice/authSlice";
@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 const Login = ({ onForgetPassword, onSignup, onLoginSuccess }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [
     login,
     { isSuccess, error: loginError, data: responseData, isLoading },
@@ -78,18 +79,27 @@ const Login = ({ onForgetPassword, onSignup, onLoginSuccess }) => {
             required
           />
         </div>
-        <div className="flex items-center border border-gray-300 p-2 rounded-md">
+        <div className="relative w-full flex items-center border border-gray-300 p-2 rounded-md">
           <LockKeyhole className="text-gray-500 mr-2" />
           <input
-            type="password"
-            className="w-full focus:outline-none text-sm sm:text-base"
+            type={showPassword ? "text" : "password"}
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
-            minLength="8"
+            className="w-full focus:outline-none"
           />
+          {/* Show/Hide Password Button */}
+          {password && (
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="w-6 absolute inset-y-0 right-3 flex items-center justify-center text-gray-600"
+            >
+              {showPassword ? <EyeIcon /> : <EyeClosedIcon />}
+            </button>
+          )}
         </div>
+
         <div className="text-right">
           <button
             type="button"
