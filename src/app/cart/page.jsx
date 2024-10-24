@@ -8,7 +8,7 @@ const Page = () => {
       <BreadCrum />
       {/* Cart Content */}
       <div>
-        <h1 className="text-3xl font-semibold text-center mt-6 text-black">
+        <h1 className="text-xl md:text-3xl font-semibold text-center text-black">
           My Shopping Cart
         </h1>
         <CartSection />

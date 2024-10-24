@@ -1,171 +1,156 @@
 "use client";
+import { useEffect } from "react";
 import Image from "next/image";
-import { CircleX } from "lucide-react";
-import { useState } from "react";
 import Link from "next/link";
+import { CircleX, Minus, Plus } from "lucide-react";
+import { useSelector } from "react-redux";
+import { useToast } from "@/hooks/use-toast";
+import {
+  useGetUserCartQuery,
+  useUpdateCartItemMutation,
+  useRemoveFromCartMutation,
+} from "@/hooks/UseCart";
+import { Skeleton } from "../ui/skeleton";
 
 const CartSection = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Green Capsicum",
-      price: 14.0,
-      quantity: 5,
-      image: "",
-    },
-    {
-      id: 2,
-      name: "Red Capsicum",
-      price: 14.0,
-      quantity: 1,
-      image: "",
-    },
-  ]);
+  const userId = useSelector((state) => state.authSlice?.user?.id);
+  const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
+  const { toast } = useToast();
 
-  const updateQuantity = (id, newQuantity) => {
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === id ? { ...item, quantity: Math.max(newQuantity, 1) } : item
-      )
-    );
+  const { data: cartData, isLoading: cartLoading, isError: cartError, refetch } = useGetUserCartQuery(userId, { skip: !isLoggedIn });
+  const [updateCartItem, { isLoading: updatingCart, isError: updateCartError, data: updateData }] = useUpdateCartItemMutation();
+  const [removeFromCart, { isLoading: removingCart, isError: removeCartError, data: removeData }] = useRemoveFromCartMutation();
+
+  useEffect(() => {
+    if (cartLoading) {
+      toast({
+        title: "Loading...",
+        description: "Fetching cart data...",
+      });
+    }
+    if (cartError) {
+      toast({
+        title: "Error",
+        description: "Failed to fetch cart data.",
+        variant: "destructive",
+      });
+    }
+    if (updateData?.success) {
+      toast({
+        title: "Success",
+        description: updateData.msg || "Cart updated successfully.",
+      });
+    }
+    if (updateCartError) {
+      toast({
+        title: "Error",
+        description: "Failed to update cart.",
+        variant: "destructive",
+      });
+    }
+    if (removeData?.success) {
+      toast({
+        title: "Success",
+        description: removeData.msg || "Item removed successfully.",
+      });
+    }
+    if (removeCartError) {
+      toast({
+        title: "Error",
+        description: "Failed to remove item from cart.",
+        variant: "destructive",
+      });
+    }
+  }, [cartLoading, cartError, updateData, updateCartError, removeData, removeCartError, toast]);
+
+  const updateQuantity = (id, quantity) => {
+    updateCartItem({ id, cartData: { quantity } });
+    refetch();
   };
 
   const removeItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
+    removeFromCart(id);
+    refetch();
   };
 
   return (
-    <div className="flex flex-wrap md:flex-nowrap justify-center gap-3 px-4 py-8">
-      {/* Cart Product Section */}
-      <div className="bg-white shadow-md rounded-lg p-6 w-full md:max-w-4xl">
-        {/* Table Headers (Hidden on Mobile) */}
-        <div className="hidden md:grid grid-cols-4 gap-4 text-left mb-4">
-          <p className="font-semibold">Product</p>
-          <p className="font-semibold">Price</p>
-          <p className="font-semibold">Quantity</p>
-          <p className="font-semibold">Subtotal</p>
-        </div>
-
-        {/* Cart Items */}
-        {cartItems.map((item) => (
-          <div key={item.id} className="border-b pb-4 mb-4">
-            {/* Mobile View Layout */}
-            <div className="md:hidden space-y-2">
-              <div className="flex justify-between">
-                <p className="font-semibold">Product:</p>
-                <p>{item.name}</p>
-              </div>
-              <div className="flex justify-between">
-                <p className="font-semibold">Price:</p>
-                <p>${item.price.toFixed(2)}</p>
-              </div>
-              <div className="flex justify-between items-center">
-                <p className="font-semibold">Quantity:</p>
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                    className="px-3 py-1 border rounded text-xl"
-                  >
-                    -
-                  </button>
-                  <span>{item.quantity}</span>
-                  <button
-                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                    className="px-3 py-1 border rounded text-xl"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-              <div className="flex justify-between">
-                <p className="font-semibold">Subtotal:</p>
-                <p>${(item.price * item.quantity).toFixed(2)}</p>
-              </div>
+    <div className="flex flex-col lg:flex-row justify-center gap-8 py-8">
+      {/* Cart Items Section */}
+      {cartData?.data && <div className="border shadow-lg rounded-lg p-1 sm:p-2 md:p-3 w-full flex-1 flex flex-col gap-2">
+        {cartData?.data?.map((item) => (
+          <div key={item.id} className="h-[80px] md:h-[100px] lg:h-[126px] flex items-center gap-4 p-2 md:p-3 border rounded-lg shadow-sm bg-white relative">
+            <div className="flex-shrink-0 h-full">
+              <Image
+                src={`http://97.74.89.204/${item?.Product?.Product_Images[0].imageUrl}`}
+                alt={item.Product?.name}
+                width={100}
+                height={100}
+                className="w-[70px] md:w-[100px] h-full rounded-md object-cover"
+              />
             </div>
-
-            {/* Desktop View Layout */}
-            <div className="hidden md:grid grid-cols-4 gap-4 items-center">
-              <div className="flex items-center space-x-4">
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  className="w-[55px] h-[40px] rounded-md"
-                />
-                <p className="text-sm font-medium">{item.name}</p>
-              </div>
-              <p className="text-gray-500">${item.price.toFixed(2)}</p>
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                  className="px-3 py-1 border rounded text-xl"
-                >
-                  -
-                </button>
-                <span>{item.quantity}</span>
-                <button
-                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                  className="px-3 py-1 border rounded text-xl"
-                >
-                  +
-                </button>
-              </div>
-              <div className="flex gap-5">
-                <p className="text-lg font-medium">
-                  ${(item.price * item.quantity).toFixed(2)}
-                </p>
+            <div className="flex-grow h-full">
+              <h3 className="text-xs sm:text-sm md:text-lg font-semibold h-9 truncate-multiline overflow-hidden">{item.Product?.name}</h3>
+              <p className="text-xs sm:text-sm md:text-lg text-primary font-medium">${item.Product.basePrice}</p>
+            </div>
+            <div className="flex flex-col items-end justify-between h-full">
                 <CircleX
                   onClick={() => removeItem(item.id)}
-                  className="text-gray-400 hover:text-red-500 text-2xl"
+                  className="text-destructive cursor-pointer w-5"
+                  size={24}
+                  disabled={removingCart}
                 />
+              <div className="flex items-center gap-2 md:space-x-4 p-1 rounded-2xl border md:border-primary">
+                <button
+                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                  className="p-1 rounded-full bg-primary text-white"
+                  disabled={updatingCart}
+                >
+                  <Minus size={16} className="size-3"/>
+                </button>
+                <span className="text-xs md:text-base font-medium">{item.quantity}</span>
+                <button
+                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                  className="p-1 rounded-full bg-primary text-white"
+                  disabled={updatingCart}
+                >
+                  <Plus size={16} className="size-3"/>
+                </button>
               </div>
             </div>
           </div>
         ))}
-
-        {/* Bottom Buttons */}
-        <div className="flex flex-col sm:flex-row justify-between items-center pt-6 border-t mt-6 gap-2">
-          <button className="px-6 py-3 bg-gray-200 rounded-lg text-gray-700 hover:bg-gray-300 w-full sm:w-auto">
-            Return to shop
-          </button>
-          <button className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary w-full sm:w-auto">
-            Update Cart
-          </button>
-        </div>
-
-        {/* Coupon Section */}
-        <div className="flex flex-col sm:flex-row justify-between items-center mt-5 gap-2">
-          <p className="font-semibold">Coupon Code</p>
-          <div className="flex w-full sm:w-auto py-1 px-2 items-center rounded-3xl border-2 border-gray-300">
-            <input
-              type="text"
-              placeholder="Enter Code"
-              className="w-full sm:w-[250px] bg-transparent outline-none"
-            />
-            <button className="bg-black text-white rounded-3xl py-2 px-3">
-              Apply Coupon
-            </button>
-          </div>
-        </div>
       </div>
+      }
+
+      {cartLoading &&
+        <div className="border shadow-lg rounded-lg p-3 w-full flex-1 flex flex-col gap-2">
+          {[...Array(4)].map((_, index) => (
+            <Skeleton key={index} className="w-full h-[80px] rounded-lg shadow-sm" />
+          ))}
+        </div>
+      }
 
       {/* Cart Total Section */}
-      <div className="w-full md:w-1/4 flex flex-col justify-between bg-white shadow-md rounded-lg p-6 mt-8 md:mt-0">
+      <div className="w-full md:w-[320px] lg:w-[380px] bg-white shadow-lg rounded-lg p-6">
         <h2 className="text-lg font-semibold mb-4">Cart Total</h2>
-        <div className="flex justify-between items-center mb-2">
+        <div className="flex justify-between items-center mb-3">
           <p className="text-gray-600">Subtotal:</p>
-          <p className="font-medium">$84.00</p>
+          <p className="font-semibold">
+            ${cartData?.items?.reduce((total, item) => total + item.price * item.quantity, 0)}
+          </p>
         </div>
-        <div className="flex justify-between items-center mb-2">
+        <div className="flex justify-between items-center mb-3">
           <p className="text-gray-600">Shipping:</p>
-          <p className="font-medium">Free</p>
+          <p className="font-semibold">₹100.00</p>
         </div>
-        <div className="flex justify-between items-center border-t pt-2 mt-4">
+        <div className="flex justify-between items-center border-t pt-3 mt-3">
           <p className="text-lg font-semibold">Total:</p>
-          <p className="text-lg font-semibold">$84.00</p>
+          <p className="text-lg font-semibold">
+            ₹{cartData?.items?.reduce((total, item) => total + item.price * item.quantity, 0) + 100}
+          </p>
         </div>
-
         <Link href="/checkout">
-          <button className="mt-6 w-full py-3 bg-primary text-white rounded-lg hover:bg-primary">
+          <button className="mt-6 w-full py-3 bg-primary text-white rounded-lg hover:bg-primary-dark">
             Proceed to checkout
           </button>
         </Link>

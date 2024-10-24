@@ -5,15 +5,11 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton"; // Skeleton loader import
 import { Minus, Plus, ShoppingCart, Star, Instagram, Facebook, Twitter, Heart } from "lucide-react";
-import Swiper from "@/components/Swiper";
 import SelectSize from "@/components/singleProduct/SelectSize";
 import SelectColor from "@/components/singleProduct/SelectColor";
-import { useGetAllProductsQuery } from "@/hooks/UseProducts";
+import { useGetAllProductsQuery, useGetProductByIdQuery } from "@/hooks/UseProducts";
 import TabComponent from "@/components/singleProduct/TabContent";
-
-
-
-
+import Gallery from "@/components/singleProduct/Gallery";
 
 const ProductDetails = ({ params }) => {
   const { id } = params;
@@ -27,108 +23,37 @@ const ProductDetails = ({ params }) => {
     categoryId,
   };
   const { data: item, isLoading, isError } = useGetAllProductsQuery(queryParams);
-
-  const [selectedImage, setSelectedImage] = useState("/preview.png");
+  const { data: productData, isError:productError, isLoading:productLoading } = useGetProductByIdQuery(id);
+  const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(0);
-  const [product, setProduct] = useState([]);
-  const [loader, setLoader] = useState(true);
 
 
   console.log(product);
-
-  const images = [
-    "/preview.png",
-    "/cabbage1.png",
-    "/cabbage2.png",
-    "/cabbage.png",
-  ];
-
-  const products = [
-    {
-      name: "Big Potatoes",
-      price: 14.99,
-      rating: 4,
-      image: "/brinjal.png",
-    },
-    {
-      name: "Big Potatoes",
-      price: 14.99,
-      rating: 4,
-      image: "/preview.png",
-    },
-    {
-      name: "Big Potatoes",
-      price: 14.99,
-      rating: 3,
-      image: "/japani.png",
-    },
-    {
-      name: "Big Potatoes",
-      price: 14.99,
-      rating: 5,
-      image: "/mirch.png",
-    },
-  ];
+useEffect(() => {
+  if(productData){
+    setProduct(productData.data);
+  }
+}, [productData]);
 
   const handleIncrement = () => setQuantity((prevQty) => prevQty + 1);
   const handleDecrement = () =>
     setQuantity((prevQty) => (prevQty > 0 ? prevQty - 1 : prevQty));
 
-  console.log(selectedImage);
-
   return (
-    <main className="w-full flex justify-center items-center overflow-hidden  my-10">
-      <section className="my-6 w-[90vw]">
-        {/* Product Details */}
+    <main className="w-full flex justify-center items-center overflow-hidden">
+      <section className="my-6 w-[90%]">
 
         <div className="flex flex-col gap-5">
-          <div className="w-full  h-auto flex md:flex-row flex-col justify-center items-center lg:justify-between">
-            {/* Thumbnails */}
-
-            {/* <div className="w-[70px] lg:w-[80px] flex lg:flex-col justify-center gap-8 lg:gap-4">
-              {images.map((img, index) => (
-                <Image
-                  key={index}
-                  className={`cursor-pointer ${
-                    selectedImage === img ? "border-primary border" : ""
-                  }`}
-                  src={img}
-                  alt=""
-                  width={70}
-                  height={70}
-                  onClick={() => setSelectedImage(img)}
-                />
-              ))}
-            </div> */}
-
-            {/* Preview Image */}
-            <div className="w-full md:w-[50%] ">
-              {/* <div className="w-[350px] sm:w-[400px] lg:w-[556px] ml-6">
-              <Image
-                src={
-                  "http://97.74.89.204/uploads/products/3067216fdd3760ec9f46aa896ce48beb.jpeg"
-                }
-                alt="Preview Image"
-                width={506}
-                height={506}
-              />
-            </div>
-            </div> */}
-              <Swiper />
+          <div className="gap-5 w-full h-auto flex md:flex-row flex-col justify-center items-center lg:justify-between">
+            <div className="w-full md:w-[48%] border shadow-md p-2 ">
+              <Gallery data={product} />
             </div>
 
             {/* Product Information */}
             <div className="w-full md:w-[50%] h-auto lg:h-[501px]">
-
-
-
               <div className=" rounded-[4px]  text-primary text-2xl font-bold ">
-                {/* {products.name} */}
-                Man Shirts
+                {product?.name}
               </div>
-
-
-
               {/* Ratings and other product details */}
               <div className="flex items-center gap-3 my-2">
                 <div className="flex">
@@ -166,7 +91,7 @@ const ProductDetails = ({ params }) => {
                   $48.00
                 </p>
                 <p className="text-[#2C742F] text-[24px] font-medium">
-                  ${product.basePrice}
+                  ${product?.basePrice}
                 </p>
                 <div className="w-[75px] h-[27px] rounded-[30px] bg-[#EA4B481A] text-[#EA4B48] text-[14px] py-[3px] px-[10px]">
                   In Stock
@@ -192,13 +117,13 @@ const ProductDetails = ({ params }) => {
               </div> */}
               <div className="my-4">
                 <h1 className="font-semibold text-md">Product Description</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cum ullam sapiente nihil nesciunt recusandae aut totam, tempore sit impedit enim esse ea facilis ipsum blanditiis! Ipsam natus assumenda ducimus illum nihil illo, quidem quibusdam?</p>
+                <p>{product?.description}</p>
               </div>
               <div className="w-full lg:w-[647px] my-5 border border-[#E6E6E6]"></div>
               <div className=" space-y-4 px-3 gap-4">
-              <SelectSize />
+                <SelectSize />
                 <SelectColor />
-                
+
               </div>
               {/* <div className="w-full lg::w-[568px] mt-4">
                 <p className="text-[14px] md:text-[16px] text-[#808080]">
@@ -243,8 +168,8 @@ const ProductDetails = ({ params }) => {
               {/* Category and Tags */}
               <div>
                 <p className="text-[14px] font-bold">
-                  Category :
-                  <span className="text-[#808080] font-normal"> Vegetables</span>
+                  Category: 
+                  <span className="text-[#808080] font-normal">{product?.Category.name}</span>
                 </p>
                 {/* <div className="flex gap-2 mt-3">
                   <p className="text-[14px] font-bold">Tags :</p>
@@ -282,11 +207,11 @@ const ProductDetails = ({ params }) => {
                 </a>
               </nav>
             </div> */}
-<TabComponent/>
+            <TabComponent data={product}/>
             {/* Content Section */}
-          
-              {/* Left Text Content */}
-              {/* <div className="text-gray-700 w-full py-10">
+
+            {/* Left Text Content */}
+            {/* <div className="text-gray-700 w-full py-10">
                 <p className="text-[14px] md:text-[16px]">
                   Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet
                   at posuere ac, viverra at mauris. Maecenas tincidunt ligula a
@@ -305,8 +230,8 @@ const ProductDetails = ({ params }) => {
                 </p>
               </div> */}
 
-              {/* Right Image Content */}
-              {/* <div className="relative lg:w-[536px]">
+            {/* Right Image Content */}
+            {/* <div className="relative lg:w-[536px]">
                 <Image
                   width={800}
                   height={800}
@@ -346,7 +271,7 @@ const ProductDetails = ({ params }) => {
                   </div>
                 </div>
               </div> */}
-          
+
           </div>
 
           {/* Related Products */}

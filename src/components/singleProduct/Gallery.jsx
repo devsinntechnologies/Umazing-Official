@@ -6,34 +6,27 @@ import { Navigation, Thumbs } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
+import Image from 'next/image';
 
-const Gallery = () => {
+const Gallery = (data) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [isSSR, setIsSSR] = useState(true);
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
-    setIsSSR(false); // Ensures that Swiper is only rendered on the client
+    setIsSSR(false);
   }, []);
 
-  const Product_Images = [
-    {
-      id: "0c7c15a99f1f6860cd326c7e99059d6b",
-      imageUrl: "uploads/products/fbddc92815567b42346d3f6d58f54bd8.jpeg"
-    },
-    {
-      id: "5009fc30be4b74c24c9acdeddcc6232f",
-      imageUrl: "uploads/products/454831425a0e306b729a4426b8d26cb3.png"
-    },
-    {
-      id: "de362500f4ec968600082acc8a855df0",
-      imageUrl: "uploads/products/4a09dc4c53f5c45911c253e40dcdcd72.jpeg"
+  useEffect(() => {
+    if(data){
+      setImages(data.data?.Product_Images);
     }
-  ];
-
+  }, [data]);
   if (isSSR) return null;
 
+
   return (
-    <div className="w-full">
+    <div className="w-full overflow-hidden">
       {/* Main Gallery Swiper */}
       <Swiper
         loop={true}
@@ -41,19 +34,21 @@ const Gallery = () => {
         spaceBetween={10}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[Navigation, Thumbs]} // Registering modules in the component itself
-        className="w-full h-80"
+        className="w-full h-80 flex items-center justify-center overflow-hidden"
 
       >
-        {Product_Images.map((image, index) => (
-        <div className="h-20 bg-primary">
+        {images?.map((image, index) => (
+          <div key={index} className="h-20 bg-primary">
             <SwiperSlide key={index}>
-            <img 
-              src={`http://97.74.89.204/${image.imageUrl}`} 
-              alt={`Image ${index}`} 
-              className="w-full h-full object-cover" 
-            />
-          </SwiperSlide>
-        </div>
+              <Image
+                width={300}
+                height={300}
+                src={`http://97.74.89.204/${image.imageUrl}`}
+                alt={`Image ${index}`}
+                className="w-full h-full object-cover"
+              />
+            </SwiperSlide>
+          </div>
         ))}
       </Swiper>
 
@@ -63,15 +58,17 @@ const Gallery = () => {
         loop={true}
         spaceBetween={-300}
         slidesPerView={4}
-        
+
         watchSlidesProgress={true}
         modules={[Navigation, Thumbs]} // Registering modules for thumbnail swiper
         className="w-full mt-4 h-24  "
       >
-        {Product_Images.map((image, index) => (
+        {images?.map((image, index) => (
           <SwiperSlide key={index}>
-            <img
-              className="w-10 h-10 rounded-full object-cover "
+            <Image
+              width={60}
+              height={60}
+              className="w-10 h-10 rounded-full object-cover"
               src={`http://97.74.89.204/${image.imageUrl}`}
               alt={`Thumbnail ${index}`}
             />
