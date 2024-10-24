@@ -128,16 +128,19 @@ const FilterBar = () => {
               <Accordion type="single" collapsible>
                 <AccordionItem value="item-1">
                   <AccordionTrigger className="text-lg font-medium mb-3">
-                    All Categories
+                    {selectedParams.categoryId
+                      ? categories?.data?.find(
+                        (category) => category.id === selectedParams.categoryId
+                      )?.name || "All Categories"
+                      : "All Categories"}
                   </AccordionTrigger>
                   <AccordionContent>
                     {categories?.data?.map((category) => (
                       <div
-                        className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${
-                          selectedParams.categoryId === category.id
+                        className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${selectedParams.categoryId === category.id
                             ? "bg-primary text-white"
                             : ""
-                        }`}
+                          }`}
                         key={category.id}
                         onClick={() => handleSelect("categoryId", category.id)}
                       >
@@ -198,11 +201,10 @@ const FilterBar = () => {
                   <AccordionContent>
                     {offers?.data?.map((offer) => (
                       <div
-                        className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${
-                          selectedParams.offerId === offer.id
+                        className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${selectedParams.offerId === offer.id
                             ? "bg-primary text-white"
                             : ""
-                        }`}
+                          }`}
                         key={offer.id}
                         onClick={() => handleSelect("offerId", offer.id)}
                       >
@@ -254,11 +256,10 @@ const FilterBar = () => {
               <AccordionContent>
                 {conditionData.map((condition) => (
                   <div
-                    className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${
-                      selectedParams.condition === condition
+                    className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${selectedParams.condition === condition
                         ? "bg-primary text-white"
                         : ""
-                    }`}
+                      }`}
                     key={condition}
                     onClick={() => handleSelect("condition", condition)}
                   >
@@ -494,7 +495,11 @@ const FilterBar = () => {
                   <Accordion type="single" collapsible>
                     <AccordionItem value="item-1">
                       <AccordionTrigger className="text-lg font-medium mb-3">
-                        All Categories
+                      {selectedParams.categoryId
+                      ? categories?.data?.find(
+                        (category) => category.id === selectedParams.categoryId
+                      )?.name || "All Categories"
+                      : "All Categories"}
                       </AccordionTrigger>
                       <AccordionContent>
                         <div
@@ -502,11 +507,10 @@ const FilterBar = () => {
                         >
                           {categories?.data?.map((category) => (
                             <div
-                              className={`w-full cursor-pointer px-3 py-2 rounded-full ${
-                                selectedParams.categoryId === category.id
+                              className={`w-full cursor-pointer px-3 py-2 rounded-full ${selectedParams.categoryId === category.id
                                   ? "bg-primary text-white"
                                   : ""
-                              }`}
+                                }`}
                               key={category.id}
                               onClick={() =>
                                 handleSelect("categoryId", category.id)
@@ -577,11 +581,10 @@ const FilterBar = () => {
                       <AccordionContent>
                         {offers?.data?.map((offer) => (
                           <div
-                            className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${
-                              selectedParams.offerId === offer.id
+                            className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${selectedParams.offerId === offer.id
                                 ? "bg-primary text-white"
                                 : ""
-                            }`}
+                              }`}
                             key={offer.id}
                             onClick={() => handleSelect("offerId", offer.id)}
                           >
@@ -634,11 +637,10 @@ const FilterBar = () => {
                   <AccordionContent>
                     {conditionData.map((condition) => (
                       <div
-                        className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${
-                          selectedParams.condition === condition
+                        className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${selectedParams.condition === condition
                             ? "bg-primary text-white"
                             : ""
-                        }`}
+                          }`}
                         key={condition}
                         onClick={() => handleSelect("condition", condition)}
                       >

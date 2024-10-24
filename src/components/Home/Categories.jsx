@@ -37,7 +37,7 @@ const Categories = () => {
         <div className="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-8 items-center gap-3 w-full ">
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="w-full h-28 rounded-full relative">
-              <Skeleton className="w-full h-full" />
+              <Skeleton className="w-full h-full rounded-full" />
             </div>
           ))}
         </div>
@@ -46,7 +46,7 @@ const Categories = () => {
       ) : (
         <ul className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 justify-center gap-3 items-center w-full mx-auto my-5">
           {categoriesToDisplay?.map((category, index) => (
-            <Link key={index} href={`/shop/${category.id}`}>
+            <Link key={index} href={`/search?categoryId=${category.id}`}>
               <div className="w-[148px] flex items-center flex-col justify-center space-y-3">
                 <div className="rounded-full bg-secondary px-4 py-4 border border-border gap-6 cursor-pointer size-32 transition-shadow duration-150 ease-in-out hover:border-primary">
                   <Image
