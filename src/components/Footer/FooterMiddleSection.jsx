@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const FooterMiddleSection = () => {
   return (
-    <div className="w-[95vw] mx-auto py-10">
+    <div className="w-full py-10">
       <div className="w-full  grid grid-cols-1  md:grid-cols-5 gap-6">
         {/* Left Section - Brand Info */}
         <div className="col-span-1 md:col-span-2 w-full sapce-y-4">
@@ -66,8 +66,9 @@ const FooterMiddleSection = () => {
         <div className="col-span-1 md:col-span-1 flex w-full flex-col space-y-4">
           <h3 className="font-semibold text-gray-800">Download Mobile App</h3>
           <div className="flex">
-            <a href="#">
-              <Image src='/images/playStore.png' width={400} alt="" height={100} />
+            <a href="#" className="flex gap-2">
+              <Image src='/images/playStore.png' width={80} alt="" height={20} />
+              <Image src='/images/appStore.png' width={80} alt="" height={20} />
             </a>
           </div>
         </div>

@@ -51,7 +51,7 @@ const AuthDialog = ({ isOpen: externalIsOpen, setIsOpen: externalSetIsOpen, useT
             Login
           </button>
         </DialogTrigger>
-      )}
+      )} 
 
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
