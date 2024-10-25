@@ -31,7 +31,6 @@ const AuthDialog = ({ isOpen: externalIsOpen, setIsOpen: externalSetIsOpen, useT
   };
 
   const handleSignup = (formData) => {
-    console.log("Signup Data:", formData);
     setCurrentView("login");
   };
 

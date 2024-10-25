@@ -154,7 +154,6 @@ const Signup = ({ onBack, onSignupSuccess }) => {
       dob: dob ? format(dob, "yyyy-MM-dd") : "",
     };
 
-    // console.log("Signup Form Data:", formData);
     signupData(formData)
     // onSignupSuccess(formData); // Trigger parent callback with form data
   };

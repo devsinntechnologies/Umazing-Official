@@ -13,7 +13,6 @@ import Gallery from "@/components/singleProduct/Gallery";
 
 const ProductDetails = ({ params }) => {
   const { id } = params;
-  console.log(id);
   const pageNo = "1";
   const pageSize = "8";
   const categoryId = "4051eb3ece5de28e4b7521a0a42957eb";
@@ -27,8 +26,6 @@ const ProductDetails = ({ params }) => {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(0);
 
-
-  console.log(product);
 useEffect(() => {
   if(productData){
     setProduct(productData.data);

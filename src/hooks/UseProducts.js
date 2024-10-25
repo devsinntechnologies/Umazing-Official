@@ -22,14 +22,12 @@ export const products = createApi({
     getAllProducts: builder.query({
       query: (params) => {
         const queryString = new URLSearchParams(params).toString();
-        console.log("API Route Products", queryString);
         return `allProducts?${queryString}`;
       },
     }),
     getUserProducts: builder.query({
       query: (params) => {
         const queryString = new URLSearchParams(params).toString();
-        // console.log("API Route Products", queryString);
         return `getUserProducts?${queryString}`;
       },
     }),
@@ -39,7 +37,7 @@ export const products = createApi({
     }),
     deleteProductById: builder.mutation({
       query: (id) => ({
-        url: `/deleteById//${id}`,
+        url: `/deleteById/${id}`,
         method: "DELETE",
       }),
     }),

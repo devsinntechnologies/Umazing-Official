@@ -8,7 +8,7 @@ const Page = () => {
   return (
     <div className="flex-col md:flex-row w-full flex py-4 gap-4 h-screen overflow-hidden">
       <FilterBar />
-      <FilterProducts />
+      <FilterProducts/>
     </div>
   );
 };

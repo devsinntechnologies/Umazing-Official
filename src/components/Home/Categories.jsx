@@ -8,25 +8,20 @@ import { useGetCategoriesQuery } from "@/hooks/UseCategories";
 
 const Categories = () => {
   const { data: categoriesData, isLoading, isError } = useGetCategoriesQuery(); // Use the hook for fetching categories
-  const [showAll, setShowAll] = useState(false); // State to toggle between showing limited and all categories
-
-  // Determine categories to display
-  const categoriesToDisplay = showAll ? categoriesData?.data : categoriesData?.data?.slice(0, 6);
 
   return (
     <div className="w-full flex justify-center items-center flex-col gap-8 py-10">
-      <div className="w-full flex justify-between items-center px-4 ">
-        <p></p>
-        <p className="font-bold text-2xl flex justify-center text-center text-primary">Category</p>
+      <div className="w-full flex justify-center items-center px-4">
+        <p className="font-bold text-2xl text-center text-primary">Category</p>
         {/* View All button to toggle showing all categories */}
-        {categoriesData?.data?.length > 6 && (
+        {/* {categoriesData?.data?.length > 6 && (
           <button
             onClick={() => setShowAll(!showAll)}
             className="text-sm text-primary font-medium hover:underline"
           >
-            {showAll ? "View Less" : "View All"}
+            View All
           </button>
-        )}
+        )} */}
       </div>
       <h1 className="font-semibold text-xl sm:text-2xl md:text-3xl lg:text-4xl">
         Shop by Top Categories
@@ -34,21 +29,22 @@ const Categories = () => {
 
       {/* Conditionally render loading state or categories */}
       {isLoading ? (
-        <div className="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-8 items-center gap-3 w-full ">
+       <div className="w-full overflow-x-scroll">
+         <div className="flex items-center justify-center gap-3 md:gap-5 lg:gap-6 min-w-fit">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="w-full h-28 rounded-full relative">
-              <Skeleton className="w-full h-full rounded-full" />
-            </div>
+              <Skeleton key={i} className="size-16 sm:size-20 md:size-28 lg:size-36 rounded-full" />
           ))}
+       </div>
         </div>
       ) : isError ? (
         <p className="text-red-500">Error loading categories. Please try again.</p>
       ) : (
-        <ul className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 justify-center gap-3 items-center w-full mx-auto my-5">
-          {categoriesToDisplay?.map((category, index) => (
+        <div className="w-full overflow-x-scroll">
+         <div className="flex items-center justify-center gap-3 md:gap-5 lg:gap-6 min-w-fit">
+         {categoriesData?.data?.map((category, index) => (
             <Link key={index} href={`/search?categoryId=${category.id}`}>
-              <div className="w-[148px] flex items-center flex-col justify-center space-y-3">
-                <div className="rounded-full bg-secondary px-4 py-4 border border-border gap-6 cursor-pointer size-32 transition-shadow duration-150 ease-in-out hover:border-primary">
+              <div className="flex items-center flex-col justify-center space-y-3">
+                <div className="size-16 sm:size-20 md:size-28 lg:size-36 rounded-full bg-secondary p-4 border border-border gap-6 cursor-pointer">
                   <Image
                     src={
                       category.imageUrl
@@ -67,7 +63,8 @@ const Categories = () => {
               </div>
             </Link>
           ))}
-        </ul>
+         </div>
+        </div>
       )}
     </div>
   );

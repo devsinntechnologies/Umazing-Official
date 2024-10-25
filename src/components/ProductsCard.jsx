@@ -14,7 +14,7 @@ import AuthDialog from "./auth/AuthDialog";
 import { useAddToCartMutation, useGetUserCartQuery, useUpdateCartItemMutation } from "@/hooks/UseCart";
 import Link from "next/link";
 
-const ProductsCard = ({ product }) => {
+const ProductsCard = ({ product, onDelete }) => {
   const { toast } = useToast();
   const userId = useSelector((state) => state.authSlice?.user?.id);
   const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
@@ -40,7 +40,6 @@ const ProductsCard = ({ product }) => {
   const [addToFavourite, { isSuccess: addSuccess, isLoading: addingToFav, isError: addError }] = useAddToFavouriteMutation();
   const [removeFromFavourite, { isSuccess: removeSuccess, isLoading: removingFromFav, isError: removeError }] = useRemoveFromFavouriteMutation();
 
-  // Check if the product is already in the cart and set cart item ID
   useEffect(() => {
     if (isLoggedIn && cartData) {
       const cartItem = cartData.data?.find(item => item.Product.id === product.id);
@@ -83,7 +82,6 @@ const ProductsCard = ({ product }) => {
     toast({
       title: "Processing",
       description: "Updating your cart...",
-      status: "loading",
     });
 
     try {
@@ -117,7 +115,6 @@ const ProductsCard = ({ product }) => {
     toast({
       title: "Adding",
       description: "Adding item to your wishlist...",
-      status: "loading",
     });
 
     try {
@@ -145,7 +142,6 @@ const ProductsCard = ({ product }) => {
     toast({
       title: "Removing",
       description: "Removing item from your wishlist...",
-      status: "loading",
     });
 
     try {
@@ -156,50 +152,47 @@ const ProductsCard = ({ product }) => {
     }
   };
 
-  const handleDelete = () => {
-    console.log(`Deleting product with ID: ${product.id}`);
-  };
-
   const isSeller = pathname === "/seller" || pathname === "/seller/products";
 
   return (
     <div className="w-full h-auto relative hover:shadow-lg border border-border rounded-sm hover:border-primary">
-     <Link href={`details/${product.id}`} className="w-full flex flex-col">
-     <AuthDialog isOpen={isDialogOpen} setIsOpen={setIsDialogOpen} useTrigger={false} />
-      <Image
-        className="w-full h-[200px] object-cover"
-        width={500}
-        height={300}
-        src={product?.Product_Images[0]?.imageUrl ? `http://97.74.89.204/${product?.Product_Images[0]?.imageUrl}` : ""}
-        alt={product.name}
-      />
-      <div className="w-full space-y-2 p-2">
-        <h3 className="text-sm font-semibold h-10 transition duration-200 text-primary truncate-multiline">{product.name}</h3>
-        <p className="text-gray-600">${product.basePrice}</p>
-      </div>
-     </Link>
-       {/* Add to Cart button */}
-       {!isSeller && (
-          <button
-            className="w-full text-sm bg-primary py-3 text-white rounded-b-sm"
-            onClick={handleAddToCart} // Add to Cart functionality
-            disabled={addingToCart || updatingCart} // Disable while loading
-          >
-            {addingToCart || updatingCart ? (
-              <Loader2 size={20} className="animate-spin text-white" />
-            ) : (
-              isProductInCart ? "Update Cart" : "Add to Cart"
-            )}
-          </button>
-        )}
-     <div className="absolute top-2 right-2 flex items-center">
+      <Link href={`details/${product.id}`} className="w-full flex flex-col">
+        <AuthDialog isOpen={isDialogOpen} setIsOpen={setIsDialogOpen} useTrigger={false} />
+        <Image
+          className="w-full h-[200px] object-cover"
+          width={500}
+          height={300}
+          src={product?.Product_Images[0]?.imageUrl ? `http://97.74.89.204/${product?.Product_Images[0]?.imageUrl}` : ""}
+          alt={product.name}
+        />
+        <div className="w-full space-y-2 p-2">
+          <h3 className="text-sm font-semibold h-10 transition duration-200 text-primary truncate-multiline">{product.name}</h3>
+          <p className="text-gray-600">${product.basePrice}</p>
+        </div>
+      </Link>
+      {/* Add to Cart button */}
+      {!isSeller && (
+        <button
+          className="w-full text-sm bg-primary py-3 text-white rounded-b-sm"
+          onClick={handleAddToCart} // Add to Cart functionality
+          disabled={addingToCart || updatingCart} // Disable while loading
+        >
+          {addingToCart || updatingCart ? (
+            <Loader2 size={20} className="animate-spin text-white" />
+          ) : (
+            isProductInCart ? "Update Cart" : "Add to Cart"
+          )}
+        </button>
+      )}
+      <div className="absolute top-2 right-2 flex items-center">
         {isSeller && (
-          <button
-            className="p-2 rounded-full bg-gray-200 mr-2"
-            onClick={handleDelete}
-          >
-            <Trash2 size={20} className="text-destructive" />
-          </button>
+         <button
+         className="p-2 bg-gray-200 rounded-full"
+         onClick={onDelete}
+         aria-label={`Delete ${product.name}`}
+       >
+         <Trash2 size={20} className="text-destructive" />
+       </button>
         )}
         {!isSeller && (
           <button

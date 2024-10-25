@@ -53,7 +53,6 @@ const FilterBar = () => {
 
   // Update URL with filter changes
   const updateURL = (key, value) => {
-    console.log(key, value);
     const currentParams = new URLSearchParams(window.location.search);
     if (value !== "") {
       currentParams.set(key, value.toString());

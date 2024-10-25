@@ -13,7 +13,7 @@ const Sidebar = () => {
       : "hover:bg-primary hover:text-white rounded-full lg:rounded-sm py-1";
 
   return (
-    <div className="lg:w-[230px] w-full flex  lg:flex-col gap-3 lg:bg-[#f3f4f6] mt-0 lg:mt-0 py-1 text-start lg:shadow-sm lg:shadow-primary lg:border-[1px] lg:border-solid lg:border-primary lg:rounded-md md:px-2">
+    <div className="lg:w-[230px] w-full flex h-fit lg:flex-col gap-3 lg:bg-[#f3f4f6] py-3 text-start lg:shadow-sm lg:shadow-primary lg:border-[1px] lg:border-solid lg:border-primary lg:rounded-md md:px-2">
       <h1 className="text-2xl font-semibold lg:flex hidden md:px-3">Seller</h1> 
       <Link href="/seller" className={getLinkClass("/seller")}>
         <div className="flex md:gap-3 text-md text-center lg:text-lg sm:text-md text-xs gap-2 md:px-3 py-1 px-2 items-center ">

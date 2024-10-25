@@ -32,9 +32,9 @@ const HeaderSlider = () => {
         pagination={{
           clickable: true,
         }}
-        navigation={true} // Keep this true to enable navigation but handle it with custom buttons
+        navigation={false} // Keep this true to enable navigation but handle it with custom buttons
         keyboard={true}
-        modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+        modules={[Navigation, Pagination, Mousewheel, Keyboard, Autoplay]}
         className="mySwiper w-full h-full rounded-lg"
       >
         {offers.data.map((offer) => (

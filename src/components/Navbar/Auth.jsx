@@ -38,7 +38,7 @@ const Auth = ({className}) => {
 
   useEffect(() => {
     if (userProfile) {
-      console.log("User Profile Data:", userProfile);
+      // console.log("User Profile Data:", userProfile);
       dispatch(setUserProfile(userProfile.data));  // Store profile data in Redux
     }
     if (error) {

@@ -56,7 +56,6 @@ const Profile = () => {
         description: "Login Successfully",
         variant: "",
       });
-      console.log("User Profile Data:", userProfile);
     }
     if (error) {
       console.error("Error fetching user profile:", error);
@@ -89,12 +88,9 @@ const Profile = () => {
   const handleUpdateProfile = async () => {
     const updateData = { name, email, dob: birthday }; // Collecting the data to send
 
-    console.log("Update data being sent:", updateData); // Log the data before sending
-
     updateProfile(updateData)
       .unwrap()
       .then((response) => {
-        console.log("API response:", response); // Log the API response
         toast({
           title: "Success",
           description: "Profile updated successfully!",
@@ -113,16 +109,12 @@ const Profile = () => {
   };
 
   const handleAddAddress = async () => {
-    console.log("New address being added:", newAddress); // Log the new address
-
     addUserAddress({ address: newAddress })
       .unwrap()
       .then((response) => {
-        console.log("Add address API response:", response); // Log the API response
         toast({
           title: "Success",
           description: "Address added successfully.",
-          status: "success",
         });
         setNewAddress(""); // Clear the input field
         refetch(); // Optionally refetch user profile to get updated addresses
