@@ -33,7 +33,7 @@ const BreadCrum = () => {
   }
 
   return (
-    <div className="w-full  py-5  flex justify-start items-center ">
+    <div className="w-full  py-3  flex justify-start items-center ">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>

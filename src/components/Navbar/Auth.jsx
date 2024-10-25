@@ -13,6 +13,7 @@ import { logOut } from "@/slice/authSlice";
 import AuthDialog from "../auth/AuthDialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { cn } from "@/lib/utils";
+import { Skeleton } from "../ui/skeleton";
 
 const Auth = ({className}) => {
   const dispatch = useDispatch();
@@ -49,7 +50,13 @@ const Auth = ({className}) => {
   return (
     <div className={`${cn(className)} flex gap-2 items-center space-x-1 text-gray-500 text-sm`}>
       {isLoggedIn ?
-        <div className="flex items-center gap-3 min-h-10">
+        (isLoading ? <div className="flex items-center gap-3 min-h-10">
+          <Skeleton className="size-8 md:size-10 rounded-full" />
+          <Skeleton className="size-8 md:size-10 rounded-full" />
+          <Skeleton className="size-12 rounded-full" />
+        </div> 
+          :
+          <div className="flex items-center gap-3 min-h-10">
           <Link href='/wishlist' className="size-8 md:size-10 rounded-full text-primary font-bold flex items-center justify-center"><Heart className="font-bold" /></Link>
           <Link href='/cart' className="size-8 md:size-10 rounded-full text-primary font-bold flex items-center justify-center"><ShoppingCart className="font-bold" /></Link>
           {/* <div className="size-8 md:size-10 rounded-full text-primary font-bold flex items-center justify-center"><Bell className="font-bold" /></div> */}
@@ -102,6 +109,7 @@ const Auth = ({className}) => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
+        )
         : <AuthDialog useTrigger={true} />
         }
     </div>

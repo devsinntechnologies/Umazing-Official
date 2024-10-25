@@ -4,7 +4,7 @@ import FooterMiddleSection from './FooterMiddleSection'
 import FooterBottomSection from './FooterBottomSection'
 const Footer = () => {
   return (
-    <div className='border-t border-solid-2px'>
+    <div className='w-full border-t border-gray-200'>
         {/* <FooterTopSection/> */}
         <FooterMiddleSection/>
         <FooterBottomSection/>

@@ -1,6 +1,7 @@
 "use client";
 import BreadCrum from "@/components/BreadCrum";
 import withAuth from "@/components/hoc/withAuth";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import {
   useGetUserFavouriteQuery,
@@ -25,10 +26,9 @@ const Page = () => {
   }, [userId, isLoggedIn]);
 
   const {
-    isSuccess: fetchSuccess,
-    isError: fetchError,
     data: wishlistItems,
-    isLoading: fetchLoading,
+    isLoading,
+    isError,
     refetch,
   } = useGetUserFavouriteQuery(userId, {
     skip: !triggerFetch,
@@ -43,71 +43,63 @@ const Page = () => {
     },
   ] = useRemoveFromFavouriteMutation();
 
-  // Update the wishlist when new items are fetched
   useEffect(() => {
     if (wishlistItems?.data) {
       setWishlist(wishlistItems.data);
     }
   }, [wishlistItems]);
 
-  // Handle removal from wishlist
   const handleRemove = (favouriteId) => {
-    // Optimistically remove the item from the wishlist
     setWishlist((prevWishlist) =>
       prevWishlist.filter((item) => item.id !== favouriteId)
     );
-    // Trigger the mutation to remove from favourite
     removeFromFavourite(favouriteId);
   };
 
-  // useEffect to handle toast notifications for removal success and error
   useEffect(() => {
+    if (removeLoading) {
+      toast({
+        title: "Removing",
+        description: "Product is removing from your wishlist",
+      });
+    }
     if (removeSuccess) {
-      // Show success toast when item is successfully removed
       toast({
         title: "Removed",
         description: "Item removed from your wishlist successfully.",
-        status: "success",
       });
-
-      // Refetch the updated wishlist
       refetch();
     }
 
     if (removeError) {
-      // Show error toast if there's an error during removal
       toast({
         title: "Error",
         description: "Failed to remove item from wishlist. Please try again.",
-        status: "error",
       });
 
-      // Optionally refetch to restore the correct state
       refetch();
     }
-  }, [removeSuccess, removeError, toast, refetch]);
+  }, [removeSuccess, removeLoading, removeError, toast, refetch]);
+  
 
-  if (fetchLoading) {
-    return <div>{/* Skeleton Loading UI */}</div>;
+  if (isError) {
+    return <div> Failed To fetch </div>
   }
-
-  if (fetchError) {
-    return <div>Error fetching wishlist items</div>;
-  }
-
   return (
     <>
       <BreadCrum />
-      <div>
-        <main className="container md:w-[85%] mx-auto px-4 md:px-6 lg:px-8 py-8 mt-4">
-          <h1 className="text-2xl font-semibold mb-6 text-center">
-            My Wishlist
-          </h1>
-
-          <div
-            id="overflow"
-            className="shadow-sm shadow-primary overflow-auto border-b border-gray-200 sm:rounded-lg "
-          >
+      <div className="w-full py-6">
+        <h1 className="text-lg md:text-xl lg:text-2xl font-semibold mb-6 text-center">
+          My Wishlist
+        </h1>
+        <div className="shadow-sm shadow-primary border-b border-gray-200 rounded-lg w-[85%] mx-auto">
+          {isLoading ?
+            <div className="w-full divide-y divide-gray-200 p-2 flex flex-col gap-3">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <Skeleton key={index} className="w-full rounded-md h-12 text-primary" />
+              ))}
+            </div>
+            :
             <table className="w-full divide-y divide-gray-200 ">
               <thead>
                 <tr>
@@ -149,8 +141,8 @@ const Page = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-md bg-green-100 text-green-700">
-                          In Stock
+                        <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-md bg-green-100 text-primary">
+                          {item.Product.baseQuantity > 0 ? "In Stock" : "No Stock"}
                         </span>
                       </td>
                       <td className="py-4 whitespace-nowrap">
@@ -178,8 +170,8 @@ const Page = () => {
                 )}
               </tbody>
             </table>
-          </div>
-        </main>
+          }
+        </div>
       </div>
     </>
   );

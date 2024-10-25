@@ -82,6 +82,7 @@ const ProductsCard = ({ product, onDelete }) => {
     toast({
       title: "Processing",
       description: "Updating your cart...",
+      duration: 1000,
     });
 
     try {
@@ -115,6 +116,7 @@ const ProductsCard = ({ product, onDelete }) => {
     toast({
       title: "Adding",
       description: "Adding item to your wishlist...",
+      duration: 1000
     });
 
     try {
@@ -142,6 +144,7 @@ const ProductsCard = ({ product, onDelete }) => {
     toast({
       title: "Removing",
       description: "Removing item from your wishlist...",
+      duration: 1000
     });
 
     try {
@@ -167,20 +170,20 @@ const ProductsCard = ({ product, onDelete }) => {
         />
         <div className="w-full space-y-2 p-2">
           <h3 className="text-sm font-semibold h-10 transition duration-200 text-primary truncate-multiline">{product.name}</h3>
-          <p className="text-gray-600">${product.basePrice}</p>
+          <p className="text-gray-600">Rs. {product.basePrice}</p>
         </div>
       </Link>
       {/* Add to Cart button */}
       {!isSeller && (
         <button
-          className="w-full text-sm bg-primary py-3 text-white rounded-b-sm"
+          className="w-full text-sm bg-primary py-3 text-white rounded-b-sm flex items center justify-center gap-2"
           onClick={handleAddToCart} // Add to Cart functionality
           disabled={addingToCart || updatingCart} // Disable while loading
         >
           {addingToCart || updatingCart ? (
             <Loader2 size={20} className="animate-spin text-white" />
           ) : (
-            isProductInCart ? "Update Cart" : "Add to Cart"
+           "Add to Cart"
           )}
         </button>
       )}
