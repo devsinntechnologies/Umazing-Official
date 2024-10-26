@@ -3,7 +3,7 @@ import Stars from './Stars'
 
 const ReviewsCard = () => {
   return (
-    <div className='w-full border space-y-3 rounded-lg border-solid-2px h-auto px-6 py-6'>
+    <div className='w-full border space-y-3 rounded-lg border-solid-2px h-auto px-6 py-6 my-4 '>
    <div className='flex justify-between items-center'>
    <div className='flex gap-3 items-center'>   <div className='size-10  rounded-full bg-black'>
             <img src="/icon.svg" alt="" />

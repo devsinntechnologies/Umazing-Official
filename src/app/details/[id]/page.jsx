@@ -52,7 +52,7 @@ useEffect(() => {
             </div>
 
             {/* Product Information */}
-            <div className="w-full md:w-[50%] h-auto lg:h-[501px]">
+            <div className="w-full md:w-[50%] h-auto lg:h-[501px] space-y-5 my-5">
               <div className="rounded-[4px] text-primary text-2xl font-bold ">
                 {product?.name}
               </div>
@@ -98,7 +98,7 @@ useEffect(() => {
                 </div>
               </div> */}
               <div className="my-4">
-                <h1 className="font-semibold text-md">Product Description</h1>
+                <h1 className="font-semibold text-md ">Product Description</h1>
                 <p>{product?.description}</p>
               </div>
               {/* <div className="w-full lg:w-[647px] my-5 border border-[#E6E6E6]"></div>
@@ -151,7 +151,7 @@ useEffect(() => {
               <div>
                 <p className="text-[14px] font-bold">
                   Category: 
-                  <span className="text-[#808080] font-normal">{product?.Category.name}</span>
+                  <span className="text-[#808080] font-normal"> {product?.Category.name}</span>
                 </p>
                 {/* <div className="flex gap-2 mt-3">
                   <p className="text-[14px] font-bold">Tags :</p>

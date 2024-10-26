@@ -61,7 +61,7 @@ const Gallery = (data) => {
 
         watchSlidesProgress={true}
         modules={[Navigation, Thumbs]} // Registering modules for thumbnail swiper
-        className="w-full mt-4 h-24  "
+        className="w-full p-4 h-auto mx-2 my-4 gap-3 flex justify-center items-center  "
       >
         {images?.map((image, index) => (
           <SwiperSlide key={index}>
