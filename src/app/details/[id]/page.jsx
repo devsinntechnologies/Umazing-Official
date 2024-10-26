@@ -7,9 +7,10 @@ import { Skeleton } from "@/components/ui/skeleton"; // Skeleton loader import
 import { Minus, Plus, ShoppingCart, Star, Instagram, Facebook, Twitter, Heart } from "lucide-react";
 import SelectSize from "@/components/singleProduct/SelectSize";
 import SelectColor from "@/components/singleProduct/SelectColor";
-import { useGetAllProductsQuery, useGetProductByIdQuery, useGetProductReviewsQuery } from "@/hooks/UseProducts";
+import { useGetAllProductsQuery, useGetProductByIdQuery,  } from "@/hooks/UseProducts";
 import TabComponent from "@/components/singleProduct/TabContent";
 import Gallery from "@/components/singleProduct/Gallery";
+import Stars from "@/components/singleProduct/Stars";
 
 const ProductDetails = ({ params }) => {
   const { id } = params;
@@ -24,7 +25,7 @@ const ProductDetails = ({ params }) => {
   };
   const { data: item, isLoading, isError } = useGetAllProductsQuery(queryParams);
   const { data: productData, isError:productError, isLoading:productLoading } = useGetProductByIdQuery(id);
-  const { data: reviewsData, isLoading: reviewsLoading } = useGetProductReviewsQuery(id);
+
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(0);
 
@@ -42,11 +43,11 @@ useEffect(() => {
 
   return (
     <main className="w-full flex justify-center items-center overflow-hidden">
-      <section className="my-6 w-[90%]">
+      <section className="my-3 w-[90%]">
 
         <div className="flex flex-col gap-5">
-          <div className="gap-5 w-full h-auto flex md:flex-row flex-col justify-center items-center lg:justify-between">
-            <div className="w-full md:w-[48%] border shadow-md ">
+          <div className="gap-5 w-full h-auto flex md:flex-row flex-col justify-center  lg:justify-between">
+            <div className="w-full md:w-[50%] h-auto border  shadow-md ">
               <Gallery data={product} />
             </div>
 
@@ -57,47 +58,14 @@ useEffect(() => {
               </div>
               {/* Ratings and other product details */}
               <div className="flex items-center gap-3 my-2">
-                {/* <div className="flex">
-                  <Star
-                    size={12}
-                    color="#4D4D4D"
-                  />
-                  <Star
-                    size={12}
-                    color="#4D4D4D"
-                  />
-                  <Star
-                    size={12}
-                    color="#4D4D4D"
-                  />
-                  <Star
-                    size={12}
-                    color="#4D4D4D"
-                  />
-                  <Star
-                    size={12}
-                    color="#4D4D4D"
-                  />
-                 
-                </div>
+               <Stars/>
                 <p className="text-[#666666] text-[14px]">4 review</p>
                 <p className="text-[14px]">
                   SKU : <span className="text-[#666666]">213,234,3</span>
-                </p> */}
-                 <div className="reviews-section">
-          <h2>Customer Reviews</h2>
-          {reviewsLoading ? (
-            <p>Loading reviews...</p>
-          ) : (
-            reviewsData?.map((review, index) => (
-              <div key={index} className="review">
-                <p>Rating: {review.star} ★</p>
-                <p>{review.comment}</p>
-              </div>
-            ))
-          )}
+                </p>
+                 
         </div>
-              </div>
+              
 
               {/* Pricing */}
               <div className="flex items-center gap-3 ">

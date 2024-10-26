@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ReviewsCard from './ReviewsCard';
 
 const TabComponent = () => {
   const [activeTab, setActiveTab] = useState('description');
@@ -21,7 +22,7 @@ const TabComponent = () => {
           }`}
           onClick={() => setActiveTab('feedback')}
         >
-          Customer Feedback
+          Customer Reviews
         </button>
       </div>
 
@@ -41,11 +42,9 @@ const TabComponent = () => {
 
         {activeTab === 'feedback' && (
           <div className="feedback-content sm:text-md text-sm">
-            <p className="text-gray-700">
-              Lorem ipsum kwjife rw, nifiorw fiwlr dolor sixercixcepturi eligendi ratione, consectetur
-              quos, asperiores cumque?
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corrupti commodi ad illo, soluta vitae ullam recusandae distinctio harum quo similique aliquam nostrum ratione quae magni dolore ut maxime sapiente nobis debitis eligendi nisi tenetur ipsa quibusdam? Voluptas earum eos repudiandae nisi debitis delectus tenetur nesciunt quia expedita asperiores quo amet, magni molestias facere in hic saepe. Dolorum magni deserunt consequatur amet a iusto beatae officiis labore, adipisci at? Alias vero molestias enim provident velit. Error natus quibusdam exercitationem aut non ullam vero, illum at nisi ipsam voluptas, doloribus iste quis rerum cupiditate laboriosam sunt consequuntur mollitia dolorem. Reiciendis, molestias corrupti?
-            </p>
+         <h1 className='text-xl font-semibold'>4.5 Ratings</h1>
+         <h3>22 Reviews</h3>
+           <ReviewsCard/>
           </div>
         )}
       </div>

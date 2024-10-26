@@ -34,7 +34,7 @@ const Gallery = (data) => {
         spaceBetween={10}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[Navigation, Thumbs]} // Registering modules in the component itself
-        className="w-full h-80 flex items-center justify-center overflow-hidden"
+        className="w-full h-auto flex items-center justify-center overflow-hidden"
 
       >
         {images?.map((image, index) => (
