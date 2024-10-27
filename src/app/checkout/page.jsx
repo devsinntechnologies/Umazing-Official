@@ -1,7 +1,6 @@
 "use client";
-import Image from "next/image";
 import BreadCrum from "@/components/BreadCrum";
-const Checkout = () => {
+const Page = () => {
   return (
     <>
       <BreadCrum />
@@ -140,12 +139,12 @@ const Checkout = () => {
           <div className="flex flex-col gap-4">
             <div className="flex justify-between items-center  flex-wrap">
               <div className="flex gap-2 items-center flex-wrap">
-                <Image
+                {/* <Image
                   className="w-[30px] h-[30px] break-inside-auto lg:w-[50px] lg:h-[50px]	"
                   width={100}
                   height={100}
                   src={"/Images/apple.png"}
-                ></Image>
+                ></Image> */}
                 <h1 className="font-normal text-sm">Green Capsicum</h1>
                 <h1 className="font-normal text-sm">x5</h1>
               </div>
@@ -155,12 +154,12 @@ const Checkout = () => {
             </div>
             <div className="flex justify-between items-center  flex-wrap">
               <div className="flex gap-2 items-center flex-wrap">
-                <Image
+                {/* <Image
                   className="w-[30px] h-[30px] break-inside-auto lg:w-[50px] lg:h-[50px]	"
                   width={100}
                   height={100}
                   src={"/Images/Capsicum.png"}
-                ></Image>
+                ></Image> */}
                 <h1 className="font-normal text-sm">Red Capsicum</h1>
                 <h1 className="font-normal text-sm">x1</h1>
               </div>
@@ -229,4 +228,4 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
+export default Page;

@@ -11,7 +11,7 @@ import { useGetAllProductsQuery, useGetProductByIdQuery } from "@/hooks/UseProdu
 import TabComponent from "@/components/singleProduct/TabContent";
 import Gallery from "@/components/singleProduct/Gallery";
 
-const ProductDetails = ({ params }) => {
+const Page = ({ params }) => {
   const { id } = params;
   const pageNo = "1";
   const pageSize = "8";
@@ -301,4 +301,4 @@ useEffect(() => {
   );
 };
 
-export default ProductDetails;
+export default Page;

@@ -27,7 +27,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-const Profile = () => {
+const Page = () => {
   const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
   const userId = useSelector((state) => state.authSlice.user?.id);
   const [triggerFetch, setTriggerFetch] = useState(false);
@@ -325,4 +325,4 @@ const Profile = () => {
   );
 };
 
-export default withAuth(Profile);
+export default withAuth(Page);

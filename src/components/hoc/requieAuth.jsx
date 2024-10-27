@@ -13,7 +13,7 @@ const requireAuth = (WrappedComponent, redirectPath = '/') => {
       if (token) {
         router.push(redirectPath);
       }
-    }, [token, router, redirectPath]);
+    }, [token, router]);
 
     if (token) {
         return <div>Loading...</div>;

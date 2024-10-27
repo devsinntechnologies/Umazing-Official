@@ -159,7 +159,7 @@ const ProductsCard = ({ product, onDelete }) => {
 
   return (
     <div className="w-full h-auto relative hover:shadow-lg border border-border rounded-sm hover:border-primary">
-      <Link href={`details/${product.id}`} className="w-full flex flex-col">
+      <Link href={`/details/${product.id}`} className="w-full flex flex-col">
         <AuthDialog isOpen={isDialogOpen} setIsOpen={setIsDialogOpen} useTrigger={false} />
         <Image
           className="w-full h-[200px] object-cover"

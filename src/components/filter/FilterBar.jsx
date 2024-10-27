@@ -109,7 +109,7 @@ const FilterBar = () => {
   };
 
   return (
-    <>
+    <div>
       <div className="hidden md:block w-full md:w-[260px] px-3 py-2 rounded-lg bg-white h-full overflow-y-scroll border border-primary">
         <h1 className="text-xl font-bold mb-4">Filters</h1>
 
@@ -874,7 +874,7 @@ const FilterBar = () => {
           </div>
         </SheetContent>
       </Sheet>
-    </>
+    </div>
   );
 };
 
