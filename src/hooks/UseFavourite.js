@@ -16,13 +16,25 @@ export const favourite = createApi({
   }),
   endpoints: (builder) => ({
     getUserFavourite: builder.query({
-      query: (userId) => `getUserFavourite/${userId}`,
+      query: () => `getUserFavourite`,
     }),
     addToFavourite: builder.mutation({
       query: (favData) => ({
         url: 'addToFavourite',
         method: 'POST',
         body: favData,
+      }),
+    }),
+    removeFromFavourite: builder.mutation({
+      query: (id) => ({
+        url: `removeFavouriteProductId/${id}`,
+        method: 'DELETE',
+      }),
+    }),
+    removeFromFavouriteProductId: builder.mutation({
+      query: (id) => ({
+        url: `removeFavouriteProductId/${id}`,
+        method: 'DELETE',
       }),
     }),
     removeFromFavourite: builder.mutation({
@@ -38,4 +50,5 @@ export const {
   useGetUserFavouriteQuery,
   useAddToFavouriteMutation,
   useRemoveFromFavouriteMutation,
+  useRemoveFromFavouriteProductIdMutation,
 } = favourite;

@@ -127,8 +127,8 @@ const FilterProducts = () => {
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {products.map((product) => (
-                  <ProductsCard key={product.id} product={product} />
+                {products.map((product, index) => (
+                  <ProductsCard key={product.id} product={product} index={index} setProducts={setProducts} products={products} />
                 ))}
               </div>
             </div>

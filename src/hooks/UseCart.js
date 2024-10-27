@@ -16,7 +16,7 @@ export const cart = createApi({
   }),
   endpoints: (builder) => ({
     getUserCart: builder.query({
-      query: (userId) => `getUserCart/${userId}`,
+      query: () => `getUserCart`,
     }),
     addToCart: builder.mutation({
       query: (cartData) => ({

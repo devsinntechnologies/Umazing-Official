@@ -97,8 +97,8 @@ const Page = () => {
       {/* Products Grid */}
       {products.length > 0 && (
         <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {products.slice(0, 5).map((product) => (
-            <ProductsCard key={product.id} product={product} onDelete={() => setProductToDelete(product.id)} />
+          {products.slice(0, 5).map((product, index) => (
+             <ProductsCard key={product.id} product={product} index={index} setProducts={setProducts} products={products} onDelete={() => setProductToDelete(product.id)} />
           ))}
         </div>
       )}

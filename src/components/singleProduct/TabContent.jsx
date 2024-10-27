@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import ReviewsCard from './ReviewsCard';
 
-const TabComponent = () => {
+const TabComponent = ({product, review}) => {
   const [activeTab, setActiveTab] = useState('description');
+  console.log(review, "sdfldk")
 
   return (
     <div className="w-full md:mx-10 mt-8">
@@ -30,21 +31,15 @@ const TabComponent = () => {
       <div className="mt-4">
         {activeTab === 'description' && (
           <div className="description-content sm:text-md text-sm">
-            <p className="text-gray-700">
-              Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at posuere ac, viverra at
-              mauris. Maecenas tincidunt ligula a sem vestibulum pharetra.
-            </p>
-            <p className="mt-2 text-gray-700">
-             Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quo at reprehenderit beatae? Necessitatibus maiores pariatur fugit tempore eius dicta deserunt quo consequuntur amet obcaecati provident impedit perspiciatis quia aut mollitia corporis nemo esse rerum, eos ipsum cupiditate facilis sint voluptatibus praesentium! Illo enim veritatis quod facilis minima ullam nobis tempora libero non cumque quae rerum a quisquam magni, culpa in rem nulla ipsa, nihil corrupti inventore ratione qui ea! Earum laboriosam beatae iure soluta corporis eum doloremque, inventore veritatis molestiae atque consequatur cumque quia voluptatibus numquam optio asperiores incidunt. Magni cupiditate nam doloremque impedit quidem reiciendis esse deserunt numquam?
-            </p>
+            {product?.longDescription}
           </div>
         )}
 
         {activeTab === 'feedback' && (
           <div className="feedback-content sm:text-md text-sm">
          <h1 className='text-xl font-semibold'>4.5 Ratings</h1>
-         <h3>22 Reviews</h3>
-           <ReviewsCard/>
+         <h3>{review?.data.length} Reviews</h3>
+           <ReviewsCard review={review}/>
           </div>
         )}
       </div>

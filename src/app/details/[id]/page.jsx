@@ -11,6 +11,7 @@ import { useGetAllProductsQuery, useGetProductByIdQuery,  } from "@/hooks/UsePro
 import TabComponent from "@/components/singleProduct/TabContent";
 import Gallery from "@/components/singleProduct/Gallery";
 import Stars from "@/components/singleProduct/Stars";
+import { useGetAllProductReviewsQuery } from "@/hooks/UseReview";
 
 const Page = ({ params }) => {
   const { id } = params;
@@ -24,7 +25,10 @@ const Page = ({ params }) => {
   };
   const { data: item, isLoading, isError } = useGetAllProductsQuery(queryParams);
   const { data: productData, isError:productError, isLoading:productLoading } = useGetProductByIdQuery(id);
+  const { data: reviewData, isError:reviewError, isLoading:reviewLoading } = useGetAllProductReviewsQuery(id);
 
+  console.log("Arslan" , reviewData);
+  const [products, setProducts] = useState(null);
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(0);
 
@@ -32,7 +36,11 @@ useEffect(() => {
   if(productData){
     setProduct(productData.data);
   }
-}, [productData]);
+  if(item) 
+  {
+    setProducts(item.data)
+  }
+}, [productData,item]);
 
   const handleIncrement = () => setQuantity((prevQty) => prevQty + 1);
   const handleDecrement = () =>
@@ -186,7 +194,7 @@ useEffect(() => {
                 </a>
               </nav>
             </div> */}
-            <TabComponent data={product}/>
+            <TabComponent product={product} review={reviewData}/>
             {/* Content Section */}
 
             {/* Left Text Content */}
@@ -271,8 +279,8 @@ useEffect(() => {
               </div>
             ) : (
               <div className="lg:h-auto w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-4 mt-8">
-                {item?.data?.map((item, index) => (
-                  <ProductsCard key={index} product={item} />
+                {products?.map((product, index) => (
+                  <ProductsCard key={product.id} product={product} index={index} setProducts={setProducts} products={products} />
                 ))}
               </div>
             )}

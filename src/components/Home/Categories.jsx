@@ -40,10 +40,10 @@ const Categories = () => {
         <p className="text-red-500">Error loading categories. Please try again.</p>
       ) : (
         <div className="w-full overflow-x-scroll">
-         <div className="flex items-center justify-center gap-3 md:gap-5 lg:gap-6 min-w-fit">
+         <div className="flex items-center justify-center gap-5 lg:gap-6 min-w-fit flex-nowrap">
          {categoriesData?.data?.map((category, index) => (
             <Link key={index} href={`/search?categoryId=${category.id}`}>
-              <div className="flex items-center flex-col justify-center space-y-3">
+              <div className="flex items-between flex-col justify-center h-full w-max space-y-3">
                 <div className="size-16 sm:size-20 md:size-28 lg:size-36 rounded-full bg-secondary p-4 border border-border gap-6 cursor-pointer">
                   <Image
                     src={
@@ -57,7 +57,7 @@ const Categories = () => {
                     className="object-cover w-full h-full size-20"
                   />
                 </div>
-                <h3 className="text-sm w-full text-center">
+                <h3 className=" text-xs md:text-sm w-full text-center">
                   {category.name || "Unknown Category"}
                 </h3>
               </div>

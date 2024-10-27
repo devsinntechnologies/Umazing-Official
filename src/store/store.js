@@ -9,6 +9,7 @@ import { notifications } from '@/hooks/UseNotifications';
 import { offer } from '@/hooks/UseOffers';
 import { favourite } from '@/hooks/UseFavourite';
 import { cart } from '@/hooks/UseCart';
+import { review } from '@/hooks/UseReview';
 
 export const makeStore = () => {
   return configureStore({
@@ -22,9 +23,10 @@ export const makeStore = () => {
       [notifications.reducerPath]: notifications.reducer,
       [favourite.reducerPath]: favourite.reducer,
       [cart.reducerPath]: cart.reducer,
+      [review.reducerPath]: review.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(auth.middleware, offer.middleware, products.middleware, categories.middleware, attribute.middleware, notifications.middleware, favourite.middleware, cart.middleware),
+      getDefaultMiddleware().concat(auth.middleware, offer.middleware, products.middleware, categories.middleware, attribute.middleware, notifications.middleware, favourite.middleware, cart.middleware, review.middleware),
   });
 };
 

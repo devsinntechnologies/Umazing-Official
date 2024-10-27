@@ -13,8 +13,8 @@ const Page = () => {
   const { toast } = useToast();
   const [products, setProducts] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const pageSize = 12; 
-  const [totalPages, setTotalPages] = useState(1); 
+  const pageSize = 12;
+  const [totalPages, setTotalPages] = useState(1);
 
   const queryParams = {
     pageNo,
@@ -22,13 +22,13 @@ const Page = () => {
   };
   const [productToDelete, setProductToDelete] = useState(null);
   const { data: productsData, isLoading, isError, refetch } = useGetUserProductsQuery(queryParams);
-  const [deleteProduct, { data:resData, isSuccess: deleteSuccess, isLoading: deleting, isError: deleteError }] = useDeleteProductByIdMutation();
+  const [deleteProduct, { data: resData, isSuccess: deleteSuccess, isLoading: deleting, isError: deleteError }] = useDeleteProductByIdMutation();
 
 
   useEffect(() => {
     if (productsData?.success) {
       setProducts(productsData.data);
-      const pages = Math.ceil(productsData.total / pageSize); 
+      const pages = Math.ceil(productsData.total / pageSize);
       setTotalPages(pages);
     }
   }, [productsData]);
@@ -39,7 +39,7 @@ const Page = () => {
   }, [pageNo, refetch]);
 
   const handleDelete = (productId) => {
-    deleteProduct(productId); 
+    deleteProduct(productId);
   };
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const Page = () => {
       setProductToDelete(null); // Reset the product to delete
       refetch();
     }
-    if(deleting){
+    if (deleting) {
       toast({
         title: "Deleting",
       });
@@ -112,30 +112,30 @@ const Page = () => {
       {/* Products Grid */}
       {!isLoading && !isError && products.length > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {products.map((product) => (
-            <ProductsCard key={product.id} product={product} onDelete={() => setProductToDelete(product.id)}/>
+          {products.map((product, index) => (
+            <ProductsCard key={product.id} product={product} index={index} setProducts={setProducts} products={products} onDelete={() => setProductToDelete(product.id)} />
           ))}
         </div>
       )}
 
-{products.length === 0 && 
-      <div className="w-full flex items-center justify-center gap-4 flex-col py-5">
-        <p className="text-base">No products found.</p>
-        <Link href="/seller/addProduct" className="bg-primary px-3 py-1.5 rounded-full text-white">
+      {products.length === 0 &&
+        <div className="w-full flex items-center justify-center gap-4 flex-col py-5">
+          <p className="text-base">No products found.</p>
+          <Link href="/seller/addProduct" className="bg-primary px-3 py-1.5 rounded-full text-white">
             Add Products
           </Link>
-      </div>
+        </div>
       }
 
       {/* Pagination Component */}
       {products.length > 0 &&
-      <div className="flex justify-center items-center my-10">
-         <Pagination
-          totalPages={totalPages}
-          currentPage={pageNo}
-          onPageChange={(page) => setPageNo(page)} // Update pageNo when a new page is selected
-        />
-      </div>
+        <div className="flex justify-center items-center my-10">
+          <Pagination
+            totalPages={totalPages}
+            currentPage={pageNo}
+            onPageChange={(page) => setPageNo(page)} // Update pageNo when a new page is selected
+          />
+        </div>
       }
     </div>
   );

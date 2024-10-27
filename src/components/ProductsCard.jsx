@@ -1,11 +1,10 @@
 "use client";
 import { useToast } from "@/hooks/use-toast";
 import {
-  useGetUserFavouriteQuery,
   useAddToFavouriteMutation,
-  useRemoveFromFavouriteMutation,
+  useRemoveFromFavouriteProductIdMutation,
 } from "@/hooks/UseFavourite";
-import { Trash2, Heart, Loader2 } from "lucide-react"; // Loader icon from Lucide
+import { Trash2, Heart, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -14,7 +13,7 @@ import AuthDialog from "./auth/AuthDialog";
 import { useAddToCartMutation, useGetUserCartQuery, useUpdateCartItemMutation } from "@/hooks/UseCart";
 import Link from "next/link";
 
-const ProductsCard = ({ product, onDelete }) => {
+const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
   const { toast } = useToast();
   const userId = useSelector((state) => state.authSlice?.user?.id);
   const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
@@ -22,14 +21,8 @@ const ProductsCard = ({ product, onDelete }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isProductInCart, setIsProductInCart] = useState(false);
   const [cartItemId, setCartItemId] = useState(null);
-  const [isProductInWishlist, setIsProductInWishlist] = useState(false);
-  const [favouriteId, setFavouriteId] = useState(null);
   const quantity = 1;
 
-  // Fetch user favourites
-  const { data: favouriteData, refetch: refetchFavourites } = useGetUserFavouriteQuery(userId, {
-    skip: !isLoggedIn,
-  });
 
   const { data: cartData, refetch: refetchCart } = useGetUserCartQuery(userId, {
     skip: !isLoggedIn,
@@ -38,14 +31,14 @@ const ProductsCard = ({ product, onDelete }) => {
   const [addToCart, { isSuccess: cartSuccess, isLoading: addingToCart, isError: cartError }] = useAddToCartMutation();
   const [updateData, { isSuccess: cartUpdateSuccess, isLoading: updatingCart, isError: updateCartError }] = useUpdateCartItemMutation();
   const [addToFavourite, { isSuccess: addSuccess, isLoading: addingToFav, isError: addError }] = useAddToFavouriteMutation();
-  const [removeFromFavourite, { isSuccess: removeSuccess, isLoading: removingFromFav, isError: removeError }] = useRemoveFromFavouriteMutation();
+  const [removeFromFavourite, { isSuccess: removeSuccess, isLoading: removingFromFav, isError: removeError }] = useRemoveFromFavouriteProductIdMutation();
 
   useEffect(() => {
     if (isLoggedIn && cartData) {
       const cartItem = cartData.data?.find(item => item.Product.id === product.id);
       if (cartItem) {
         setIsProductInCart(true);
-        setCartItemId(cartItem.id); // Store the cart item ID for updates
+        setCartItemId(cartItem.id);
       } else {
         setIsProductInCart(false);
         setCartItemId(null);
@@ -53,19 +46,21 @@ const ProductsCard = ({ product, onDelete }) => {
     }
   }, [cartData, product.id, isLoggedIn]);
 
-  // Check if the product is in the user's wishlist
-  useEffect(() => {
-    if (isLoggedIn && favouriteData?.data) {
-      const favourite = favouriteData.data.find(item => item.Product.id === product.id);
-      if (favourite) {
-        setIsProductInWishlist(true);
-        setFavouriteId(favourite.id); // Store the favourite ID
-      } else {
-        setIsProductInWishlist(false);
-        setFavouriteId(null);
-      }
-    }
-  }, [favouriteData, product.id, isLoggedIn]);
+useEffect(() => {
+  if(isLoggedIn){
+    setProducts((prevProducts) => {
+      const updatedProducts = [...prevProducts];
+      updatedProducts[index] = { ...updatedProducts[index], isFavorite: product.isFavorite };
+      return updatedProducts;
+    });
+  } else {
+    setProducts((prevProducts) => {
+      const updatedProducts = [...prevProducts];
+      updatedProducts[index] = { ...updatedProducts[index], isFavorite: false };
+      return updatedProducts;
+    });
+  }
+}, [isLoggedIn, index, setProducts, product.isFavorite]);
 
   // Add to cart functionality
   const handleAddToCart = async () => {
@@ -93,7 +88,7 @@ const ProductsCard = ({ product, onDelete }) => {
         await updateData({ cartItemId, quantity: newQuantity });
       } else {
         // Add product to cart if not in the cart
-        await addToCart({ ProductId: product.id, UserId: userId, quantity });
+        await addToCart({ ProductId: product.id, quantity });
       }
       refetchCart();
     } catch (error) {
@@ -121,7 +116,19 @@ const ProductsCard = ({ product, onDelete }) => {
 
     try {
       await addToFavourite({ UserId: userId, ProductId: product.id });
-      refetchFavourites();
+
+      console.log(products[index].isFavorite );
+
+      
+
+      setProducts((prevProducts) => {
+        const updatedProducts = [...prevProducts];
+        updatedProducts[index] = { ...updatedProducts[index], isFavorite: true };
+        return updatedProducts;
+      });
+
+
+      // refetchFavourites();
     } catch (error) {
       console.error("Failed to add to wishlist:", error);
     }
@@ -139,8 +146,6 @@ const ProductsCard = ({ product, onDelete }) => {
       return;
     }
 
-    if (!favouriteId) return;
-
     toast({
       title: "Removing",
       description: "Removing item from your wishlist...",
@@ -148,8 +153,14 @@ const ProductsCard = ({ product, onDelete }) => {
     });
 
     try {
-      await removeFromFavourite(favouriteId);
-      refetchFavourites();
+      await removeFromFavourite(product.id);
+
+       setProducts((prevProducts) => {
+        const updatedProducts = [...prevProducts];
+        updatedProducts[index] = { ...updatedProducts[index], isFavorite: false };
+        return updatedProducts;
+      });
+
     } catch (error) {
       console.error("Failed to remove from wishlist:", error);
     }
@@ -200,12 +211,12 @@ const ProductsCard = ({ product, onDelete }) => {
         {!isSeller && (
           <button
             className="p-2 rounded-full bg-gray-200"
-            onClick={isProductInWishlist ? handleRemove : handleAddToFavorites}
+            onClick={product.isFavorite ? handleRemove : handleAddToFavorites}
           >
             {/* Show loader while adding/removing */}
             {addingToFav || removingFromFav ? (
               <Loader2 size={20} className="animate-spin text-gray-500" />
-            ) : isProductInWishlist ? (
+            ) : product.isFavorite ? (
               <Heart size={20} color="red" fill="red" />
             ) : (
               <Heart size={20} color="gray" />

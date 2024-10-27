@@ -58,8 +58,8 @@ const ProductSection = () => {
       {/* Products Grid */}
       {!isLoading && !isError && products.length > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {products.map((product) => (
-            <ProductsCard key={product.id} product={product} />
+          {products.map((product, index) => (
+            <ProductsCard key={product.id} product={product} index={index} setProducts={setProducts} products={products} />
           ))}
         </div>
       )}
