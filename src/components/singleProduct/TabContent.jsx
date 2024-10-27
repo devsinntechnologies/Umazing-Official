@@ -6,7 +6,7 @@ const TabComponent = ({product, review}) => {
   console.log(review, "sdfldk")
 
   return (
-    <div className="w-full md:mx-10 mt-8">
+    <div className="w-full ">
       {/* Tab navigation */}
       <div className="flex border-b">
         <button
