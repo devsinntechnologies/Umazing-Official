@@ -7,9 +7,10 @@ import { Skeleton } from "@/components/ui/skeleton"; // Skeleton loader import
 import { Minus, Plus, ShoppingCart, Star, Instagram, Facebook, Twitter, Heart } from "lucide-react";
 import SelectSize from "@/components/singleProduct/SelectSize";
 import SelectColor from "@/components/singleProduct/SelectColor";
-import { useGetAllProductsQuery, useGetProductByIdQuery } from "@/hooks/UseProducts";
+import { useGetAllProductsQuery, useGetProductByIdQuery,  } from "@/hooks/UseProducts";
 import TabComponent from "@/components/singleProduct/TabContent";
 import Gallery from "@/components/singleProduct/Gallery";
+import Stars from "@/components/singleProduct/Stars";
 
 const Page = ({ params }) => {
   const { id } = params;
@@ -23,6 +24,7 @@ const Page = ({ params }) => {
   };
   const { data: item, isLoading, isError } = useGetAllProductsQuery(queryParams);
   const { data: productData, isError:productError, isLoading:productLoading } = useGetProductByIdQuery(id);
+
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(0);
 
@@ -38,49 +40,29 @@ useEffect(() => {
 
   return (
     <main className="w-full flex justify-center items-center overflow-hidden">
-      <section className="my-6 w-[90%]">
+      <section className="my-3 w-[90%]">
 
         <div className="flex flex-col gap-5">
-          <div className="gap-5 w-full h-auto flex md:flex-row flex-col justify-center items-center lg:justify-between">
-            <div className="w-full md:w-[48%] border shadow-md p-2 ">
+          <div className="gap-5 w-full h-auto flex md:flex-row flex-col justify-center  lg:justify-between">
+            <div className="w-full md:w-[50%] h-auto border  shadow-md ">
               <Gallery data={product} />
             </div>
 
             {/* Product Information */}
-            <div className="w-full md:w-[50%] h-auto lg:h-[501px]">
-              <div className=" rounded-[4px]  text-primary text-2xl font-bold ">
+            <div className="w-full md:w-[50%] h-auto lg:h-[501px] space-y-5 my-5">
+              <div className="rounded-[4px] text-primary text-2xl font-bold ">
                 {product?.name}
               </div>
               {/* Ratings and other product details */}
               <div className="flex items-center gap-3 my-2">
-                <div className="flex">
-                  <Star
-                    size={12}
-                    color="#4D4D4D"
-                  />
-                  <Star
-                    size={12}
-                    color="#4D4D4D"
-                  />
-                  <Star
-                    size={12}
-                    color="#4D4D4D"
-                  />
-                  <Star
-                    size={12}
-                    color="#4D4D4D"
-                  />
-                  <Star
-                    size={12}
-                    color="#4D4D4D"
-                  />
-                  {/* <Rating/> */}
-                </div>
+               <Stars/>
                 <p className="text-[#666666] text-[14px]">4 review</p>
                 <p className="text-[14px]">
                   SKU : <span className="text-[#666666]">213,234,3</span>
                 </p>
-              </div>
+                 
+        </div>
+              
 
               {/* Pricing */}
               <div className="flex items-center gap-3 ">
@@ -113,15 +95,15 @@ useEffect(() => {
                 </div>
               </div> */}
               <div className="my-4">
-                <h1 className="font-semibold text-md">Product Description</h1>
+                <h1 className="font-semibold text-md ">Product Description</h1>
                 <p>{product?.description}</p>
               </div>
-              <div className="w-full lg:w-[647px] my-5 border border-[#E6E6E6]"></div>
+              {/* <div className="w-full lg:w-[647px] my-5 border border-[#E6E6E6]"></div>
               <div className=" space-y-4 px-3 gap-4">
                 <SelectSize />
                 <SelectColor />
 
-              </div>
+              </div> */}
               {/* <div className="w-full lg::w-[568px] mt-4">
                 <p className="text-[14px] md:text-[16px] text-[#808080]">
                   {product.longDescription}
@@ -166,7 +148,7 @@ useEffect(() => {
               <div>
                 <p className="text-[14px] font-bold">
                   Category: 
-                  <span className="text-[#808080] font-normal">{product?.Category.name}</span>
+                  <span className="text-[#808080] font-normal"> {product?.Category.name}</span>
                 </p>
                 {/* <div className="flex gap-2 mt-3">
                   <p className="text-[14px] font-bold">Tags :</p>
@@ -189,7 +171,7 @@ useEffect(() => {
             </div>
           </div>
 
-          <div className="w-full  mt-5 flex justify-center">
+          <div className="w-full   flex justify-center">
             {/* Tabs Section */}
             {/* <div className="border-b border-gray-200">
               <nav className="flex justify-center items-center space-x-4 text-center">

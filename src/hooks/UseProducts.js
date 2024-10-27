@@ -31,7 +31,9 @@ export const products = createApi({
         return `getUserProducts?${queryString}`;
       },
     }),
-
+    // getProductReviews: builder.query({
+    //   query: (productId) => `Review/getAllProductReviews/${productId}`,
+    // }),
     getProductById: builder.query({
       query: (id) => `/getById/${id}`,
     }),
@@ -71,4 +73,5 @@ export const {
   useGetAllVariantsQuery,
   useAddProductMutation,
   useUpdateProductMutation,
+  // useGetProductReviewsQuery,
 } = products;
