@@ -3,6 +3,7 @@ import { setupListeners } from '@reduxjs/toolkit/query/react';
 import { products } from '@/hooks/UseProducts';
 import { auth } from '@/hooks/UseAuth';
 import { authSlice } from '@/slice/authSlice';
+import { cartSlice } from '@/slice/cartSlice';
 import { categories } from '@/hooks/UseCategories';
 import { attribute } from '@/hooks/UseAttributes';
 import { notifications } from '@/hooks/UseNotifications';
@@ -15,6 +16,7 @@ export const makeStore = () => {
   return configureStore({
     reducer: {
       authSlice: authSlice.reducer,
+      cartSlice: cartSlice.reducer,
       [auth.reducerPath]: auth.reducer,
       [products.reducerPath]: products.reducer,
       [categories.reducerPath]: categories.reducer,

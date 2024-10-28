@@ -1,70 +1,86 @@
 "use client";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { CircleX, Minus, Plus } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "@/hooks/use-toast";
 import {
   useGetUserCartQuery,
   useUpdateCartItemMutation,
   useRemoveFromCartMutation,
 } from "@/hooks/UseCart";
+import { setCartData } from "@/slice/cartSlice";  // Import your cart slice
 import { Skeleton } from "../ui/skeleton";
+import LoadingSpinner from "../Navbar/LoadingSpinner";
 
 const CartSection = () => {
-  const userId = useSelector((state) => state.authSlice?.user?.id);
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
+  const cart = useSelector((state) => state.cartSlice);  // Access cart state from Redux
   const { toast } = useToast();
+  const [showLoader, setShowLoader] = useState(false);
+  const [refetching, setRefetching] = useState(false);
 
-  const { data: cartData, isLoading: cartLoading, isError: cartError, refetch } = useGetUserCartQuery(userId, { skip: !isLoggedIn });
+  const { data: cartData, isLoading: cartLoading, isError: cartError, refetch } = useGetUserCartQuery(
+    { skip: !isLoggedIn }
+  );
   const [updateCartItem, { isLoading: updatingCart, isError: updateCartError, data: updateData }] = useUpdateCartItemMutation();
   const [removeFromCart, { isLoading: removingCart, isError: removeCartError, data: removeData }] = useRemoveFromCartMutation();
 
+  // Handle cart updates and loading spinner visibility
   useEffect(() => {
-    if (cartLoading) {
-      toast({ title: "Loading...", description: "Fetching cart data..." });
+    if (cartLoading || updatingCart || removingCart || refetching) {
+      setShowLoader(true);
+      toast({ title: "Loading...", description: "Processing request...", duration: 500 });
+    } else {
+      setShowLoader(false);
     }
-    if (cartError) {
-      toast({ title: "Error", description: "Failed to fetch cart data.", variant: "destructive" });
-    }
-    if (updateData?.success) {
-      toast({ title: "Success", description: updateData.msg || "Cart updated successfully." });
-    }
-    if (updateCartError) {
-      toast({ title: "Error", description: "Failed to update cart.", variant: "destructive" });
-    }
-    if (removeData?.success) {
-      toast({ title: "Success", description: removeData.msg || "Item removed successfully." });
-    }
-    if (removeCartError) {
-      toast({ title: "Error", description: "Failed to remove item from cart.", variant: "destructive" });
-    }
-  }, [cartLoading, cartError, updateData, updateCartError, removeData, removeCartError, toast]);
 
-  const updateQuantity = (id, quantity) => {
-    updateCartItem({ id, cartData: { quantity } });
-    refetch();
+    if (cartData && cartData.data) {
+      dispatch(setCartData({ items: cartData.data, cartId: cartData.id }));
+    }
+
+    if (cartError) toast({ title: "Error", description: "Failed to fetch cart data.", variant: "destructive" });
+    if (updateData?.success) toast({ title: "Success", description: "Cart updated successfully." });
+    if (updateCartError) toast({ title: "Error", description: "Failed to update cart.", variant: "destructive" });
+    if (removeData?.success) toast({ title: "Success", description: "Item removed successfully." });
+    if (removeCartError) toast({ title: "Error", description: "Failed to remove item from cart.", variant: "destructive" });
+  }, [cartLoading, updatingCart, removingCart, cartData, cartError, updateData, updateCartError, removeData, removeCartError, dispatch, toast, refetching]);
+
+  const updateQuantity = async (id, quantity) => {
+    await updateCartItem({ id, cartData: { quantity } });
+    setRefetching(true);
+    await refetch();
+    setRefetching(false);
   };
 
-  const removeItem = (id) => {
-    removeFromCart(id);
-    refetch();
+  const removeItem = async (id) => {
+    await removeFromCart(id);
+    setRefetching(true);
+    await refetch();
+    setRefetching(false);
   };
 
   const shippingFee = 200;
   const subtotal = useMemo(() => (
-    cartData?.data?.reduce((total, item) => total + item.Product.basePrice * item.quantity, 0) || 0
-  ), [cartData]);
-
+    (cart.items || []).reduce((total, item) => total + item.Product.basePrice * item.quantity, 0)
+  ), [cart.items]);
   const total = subtotal + shippingFee;
 
   return (
-    <div className="flex flex-col lg:flex-row justify-center gap-8 py-8">
+    <div className="relative flex flex-col md:flex-row justify-center gap-4 lg:gap-8 py-8">
+      {/* Loader Overlay */}
+      {showLoader && (
+        <div className="fixed inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50">
+          <LoadingSpinner />
+        </div>
+      )}
+
       {/* Cart Items Section */}
-      {cartData?.data?.length ? (
-        <div className="border shadow-lg rounded-lg p-2 md:p-3 w-full flex-1 flex flex-col gap-2">
-          {cartData.data.map((item) => (
+      {cart.items.length ? (
+        <div className="border shadow-lg rounded-lg p-2 md:p-3 w-full h-fit flex-1 flex flex-col gap-2">
+          {cart.items.map((item) => (
             <div key={item.id} className="h-[100px] lg:h-[126px] flex items-center gap-4 p-2 md:p-3 border rounded-lg shadow-sm bg-white relative">
               <div className="flex-shrink-0 h-full">
                 <Image
@@ -76,8 +92,8 @@ const CartSection = () => {
                 />
               </div>
               <div className="flex-grow h-full">
-                <h3 className="text-xs md:text-lg font-semibold h-9 truncate-multiline">{item.Product.name}</h3>
-                <p className="text-xs md:text-lg text-primary font-medium">Rs. {item.Product.basePrice}</p>
+                <h3 className="text-xs md:text-base lg:text-lg font-semibold h-9 truncate-multiline">{item.Product.name}</h3>
+                <p className="text-xs md:text-base lg:text-lg text-primary font-medium">Rs. {item.Product.basePrice}</p>
               </div>
               <div className="flex flex-col items-end justify-between h-full">
                 <CircleX
@@ -129,22 +145,24 @@ const CartSection = () => {
       )}
 
       {/* Cart Total Section */}
-      <div className="w-full md:w-[320px] lg:w-[380px] bg-white shadow-lg rounded-lg p-6">
-        <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
-        <div className="flex justify-between items-center mb-3">
-          <p className="text-gray-600">Subtotal:</p>
-          <p className="font-semibold">Rs. {subtotal.toFixed(2)}</p>
+      <div className="fixed left-0 bottom-0 md:static w-full md:w-[280px] lg:w-[360px] xl:w-[380px] h-fit bg-white shadow-lg border md:rounded-lg px-2 py-1 md:p-6 flex items-center justify-between md:block">
+        <h2 className="text-lg font-bold hidden md:block mb-6">Order Summary</h2>
+        <div className="space-y-2 md:space-y-4">
+          <div className="flex justify-between items-center text-xs sm:text-sm md:text-base">
+            <p className="text-gray-600">Subtotal:</p>
+            <p className="font-semibold">Rs. {subtotal.toFixed(2)}</p>
+          </div>
+          <div className="flex justify-between items-center text-xs sm:text-sm md:text-base">
+            <p className="text-gray-600">Shipping:</p>
+            <p className="font-semibold">Rs. {shippingFee.toFixed(2)}</p>
+          </div>
         </div>
-        <div className="flex justify-between items-center mb-3">
-          <p className="text-gray-600">Shipping:</p>
-          <p className="font-semibold">Rs. {shippingFee.toFixed(2)}</p>
+        <div className="flex justify-between items-center text-sm md:text-base md:mt-6 md:border-t pt-4">
+          <p className="text-gray-600">Total:</p>
+          <p className="font-bold">Rs. {total.toFixed(2)}</p>
         </div>
-        <div className="flex justify-between items-center border-t pt-3 mt-3">
-          <p className="text-lg font-semibold">Total:</p>
-          <p className="text-lg font-semibold">Rs. {total.toFixed(2)}</p>
-        </div>
-        <Link href="/checkout">
-          <button className="mt-6 w-full py-3 bg-primary text-white rounded-lg hover:bg-primary-dark">
+        <Link href={`/checkout`}>
+          <button className="mt-1.5 md:mt-6 w-full px-3 py-2 md:px-4 md:py-3 bg-primary text-white text-sm md:text-base font-medium rounded-lg">
             Proceed to Checkout
           </button>
         </Link>

@@ -1,227 +1,143 @@
 "use client";
+import { useSelector } from "react-redux"; // Assuming you're using Redux for state management
 import BreadCrum from "@/components/BreadCrum";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast"; // Assuming you have a toast for notifications
+
 const Page = () => {
+  const cartItems = useSelector((state) => state.cartSlice.items); // Access cart items from Redux store
+  const [billingInfo, setBillingInfo] = useState({
+    streetAddress: "",
+    phone: "",
+    shipDifferent: false,
+  });
+  const [selectedPayment, setSelectedPayment] = useState("");
+  const { showToast } = useToast(); // Display feedback notifications
+
+  const handleInputChange = (e) => {
+    const { id, value, checked, type } = e.target;
+    setBillingInfo((prev) => ({
+      ...prev,
+      [id]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handlePlaceOrder = () => {
+    if (!billingInfo.streetAddress || !billingInfo.phone) {
+      showToast("Please fill in all billing information.", "error");
+      return;
+    }
+    if (!selectedPayment) {
+      showToast("Please select a payment method.", "error");
+      return;
+    }
+    // Handle order placement logic here
+  };
+
+  // Calculate subtotal
+  const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const shipping = 0; // Assuming free shipping
+  const total = subtotal + shipping;
+
   return (
     <>
       <BreadCrum />
-
       <div className="flex w-full p-5 gap-10 flex-wrap md:flex-nowrap lg:px-10">
+        {/* Billing Information */}
         <div className="w-full flex flex-col gap-5 md:w-[60%]">
           <h1 className="font-medium text-2xl">Billing Information</h1>
-          <div className="grid grid-cols-1 gap-4  xl:grid-cols-3">
-            <div className="flex flex-col gap-2">
-              <label htmlFor="firstname" className="text-sm font-normal">
-                First Name
-              </label>
-              <input
-                type="text"
-                placeholder="Your first name"
-                id="firstname"
-                className="border-[1px] border-solid border-[#cbc9c9] rounded-md p-2 px-3 placeholder:text-base placeholder:font-normal focus:outline-none"
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="lastname" className="text-sm font-normal">
-                Last Name
-              </label>
-              <input
-                type="text"
-                placeholder="Your last name"
-                id="lastname"
-                className="border-[1px] border-solid border-[#cbc9c9] rounded-md p-2 px-3 placeholder:text-base placeholder:font-normal focus:outline-none"
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="company" className="text-sm font-normal">
-                Company Name <span className="text-[#7e7d7d]">(optional)</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Company name"
-                id="company"
-                className="border-[1px] border-solid border-[#cbc9c9] rounded-md p-2 px-3 placeholder:text-base placeholder:font-normal focus:outline-none"
-              />
-            </div>
-          </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="email" className="text-sm font-normal">
+            <label htmlFor="streetAddress" className="text-sm font-normal">
               Street Address
             </label>
             <input
-              type="email"
-              placeholder="Email"
-              id="email"
-              className="border-[1px] border-solid border-[#cbc9c9] rounded-md p-2 px-3 placeholder:text-base placeholder:font-normal focus:outline-none"
+              type="text"
+              id="streetAddress"
+              placeholder="Street Address"
+              value={billingInfo.streetAddress}
+              onChange={handleInputChange}
+              className="border border-[#cbc9c9] rounded-md p-2 placeholder:text-base focus:outline-none"
             />
           </div>
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-            <div className="flex flex-col gap-2 ">
-              <label htmlFor="firstname" className="text-sm font-normal">
-                Country / Region
-              </label>
-
-              <select
-                name="choice"
-                className="w-full border-[1px] border-solid border-[#cbc9c9] rounded-md p-2 px-3 focus:outline-none "
-              >
-                <option defaultValue="first">Select</option>
-                <option value="second">First Value</option>
-                <option value="third">Second Value</option>
-                <option value="fourth">Third Value</option>
-              </select>
-            </div>
-            <div className="flex flex-col gap-2 ">
-              <label htmlFor="firstname" className="text-sm font-normal">
-                States
-              </label>
-              <select
-                name="choice"
-                className="border-[1px] border-solid border-[#cbc9c9] rounded-md p-2 px-3 focus:outline-none "
-              >
-                <option defaultValue="first">Select</option>
-                <option value="second">First Value</option>
-                <option value="third">Second Value</option>
-                <option value="fourth">Third Value</option>
-              </select>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="zip" className="text-sm font-normal">
-                Zip Code{" "}
-              </label>
-              <input
-                type="teaxt"
-                placeholder="Zip Code"
-                id="zip"
-                className="border-[1px] border-solid border-[#cbc9c9] rounded-md p-2 px-3 placeholder:text-base placeholder:font-normal focus:outline-none"
-              />
-            </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="phone" className="text-sm font-normal">Phone</label>
+            <input
+              type="text"
+              id="phone"
+              placeholder="Phone number"
+              value={billingInfo.phone}
+              onChange={handleInputChange}
+              className="border border-[#cbc9c9] rounded-md p-2 placeholder:text-base focus:outline-none"
+            />
           </div>
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <div className="flex flex-col gap-2">
-              <label htmlFor="email2" className="text-sm font-normal">
-                Email
-              </label>
-              <input
-                type="email"
-                placeholder="Email Address"
-                id="email2"
-                className="border-[1px] border-solid border-[#cbc9c9] rounded-md p-2 px-3 placeholder:text-base placeholder:font-normal focus:outline-none"
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="phone" className="text-sm font-normal">
-                Phone
-              </label>
-              <input
-                type="text"
-                placeholder="Phone number"
-                id="phone"
-                className="border-[1px] border-solid border-[#cbc9c9] rounded-md p-2 px-3 placeholder:text-base placeholder:font-normal focus:outline-none"
-              />
-            </div>
-          </div>
-          <div className="flex gap-3">
-            <input type="checkbox" id="check" />
-            <label htmlFor="check">Ship to a different address</label>
-          </div>
-          <hr />
-          <div className="flex flex-col gap-5">
-            <h1 className="font-medium text-2xl"> Additional Info</h1>
-            <h3>Order Notes (Optional)</h3>
-            <textarea
-              placeholder="Notes about your order, e.g. special notes for delivery"
-              className="w-full h-28 border-[1px] border-solid border-[#cbc9c9] rounded-md p-2 px-3 placeholder:text-base placeholder:font-normal focus:outline-none"
-            ></textarea>
+          <div className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              id="shipDifferent"
+              checked={billingInfo.shipDifferent}
+              onChange={handleInputChange}
+            />
+            <label htmlFor="shipDifferent">Ship to a different address</label>
           </div>
         </div>
-        <div className="border-[1px] border-solid border-[#E6E6E6] h-full  p-5 flex flex-wrap flex-col gap-5 w-[100%] md:w-[40%]  rounded-lg ">
-          <h1 className="font-medium text-xl">Order Summery</h1>
+
+        {/* Order Summary */}
+        <div className="border border-[#E6E6E6] p-5 rounded-lg w-full md:w-[40%]">
+          <h1 className="font-medium text-xl">Order Summary</h1>
           <div className="flex flex-col gap-4">
-            <div className="flex justify-between items-center  flex-wrap">
-              <div className="flex gap-2 items-center flex-wrap">
-                {/* <Image
-                  className="w-[30px] h-[30px] break-inside-auto lg:w-[50px] lg:h-[50px]	"
-                  width={100}
-                  height={100}
-                  src={"/Images/apple.png"}
-                ></Image> */}
-                <h1 className="font-normal text-sm">Green Capsicum</h1>
-                <h1 className="font-normal text-sm">x5</h1>
-              </div>
-              <div>
-                <h1 className="font-medium text-sm">$70.00</h1>
-              </div>
-            </div>
-            <div className="flex justify-between items-center  flex-wrap">
-              <div className="flex gap-2 items-center flex-wrap">
-                {/* <Image
-                  className="w-[30px] h-[30px] break-inside-auto lg:w-[50px] lg:h-[50px]	"
-                  width={100}
-                  height={100}
-                  src={"/Images/Capsicum.png"}
-                ></Image> */}
-                <h1 className="font-normal text-sm">Red Capsicum</h1>
-                <h1 className="font-normal text-sm">x1</h1>
-              </div>
-              <div>
-                <h1 className="font-medium text-sm">$14.00</h1>
-              </div>
-            </div>
+            {/* Product Items */}
+            {cartItems.length > 0 ? (
+              cartItems.map((item, index) => (
+                <div key={index} className="flex justify-between items-center">
+                  <h1 className="text-sm">{item.name} x{item.quantity}</h1>
+                  <h1 className="font-medium text-sm">${(item.price * item.quantity).toFixed(2)}</h1>
+                </div>
+              ))
+            ) : (
+              <h1 className="text-center">Your cart is empty.</h1>
+            )}
           </div>
-          <div className="flex flex-col gap-4 ">
-            <div className="flex justify-between items-center flex-wrap ">
-              <div className="flex gap-2 items-center flex-wrap">
-                <h1 className="font-normal text-sm">Subtotal:</h1>
-              </div>
-              <div>
-                <h1 className="font-medium text-sm">$84.00</h1>
-              </div>
+
+          {/* Subtotal, Shipping, and Total */}
+          <div className="mt-4">
+            <div className="flex justify-between items-center">
+              <h1 className="text-sm">Subtotal:</h1>
+              <h1 className="font-medium text-sm">${subtotal.toFixed(2)}</h1>
             </div>
             <hr />
-            <div className="flex justify-between items-center flex-wrap ">
-              <div className="flex gap-2 items-center flex-wrap">
-                <h1 className="font-normal text-sm">Shipping:</h1>
-              </div>
-              <div>
-                <h1 className="font-medium text-sm">Free</h1>
-              </div>
+            <div className="flex justify-between items-center">
+              <h1 className="text-sm">Shipping:</h1>
+              <h1 className="font-medium text-sm">Free</h1>
             </div>
             <hr />
-
-            <div className="flex justify-between items-center flex-wrap ">
-              <div className="flex gap-2 items-center flex-wrap">
-                <h1 className="font-normal text-base">Total:</h1>
-              </div>
-              <div>
-                <h1 className="font-semibold text-lg">$84.00</h1>
-              </div>
+            <div className="flex justify-between items-center">
+              <h1 className="text-base">Total:</h1>
+              <h1 className="font-semibold text-lg">${total.toFixed(2)}</h1>
             </div>
           </div>
-          <div className="flex flex-col gap-4">
-            <h1 className="font-medium text-xl">Payment Method</h1>
-            <div className="flex gap-3 flex-wrap">
-              <input type="radio" id="cash" name="payment" />
-              <label htmlFor="cash" className="font-normal text-sm">
-                Cash on Delivery
-              </label>
-            </div>
-            <div className="flex gap-3 flex-wrap">
-              <input type="radio" id="paypal" name="payment" />
-              <label htmlFor="paypal" className="font-normal text-sm">
-                Paypal
-              </label>
-            </div>
-            <div className="flex gap-3 flex-wrap">
-              <input type="radio" id="pay" name="payment" />
-              <label htmlFor="pay" className="font-normal text-sm">
-                Amazon Pay
-              </label>
-            </div>
 
-            <button className="py-3 bg-primary text-white rounded-full">
-              Place Order
-            </button>
-          </div>
+          {/* Payment Method */}
+          <h1 className="font-medium text-xl mt-4">Payment Method</h1>
+          {["Cash on Delivery", "PayPal", "Amazon Pay"].map((method, index) => (
+            <div key={index} className="flex items-center gap-3">
+              <input
+                type="radio"
+                id={method}
+                name="payment"
+                checked={selectedPayment === method}
+                onChange={() => setSelectedPayment(method)}
+              />
+              <label htmlFor={method} className="text-sm">{method}</label>
+            </div>
+          ))}
+
+          {/* Place Order Button */}
+          <button
+            onClick={handlePlaceOrder}
+            className="w-full py-3 mt-4 bg-primary text-white rounded-full"
+          >
+            Place Order
+          </button>
         </div>
       </div>
     </>

@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
 import AuthDialog from "./auth/AuthDialog";
-import { useAddToCartMutation, useGetUserCartQuery, useUpdateCartItemMutation } from "@/hooks/UseCart";
+import { useAddToCartMutation, useGetUserCartQuery } from "@/hooks/UseCart";
 import Link from "next/link";
 
 const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
@@ -19,48 +19,33 @@ const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
   const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
   const pathname = usePathname();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isProductInCart, setIsProductInCart] = useState(false);
-  const [cartItemId, setCartItemId] = useState(null);
   const quantity = 1;
 
-
-  const { data: cartData, refetch: refetchCart } = useGetUserCartQuery(userId, {
-    skip: !isLoggedIn,
-  });
-
   const [addToCart, { isSuccess: cartSuccess, isLoading: addingToCart, isError: cartError }] = useAddToCartMutation();
-  const [updateData, { isSuccess: cartUpdateSuccess, isLoading: updatingCart, isError: updateCartError }] = useUpdateCartItemMutation();
   const [addToFavourite, { isSuccess: addSuccess, isLoading: addingToFav, isError: addError }] = useAddToFavouriteMutation();
   const [removeFromFavourite, { isSuccess: removeSuccess, isLoading: removingFromFav, isError: removeError }] = useRemoveFromFavouriteProductIdMutation();
 
   useEffect(() => {
-    if (isLoggedIn && cartData) {
-      const cartItem = cartData.data?.find(item => item.Product.id === product.id);
-      if (cartItem) {
-        setIsProductInCart(true);
-        setCartItemId(cartItem.id);
-      } else {
-        setIsProductInCart(false);
-        setCartItemId(null);
-      }
+    if (isLoggedIn) {
+      setProducts((prevProducts) => {
+        const updatedProducts = [...prevProducts];
+        updatedProducts[index] = { ...updatedProducts[index], isFavorite: product.isFavorite };
+        return updatedProducts;
+      });
+    } else {
+      setProducts((prevProducts) => {
+        const updatedProducts = [...prevProducts];
+        updatedProducts[index] = { ...updatedProducts[index], isFavorite: false };
+        return updatedProducts;
+      });
     }
-  }, [cartData, product.id, isLoggedIn]);
-
-useEffect(() => {
-  if(isLoggedIn){
-    setProducts((prevProducts) => {
-      const updatedProducts = [...prevProducts];
-      updatedProducts[index] = { ...updatedProducts[index], isFavorite: product.isFavorite };
-      return updatedProducts;
-    });
-  } else {
-    setProducts((prevProducts) => {
-      const updatedProducts = [...prevProducts];
-      updatedProducts[index] = { ...updatedProducts[index], isFavorite: false };
-      return updatedProducts;
-    });
-  }
-}, [isLoggedIn, index, setProducts, product.isFavorite]);
+    if(cartSuccess){
+      toast({
+        title: "Added to Cart",
+        description: "Item added to your cart.",
+      });
+    }
+  }, [isLoggedIn, index, setProducts, product.isFavorite, cartSuccess, toast]);
 
   // Add to cart functionality
   const handleAddToCart = async () => {
@@ -73,7 +58,6 @@ useEffect(() => {
       setIsDialogOpen(true);
       return;
     }
-
     toast({
       title: "Processing",
       description: "Updating your cart...",
@@ -81,16 +65,7 @@ useEffect(() => {
     });
 
     try {
-      if (isProductInCart) {
-        // Update quantity if product is already in the cart
-        const existingItem = cartData.data.find(item => item.Product.id === product.id);
-        const newQuantity = existingItem.quantity + 1; // Increment quantity
-        await updateData({ cartItemId, quantity: newQuantity });
-      } else {
-        // Add product to cart if not in the cart
         await addToCart({ ProductId: product.id, quantity });
-      }
-      refetchCart();
     } catch (error) {
       console.error("Error updating cart:", error);
     }
@@ -117,9 +92,9 @@ useEffect(() => {
     try {
       await addToFavourite({ UserId: userId, ProductId: product.id });
 
-      console.log(products[index].isFavorite );
+      console.log(products[index].isFavorite);
 
-      
+
 
       setProducts((prevProducts) => {
         const updatedProducts = [...prevProducts];
@@ -155,7 +130,7 @@ useEffect(() => {
     try {
       await removeFromFavourite(product.id);
 
-       setProducts((prevProducts) => {
+      setProducts((prevProducts) => {
         const updatedProducts = [...prevProducts];
         updatedProducts[index] = { ...updatedProducts[index], isFavorite: false };
         return updatedProducts;
@@ -189,24 +164,24 @@ useEffect(() => {
         <button
           className="w-full text-sm bg-primary py-3 text-white rounded-b-sm flex items center justify-center gap-2"
           onClick={handleAddToCart} // Add to Cart functionality
-          disabled={addingToCart || updatingCart} // Disable while loading
+          disabled={addingToCart} // Disable while loading
         >
-          {addingToCart || updatingCart ? (
+          {addingToCart ? (
             <Loader2 size={20} className="animate-spin text-white" />
           ) : (
-           "Add to Cart"
+            "Add to Cart"
           )}
         </button>
       )}
       <div className="absolute top-2 right-2 flex items-center">
         {isSeller && (
-         <button
-         className="p-2 bg-gray-200 rounded-full"
-         onClick={onDelete}
-         aria-label={`Delete ${product.name}`}
-       >
-         <Trash2 size={20} className="text-destructive" />
-       </button>
+          <button
+            className="p-2 bg-gray-200 rounded-full"
+            onClick={onDelete}
+            aria-label={`Delete ${product.name}`}
+          >
+            <Trash2 size={20} className="text-destructive" />
+          </button>
         )}
         {!isSeller && (
           <button
