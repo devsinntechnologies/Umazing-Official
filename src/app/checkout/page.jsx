@@ -1,24 +1,27 @@
 "use client";
-import { useSelector } from "react-redux"; // Assuming you're using Redux for state management
+import { useSelector } from "react-redux";
 import BreadCrum from "@/components/BreadCrum";
 import { useState } from "react";
-import { useToast } from "@/hooks/use-toast"; // Assuming you have a toast for notifications
+import { useToast } from "@/hooks/use-toast";
+import { useGetUserCartQuery } from "@/hooks/UseCart";
 
 const Page = () => {
-  const cartItems = useSelector((state) => state.cartSlice.items); // Access cart items from Redux store
+  const isLoggedIn = useSelector((state) => state.authSlice.isLoggedIn);
+  const { data: cartData, isLoading: cartLoading, isError: cartError, refetch } = useGetUserCartQuery(
+    { skip: !isLoggedIn }
+  );
   const [billingInfo, setBillingInfo] = useState({
     streetAddress: "",
     phone: "",
-    shipDifferent: false,
   });
   const [selectedPayment, setSelectedPayment] = useState("");
-  const { showToast } = useToast(); // Display feedback notifications
+  const { showToast } = useToast(); 
 
   const handleInputChange = (e) => {
-    const { id, value, checked, type } = e.target;
+    const { id, value } = e.target;
     setBillingInfo((prev) => ({
       ...prev,
-      [id]: type === "checkbox" ? checked : value,
+      [id]: value,
     }));
   };
 
@@ -31,11 +34,24 @@ const Page = () => {
       showToast("Please select a payment method.", "error");
       return;
     }
-    // Handle order placement logic here
+
+    // Log order details in the specified format
+    const orderDetails = {
+      OrderInfo: cartData?.data.map(item => ({
+        ProductId: item.Product.id,
+        quantity: item.quantity,
+      })),
+      receiverPhoneNo: billingInfo.phone,
+      receiverAddress: billingInfo.streetAddress,
+    };
+    console.log(orderDetails);
+
+    // Continue with further order placement logic
   };
 
   // Calculate subtotal
-  const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const cartItems = cartData?.data || [];
+  const subtotal = cartItems.reduce((total, item) => total + item.Product.basePrice * item.quantity, 0);
   const shipping = 0; // Assuming free shipping
   const total = subtotal + shipping;
 
@@ -70,15 +86,6 @@ const Page = () => {
               className="border border-[#cbc9c9] rounded-md p-2 placeholder:text-base focus:outline-none"
             />
           </div>
-          <div className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              id="shipDifferent"
-              checked={billingInfo.shipDifferent}
-              onChange={handleInputChange}
-            />
-            <label htmlFor="shipDifferent">Ship to a different address</label>
-          </div>
         </div>
 
         {/* Order Summary */}
@@ -89,8 +96,8 @@ const Page = () => {
             {cartItems.length > 0 ? (
               cartItems.map((item, index) => (
                 <div key={index} className="flex justify-between items-center">
-                  <h1 className="text-sm">{item.name} x{item.quantity}</h1>
-                  <h1 className="font-medium text-sm">${(item.price * item.quantity).toFixed(2)}</h1>
+                  <h1 className="text-sm">{item.Product.name} x{item.quantity}</h1>
+                  <h1 className="font-medium text-sm">${(item.Product.basePrice * item.quantity).toFixed(2)}</h1>
                 </div>
               ))
             ) : (
@@ -99,18 +106,18 @@ const Page = () => {
           </div>
 
           {/* Subtotal, Shipping, and Total */}
-          <div className="mt-4">
-            <div className="flex justify-between items-center">
+          <div className="mt-3">
+            <div className="flex justify-between items-center py-3">
               <h1 className="text-sm">Subtotal:</h1>
               <h1 className="font-medium text-sm">${subtotal.toFixed(2)}</h1>
             </div>
             <hr />
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center py-3">
               <h1 className="text-sm">Shipping:</h1>
               <h1 className="font-medium text-sm">Free</h1>
             </div>
             <hr />
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center py-3">
               <h1 className="text-base">Total:</h1>
               <h1 className="font-semibold text-lg">${total.toFixed(2)}</h1>
             </div>
