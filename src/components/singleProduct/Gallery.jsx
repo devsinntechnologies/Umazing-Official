@@ -26,7 +26,7 @@ const Gallery = (data) => {
 
 
   return (
-    <div className="w-full overflow-hidden">
+    <div className="w-full h-full overflow-hidden">
       {/* Main Gallery Swiper */}
       <Swiper
         loop={true}
@@ -34,18 +34,18 @@ const Gallery = (data) => {
         spaceBetween={10}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[Navigation, Thumbs]} // Registering modules in the component itself
-        className="w-full h-auto flex items-center justify-center overflow-hidden"
+        className="w-auto flex items-center justify-center h-[calc(100%-60px)] md:h-[calc(100%-80px)] overflow-hidden border border-gray-300 shadow-md p-2"
 
       >
         {images?.map((image, index) => (
-          <div key={index} className="h-20 bg-primary">
+          <div key={index} className="w-auto h-16 bg-primary">
             <SwiperSlide key={index}>
               <Image
                 width={300}
                 height={300}
                 src={`http://97.74.89.204/${image.imageUrl}`}
                 alt={`Image ${index}`}
-                className="w-full h-full object-cover"
+                className="w-auto h-full p-3 object-cover mx-auto"
               />
             </SwiperSlide>
           </div>
@@ -53,7 +53,8 @@ const Gallery = (data) => {
       </Swiper>
 
       {/* Thumbnail Swiper */}
-      <Swiper
+     <div className='px-4 py-2 md:py-5'>
+     <Swiper
         onSwiper={setThumbsSwiper}
         loop={true}
         spaceBetween={-300}
@@ -61,7 +62,7 @@ const Gallery = (data) => {
 
         watchSlidesProgress={true}
         modules={[Navigation, Thumbs]} // Registering modules for thumbnail swiper
-        className="w-full p-4 h-auto mx-2 my-4 gap-3 flex justify-center items-center  "
+        className="w-full p-4 h-auto py-4 px-3 gap-3 flex justify-center items-center  "
       >
         {images?.map((image, index) => (
           <SwiperSlide key={index}>
@@ -75,6 +76,7 @@ const Gallery = (data) => {
           </SwiperSlide>
         ))}
       </Swiper>
+     </div>
     </div>
   );
 };

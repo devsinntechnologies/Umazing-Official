@@ -33,12 +33,22 @@ const ProductSection = () => {
 
   return (
     <div className="flex flex-col gap-5 justify-center w-full">
-      <div className="w-full flex items-center justify-center space-y-3 flex-col">
-        <p className="font-medium text-sm text-primary">Products</p>
-        <h1 className="font-semibold text-xl sm:text-2xl md:text-3xl">
-          Our Featured Products
-        </h1>
+      <div className="w-full flex justify-center items-center px-4">
+        <p className="font-bold text-2xl text-center text-primary">Products</p>
+        {/* View All button to toggle showing all categories */}
+        {/* {categoriesData?.data?.length > 6 && (
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="text-sm text-primary font-medium hover:underline"
+          >
+            View All
+          </button>
+        )} */}
       </div>
+      <h1 className="font-semibold text-xl sm:text-2xl md:text-3xl lg:text-4xl">
+      Our Featured Products
+      </h1>
+
 
       {/* Loading & Error States */}
       {isLoading && (
