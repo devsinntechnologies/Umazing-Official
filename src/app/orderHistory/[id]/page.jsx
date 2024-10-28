@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Skeleton from 'react-loading-skeleton'; // Import the skeleton loader
+import { Skeleton } from '@/components/ui/skeleton';
 
 import {
     Table,
@@ -14,7 +14,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-const page = () => {
+const Page = () => {
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
 
@@ -58,13 +58,13 @@ const page = () => {
                   <TableCell><Skeleton /></TableCell>
                   <TableCell><Skeleton /></TableCell>
                   <TableCell><Skeleton /></TableCell>
-                  <TableCell><Skeleton height={40} /></TableCell>
+                  <TableCell><Skeleton className="h-10" /></TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell><Skeleton /></TableCell>
                   <TableCell><Skeleton /></TableCell>
                   <TableCell><Skeleton /></TableCell>
-                  <TableCell><Skeleton height={40} /></TableCell>
+                  <TableCell><Skeleton className="h-10" /></TableCell>
                 </TableRow>
               </>
             ) : (
@@ -91,4 +91,4 @@ const page = () => {
   );
 }
 
-export default page;
+export default Page;

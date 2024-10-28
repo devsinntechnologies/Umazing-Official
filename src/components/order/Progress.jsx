@@ -1,28 +1,45 @@
-import React from "react";
+import React from 'react';
 
-const Progress = () => {
-  const steps = ["Order Placed", "Sewing", "Out for Delivery", "Success"];
+const steps = [
+  { label: "Pending", position: 1 },
+  { label: "Confirmed", position: 2 },
+  { label: "Out for Delivery", position: 3 },
+  { label: "Success", position: 4 },
+];
 
+export default function Progress({ currentStep }) {
   return (
-    <div className="flex items-center lg:px-12 md:px-10 px-8 justify-around w-full my-10 ">
+    <div className="flex items-center justify-between lg:space-x-4 space-x-2">
       {steps.map((step, index) => (
-        <div key={index} className="flex flex-col items-center relative">
-          <div className="flex items-center justify-center">
-            <span className="h-10 w-10 flex items-center justify-center rounded-full font-semibold relative z-10 text-transparent before:content-[''] before:h-10 before:w-10 before:bg-primary before:absolute before:left-1/2 before:top-1/2 before:transform before:-translate-x-1/2 before:-translate-y-1/2">
-              {index + 1}
+        <React.Fragment key={step.position}>
+          <div className="flex flex-col items-center">
+            <div
+              className={`w-10 h-10 flex items-center justify-center rounded-full text-white text-lg font-medium ${
+                currentStep >= step.position ? 'bg-blue-500' : 'bg-gray-300'
+              }`}
+            >
+              {step.position}
+            </div>
+            <span
+              className={`text-sm mt-2 ${
+                currentStep >= step.position ? 'text-blue-500 font-semibold' : 'text-gray-400'
+              }`}
+            >
+              {step.label}
             </span>
-            {index < steps.length - 1 && (
-              <div className="absolute bg-primary h-0.5 xl:w-80 lg:w-60 md:w-52 w-48 left-1/2 top-5 transform  rounded-full"></div>
-            )}
           </div>
-          <div className="flex flex-col items-center mt-2">
-            <span className="text-sm font-semibold">{step}</span>
-            <span className="text-sm font-semibold">12 May 2023</span>
-          </div>
-        </div>
+          {index < steps.length - 1 && (
+            <div
+              className={`flex-1 h-0.5 ${
+                currentStep > step.position ? 'bg-blue-500' : 'bg-gray-300'
+              } lg:mx-4 mx-2`}
+            ></div>
+          )}
+        </React.Fragment>
       ))}
     </div>
   );
-};
+}
 
-export default Progress;
+// Usage example
+// <Progress currentStep={2} />
