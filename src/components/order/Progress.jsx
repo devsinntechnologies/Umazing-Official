@@ -14,15 +14,15 @@ export default function Progress({ currentStep }) {
         <React.Fragment key={step.position}>
           <div className="flex flex-col items-center">
             <div
-              className={`w-10 h-10 flex items-center justify-center rounded-full text-white text-lg font-medium ${
-                currentStep >= step.position ? 'bg-blue-500' : 'bg-gray-300'
+              className={`md:w-10 md:h-10 w-6 h-6 flex items-center justify-center rounded-full text-white md:text-lg text-sm font-medium ${
+                currentStep >= step.position ? 'bg-primary' : 'bg-gray-300'
               }`}
             >
               {step.position}
             </div>
             <span
-              className={`text-sm mt-2 ${
-                currentStep >= step.position ? 'text-blue-500 font-semibold' : 'text-gray-400'
+              className={`md:text-sm text-[10px] mt-2 ${
+                currentStep >= step.position ? 'text-primary font-semibold' : 'text-gray-400'
               }`}
             >
               {step.label}
@@ -31,8 +31,8 @@ export default function Progress({ currentStep }) {
           {index < steps.length - 1 && (
             <div
               className={`flex-1 h-0.5 ${
-                currentStep > step.position ? 'bg-blue-500' : 'bg-gray-300'
-              } lg:mx-4 mx-2`}
+                currentStep > step.position ? 'bg-primary' : 'bg-gray-300'
+              } `}
             ></div>
           )}
         </React.Fragment>
