@@ -4,11 +4,11 @@ import Progress from '@/components/order/Progress'
 
 const Page = () => {
   return (
-    <div className='w-full min-h-[70vh] py-4 space-y-4'>
-    <div className='w-full px-10'>
+    <div className='w-full min-h-[70vh] py-10  space-y-10'>
+    <div className='w-full md:px-10 px-5 px-2'>
     <Progress currentStep={3}/>
     </div>
-      <div className='flex justify-center'>
+      <div className='flex justify-center '>
         <OrderCard />
       </div>
     </div>

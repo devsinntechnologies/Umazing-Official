@@ -35,19 +35,19 @@ const Page = () => {
   }, []);
 
   return (
-    <div>
+    <div className='w-full h-[60vh]'>
       <div className='flex justify-center sm:my-10 my-5 sm:text-4xl text-2xl font-semibold'>
         Order History
       </div>
-      <div>
-        <Table>
+      <div className='md:mx-32 sm:mx-16 mx-5 border border-solid-primary rounded-lg divide-y divide-gray-200 shadow-sm shadow-primary'>
+        <Table className='w-full divide-y divide-gray-200'>
           <TableCaption>A list of your recent orders.</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="sm:text-md text-xs font-semibold text-primary">ID</TableHead>
-              <TableHead className="sm:text-md text-xs font-semibold text-primary">PRICE</TableHead>
-              <TableHead className="sm:text-md text-xs font-semibold text-primary">QUANTITY</TableHead>
-              <TableHead className="sm:text-md text-xs font-semibold text-primary">DETAILS</TableHead>
+              <TableHead className="sm:text-lg text-xs font-semibold text-primary">ID</TableHead>
+              <TableHead className="sm:text-lg text-xs font-semibold text-primary">PRICE</TableHead>
+              <TableHead className="sm:text-lg text-xs font-semibold text-primary">QUANTITY</TableHead>
+              <TableHead className="sm:text-lg text-xs font-semibold text-primary">DETAILS</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
