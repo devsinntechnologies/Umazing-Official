@@ -54,7 +54,7 @@ export const auth = createApi({
       }),
     }),
     getUserProfile: builder.query({
-      query: (id) => `get-user-profile/${id}`,
+      query: (id) => `get-user-profile`,
     }),
     updateProfile: builder.mutation({
       query: (updateData) => ({
@@ -80,7 +80,7 @@ export const auth = createApi({
     }),
     deleteAddressById: builder.mutation({
       query: (id) => ({
-        url: `delete-address/${id}`, // Use consistent URL formatting
+        url: `delete-address`, // Use consistent URL formatting
         method: "DELETE",
       }),
     }),
