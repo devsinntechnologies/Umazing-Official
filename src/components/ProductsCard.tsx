@@ -5,7 +5,7 @@ import {
   useAddToFavouriteMutation,
   useRemoveFromFavouriteProductIdMutation,
 } from "@/hooks/UseFavourite";
-import { Trash2, Heart, Loader2 } from "lucide-react";
+import { Trash2, Heart, Loader2, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -170,7 +170,7 @@ const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
           {addingToCart ? (
             <Loader2 size={20} className="animate-spin text-white" />
           ) : (
-            "Add to Cart"
+            <div className="flex items-center justify-center gap-3"><ShoppingCart/> add To Cart</div>
           )}
         </button>
       )}

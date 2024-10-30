@@ -1,16 +1,12 @@
 "use client";
 import { useSelector } from "react-redux";
 import BreadCrumb from "@/components/BreadCrumb";
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useGetUserCartQuery } from "@/hooks/UseCart";
 import withAuth from "@/components/hoc/withAuth";
-
-interface RootState {
-  authSlice: {
-    isLoggedIn: boolean;
-  };
-}
+import { useGetUserProfileQuery } from "@/hooks/UseAuth";
+import { RootState } from "@/store/store";
 
 interface BillingInfo {
   streetAddress: string;
@@ -18,6 +14,7 @@ interface BillingInfo {
 }
 
 interface CartItem {
+  id: number;
   Product: {
     id: number;
     name: string;
@@ -27,8 +24,26 @@ interface CartItem {
 }
 
 const Page: React.FC = () => {
+  const { toast } = useToast();
   const isLoggedIn = useSelector((state: RootState) => state.authSlice.isLoggedIn);
-  const { data: cartData, isLoading: cartLoading, isError: cartError, refetch } = useGetUserCartQuery(
+  const userId = useSelector((state: RootState) => state.authSlice.user?.id);
+  const [triggerFetch, setTriggerFetch] = useState(false);
+
+  useEffect(() => {
+    if (userId && isLoggedIn) {
+      setTriggerFetch(true);
+    }
+  }, [userId, isLoggedIn]);
+
+  const {
+    data: userProfile,
+    error,
+    isLoading,
+    refetch,
+  } = useGetUserProfileQuery(userId, {
+    skip: !triggerFetch,
+  });
+  const { data: cartData, isLoading: cartLoading, isError: cartError } = useGetUserCartQuery(
     { skip: !isLoggedIn }
   );
 
@@ -37,7 +52,25 @@ const Page: React.FC = () => {
     phone: "",
   });
   const [selectedPayment, setSelectedPayment] = useState<string>("");
-  const { toast } = useToast();
+  
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  useEffect(() => {
+    const localStorageItems: { id: string; quantity: number; }[] = JSON.parse(localStorage.getItem("selectedItems") || "[]");
+    
+    // If no items in local storage, navigate back to the cart page
+    if (localStorageItems.length === 0) {
+      window.location.href = "/cart"; // Redirect to cart page
+      return;
+    }
+
+    // Filter the cartData to get only items present in localStorage
+    const filteredCartItems = cartData?.data.filter((item: CartItem) => 
+      localStorageItems.some(localItem => localItem.id === item.id.toString())
+    ) || [];
+
+    setCartItems(filteredCartItems);
+  }, [cartData]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -56,17 +89,9 @@ const Page: React.FC = () => {
       });
       return;
     }
-    // if (!selectedPayment) {
-    //   toast({
-    //     title: "Payment Method Selection",
-    //     description: "Please select a payment method.",
-    //     variant: "destructive"
-    //   });
-    //   return;
-    // }
 
     const orderDetails = {
-      OrderInfo: cartData?.data.map((item: CartItem) => ({
+      OrderInfo: cartItems.map((item: CartItem) => ({
         ProductId: item.Product.id,
         quantity: item.quantity,
       })),
@@ -76,7 +101,6 @@ const Page: React.FC = () => {
     console.log(orderDetails);
   };
 
-  const cartItems: CartItem[] = cartData?.data || [];
   const subtotal = cartItems.reduce((total, item) => total + item.Product.basePrice * item.quantity, 0);
   const shipping = 0;
   const total = subtotal + shipping;

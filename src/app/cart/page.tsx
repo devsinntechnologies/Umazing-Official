@@ -4,7 +4,7 @@ import BreadCrumb from "@/components/BreadCrumb";
 
 const Page = () => {
   return (
-    <div className="w-full">
+    <div className="w-full min-h-[60vh]">
       <BreadCrumb />
       {/* Cart Content */}
       <div>
