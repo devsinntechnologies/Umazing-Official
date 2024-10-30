@@ -18,7 +18,7 @@ const OrderCard = () => {
     
     <div className=' w-[80%] sm:px-4 sm:py-2 px-2 py-1'> {/* Updated border classes */}
 <div className='flex justify-between items-center'>
-<h1 className='sm:text-xl text-lg font-bold text-primary '>Product Name</h1> {/* Added margin left for spacing */}      
+<h1 className='sm:text-xl text-lg font-bold text-primary'>Product Name</h1> {/* Added margin left for spacing */}      
 <CancelOrder/>
 </div>
 
