@@ -12,7 +12,7 @@ const Categories = () => {
   return (
     <div className="w-full flex justify-center items-center flex-col gap-8 py-10">
       <div className="w-full flex justify-center items-center px-4">
-        <p className="font-bold text-2xl text-center text-primary">Category</p>
+        <p className="font-bold text-lg sm:text-xl md:text-2xl text-center text-primary">Category</p>
         {/* View All button to toggle showing all categories */}
         {/* {categoriesData?.data?.length > 6 && (
           <button

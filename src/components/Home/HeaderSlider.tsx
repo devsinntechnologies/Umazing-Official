@@ -45,7 +45,7 @@ const HeaderSlider = () => {
             className="relative flex items-center justify-between bg-primary p-6 md:p-10 lg:p-20 w-full h-full"
           >
             {/* Text Content */}
-            <div className="max-w-lg pt-3 md:pt-0 spce-y-5 text-white flex-1 h-full">
+            <div className="z-[10] max-w-lg pt-3 md:pt-0 space-y-5 text-white flex-1 h-full">
               <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
                 {offer.offerName}
               </h1>
@@ -63,7 +63,7 @@ const HeaderSlider = () => {
             </div>
 
             {/* Image Content */}
-            <div className="absolute top-0 right-0 z-[-10] w-full h-full opacity-95">
+            <div className="absolute top-0 right-0 z-[-1] w-full h-full opacity-95">
               <Image
                 src={`http://97.74.89.204/${offer.imageUrl}`}
                 alt={offer.offerName}

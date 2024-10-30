@@ -149,28 +149,28 @@ const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
       <Link href={`/details/${product.id}`} className="w-full flex flex-col">
         <AuthDialog isOpen={isDialogOpen} setIsOpen={setIsDialogOpen} useTrigger={false} />
         <Image
-          className="w-full h-[200px] object-cover"
+          className="w-full h-[140px] md:h-[160px] lg:h-[200px] object-cover"
           width={500}
           height={300}
           src={product?.Product_Images[0]?.imageUrl ? `http://97.74.89.204/${product?.Product_Images[0]?.imageUrl}` : ""}
           alt={product.name}
         />
         <div className="w-full space-y-2 p-2">
-          <h3 className="text-sm font-semibold h-10 transition duration-200 text-primary truncate-multiline">{product.name}</h3>
-          <p className="text-gray-600">Rs. {product.basePrice}</p>
+          <h3 className="text-xs md:text-sm font-semibold h-8 md:h-10 transition duration-200 text-primary truncate-multiline">{product.name}</h3>
+          <p className="text-xs md:text-sm text-gray-600">Rs. {product.basePrice}</p>
         </div>
       </Link>
       {/* Add to Cart button */}
       {!isSeller && (
         <button
-          className="w-full text-sm bg-primary py-3 text-white rounded-b-sm flex items center justify-center gap-2"
+          className="w-full text-xs lg:text-sm bg-primary py-2 lg:py-3 text-white rounded-b-sm flex items center justify-center gap-2"
           onClick={handleAddToCart} // Add to Cart functionality
           disabled={addingToCart} // Disable while loading
         >
           {addingToCart ? (
             <Loader2 size={20} className="animate-spin text-white" />
           ) : (
-            <div className="flex items-center justify-center gap-3"><ShoppingCart/> add To Cart</div>
+            <div className="flex items-center justify-center gap-3"><ShoppingCart className="size-3 md:size-4"/> add To Cart</div>
           )}
         </button>
       )}

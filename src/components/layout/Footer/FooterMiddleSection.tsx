@@ -67,8 +67,8 @@ const FooterMiddleSection = () => {
           <h3 className="font-semibold text-gray-800">Download Mobile App</h3>
           <div className="flex">
             <a href="#" className="flex gap-2">
-              <Image src='/images/playStore.png' width={80} alt="" height={20} />
-              <Image src='/images/appStore.png' width={80} alt="" height={20} />
+              <Image src='/Images/playStore.png' width={80} alt="" height={20} />
+              <Image src='/Images/appStore.png' width={80} alt="" height={20} />
             </a>
           </div>
         </div>

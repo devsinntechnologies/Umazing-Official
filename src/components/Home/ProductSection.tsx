@@ -30,7 +30,7 @@ const ProductSection: React.FC = () => {
   return (
     <div className="flex flex-col gap-5 justify-center w-full">
       <div className="w-full flex items-center justify-center space-y-3 flex-col">
-        <p className="font-medium text-sm text-primary">Products</p>
+        <p className="font-bold text-lg sm:text-xl md:text-2xl text-center text-primary">Products</p>
         <h1 className="font-semibold text-xl sm:text-2xl md:text-3xl">
           Our Featured Products
         </h1>
