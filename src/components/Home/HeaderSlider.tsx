@@ -42,7 +42,7 @@ const HeaderSlider = () => {
         {offers.data.map((offer) => (
           <SwiperSlide
             key={offer.id}
-            className="relative flex items-center justify-between bg-primary p-6 md:p-10 lg:p-20 w-full h-full"
+            className="relative flex items-center justify-between shadow-md p-6 md:p-10 lg:p-20 w-full h-full"
           >
             {/* Text Content */}
             <div className="z-[10] max-w-lg pt-3 md:pt-0 space-y-5 text-white flex-1 h-full">
@@ -67,8 +67,9 @@ const HeaderSlider = () => {
               <Image
                 src={`http://97.74.89.204/${offer.imageUrl}`}
                 alt={offer.offerName}
-                fill
-                className="object-cover opacity-95"
+                width={1000}
+                height={420}
+                className="object-cover opacity-95 size-full"
                 priority
               />
             </div>
