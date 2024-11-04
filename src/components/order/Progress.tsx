@@ -1,31 +1,34 @@
 import React from 'react';
 
-const steps = [
-  { label: "Pending", position: 1 },
-  { label: "Confirmed", position: 2 },
-  { label: "Out for Delivery", position: 3 },
-  { label: "Success", position: 4 },
-];
-
-interface StepperProp{
-  currentStep: number; 
+interface Step {
+  label: string;
+  position: number;
 }
 
-export default function Progress({ currentStep }:StepperProp) {
+const steps: Step[] = [
+  { label: 'Pending', position: 1 },
+  { label: 'Success', position: 2 },
+];
+
+interface StepperProp {
+  currentStep: number;
+}
+
+const Progress: React.FC<StepperProp> = ({ currentStep }) => {
   return (
-    <div className="flex items-center justify-between lg:space-x-4 space-x-2">
+    <div className="flex items-center justify-between space-x-2 md:space-x-4">
       {steps.map((step, index) => (
         <React.Fragment key={step.position}>
           <div className="flex flex-col items-center">
             <div
-              className={`md:w-10 md:h-10 w-6 h-6 flex items-center justify-center rounded-full text-white md:text-lg text-sm font-medium ${
+              className={`w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full text-white font-medium ${
                 currentStep >= step.position ? 'bg-primary' : 'bg-gray-300'
               }`}
             >
               {step.position}
             </div>
             <span
-              className={`md:text-sm text-[10px] mt-2 ${
+              className={`text-xs md:text-sm mt-2 ${
                 currentStep >= step.position ? 'text-primary font-semibold' : 'text-gray-400'
               }`}
             >
@@ -36,14 +39,13 @@ export default function Progress({ currentStep }:StepperProp) {
             <div
               className={`flex-1 h-0.5 ${
                 currentStep > step.position ? 'bg-primary' : 'bg-gray-300'
-              } `}
+              }`}
             ></div>
           )}
         </React.Fragment>
       ))}
     </div>
   );
-}
+};
 
-// Usage example
-// <Progress currentStep={2} />
+export default Progress

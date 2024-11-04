@@ -1,19 +1,80 @@
+// @ts-nocheck
 "use client"
-import withAuth from '@/components/hoc/withAuth'
-import OrderCard from '@/components/order/OrderCard'
-import Progress from '@/components/order/Progress'
+import { useGetAllOrdersQuery } from "@/hooks/UseOrders";
+import { DataTable } from "@/components/DataTable";
+import { useToast } from "@/hooks/use-toast";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import withAuth from "@/components/hoc/withAuth";
 
 const Page = () => {
-  return (
-    <div className='w-full min-h-[70vh] py-10  space-y-10'>
-    <div className='w-full md:px-10 px-5'>
-    <Progress currentStep={3}/>
-    </div>
-      <div className='flex justify-center '>
-        <OrderCard />
-      </div>
-    </div>
-  )
-}
+  const { toast } = useToast();
+  const router = useRouter();
+  const { data: ordersData, isLoading, isError } = useGetAllOrdersQuery({});
+  const [orders,setOrders] = useState([])
 
-export default withAuth(Page)
+  useEffect(() => {
+    if (ordersData) {
+      setOrders(ordersData.data)
+    }
+  }, [ordersData])
+
+  if (isError) {
+    toast({
+      title: "Error",
+      description: "Failed to load orders. Please try again.",
+    });
+  }
+
+  const columns = [
+    {
+      header: "Order ID",
+      accessorKey: "id",
+    },
+    {
+      header: "Date",
+      accessorKey: "createdAt",
+      cell: ({ getValue }) => new Date(getValue()).toLocaleDateString(),
+    },
+    {
+      header: "Status",
+      accessorKey: "status",
+    },
+    {
+      header: "Total Amount",
+      accessorKey: "totalAmount",
+      cell: ({ getValue }) => `Rs. ${getValue()}`,
+    },
+    {
+      header: "Items",
+      accessorKey: "Order_Items",
+      cell: ({ getValue }) => getValue().length,
+    },
+    {
+      header: "Actions",
+      cell: ({ row }) => (
+        <button
+          className="bg-primary text-white px-4 py-2 rounded-full"
+          onClick={() => router.push(`/order/${row.original.id}`)}
+        >
+          View Details
+        </button>
+      ),
+    },
+  ];
+
+  return (
+    <div className="w-full py-6 min-h-[70vh]">
+      <Breadcrumb/>
+      <h1 className="text-lg md:text-xl lg:text-2xl font-semibold mb-6 text-center">
+        My Orders
+      </h1>
+     <div className="w-full lg:w-[80%] mx-auto">
+     <DataTable columns={columns} data={orders} isLoading={isLoading} />
+     </div>
+    </div>
+  );
+};
+
+export default withAuth(Page);

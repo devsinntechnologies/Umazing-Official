@@ -1,35 +1,37 @@
-import { Trash } from 'lucide-react';
-import Image from 'next/image'; // Ensure you're importing Image correctly
+// @ts-nocheck
+import { CircleX, Trash } from 'lucide-react';
+import Image from 'next/image';
 import React from 'react';
-import CancelOrder from './CancelOrder';
+import { Order } from '@/lib/types'; // Adjust the import according to your file structure
 
-const OrderCard = () => {
+interface OrderCardProps {
+  data: Order;
+}
+
+const OrderCard: React.FC<OrderCardProps> = ({ data }) => {
   return (
-    <div className='flex sm:w-[70%] w-[100%] h-auto  rounded-2xl border border-solid border-gray-300'>
-       <div className="w-[20%] rounded-l-2xl bg-black overflow-hidden">
-       <Image
-        src="/images/test.png" // Correct path for the public directory
-        alt="description"
-        width={100}
-        height={100}
-      />
-
+    <div className="space-y-4">
+      {data.Order_Items.map((item) => (
+        <div
+          key={item.id}
+          className="flex items-center gap-4 p-4 border rounded-lg shadow-md bg-white"
+        >
+          <div className="flex-shrink-0 h-24 w-24 md:h-32 md:w-32">
+          </div>
+          <div className="flex-grow">
+            <h3 className="text-sm md:text-lg font-semibold truncate">
+              {item.Product.name}
+            </h3>
+            <p className="text-primary font-medium">Rs. {item.Product.basePrice}</p>
+            <p className="text-gray-600">Quantity: {item.quantity}</p>
+          </div>
+          <button aria-label="Cancel Order" className="text-destructive cursor-pointer">
+            <CircleX size={24} />
+          </button>
         </div>
-    
-    <div className=' w-[80%] sm:px-4 sm:py-2 px-2 py-1'> {/* Updated border classes */}
-<div className='flex justify-between items-center'>
-<h1 className='sm:text-xl text-lg font-bold text-primary'>Product Name</h1> {/* Added margin left for spacing */}      
-<CancelOrder/>
-</div>
-
-      <p className='sm:text-sm text-xs truncate-multiline '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, debitis.</p>
-      <div className='flex justify-between py-2 sm:text-lg text-sm'>
-        <p>Qty: 2</p>
-        <p className=' text-primary'><b>Total:</b> 4500</p>
-      </div>
-    </div>
+      ))}
     </div>
   );
-}
+};
 
 export default OrderCard;

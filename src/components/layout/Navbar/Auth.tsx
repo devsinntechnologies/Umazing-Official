@@ -127,6 +127,12 @@ const Auth: React.FC<AuthProps> = ({ className }) => {
                     <Link href="/seller/products">Your Products</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="cursor-pointer">
+                    <Link href="/orders">Your Orders</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="cursor-pointer">
+                    <Link href="/seller/orders">Customer Orders</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="cursor-pointer">
                     <Link href="/wishlist">Wishlist</Link>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>

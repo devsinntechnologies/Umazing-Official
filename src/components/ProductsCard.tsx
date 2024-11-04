@@ -145,7 +145,7 @@ const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
   const isSeller = pathname === "/seller" || pathname === "/seller/products";
 
   return (
-    <div className="w-full h-auto relative hover:shadow-lg border border-border rounded-sm hover:border-primary">
+    <div className="w-full h-auto relative hover:shadow-lg border border-border rounded-md overflow-hidden hover:border-primary">
       <Link href={`/details/${product.id}`} className="w-full flex flex-col">
         <AuthDialog isOpen={isDialogOpen} setIsOpen={setIsDialogOpen} useTrigger={false} />
         <Image

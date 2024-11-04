@@ -65,6 +65,7 @@
   body {
     position: relative;
     @apply bg-background text-foreground;
+    user-select: none;
   }
   ::-webkit-scrollbar {
     display: none;
