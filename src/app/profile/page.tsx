@@ -153,16 +153,22 @@ const Page: React.FC = () => {
   return (
     <div className="w-full py-10 flex flex-col gap-8 px-5">
       <BreadCrumb />
-      <div className="flex items-center gap-5 flex-col md:flex-row">
-        <div className="bg-slate-300 rounded-full flex justify-center items-center w-[120px] h-[120px] overflow-hidden">
-          <Image
-            src={`http://97.74.89.204/${userProfile?.data?.imageUrl}`}
-            width={100}
-            height={100}
-            alt="User Profile"
-            className="w-full h-full"
-          />
-        </div>
+      <div className=" flex items-center gap-5 flex-col md:flex-row">
+      <div className="relative  bg-slate-300 rounded-full flex justify-center items-center w-[120px] h-[120px] overflow-hidden">
+  <Image
+    src={`http://97.74.89.204/${userProfile?.data?.imageUrl}`}
+    width={100}
+    height={100}
+    alt="User Profile"
+    className="w-full h-full"
+  />
+  <div className="absolute bottom-0 right-0 bg-black rounded-full p-1 z-10 flex items-center justify-center">
+    <i className="fas fa-camera text-white"></i>
+    {/* OR use an SVG or your Camera component */}
+    <Camera className="text-white" />
+  </div>
+</div>
+
         <h3 className="font-semibold text-center md:text-left">{name}</h3>
       </div>
 
@@ -246,6 +252,25 @@ const Page: React.FC = () => {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
+        <div className="flex justify-between items-center px-3 border-b-[1px] border-solid border-black pb-3 pt-4 sm:pt-6">
+          <div className="flex w-full flex-col sm:flex-row">
+            <h3 className="font-semibold text-base sm:text-lg mr-2">Email:</h3>
+            <input
+              type="text"
+              value={email}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setName(e.target.value)
+              }
+              className="border-b-2 border-transparent focus:border-primary focus:outline-none flex-grow w-full"
+            />
+          </div>
+          <button
+            onClick={handleUpdateProfile}
+            className="mt-3 sm:mt-0 sm:ml-3 text-primary font-semibold text-sm sm:text-base"
+          >
+            Change
+          </button>
+        </div>
       </div>
     </div>
   );
