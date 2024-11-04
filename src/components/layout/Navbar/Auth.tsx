@@ -46,7 +46,7 @@ const Auth: React.FC<AuthProps> = ({ className }) => {
 
   // Fetch user profile data once userId is available
   const { data: userProfile, error, isLoading } = useGetUserProfileQuery(userId, {
-    skip: !triggerFetch,  // Skip API call if triggerFetch is false
+    skip: !triggerFetch, // Skip API call if triggerFetch is false
   });
 
   useEffect(() => {
@@ -108,7 +108,7 @@ const Auth: React.FC<AuthProps> = ({ className }) => {
                         </div>
                       )}
                       <div className="flex flex-col">
-                        <span className="text-lg font-bold">
+                        <span className="text-lg font-bold truncate line-clamp-1 w-[180px]">
                           {userData?.name}
                         </span>
                         <span className="text-md">View Profile</span>
