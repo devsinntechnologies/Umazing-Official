@@ -8,11 +8,11 @@ const nextConfig = {
         // port: '4000',
         // pathname: '/*/**',
       },
-      // {
-      //   protocol: 'https',
-      //   hostname: 'fakestoreapi.com',
-      //   pathname: '**',
-      // },
+      {
+        protocol: 'https',
+        hostname: '**',
+        pathname: '**',
+      },
     ],
   },
 };

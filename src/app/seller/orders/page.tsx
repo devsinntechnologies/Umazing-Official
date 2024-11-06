@@ -1,6 +1,6 @@
 // @ts-nocheck
 "use client"
-import { useGetAllOrdersQuery } from "@/hooks/UseOrders";
+import { useGetSellerOrdersQuery, useUpdateOrderMutation } from "@/hooks/UseOrders";
 import { DataTable } from "@/components/DataTable";
 import { useToast } from "@/hooks/use-toast";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
@@ -11,7 +11,7 @@ import withAuth from "@/components/hoc/withAuth";
 const Page = () => {
   const { toast } = useToast();
   const router = useRouter();
-  const { data: ordersData, isLoading, isError } = useGetAllOrdersQuery({});
+  const { data: ordersData, isLoading, isError ,refetch} = useGetSellerOrdersQuery({});
   const [orders,setOrders] = useState([])
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Page = () => {
   const columns = [
     {
       header: "Order ID",
-      accessorKey: "id",
+      accessorKey: "OrderId",
     },
     {
       header: "Date",
@@ -43,32 +43,70 @@ const Page = () => {
     },
     {
       header: "Total Amount",
-      accessorKey: "totalAmount",
+      accessorKey: "price",
       cell: ({ getValue }) => `Rs. ${getValue()}`,
     },
     {
-      header: "Items",
-      accessorKey: "Order_Items",
-      cell: ({ getValue }) => getValue().length,
+      header: "Product",
+      accessorKey: "Product.name",
+    },
+    {
+      header: "Quantity",
+      accessorKey: "quantity",
     },
     {
       header: "Actions",
       cell: ({ row }) => (
-        <button
-          className="bg-primary text-white px-4 py-2 rounded-full"
-          onClick={() => router.push(`/seller/order/${row.original.id}`)}
-        >
-          View Details
-        </button>
+        <div className="flex gap-2">
+          {row.original.status === "complete" ? (
+            <button
+              className="bg-gray-400 text-white px-4 py-2 rounded-full cursor-not-allowed"
+              disabled
+            >
+              Completed
+            </button>
+          ) : (
+            <button
+              className="bg-primary text-white px-4 py-2 rounded-full"
+              onClick={() => handleUpdateStatus(row.original.id)}
+            >
+              Complete
+            </button>
+          )}
+        </div>
       ),
     },
   ];
+
+  const [updateOrder] = useUpdateOrderMutation();
+
+  const handleUpdateStatus = async (id: string) => {
+    try {
+      const response = await updateOrder({ 
+        id,
+        status: "complete" 
+      }).unwrap();
+      
+      toast({
+        title: "Success",
+        description: "Order status updated successfully",
+      });
+      refetch();
+
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to update order status",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <div className="w-full py-6 min-h-[70vh]">
       <Breadcrumb/>
       <h1 className="text-lg md:text-xl lg:text-2xl font-semibold mb-6 text-center">
-        My Orders
+        Orders
       </h1>
      <div className="w-full  mx-auto">
      <DataTable columns={columns} data={orders} isLoading={isLoading} />

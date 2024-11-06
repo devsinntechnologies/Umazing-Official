@@ -7,8 +7,16 @@ const ReviewsCard = ({ review }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    setData(review?.data || []); // Default to an empty array if review.data is undefined
+    setData(review?.data || []);
   }, [review]);
+
+  // Helper function to format image URL
+  const getFormattedImageUrl = (url: string) => {
+    if (url?.startsWith('http://') || url?.startsWith('https://')) {
+      return url;
+    }
+    return `http://97.74.89.204/${url}`;
+  };
 
   return (
     <div className="w-full space-y-6 my-4">
@@ -29,10 +37,11 @@ const ReviewsCard = ({ review }) => {
                 <div className="w-10 h-10 rounded-full bg-black overflow-hidden">
                   {item.User?.imageUrl && (
                     <Image
-                      src={`http://97.74.89.204/${item.User.imageUrl}`}
+                      src={getFormattedImageUrl(item.User.imageUrl)}
                       alt={item.User?.name || 'User image'}
                       width={40}
                       height={40}
+                      className='size-10 rounded-full'
                     />
                   )}
                 </div>
@@ -41,7 +50,24 @@ const ReviewsCard = ({ review }) => {
               <Stars rating={item.star} />
             </div>
             <p>{item.comment || 'No comment provided.'}</p>
-            <p>{formattedDate}</p>
+            
+            {/* Add review images */}
+            {item.Review_Images && item.Review_Images.length > 0 && (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 my-4">
+                {item.Review_Images.map((image, imgIndex) => (
+                  <div key={imgIndex} className="relative aspect-square size-20 border border-primary rounded-lg overflow-hidden">
+                    <Image
+                      src={getFormattedImageUrl(image.imageUrl)}
+                      alt={`Review image ${imgIndex + 1}`}
+                      fill
+                      className="object-cover rounded-lg"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+            
+            <p className="text-sm text-gray-500 mt-2">{formattedDate}</p>
           </div>
         );
       })}

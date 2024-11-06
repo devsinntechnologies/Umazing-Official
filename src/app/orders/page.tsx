@@ -1,6 +1,6 @@
 // @ts-nocheck
 "use client"
-import { useGetAllOrdersQuery } from "@/hooks/UseOrders";
+import { useGetBuyerOrdersQuery } from "@/hooks/UseOrders";
 import { DataTable } from "@/components/DataTable";
 import { useToast } from "@/hooks/use-toast";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
@@ -11,7 +11,7 @@ import withAuth from "@/components/hoc/withAuth";
 const Page = () => {
   const { toast } = useToast();
   const router = useRouter();
-  const { data: ordersData, isLoading, isError } = useGetAllOrdersQuery({});
+  const { data: ordersData, isLoading, isError } = useGetBuyerOrdersQuery({});
   const [orders,setOrders] = useState([])
 
   useEffect(() => {

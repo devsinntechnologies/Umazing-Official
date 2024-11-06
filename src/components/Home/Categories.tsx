@@ -10,7 +10,7 @@ const Categories = () => {
   const { data: categoriesData, isLoading, isError } = useGetCategoriesQuery({});
 
   return (
-    <div className="w-full flex justify-center items-center flex-col gap-8 py-10">
+    <div className="w-full flex justify-center items-center flex-col gap-4 md:gap-8 py-4 md:py-10 px-2">
       <div className="w-full flex justify-center items-center px-4">
         <p className="font-bold text-lg sm:text-xl md:text-2xl text-center text-primary">Category</p>
         {/* View All button to toggle showing all categories */}

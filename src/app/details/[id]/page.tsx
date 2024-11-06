@@ -6,9 +6,17 @@ import { useGetAllProductsQuery, useGetProductByIdQuery } from "@/hooks/UseProdu
 import { useGetAllProductReviewsQuery } from "@/hooks/UseReview";
 import ProductsCard from "@/components/ProductsCard";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Minus, Plus, ShoppingCart, Heart } from "lucide-react";
+import { Minus, Plus, ShoppingCart, Heart, Loader2 } from "lucide-react";
 import Head from "next/head";
 import { useParams } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
+import {
+  useAddToFavouriteMutation,
+  useRemoveFromFavouriteProductIdMutation,
+} from "@/hooks/UseFavourite";
+import { useAddToCartMutation } from "@/hooks/UseCart";
+import { useSelector } from "react-redux";
+import AuthDialog from "@/components/layout/auth/AuthDialog";
 
 // Dynamic imports for heavy components
 const Gallery = dynamic(() => import("@/components/singleProduct/Gallery"), { ssr: false });
@@ -20,25 +28,114 @@ const Page = () => {
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const { toast } = useToast();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const userId = useSelector((state: any) => state.authSlice?.user?.id);
+  const isLoggedIn = useSelector((state: any) => state.authSlice.isLoggedIn);
+  const [averageRating, setAverageRating] = useState(0);
 
-  const { data: productData, isLoading: productLoading } = useGetProductByIdQuery(id);
-  const { data: relatedData, isLoading: relatedLoading } = useGetAllProductsQuery({ pageNo: "1", pageSize: "8", categoryId: "4051eb3ece5de28e4b7521a0a42957eb" });
+  const [addToCart, { isLoading: addingToCart }] = useAddToCartMutation();
+  const [addToFavourite, { isLoading: addingToFav }] = useAddToFavouriteMutation();
+  const [removeFromFavourite, { isLoading: removingFromFav }] = useRemoveFromFavouriteProductIdMutation();
+
+  const { data: productData, isLoading: productLoading ,refetch } = useGetProductByIdQuery(id);
+  const { data: relatedData, isLoading: relatedLoading } = useGetAllProductsQuery({ pageNo: "1", pageSize: "8", CategoryId: product?.Category?.id });
   const { data: reviewData, isLoading: reviewLoading } = useGetAllProductReviewsQuery(id);
 
   useEffect(() => {
     if (productData) setProduct(productData.data);
     if (relatedData) setRelatedProducts(relatedData.data);
-  }, [productData, relatedData]);
+  }, [productData, relatedData, product]);
+  console.log(product);
 
   const handleIncrement = () => setQuantity((prevQty) => prevQty + 1);
   const handleDecrement = () => setQuantity((prevQty) => (prevQty > 1 ? prevQty - 1 : 1));
 
-  const handleAddToCart = () => {
-    console.log("Adding to cart", { product, quantity });
+  const handleAddToCart = async () => {
+    if (!isLoggedIn) {
+      toast({
+        title: "Not Logged In",
+        description: "Please log in to add items to the cart.",
+        variant: "destructive",
+      });
+      setIsDialogOpen(true);
+      return;
+    }
+
+    try {
+      await addToCart({ ProductId: product.id, quantity });
+      toast({
+        title: "Success",
+        description: "Item added to your cart.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to add item to cart.",
+        variant: "destructive",
+      });
+    }
   };
+
+  const handleToggleFavorite = async () => {
+    if (!isLoggedIn) {
+      toast({
+        title: "Not Logged In",
+        description: "Please log in to manage favorites.",
+        variant: "destructive",
+      });
+      setIsDialogOpen(true);
+      return;
+    }
+
+    try {
+      if (product.isFavorite) {
+        await removeFromFavourite(product.id);
+      } else {
+        await addToFavourite({ ProductId: product.id });
+      }
+      refetch();
+
+      toast({
+        title: "Success",
+        description: !product.isFavorite
+          ? "Added to favorites"
+          : "Removed from favorites",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to update favorites.",
+        variant: "destructive",
+      });
+    }
+  };
+  
+  useEffect(() => {
+    if (reviewData?.data && Array.isArray(reviewData.data) && reviewData.data.length > 0) {
+      const totalRating = reviewData.data.reduce((sum, review) => {
+        const rating = Number(review.rating) || 0; // Convert to number and handle invalid values
+        return sum + rating;
+      }, 0);
+      const avgRating = totalRating / reviewData.data.length;
+      setAverageRating(Number(avgRating.toFixed(1))); // Round to 1 decimal place
+      console.log('Review Data:', reviewData.data);
+      console.log('Total Rating:', totalRating);
+      console.log('Average Rating:', avgRating);
+    } else {
+      setAverageRating(0); // Set default rating when no reviews
+    }
+  }, [reviewData]);
+
+  useEffect(() => {
+    if (product?.name) {
+      document.title = `${product.name} | Umazing Official`;
+    }
+  }, [product]);
 
   return (
     <>
+      <AuthDialog isOpen={isDialogOpen} setIsOpen={setIsDialogOpen} useTrigger={false} />
       <Head>
         <title>{product?.name || "Loading..."}</title>
         <meta property="og:title" content={product?.name || "Product Details"} />
@@ -61,10 +158,16 @@ const Page = () => {
               {productLoading ? <Skeleton className="h-6 w-3/4" /> : product?.name}
             </div>
             <div className="flex items-center gap-3 my-2">
-              <Stars />
-              <p className="text-[#666666] text-[14px]">
-                {reviewLoading ? <Skeleton className="h-4 w-10" /> : `${reviewData?.data.length || 0} reviews`}
-              </p>
+              {reviewLoading ? (
+                <Skeleton className="h-4 w-20" />
+              ) : (
+                <>
+                  <Stars rating={averageRating} />
+                  <p className="text-[#666666] text-[14px]">
+                    {reviewData?.data?.length || 0} reviews
+                  </p>
+                </>
+              )}
             </div>
             <div className="flex items-center gap-3">
               <p className="text-[#2C742F] text-[24px] font-medium">
@@ -82,20 +185,49 @@ const Page = () => {
             {/* Add to Cart Section */}
             <div className="flex items-center w-full justify-between space-x-2 px-1 lg:px-3">
               <div className="h-[50px] w-[25%] border border-[#E6E6E6] p-[8px] rounded-[170px] flex gap-2 lg:gap-0 items-center justify-between py-2">
-                <button className="w-[34px] h-[34px] bg-[#F2F2F2] rounded-full flex justify-center items-center" onClick={handleDecrement}>
+                <button 
+                  className="w-[34px] h-[34px] bg-[#F2F2F2] rounded-full flex justify-center items-center" 
+                  onClick={handleDecrement}
+                  disabled={addingToCart}
+                >
                   <Minus width={10} height={10} />
                 </button>
                 <div>{quantity}</div>
-                <button className="w-[34px] h-[34px] bg-[#F2F2F2] rounded-full flex justify-center items-center" onClick={handleIncrement}>
+                <button 
+                  className="w-[34px] h-[34px] bg-[#F2F2F2] rounded-full flex justify-center items-center" 
+                  onClick={handleIncrement}
+                  disabled={addingToCart}
+                >
                   <Plus width={10} height={10} />
                 </button>
               </div>
-              <button onClick={handleAddToCart} className="h-[51px] w-[55%] text-sm lg:w-[347px] bg-primary text-white text-[16px] font-semibold flex justify-center items-center gap-3 lg:gap-4 rounded-[43px]">
-                Add to Cart <ShoppingCart width={20} height={20} />
+              <button 
+                onClick={handleAddToCart} 
+                disabled={addingToCart}
+                className="h-[51px] w-[55%] text-sm lg:w-[347px] bg-primary text-white text-[16px] font-semibold flex justify-center items-center gap-3 lg:gap-4 rounded-[43px]"
+              >
+                {addingToCart ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  <>
+                    Add to Cart <ShoppingCart width={20} height={20} />
+                  </>
+                )}
               </button>
-              <div className="bg-primary h-[51px] w-[20%] flex justify-center items-center rounded-[43px]">
-                <Heart color="white" />
-              </div>
+              <button 
+                onClick={handleToggleFavorite}
+                disabled={addingToFav || removingFromFav}
+                className="bg-primary h-[51px] w-[20%] flex justify-center items-center rounded-[43px]"
+              >
+                {addingToFav || removingFromFav ? (
+                  <Loader2 className="animate-spin text-white" />
+                ) : (
+                  <Heart 
+                    color="white" 
+                    fill={product?.isFavorite ? "white" : "none"}
+                  />
+                )}
+              </button>
             </div>
 
             <div className="w-full lg:w-[647px] my-6 border border-[#E6E6E6]"></div>

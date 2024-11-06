@@ -3,6 +3,11 @@
 import { useEffect, useState } from "react";
 import {
   Heart,
+  LayoutDashboard,
+  LogOut,
+  Package,
+  PackagePlus,
+  ShoppingBag,
   ShoppingCart,
 } from "lucide-react";
 import Image from "next/image";
@@ -108,7 +113,7 @@ const Auth: React.FC<AuthProps> = ({ className }) => {
                         </div>
                       )}
                       <div className="flex flex-col">
-                        <span className="text-lg font-bold truncate line-clamp-1 w-[180px]">
+                        <span className="text-lg font-bold truncate-multiline-1 w-[180px]">
                           {userData?.name}
                         </span>
                         <span className="text-md">View Profile</span>
@@ -116,32 +121,51 @@ const Auth: React.FC<AuthProps> = ({ className }) => {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="cursor-pointer">
-                    <Link href="/seller">Sell | Dashboard</Link>
+                    <Link href="/seller" className="flex items-center gap-2">
+                      <LayoutDashboard className="w-4 h-4" />
+                      Sell | Dashboard
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="cursor-pointer">
-                    <Link href="/seller/addProduct">
+                    <Link href="/seller/addProduct" className="flex items-center gap-2">
+                      <PackagePlus className="w-4 h-4" />
                       Add Product
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="cursor-pointer">
-                    <Link href="/seller/products">Your Products</Link>
+                    <Link href="/seller/products" className="flex items-center gap-2">
+                      <Package className="w-4 h-4" />
+                      Your Products
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="cursor-pointer">
-                    <Link href="/orders">Your Orders</Link>
+                    <Link href="/orders" className="flex items-center gap-2">
+                      <ShoppingBag className="w-4 h-4" />
+                      Your Orders
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="cursor-pointer">
-                    <Link href="/seller/orders">Customer Orders</Link>
+                    <Link href="/seller/orders" className="flex items-center gap-2">
+                      <ShoppingBag className="w-4 h-4" />
+                      Customer Orders
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="cursor-pointer">
-                    <Link href="/wishlist">Wishlist</Link>
+                    <Link href="/wishlist" className="flex items-center gap-2">
+                      <Heart className="w-4 h-4" />
+                      Wishlist
+                    </Link>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="cursor-pointer"
-                  onClick={handleLogout}
-                >
-                  Logout
+                <DropdownMenuItem>
+                  <button
+                    className="w-full py-1 flex items-center justify-center gap-2 rounded-lg cursor-pointer bg-destructive text-white"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Logout
+                  </button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
