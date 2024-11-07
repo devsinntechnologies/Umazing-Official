@@ -31,17 +31,17 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
 
   return (
     <nav>
-      <ul className="inline-flex md:gap-1 text-base h-10 items-center">
+      <ul className="inline-flex gap-1 md:gap-2 text-base h-10 items-center">
         {/* Previous button */}
         <li
-          className={`w-[36px] h-[36px] bg-gray-400 rounded-full p-[8px] flex justify-center items-center ${
+          className={`size-6 md:size-9 bg-gray-400 rounded-full p-2 flex justify-center items-center ${
             currentPage === 1 && "opacity-50 pointer-events-none"
           }`}
         >
           <button
             onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
           >
-            <ChevronLeft color="white" />
+            <ChevronLeft color="white" className="size-3 md:size-5"/>
           </button>
         </li>
 
@@ -49,9 +49,9 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
         {paginationArray.map((page, index) => (
           <li
             key={index}
-            className={`w-[40px] h-[40px] ${
-              page === currentPage ? "bg-primary text-white" : "text-[#666666]"
-            } rounded-full p-[8px] flex justify-center items-center`}
+            className={`size-8 md:size-10 ${
+              page === currentPage ? "bg-primary text-white" : "text-gray-500"
+            } rounded-full p-2 flex justify-center items-center`}
           >
             {typeof page === "number" ? (
               <button onClick={() => onPageChange(page)}>{page}</button>
@@ -63,7 +63,7 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
 
         {/* Next button */}
         <li
-          className={`w-[36px] h-[36px] bg-gray-400 rounded-full p-[8px] flex justify-center items-center ${
+          className={`size-6 md:size-9 bg-gray-400 rounded-full p-2 flex justify-center items-center ${
             currentPage === totalPages && "opacity-50 pointer-events-none"
           }`}
         >
@@ -72,7 +72,7 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
               currentPage < totalPages && onPageChange(currentPage + 1)
             }
           >
-            <ChevronRight color="white" />
+            <ChevronRight color="white" className="size-3 md:size-5"/>
           </button>
         </li>
       </ul>

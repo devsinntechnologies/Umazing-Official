@@ -4,7 +4,15 @@ import ReviewsCard from './ReviewsCard';
 
 const TabComponent = ({product, review}) => {
   const [activeTab, setActiveTab] = useState('description');
-  console.log(review, "sdfldk")
+
+  // Calculate average rating with better null checks
+  const avgRating = review?.data?.length > 0 
+    ? (review.data.reduce((acc, curr) => {
+        console.log('Accumulator:', acc, 'Current stars:', curr.star);
+        const stars = parseFloat(curr.star) || 0;
+        return acc + stars;
+      }, 0) / review.data.length).toFixed(1)
+    : '0.0';
 
   return (
     <div className="w-full ">
@@ -38,9 +46,9 @@ const TabComponent = ({product, review}) => {
 
         {activeTab === 'feedback' && (
           <div className="feedback-content sm:text-md text-sm">
-         <h1 className='text-xl font-semibold'>4.5 Ratings</h1>
-         <h3>{review?.data.length} Reviews</h3>
-           <ReviewsCard review={review}/>
+            <h1 className='text-xl font-semibold'>{avgRating} Ratings</h1>
+            <h3>{review?.data?.length || 0} Reviews</h3>
+            <ReviewsCard review={review}/>
           </div>
         )}
       </div>

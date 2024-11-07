@@ -80,7 +80,7 @@ export const auth = createApi({
     }),
     deleteAddressById: builder.mutation({
       query: (id) => ({
-        url: `delete-address`, // Use consistent URL formatting
+        url: `deleteAddressById/${id}`,
         method: "DELETE",
       }),
     }),

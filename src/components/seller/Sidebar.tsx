@@ -33,6 +33,12 @@ const Sidebar: React.FC = () => {
           Add Products
         </div>
       </Link>
+      <Link href="/seller/orders" className={getLinkClass("/seller/orders")}>
+        <div className="flex md:gap-3 text-md text-center lg:text-lg sm:text-md text-xs gap-2 md:px-3 py-1 px-2 items-center">
+          <Package className="hidden sm:flex" />
+          Orders
+        </div>
+      </Link>
     </div>
   );
 };

@@ -32,9 +32,9 @@ const CartSection = () => {
   const [updatingItemId, setUpdatingItemId] = useState(null);
   const [selectedItems, setSelectedItems] = useState({});
 
+  const [removeFromCart] = useRemoveFromCartMutation();
   const { data: cartData, isLoading: cartLoading, refetch } = useGetUserCartQuery();
   const [updateCartItem] = useUpdateCartItemMutation();
-  const [removeFromCart] = useRemoveFromCartMutation();
 
   useEffect(() => {
     if (cartData && cartData.data) {

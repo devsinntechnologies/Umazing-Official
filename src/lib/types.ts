@@ -56,3 +56,57 @@ export interface ToastNotification {
   variant?: "default" | "destructive" | "success" | "info";
   duration?: number;
 }
+// types/order.ts
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  longDescription: string;
+  city: string;
+  condition: string;
+  baseQuantity: number;
+  basePrice: number;
+  claim: boolean;
+  isDelete: boolean;
+  createdAt: string;
+  updatedAt: string;
+  CategoryId: string;
+  UserId: string | null;
+}
+
+export interface OrderItem {
+  id: string;
+  price: number;
+  quantity: number;
+  createdAt: string;
+  Product: Product;
+  Variant: null; // You can expand this later if needed
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  phoneNo: string;
+}
+
+export interface Order {
+  id: string;
+  orderDate: string;
+  status: string;
+  receiverPhoneNo: string;
+  receiverAddress: string;
+  totalAmount: number;
+  isDelete: boolean;
+  createdAt: string;
+  updatedAt: string;
+  UserId: string;
+  Order_Items: OrderItem[];
+  User: User;
+}
+
+export interface OrderResponse {
+  success: boolean;
+  message: string;
+  data: Order;
+}

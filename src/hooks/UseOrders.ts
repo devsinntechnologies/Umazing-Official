@@ -16,8 +16,11 @@ export const orders = createApi({
   }),
   endpoints: (builder) => ({
 
-    getAllOrders: builder.query({
-      query: () => 'allOrders'
+    getBuyerOrders: builder.query({
+      query: () => 'getBuyerOrders'
+    }),
+    getSellerOrders: builder.query({
+      query: () => 'getSellerOrders'
     }),
 
     getSingleOrder: builder.query({
@@ -33,13 +36,13 @@ export const orders = createApi({
         body: data,
       }),
     }),
-    // updateProduct: builder.mutation({
-    //   query: (updateProduct) => ({
-    //     url: "/updateProduct",
-    //     method: "POST",
-    //     body: updateProduct,
-    //   }),
-    // }),
+    updateOrder: builder.mutation({
+      query: ({ id, status }) => ({
+        url: `/updateOrder/${id}`,
+        method: "PATCH",
+        body: { status },
+      }),
+    }),
     // deleteProductById: builder.mutation({
     //   query: (id) => ({
     //     url: `/deleteById/${id}`,
@@ -50,9 +53,10 @@ export const orders = createApi({
 });
 
 export const {
-  useGetAllOrdersQuery,
+  useGetBuyerOrdersQuery,
+  useGetSellerOrdersQuery,
   useGetSingleOrderQuery,
   useCreateOrderMutation,
-  // useUpdateProductMutation,
+  useUpdateOrderMutation,
   // useDeleteProductByIdMutation,
 } = orders;

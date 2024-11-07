@@ -1,19 +1,22 @@
+// @ts-nocheck
 "use client";
 import BreadCrumb from "@/components/BreadCrumb";
 import withAuth from "@/components/hoc/withAuth";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import {
   useGetUserFavouriteQuery,
   useRemoveFromFavouriteMutation,
 } from "@/hooks/UseFavourite";
 import { Trash2 } from "lucide-react";
+import { DataTable } from "@/components/DataTable";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { ColumnDef } from "@tanstack/react-table";
+import { useAddToCartMutation } from "@/hooks/UseCart";
 
 interface WishlistItem {
-  id: string; // Adjust the type as per your API response
+  id: string;
   Product: {
     Product_Images: { imageUrl: string }[];
     name: string;
@@ -24,10 +27,11 @@ interface WishlistItem {
 
 const Page: React.FC = () => {
   const { toast } = useToast();
-  const userId = useSelector((state: any) => state.authSlice?.user?.id); // Replace `any` with your RootState type
-  const isLoggedIn = useSelector((state: any) => state.authSlice.isLoggedIn); // Replace `any` with your RootState type
+  const userId = useSelector((state: any) => state.authSlice?.user?.id);
+  const isLoggedIn = useSelector((state: any) => state.authSlice.isLoggedIn);
   const [triggerFetch, setTriggerFetch] = useState(false);
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
+  const quantity = 1;
 
   useEffect(() => {
     if (userId && isLoggedIn) {
@@ -46,12 +50,10 @@ const Page: React.FC = () => {
 
   const [
     removeFromFavourite,
-    {
-      isSuccess: removeSuccess,
-      isError: removeError,
-      isLoading: removeLoading,
-    },
+    { isSuccess: removeSuccess, isError: removeError, isLoading: removeLoading },
   ] = useRemoveFromFavouriteMutation();
+
+  const [addToCart, { isSuccess: cartSuccess, isLoading: addingToCart, isError: cartError }] = useAddToCartMutation();
 
   useEffect(() => {
     if (wishlistItems?.data) {
@@ -60,10 +62,30 @@ const Page: React.FC = () => {
   }, [wishlistItems]);
 
   const handleRemove = (favouriteId: string) => {
-    setWishlist((prevWishlist) =>
-      prevWishlist.filter((item) => item.id !== favouriteId)
-    );
+    setWishlist((prevWishlist) => prevWishlist.filter((item) => item.id !== favouriteId));
     removeFromFavourite(favouriteId);
+  };
+
+  const handleAddToCart = async (productId: string) => {
+    if (!isLoggedIn) {
+      toast({
+        title: "Not Logged In",
+        description: "Please log in to add items to the cart.",
+        variant: "destructive",
+      });
+      return;
+    }
+    toast({
+      title: "Processing",
+      description: "Updating your cart...",
+      duration: 1000,
+    });
+
+    try {
+      await addToCart({ ProductId: productId, quantity });
+    } catch (error) {
+      console.error("Error updating cart:", error);
+    }
   };
 
   useEffect(() => {
@@ -80,7 +102,6 @@ const Page: React.FC = () => {
       });
       refetch();
     }
-
     if (removeError) {
       toast({
         title: "Error",
@@ -88,11 +109,76 @@ const Page: React.FC = () => {
       });
       refetch();
     }
-  }, [removeSuccess, removeLoading, removeError, toast, refetch]);
+    if (cartSuccess) {
+      toast({
+        title: "Added to Cart",
+        description: "Item added to your cart.",
+      });
+    }
+  }, [removeSuccess, removeLoading, removeError, toast, refetch, cartSuccess]);
 
   if (isError) {
     return <div>Failed To fetch</div>;
   }
+
+  // Define columns for DataTable
+  const columns: ColumnDef<WishlistItem>[] = [
+    {
+      accessorKey: "Product.Product_Images",
+      header: "Product",
+      cell: ({ row }) => (
+        <div className="flex items-center">
+          <Image
+            className="size-10 rounded-full"
+            src={`http://97.74.89.204/${row.original.Product.Product_Images[0]?.imageUrl}`}
+            alt={row.original.Product.name}
+            width={40}
+            height={40}
+          />
+          <span className="ml-4 font-medium text-gray-900">{row.original.Product.name}</span>
+        </div>
+      ),
+    },
+    {
+      accessorKey: "Product.basePrice",
+      header: "Price",
+      cell: ({ getValue }) => <span>Rs. {getValue()}</span>,
+    },
+    {
+      accessorKey: "Product.baseQuantity",
+      header: "Stock Status",
+      cell: ({ getValue }) =>
+        getValue() > 0 ? (
+          <span className="px-2 py-1 text-xs font-semibold rounded-md bg-green-100 text-primary">
+            In Stock
+          </span>
+        ) : (
+          <span className="px-2 py-1 text-xs font-semibold rounded-md bg-red-100 text-destructive">
+            No Stock
+          </span>
+        ),
+    },
+    {
+      id: "actions",
+      header: "",
+      cell: ({ row }) => (
+        <div className="flex gap-5 px-3 items-center">
+          <button
+            className="w-full py-2 text-white px-3 rounded-full bg-primary text-sm"
+            onClick={() => handleAddToCart(row.original.Product.id)}
+            disabled={addingToCart}
+          >
+            Add to Cart
+          </button>
+          <Trash2
+            className="text-destructive cursor-pointer"
+            size={24}
+            onClick={() => handleRemove(row.original.id)}
+          />
+        </div>
+      ),
+    },
+  ];
 
   return (
     <>
@@ -102,84 +188,7 @@ const Page: React.FC = () => {
           My Wishlist
         </h1>
         <div className="shadow-sm shadow-primary border-b border-gray-200 rounded-lg w-[85%] mx-auto">
-          {isLoading ? (
-            <div className="w-full divide-y divide-gray-200 p-2 flex flex-col gap-3">
-              {Array.from({ length: 4 }).map((_, index) => (
-                <Skeleton key={index} className="w-full rounded-md h-12 text-primary" />
-              ))}
-            </div>
-          ) : (
-            <table className="w-full divide-y divide-gray-200 ">
-              <thead>
-                <tr>
-                  <th className="w-[170px] md:w-1/3 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Product
-                  </th>
-                  <th className="w-[150px] md:w-1/4 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Price
-                  </th>
-                  <th className="w-[150px] md:w-1/4 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
-                    Stock Status
-                  </th>
-                  <th className="w-[150px] md:w-1/6 px-4 py-3"></th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {wishlist.length > 0 ? (
-                  wishlist.map((item) => (
-                    <tr key={item.id} className="text-sm sm:text-lg">
-                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center overflow-hidden xl:overflow-visible">
-                          <Image
-                            className="size-10 rounded-full"
-                            src={`http://97.74.89.204/${item.Product.Product_Images[0]?.imageUrl}`}
-                            alt={item.Product.name}
-                            width={40}
-                            height={40}
-                          />
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">
-                              {item.Product.name}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
-                          Rs. {item.Product.basePrice}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-md bg-green-100 text-primary">
-                          {item.Product.baseQuantity > 0 ? "In Stock" : "No Stock"}
-                        </span>
-                      </td>
-                      <td className="py-4 whitespace-nowrap">
-                        <div className="flex gap-3 w-full">
-                          <button className="w-full py-2 text-white px-3 rounded-full bg-primary text-sm">
-                            Add to Cart
-                          </button>
-                          <div className="mt-2 flex justify-end pr-7">
-                            <Trash2
-                              className="text-destructive cursor-pointer"
-                              size={24}
-                              onClick={() => handleRemove(item.id)}
-                            />
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={4} className="text-center py-4">
-                      No items in your wishlist.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          )}
+          <DataTable columns={columns} data={wishlist} isLoading={isLoading} />
         </div>
       </div>
     </>
