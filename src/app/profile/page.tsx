@@ -154,20 +154,21 @@ const Page: React.FC = () => {
     <div className="w-full py-10 flex flex-col gap-8 px-5">
       <BreadCrumb />
       <div className=" flex items-center gap-5 flex-col md:flex-row">
-      <div className="relative  bg-slate-300 rounded-full flex justify-center items-center w-[120px] h-[120px] overflow-hidden">
+      <div className="relative">
+      <div className="relative  bg-slate-300 rounded-full flex -z-1 justify-center items-center w-[120px] h-[120px] overflow-hidden">
   <Image
-    src={`http://97.74.89.204/${userProfile?.data?.imageUrl}`}
+    src={userProfile?.data?.imageUrl ? `http://97.74.89.204/${userProfile?.data?.imageUrl}` : "/Images/profileImg.png"} 
     width={100}
     height={100}
     alt="User Profile"
     className="w-full h-full"
   />
-  <div className="absolute bottom-0 right-0 bg-black rounded-full p-1 z-10 flex items-center justify-center">
-    <i className="fas fa-camera text-white"></i>
-    {/* OR use an SVG or your Camera component */}
-    <Camera className="text-white" />
-  </div>
+ 
 </div>
+<div className="absolute bottom-0 right-0 bg-black rounded-full p-1 z-100 flex items-center justify-center">
+    <Camera className="text-white " />
+  </div>
+      </div>
 
         <h3 className="font-semibold text-center md:text-left">{name}</h3>
       </div>
