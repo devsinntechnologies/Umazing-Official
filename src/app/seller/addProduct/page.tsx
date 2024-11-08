@@ -295,9 +295,10 @@ const Page = () => {
     formData.append("CategoryId", productDetails.categoryId);
     formData.append("claim", productDetails.claim);
     for (let i = 0; i < images.length; i++) {
+
       formData.append("images", images[i].file)
     }
-
+console.log(productDetails)
     // if (showVariants) {
     //   // Update the variants object based on the attributes
     //   // const newVariants = generateVariants(attributes);
