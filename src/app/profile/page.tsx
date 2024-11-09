@@ -26,6 +26,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { RootState } from "@/store/store";
+import ChangePassword from "@/components/ChangePassword";
 
 interface Address {
   id: string;
@@ -336,25 +337,7 @@ const Page: React.FC = () => {
     Change
   </button> */}
 </div>
-<div className="flex justify-between items-center px-3 border-b-[1px] border-solid border-black pb-3 pt-4 sm:pt-6">
-  <div className="flex w-full flex-col sm:flex-row">
-    <h3 className="font-semibold text-base sm:text-lg">Phone No:</h3>
-    <input
-      type="text"
-      value={phoneNo}
-      onChange={(e: ChangeEvent<HTMLInputElement>) =>
-        setDob(e.target.value)
-      }
-      className="border-b-2 border-transparent focus:border-primary focus:outline-none flex-grow w-full"
-    />
-  </div>
-  {/* <button
-    onClick={handleUpdateProfile}
-    className="mt-3 sm:mt-0 sm:ml-3 text-primary font-semibold text-sm sm:text-base"
-  >
-    Change
-  </button> */}
-</div>
+<ChangePassword/>
       </div>
     </div>
   );
