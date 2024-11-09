@@ -7,34 +7,45 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import toast, { Toaster } from 'react-hot-toast';
 
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState({});
 
   const handleValidation = () => {
-    const newErrors = {};
-    if (!oldPassword) newErrors.oldPassword = "Old password is required";
-    if (!newPassword) newErrors.newPassword = "New password is required";
-    if (!confirmPassword) newErrors.confirmPassword = "Please confirm your new password";
-    if (newPassword && confirmPassword && newPassword !== confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
+    let isValid = true;
+    if (!oldPassword) {
+      toast.error("Old password is required");
+      isValid = false;
     }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    if (!newPassword) {
+      toast.error("New password is required");
+      isValid = false;
+    }
+    if (!confirmPassword) {
+      toast.error("Please confirm your new password");
+      isValid = false;
+    }
+    if (newPassword && confirmPassword && newPassword !== confirmPassword) {
+      toast.error("Passwords do not match");
+      isValid = false;
+    }
+    return isValid;
   };
 
   const handleSubmit = () => {
     if (handleValidation()) {
       // Handle password update logic here
+      toast.success("Password updated successfully");
       console.log("Password updated successfully");
     }
   };
 
   return (
     <div>
+      <Toaster position="top-center" reverseOrder={false} />
       <Dialog>
         <DialogTrigger className='px-4 py-2 rounded-lg bg-gray hover:bg-primary hover:text-white border-solid-1px border flex justify-center'>
           Change Password
@@ -55,7 +66,6 @@ const ChangePassword = () => {
                     className='w-full bg-gray px-2 py-2 border border-solid-1px'
                     placeholder='Enter your old password'
                   />
-                  {errors.oldPassword && <p className="text-red-500">{errors.oldPassword}</p>}
                 </div>
                 <div>
                   <label className='font-semibold text-lg' htmlFor="newpassword">
@@ -68,7 +78,6 @@ const ChangePassword = () => {
                     className='w-full bg-gray px-2 py-2 border border-solid-1px'
                     placeholder='Enter your new password'
                   />
-                  {errors.newPassword && <p className="text-red-500">{errors.newPassword}</p>}
                 </div>
                 <div>
                   <label className='font-semibold text-lg' htmlFor="confirmpassword">
@@ -81,7 +90,6 @@ const ChangePassword = () => {
                     className='w-full bg-gray px-2 py-2 border border-solid-1px'
                     placeholder='Confirm password'
                   />
-                  {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword}</p>}
                 </div>
                 <div>
                   <button
