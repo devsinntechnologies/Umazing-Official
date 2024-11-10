@@ -62,6 +62,24 @@ const Page = () => {
       return;
     }
 
+    if (!product) {
+      toast({
+        title: "Error",
+        description: "Product information not available.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (product.baseQuantity < quantity || quantity <= 0) {
+      toast({
+        title: "Invalid Quantity",
+        description: "Please select a valid quantity that is available in stock.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       await addToCart({ ProductId: product.id, quantity });
       toast({
@@ -113,17 +131,19 @@ const Page = () => {
   
   useEffect(() => {
     if (reviewData?.data && Array.isArray(reviewData.data) && reviewData.data.length > 0) {
+      console.log('Review Data:', reviewData.data);
       const totalRating = reviewData.data.reduce((sum, review) => {
-        const rating = Number(review.rating) || 0; // Convert to number and handle invalid values
+        console.log('Current Review:', review);
+        console.log('Review Rating:', review.star);
+        const rating = Number(review.star) || 0;
         return sum + rating;
       }, 0);
-      const avgRating = totalRating / reviewData.data.length;
-      setAverageRating(Number(avgRating.toFixed(1))); // Round to 1 decimal place
-      console.log('Review Data:', reviewData.data);
       console.log('Total Rating:', totalRating);
+      const avgRating = totalRating / reviewData.data.length;
       console.log('Average Rating:', avgRating);
+      setAverageRating(Number(avgRating.toFixed(1)));
     } else {
-      setAverageRating(0); // Set default rating when no reviews
+      setAverageRating(0);
     }
   }, [reviewData]);
 
@@ -196,7 +216,7 @@ const Page = () => {
                 <button 
                   className="w-[34px] h-[34px] bg-[#F2F2F2] rounded-full flex justify-center items-center" 
                   onClick={handleIncrement}
-                  disabled={addingToCart}
+                  disabled={quantity >= product?.baseQuantity}
                 >
                   <Plus width={10} height={10} />
                 </button>
@@ -234,7 +254,7 @@ const Page = () => {
 
             <div>
               <p className="text-[14px] font-bold">
-                Category:
+                Category:{" "}
                 <span className="text-[#808080] font-normal">
                   {productLoading ? <Skeleton className="h-4 w-16" /> : product?.Category?.name}
                 </span>

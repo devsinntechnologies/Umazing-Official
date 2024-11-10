@@ -152,7 +152,7 @@ const Page: React.FC = () => {
 
   const handleAddAddress = async () => {
     try {
-      if (!billingInfo.streetAddress || !billingInfo.phone) {
+      if (!billingInfo.streetAddress.trim() || !billingInfo.phone.trim()) {
         toast({
           title: "Incomplete Information",
           description: "Please enter both address and phone number.",
@@ -162,8 +162,8 @@ const Page: React.FC = () => {
       }
 
       await addAddress({
-        address: billingInfo.streetAddress,
-        phoneNo: billingInfo.phone,
+        address: billingInfo.streetAddress.trim(),
+        phoneNo: billingInfo.phone.trim(),
         UserId: userId,
       });
 

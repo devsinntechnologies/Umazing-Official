@@ -184,7 +184,7 @@ const Page = () => {
   // const handleAddAttribute = () => {
   //   setAttributes((prevAttributes) => [
   //     ...prevAttributes,
-  //     { attribute: "", attributeName: "", attributeValues: [] }
+  //     { attribute: "", attributeName: "", attributeValue: "", attributeValueName: "" }
   //   ]);
   // };
 
@@ -278,6 +278,22 @@ const Page = () => {
       }
     }
 
+    if (productDetails.description.length < 30 || productDetails.description.length > 200) {
+      toast({
+        variant: "destructive",
+        description: "Description must be between 30 and 200 characters",
+      });
+      return false;
+    }
+
+    if (productDetails.longDescription.length < 80 || productDetails.longDescription.length > 800) {
+      toast({
+        variant: "destructive",
+        description: "Long description must be between 80 and 800 characters",
+      });
+      return false;
+    }
+
     return true;
   };
 
@@ -329,7 +345,7 @@ console.log(productDetails)
       variants: [{
       }],
     });
-    setAttributes([{ attribute: "", attributeName: "", attributeValue: "", attributeValueName: "" }]);
+    // setAttributes([{ attribute: "", attributeName: "", attributeValue: "", attributeValueName: "" }]);
     setImages([]);
     setShowSuccessModal(false);
   };
@@ -351,28 +367,38 @@ console.log(productDetails)
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <label className="text-sm">Description</label>
             <textarea
               name="description"
               value={productDetails.description}
               onChange={handleInputChange}
               rows={3}
-              className="w-full h-36 pl-2 pt-2 mt-2 border rounded-md border-gray-500"
-              placeholder="Type description here"
+              maxLength={200}
+              minLength={30}
+              className="w-full h-20 p-2 mt-2 border rounded-md border-gray-500 resize-none"
+              placeholder="Type description here (30-200 characters)"
             />
+            <span className="absolute bottom-2 right-2 text-sm text-gray-500">
+              {productDetails.description.length}/200
+            </span>
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <label className="text-sm">Long Description</label>
             <textarea
               name="longDescription"
               value={productDetails.longDescription}
               onChange={handleInputChange}
               rows={3}
-              className="w-full h-36 pl-2 pt-2 mt-2 border rounded-md border-gray-500"
-              placeholder="Type long description here"
+              maxLength={600}
+              minLength={80}
+              className="w-full h-32 p-2 mt-2 border rounded-md border-gray-500 resize-none"
+              placeholder="Type long description here (80-600 characters)"
             />
+            <span className="absolute bottom-2 right-2 text-sm text-gray-500">
+              {productDetails.longDescription.length}/600
+            </span>
           </div>
 
           

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetAllProductsQuery } from "@/hooks/UseProducts";
 import ProductsCard from "../ProductsCard";
-import Pagination from "@/components/Pagination";
+// import Pagination from "@/components/Pagination";
 import { useSearchParams, useRouter } from "next/navigation";
 import EmptyInbox from "../misc/EmptyInbox";
 import {
@@ -112,17 +112,16 @@ const FilterProducts: React.FC = () => {
                   <p className="text-gray-600">Showing {products?.length} products</p>
                 </div>
                 <Select
-                  className="outline-none"
                   value={priceSort}
                   onValueChange={(value) => {
                     setPriceSort(value);
                     setPageNo(1);
                   }}
                 >
-                  <SelectTrigger className="w-[180px] outline-none">
+                  <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Sort" />
                   </SelectTrigger>
-                  <SelectContent className="outline-none">
+                  <SelectContent className="outline-0">
                     <SelectItem value="Ascending">Ascending</SelectItem>
                     <SelectItem value="Descending">Descending</SelectItem>
                     <SelectItem value="Default">Default</SelectItem>
@@ -137,7 +136,7 @@ const FilterProducts: React.FC = () => {
               </div>
             </div>
           )}
-          {products.length > 0 && (
+          {/* {products.length > 0 && (
             <div className="flex justify-center items-center my-10">
               <Pagination
                 totalPages={totalPages}
@@ -145,7 +144,7 @@ const FilterProducts: React.FC = () => {
                 onPageChange={(page) => setPageNo(page)}
               />
             </div>
-          )}
+          )} */}
         </>
       )}
     </div>

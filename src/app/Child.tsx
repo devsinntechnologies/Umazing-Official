@@ -15,26 +15,7 @@ interface ChildProps {
 }
 
 export default function Child({ children }: ChildProps) {
-  const playClickSound = useClickSound();
-  // const playTypingSound = useTypingSound();
-
-  useEffect(() => {
-    const handleClick = () => playClickSound();
-    document.addEventListener('click', handleClick);
-
-    return () => {
-      document.removeEventListener('click', handleClick);
-    };
-  }, [playClickSound]);
-
-  // useEffect(() => {
-  //   const handleKeyDown = () => playTypingSound();
-  //   document.addEventListener('keydown', handleKeyDown);
-
-  //   return () => {
-  //     document.removeEventListener('keydown', handleKeyDown);
-  //   };
-  // }, [playTypingSound]);
+  
   return (
     <>
       <Navbar />

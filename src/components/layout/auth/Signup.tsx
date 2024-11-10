@@ -168,7 +168,7 @@ const Signup: React.FC<SignupProps> = ({ onBack, onSignupSuccess }) => {
       email,
       password,
       phoneNo,
-      gender,
+      gender: gender as "male" | "female",
       dob: dob ? format(dob, "yyyy-MM-dd") : "",
     };
 
@@ -286,12 +286,15 @@ const Signup: React.FC<SignupProps> = ({ onBack, onSignupSuccess }) => {
                 {dob ? format(dob, "MMMM dd, yyyy") : "Select your date of birth"}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
+            <PopoverContent className="w-auto p-0" align="start">
               <Calendar
-                onSelect={setDob}
+                mode="single"
                 selected={dob}
-                className="w-full border-none"
-                initialMonth={dob || new Date()}
+                onSelect={(date) => setDob(date)}
+                disabled={(date) =>
+                  date > new Date() || date < new Date("1900-01-01")
+                }
+                initialFocus
               />
             </PopoverContent>
           </Popover>
