@@ -278,6 +278,7 @@ const Signup: React.FC<SignupProps> = ({ onBack, onSignupSuccess }) => {
         </div>
 
         {/* Date of Birth */}
+        
         <div className="flex items-center">
           <Popover>
             <PopoverTrigger asChild>
