@@ -14,26 +14,46 @@ const ChangePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  let toastDisplayed = false; // Flag to track if a toast is shown
+
   const handleValidation = () => {
     let isValid = true;
+  
     if (!oldPassword) {
-      toast.error("Old password is required");
+      if (!toastDisplayed) {
+        toast.error("Old password is required");
+        toastDisplayed = true;
+      }
       isValid = false;
     }
+  
     if (!newPassword) {
-      toast.error("New password is required");
+      if (!toastDisplayed) {
+        toast.error("New password is required");
+        toastDisplayed = true;
+      }
       isValid = false;
     }
+  
     if (!confirmPassword) {
-      toast.error("Please confirm your new password");
+      if (!toastDisplayed) {
+        toast.error("Please confirm your new password");
+        toastDisplayed = true;
+      }
       isValid = false;
     }
+  
     if (newPassword && confirmPassword && newPassword !== confirmPassword) {
-      toast.error("Passwords do not match");
+      if (!toastDisplayed) {
+        toast.error("Passwords do not match");
+        toastDisplayed = true;
+      }
       isValid = false;
     }
+  
     return isValid;
   };
+  
 
   const handleSubmit = () => {
     if (handleValidation()) {
