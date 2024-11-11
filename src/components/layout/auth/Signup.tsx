@@ -278,24 +278,27 @@ const Signup: React.FC<SignupProps> = ({ onBack, onSignupSuccess }) => {
         </div>
 
         {/* Date of Birth */}
+        
         <div className="flex items-center">
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant={"outline"} className="w-full justify-start">
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {dob ? format(dob, "MMMM dd, yyyy") : "Select your date of birth"}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
-              <Calendar
-                onSelect={setDob}
-                selected={dob}
-                className="w-full border-none"
-                initialMonth={dob || new Date()}
-              />
-            </PopoverContent>
-          </Popover>
-        </div>
+  <Popover>
+    <PopoverTrigger asChild>
+      <Button variant="outline" className="w-full justify-start">
+        <CalendarIcon className="mr-2 h-4 w-4" />
+        {dob ? format(dob, "MMMM dd, yyyy") : "Select your date of birth"}
+      </Button>
+    </PopoverTrigger>
+    <PopoverContent className="w-auto p-0">
+      <Calendar
+        onSelect={(date) => {
+          setDob(date); // Set the selected date to dob
+        }}
+        selected={dob}
+        className="w-full border-none"
+        initialMonth={dob || new Date()} // Set initial month
+      />
+    </PopoverContent>
+  </Popover>
+</div>
 
         <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading ? "Signing up..." : "Sign Up"}

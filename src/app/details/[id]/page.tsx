@@ -233,12 +233,13 @@ const Page = () => {
             <div className="w-full lg:w-[647px] my-6 border border-[#E6E6E6]"></div>
 
             <div>
-              <p className="text-[14px] font-bold">
-                Category:
-                <span className="text-[#808080] font-normal">
-                  {productLoading ? <Skeleton className="h-4 w-16" /> : product?.Category?.name}
-                </span>
-              </p>
+            <p className="text-[14px] font-bold">
+  Category:
+  <span className="text-[#808080] font-normal">
+    {productLoading ? <Skeleton className="h-4 w-16" /> : product?.Category?.name}
+  </span>
+</p>
+
             </div>
           </div>
         </div>
