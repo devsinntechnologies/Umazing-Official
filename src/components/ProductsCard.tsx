@@ -21,6 +21,7 @@ const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
   const pathname = usePathname();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const quantity = 1;
+  console.log(product);
 
   const [addToCart, { isSuccess: cartSuccess, isLoading: addingToCart, isError: cartError }] = useAddToCartMutation();
   const [addToFavourite, { isSuccess: addSuccess, isLoading: addingToFav, isError: addError }] = useAddToFavouriteMutation();
