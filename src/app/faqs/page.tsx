@@ -17,14 +17,14 @@ const Customercare: React.FC = () => {
     faqData: [
       {
         points: [
-          "The ‘My Account’ section in your Clicky App will help review the status of your orders, so that you can receive relevant information based on the respective ‘Order Number’.",
+          "The ‘My Account’ section in your Umazing App will help review the status of your orders, so that you can receive relevant information based on the respective ‘Order Number’.",
         ],
       },
     ],
   };
 
   const faq2: FaqItem = {
-    trigger: "Will I get a confirmation call from Clicky after placing an order?",
+    trigger: "Will I get a confirmation call from Umazing after placing an order?",
     faqData: [
       {
         points: [
@@ -39,7 +39,7 @@ const Customercare: React.FC = () => {
     faqData: [
       {
         points: [
-          "To cancel your order, please log into the Clicky app, go to your My Account section, open the order you want to cancel, and select the cancel option. Your order can only be canceled before it reaches the ‘Dispatched’ status in your My Account on the Clicky app.",
+          "To cancel your order, please log into the Clicky app, go to your My Account section, open the order you want to cancel, and select the cancel option. Your order can only be canceled before it reaches the ‘Dispatched’ status in your My Account on the Umazing app.",
         ],
       },
     ],
@@ -49,7 +49,7 @@ const Customercare: React.FC = () => {
     trigger: "What is the procedure for Returns or Exchange?",
     faqData: [
       {
-        points: "You can return your product easily through the Clicky app in a few seconds. Just follow these steps:",
+        points: "You can return your product easily through the Umazing app in a few seconds. Just follow these steps:",
         subPoints: [
           <li key="1">Sign in to your Clicky Account from here.</li>,
           <li key="2">Go to the My Order section</li>,
@@ -63,7 +63,7 @@ const Customercare: React.FC = () => {
   };
 
   const faq5: FaqItem = {
-    trigger: "I wish to become a seller on Clicky",
+    trigger: "I wish to become a seller on Umazing",
     faqData: [
       {
         points: ["Fill out this form, and our team will reach out to you as soon as possible."],
@@ -98,9 +98,9 @@ const Customercare: React.FC = () => {
       <div className="w-full h-20 bg-primary flex justify-center items-center text-xl md:text-4xl font-bold text-white">
         Hi. How Can We Help?
       </div>
-      <div className="bg-slate-100 w-full pl-5 pr-5 sm:pl-16 sm:pr-16">
-        <h1 className="text-2xl sm:text-4xl text-primary font-semibold pt-8 pb-4">Helps & Topics</h1>
-        <div className="bg-white w-full h-80 grid grid-cols-2 sm:grid-cols-3 overflow-auto">
+      <div className=" w-full pl-5 pr-5 sm:pl-16 sm:pr-16">
+        {/* <h1 className="text-2xl sm:text-4xl text-primary font-semibold pt-8 pb-4">Helps & Topics</h1> */}
+        {/* <div className="bg-white w-full h-80 grid grid-cols-2 sm:grid-cols-3 overflow-auto">
           <div className="flex-col flex items-center justify-center gap-4 md:gap-8">
             <img className="size-12 md:size-14" src="./Shippingdelivery.png" alt="Shipping & Delivery" />
             <h1 className="text-xs sm:text-md lg:text-lg">Shipping & Delivery</h1>
@@ -125,7 +125,7 @@ const Customercare: React.FC = () => {
             <img className="size-12 md:size-14" src="./Accountsetting.png" alt="Account Settings" />
             <h1 className="text-xs sm:text-md lg:text-lg">Account Settings</h1>
           </div>
-        </div>
+        </div> */}
         <h1 className="text-2xl sm:text-4xl text-primary  font-semibold  pt-8 pb-4">Frequently Asked Questions</h1>
         <Faq data={faq1} />
         <Faq data={faq2} />
