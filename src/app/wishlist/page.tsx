@@ -187,11 +187,11 @@ const Page: React.FC = () => {
         <h1 className="text-lg md:text-xl lg:text-2xl font-semibold mb-6 text-center">
           My Wishlist
         </h1>
-        <div className="shadow-sm shadow-primary border-b border-gray-200 rounded-lg w-[85%] mx-auto">
+        <div className="shadow-sm shadow-primary text-xs border-b border-gray-200 rounded-lg md:w-[85%] w-[95%] mx-auto">
           <DataTable columns={columns} data={wishlist} isLoading={isLoading} />
         </div>
       </div>
-    </>
+    </> 
   );
 };
 
