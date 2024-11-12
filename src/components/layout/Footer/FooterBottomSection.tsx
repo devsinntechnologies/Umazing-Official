@@ -8,7 +8,7 @@ const FooterBottomSection = () => {
       <div className="w-full flex flex-col md:flex-row items-center justify-between py-2 ">
         {/* Copyright Text */}
         <div>
-        <p className="text-gray-500 text-sm text-center md:text-left">
+        <p className="text-gray-500 w-full text-sm text-center md:text-left">
           Umazing Official © 2024. All Rights Reserved
         </p>
         </div>

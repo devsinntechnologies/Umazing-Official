@@ -74,20 +74,21 @@ const Page = () => {
 
       {/* Order Details Section */}
       <div className="border rounded-md p-4 shadow-sm bg-white space-y-4 md:space-y-0 md:flex md:items-center md:justify-between text-sm md:text-base font-medium">
-        <div className="space-y-1 md:space-y-0 md:flex md:space-x-4">
-          <div className="bg-primary text-white p-2 rounded-md">
-            <span className="font-semibold">Order Date:</span> {orderDate}
+        <div className="space-y-1 md:space-y-0 ">
+          <div className="text-gray p-2 rounded-md">
+            <span className="font-bold text-primary">Order Date:</span> {orderDate}
           </div>
-          <div className="bg-primary text-white p-2 rounded-md">
-            <span className="font-semibold">Receiver Phone:</span> {receiverPhoneNo}
+          <div className="text-gray p-2 rounded-md">
+            <span className="font-bold text-primary">Receiver Phone:</span> {receiverPhoneNo}
           </div>
-          <div className="bg-primary text-white p-2 rounded-md">
-            <span className="font-semibold">Receiver Address:</span> {receiverAddress}
+          <div className="text-gray p-2 rounded-md">
+            <span className="font-bold text-primary">Receiver Address:</span> {receiverAddress}
           </div>
+          <div className="text-gray p-2 rounded-md">
+          <span className="font-bold text-primary">Total Amount:</span> Rs. {totalAmount}
         </div>
-        <div className="mt-4 md:mt-0 bg-primary text-white p-2 rounded-md">
-          <span className="font-semibold">Total Amount:</span> Rs. {totalAmount}
         </div>
+      
       </div>
 
       {/* Order Items Table */}

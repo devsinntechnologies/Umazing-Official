@@ -56,7 +56,7 @@ const FooterMiddleSection = () => {
             <Link href="/contact-us">
               <li className="hover:text-primary">Contact</li>
             </Link>
-            <li className="hover:text-primary">FAQs</li>
+           <Link href="/faqs"> <li className="hover:text-primary">FAQs</li></Link>
             <li className="hover:text-primary">Terms & Condition</li>
             <li className="hover:text-primary">Privacy Policy</li>
           </ul>
