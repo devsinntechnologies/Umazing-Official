@@ -7,14 +7,13 @@ const FooterMiddleSection = () => {
     <div className="w-full py-8">
       <div className="w-full grid grid-cols-1 md:grid-cols-5 gap-6">
         {/* Left Section - Brand Info */}
-        <div className="col-span-1 md:col-span-2 w-full sapce-y-4">
+        <div className="col-span-1 md:col-span-2 w-full sm:sapce-y-4 sapce-y-2">
 
-          <div className="flex items-center  mb-4 ">
+          <div className="flex items-center  sm:mb-4 mb-2 ">
             <Logo />
           </div>
           <p className="text-sm text-gray-500 mb-4">
-            Morbi cursus porttitor enim lobortis molestie. Duis gravida turpis
-            dui, eget bibendum magna congue nec.
+          Umazing is renowned online fashion platform of Pakistan that solely offers style products for women, men and kids.
           </p>
 
           <div className="flex space-x-4">
@@ -36,8 +35,8 @@ const FooterMiddleSection = () => {
         </div>
 
         {/* Center Sections - Links */}
-        <div className="col-span-1 md:col-span-1 w-full space-y-2">
-          <h3 className="font-semibold text-gray-800 mb-5">My Account</h3>
+        <div className="col-span-1 md:col-span-1 w-full sm:space-y-2 space-y-1">
+          <h3 className="font-semibold text-gray-800 sm:mb-5 mb-3">My Account</h3>
           <ul className="text-gray-600 flex flex-col gap-4">
             <Link href="/seller">
               <li className="hover:text-primary">Sell</li>
@@ -50,20 +49,20 @@ const FooterMiddleSection = () => {
             </Link>
           </ul>
         </div>
-        <div className="col-span-1 md:col-span-1 w-full space-y-2">
-          <h3 className="font-semibold text-gray-800 mb-5">Helps</h3>
+        <div className="col-span-1 md:col-span-1 w-full sm:space-y-2 space-y-1">
+          <h3 className="font-semibold text-gray-800 sm:mb-5 mb-3">Helps</h3>
           <ul className="text-gray-600 flex flex-col gap-4">
             <Link href="/contact-us">
               <li className="hover:text-primary">Contact</li>
             </Link>
            <Link href="/faqs"> <li className="hover:text-primary">FAQs</li></Link>
-            <li className="hover:text-primary">Terms & Condition</li>
-            <li className="hover:text-primary">Privacy Policy</li>
+           <Link href="/termsAndConditions"> <li className="hover:text-primary">Terms & Condition</li></Link>
+           <Link href="/privacyPolicy"> <li className="hover:text-primary">Privacy Policy</li></Link>
           </ul>
         </div>
 
         {/* Right Section - Download Mobile App */}
-        <div className="col-span-1 md:col-span-1 flex w-full flex-col space-y-4">
+        <div className="col-span-1 md:col-span-1 flex w-full flex-col sm:space-y-4 space-y-2">
           <h3 className="font-semibold text-gray-800">Download Mobile App</h3>
           <div className="flex">
             <a href="#" className="flex gap-2">

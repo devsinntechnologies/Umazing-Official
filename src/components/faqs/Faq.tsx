@@ -20,7 +20,7 @@ interface FaqProps {
 
 const Faq: React.FC<FaqProps> = ({ data }) => {
   return (
-    <Accordion className="bg-white w-full pt-4 pb-4 px-10" collapsible type="single">
+    <Accordion className="bg-white w-full py-2 sm:text-lg text-xs sm:px-10" collapsible type="single">
       <AccordionItem value="item1">
         <AccordionTrigger>
           {data.trigger}
@@ -28,7 +28,7 @@ const Faq: React.FC<FaqProps> = ({ data }) => {
         <AccordionContent>
           <div>
             {data.faqData.map((faq, index) => (
-              <div key={index}>
+              <div key={index} className="sm:text-lg text-xs">
                 {Array.isArray(faq.points) ? faq.points.map((point, i) => (
                   <p key={i}>{point}</p>
                 )) : (
