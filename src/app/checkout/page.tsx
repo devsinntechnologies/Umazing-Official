@@ -14,6 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { X } from "lucide-react";
 import { AlertDialog, AlertDialogContent, AlertDialogTrigger, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog";
 import { useCreateOrderMutation } from "@/hooks/UseOrders";
+import AddAddressDialog from "../../components/AddAddressDialog";
 
 interface BillingInfo {
   streetAddress: string;
@@ -88,7 +89,7 @@ const Page: React.FC = () => {
         title: "Address Deleted",
         description: "The address has been deleted successfully.",
       });
-      refetch(); // Refresh the addresses after deletion
+      refetch();
     } catch (error) {
       toast({
         title: "Error Deleting Address",
@@ -100,49 +101,49 @@ const Page: React.FC = () => {
 
   const handlePlaceOrder = async () => {
     if (!selectedAddress) {
-        toast({
-            title: "No Address Selected",
-            description: "Please select an address for delivery.",
-            variant: "destructive",
-        });
-        return;
+      toast({
+        title: "No Address Selected",
+        description: "Please select an address for delivery.",
+        variant: "destructive",
+      });
+      return;
     }
 
     const orderDetails = {
-        OrderInfo: cartItems.map((item: CartItem) => ({
-            ProductId: item.Product.id,
-            quantity: item.quantity,
-        })),
-        receiverPhoneNo: selectedAddress.phoneNo,
-        receiverAddress: selectedAddress.address,
+      OrderInfo: cartItems.map((item: CartItem) => ({
+        ProductId: item.Product.id,
+        quantity: item.quantity,
+      })),
+      receiverPhoneNo: selectedAddress.phoneNo,
+      receiverAddress: selectedAddress.address,
     };
 
     console.log(orderDetails);
-    
+
     try {
-        const response = await createOrder(orderDetails).unwrap(); // Unwrap to get the result
-        if (response.success) {
-            toast({
-                title: "Order Placed",
-                description: "Your order has been placed successfully!",
-            });
-            localStorage.removeItem("selectedItems"); // Clear local storage
-            window.location.href = "/orders"; // Redirect to orders page
-        } else if (response.success === false) { // Use else if here
-            toast({
-                title: "Order Failed",
-                description: response.message, // Show the actual error message from response
-                variant: "destructive",
-            });
-        }
-    } catch (error) {
+      const response = await createOrder(orderDetails).unwrap(); // Unwrap to get the result
+      if (response.success) {
         toast({
-            title: "Error Placing Order",
-            description: error.data.message,
-            variant: "destructive",
+          title: "Order Placed",
+          description: "Your order has been placed successfully!",
         });
+        localStorage.removeItem("selectedItems"); // Clear local storage
+        window.location.href = "/orders"; // Redirect to orders page
+      } else if (response.success === false) { // Use else if here
+        toast({
+          title: "Order Failed",
+          description: response.message, // Show the actual error message from response
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error Placing Order",
+        description: error.data.message,
+        variant: "destructive",
+      });
     }
-};
+  };
 
 
 
@@ -150,30 +151,21 @@ const Page: React.FC = () => {
   const shipping = 0;
   const total = subtotal + shipping;
 
-  const handleAddAddress = async () => {
+  const handleAddAddress = async (streetAddress: string, phone: string) => {
     try {
-      if (!billingInfo.streetAddress.trim() || !billingInfo.phone.trim()) {
-        toast({
-          title: "Incomplete Information",
-          description: "Please enter both address and phone number.",
-          variant: "destructive",
-        });
-        return;
-      }
-
       await addAddress({
-        address: billingInfo.streetAddress.trim(),
-        phoneNo: billingInfo.phone.trim(),
+        address: streetAddress,
+        phoneNo: phone,
         UserId: userId,
       });
 
       if (resData?.success) {
+        refetch();
         toast({
           title: "Address Added",
           description: "Your new address has been added successfully!",
         });
         setIsDialogOpen(false);
-        refetch();
       }
     } catch (error) {
       toast({
@@ -227,42 +219,13 @@ const Page: React.FC = () => {
           ) : (
             <p>No address found.</p>
           )}
-
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button variant="outline">Add More</Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Add New Address</DialogTitle>
-              </DialogHeader>
-              <div className="flex flex-col gap-4">
-                <label htmlFor="streetAddress" className="text-sm font-normal">
-                  Street Address
-                </label>
-                <input
-                  type="text"
-                  id="streetAddress"
-                  placeholder="Street Address"
-                  value={billingInfo.streetAddress}
-                  onChange={handleInputChange}
-                  className="border border-gray-300 rounded-md p-2 placeholder:text-base focus:outline-none"
-                />
-                <label htmlFor="phone" className="text-sm font-normal">Phone</label>
-                <input
-                  type="text"
-                  id="phone"
-                  placeholder="Phone number"
-                  value={billingInfo.phone}
-                  onChange={handleInputChange}
-                  className="border border-gray-300 rounded-md p-2 placeholder:text-base focus:outline-none"
-                />
-              </div>
-              <Button onClick={handleAddAddress} className="mt-4" disabled={addingAddress}>
-                {addingAddress ? "Adding..." : "Add"}
-              </Button>
-            </DialogContent>
-          </Dialog>
+          <Button variant="outline" onClick={() => setIsDialogOpen(true)}>Add More</Button>
+          <AddAddressDialog
+            onSubmit={handleAddAddress}
+            isOpen={isDialogOpen}
+            onClose={() => setIsDialogOpen(false)}
+            isLoading={addingAddress}
+          />
         </div>
 
         <div className="w-full md:w-[40%]">

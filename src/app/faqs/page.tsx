@@ -1,5 +1,5 @@
 import React from 'react';
-import Faq from '@/components/Faq';
+import Faq from '@/components/faqs/Faq';
 
 interface FaqData {
   points: string | string[];

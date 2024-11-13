@@ -1,7 +1,7 @@
 //@ts-nocheck
 "use client";
 import React, { useState, useEffect, ChangeEvent } from "react";
-import { Camera } from "lucide-react";
+import { Camera, Plus, X } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -13,6 +13,7 @@ import {
   useGetUserProfileQuery,
   useUpdateProfileMutation,
   useAddUserAddressMutation,
+  useDeleteAddressByIdMutation,
 } from "@/hooks/UseAuth";
 import { useSelector } from "react-redux";
 import { useToast } from "@/hooks/use-toast";
@@ -21,17 +22,28 @@ import Image from "next/image";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { RootState } from "@/store/store";
-import ChangePassword from "@/components/ChangePassword";
 import LoadingSpinner from "@/components/loadingSpinner/LoadingSpinner";
+import AddAddressDialog from "@/components/AddAddressDialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
 interface Address {
   id: string;
   address: string;
+  phoneNo: string;
 }
 
 interface UserProfileData {
@@ -41,15 +53,32 @@ interface UserProfileData {
   dob: string;
   imageUrl: string;
   gender: string;
+  phoneNo: string;
   addresses: Address[];
 }
 
 const Page: React.FC = () => {
-  const { toast } = useToast();
   const isLoggedIn = useSelector((state: RootState) => state.authSlice.isLoggedIn);
   const userId = useSelector((state: RootState) => state.authSlice.user?.id);
   const [triggerFetch, setTriggerFetch] = useState(false);
-  const [userProfileData, setUserProfileData] = useState<UserProfileData | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editField, setEditField] = useState("");
+  const [formData, setFormData] = useState<UserProfileData | null>(null);
+  const [hasChanges, setHasChanges] = useState(false);
+
+  const { toast } = useToast();
+  const {
+    data: userProfile,
+    error,
+    isLoading,
+    refetch,
+  } = useGetUserProfileQuery(userId, {
+    skip: !triggerFetch,
+  });
+
+  const [updateProfile] = useUpdateProfileMutation();
+  const [addAddress, { isLoading: addingAddress }] = useAddUserAddressMutation();
+  const [deleteAddress] = useDeleteAddressByIdMutation();
 
   useEffect(() => {
     if (userId && isLoggedIn) {
@@ -57,14 +86,11 @@ const Page: React.FC = () => {
     }
   }, [userId, isLoggedIn]);
 
-  const { data: userProfile, error, isLoading } = useGetUserProfileQuery(userId, {
-    skip: !triggerFetch,
-  });
-
   useEffect(() => {
-    if (userProfile) {
-      toast({ description: "Login Successfully" });
+    if (userProfile?.data) {
+      setFormData(userProfile.data);
     }
+
     if (error) {
       console.error("Error fetching user profile:", error);
       toast({
@@ -75,74 +101,203 @@ const Page: React.FC = () => {
     }
   }, [userProfile, error, toast]);
 
-  useEffect(() => {
-    if (userProfile) {
-      setUserProfileData(userProfile.data);
+  const handleEditClick = (field: string) => {
+    setEditField(field);
+  };
+
+  const handleFieldChange = (e: ChangeEvent<HTMLInputElement>, field: keyof UserProfileData) => {
+    if (formData) {
+      const updatedFormData = { ...formData, [field]: e.target.value };
+      setFormData(updatedFormData);
+      setHasChanges(true);
     }
-  }, [userProfile]);
+  };
+
+  const handleSave = async () => {
+    if (!hasChanges || !formData) {
+      setEditField("");
+      return;
+    }
+
+    try {
+      const response = await updateProfile(formData).unwrap();
+      if (response?.success) {
+        toast({
+          title: "Profile Updated",
+          description: "Your profile has been updated successfully.",
+        });
+        refetch();
+        setHasChanges(false);
+      }
+    } catch (updateError) {
+      console.error("Error updating profile:", updateError);
+      toast({
+        title: "Error",
+        description: "Failed to update profile. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setEditField("");
+    }
+  };
+
+  const handleAddAddress = async (streetAddress: string, phone: string) => {
+    try {
+      await addAddress({
+        address: streetAddress,
+        phoneNo: phone,
+        UserId: userId,
+      });
+      toast({
+        title: "Address Added",
+        description: "Your new address has been added successfully!",
+      });
+      refetch();
+      setIsDialogOpen(false);
+    } catch (error) {
+      toast({
+        title: "Error Adding Address",
+        description: "There was an issue adding your address. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteAddress = async (addressId: string) => {
+    try {
+      await deleteAddress(addressId);
+      toast({
+        title: "Address Deleted",
+        description: "The address has been deleted successfully.",
+      });
+      refetch();
+    } catch (error) {
+      toast({
+        title: "Error Deleting Address",
+        description: "There was an issue deleting your address. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <>
-      {isLoading ? <LoadingSpinner /> : 
-      <div className="w-full py-10 flex flex-col gap-8 px-5">
-        <BreadCrumb />
-        <div className="flex items-center gap-5 flex-col md:flex-row">
-          <div className="relative bg-slate-300 rounded-full w-[120px] h-[120px] overflow-hidden">
-            <Image
-              src={userProfile?.data?.imageUrl ? `http://97.74.89.204/${userProfile.data.imageUrl}` : "/Images/profileImg.png"}
-              width={100}
-              height={100}
-              alt="User Profile"
-              className="w-full h-full"
-            />
-            <div className="absolute bottom-0 right-0 bg-black rounded-full p-1 flex items-center justify-center">
-              <Camera className="text-white" />
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <div className="w-full py-10 flex flex-col gap-8 px-5">
+          <BreadCrumb />
+          <div className="flex items-center gap-5 flex-col md:flex-row">
+            <div className="relative">
+              <div className="relative bg-slate-300 rounded-full flex justify-center items-center w-[120px] h-[120px] overflow-hidden">
+                <Image
+                  src={formData?.imageUrl ? `http://97.74.89.204/${formData.imageUrl}` : "/Images/profileImg.png"}
+                  width={100}
+                  height={100}
+                  alt="User Profile"
+                  className="w-full h-full"
+                />
+              </div>
+              <div className="absolute bottom-0 right-0 bg-black rounded-full p-1 flex items-center justify-center">
+                <Camera className="text-white" />
+              </div>
             </div>
+            <h3 className="font-semibold text-2xl">{userProfile?.data.name}</h3>
           </div>
-          <h3 className="font-semibold text-2xl">{userProfileData?.name}</h3>
-        </div>
 
-        <div className="flex flex-col gap-4">
-          <h1 className="font-bold text-2xl sm:text-3xl">Account</h1>
+          <div className="flex flex-col gap-4">
+            <h1 className="font-bold text-2xl sm:text-3xl">Account</h1>
+            {["name", "dob", "gender", "phoneNo"].map((field) => (
+              <div key={field} className={`${editField === field && "border-b-primary"} flex justify-between items-center border-b pb-3 pt-4 sm:pt-6`} >
+                <div className="flex w-full flex-col sm:flex-row">
+                  <h3 className="font-semibold text-base sm:text-lg mr-2 capitalize">{field}:</h3>
+                  {editField === field ? (
+                    <input
+                      type="text"
+                      value={formData?.[field]}
+                      onChange={(e) => handleFieldChange(e, field)}
+                      className="border-b-2 border-transparent focus:outline-none flex-grow"
+                    />
+                  ) : (
+                    <p>{formData?.[field]}</p>
+                  )}
+                </div>
+                {editField === field ? (
+                  <button onClick={handleSave} className="text-primary font-semibold">
+                    Save
+                  </button>
+                ) : (
+                  <button onClick={() => handleEditClick(field)} className="text-primary font-semibold">
+                    Edit
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
 
           <Accordion type="single" collapsible>
-            <AccordionItem value="item-1" className="px-3">
-              <AccordionTrigger className="text-base sm:text-lg">Address</AccordionTrigger>
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Address</AccordionTrigger>
               <AccordionContent>
                 <div className="flex flex-col gap-4">
-                  {userProfile?.data?.addresses?.length ? (
-                    userProfile.data.addresses.map((address) => (
-                      <div key={address.id} className="py-3 bg-slate-100 px-3 rounded-lg">
-                        <h3 className="font-normal text-sm sm:text-base">{address.address}</h3>
-                        <p className="text-primary font-semibold text-sm sm:text-base cursor-pointer">Edit</p>
+                  <div className="w-full flex justify-end mb-4">
+                    <Button 
+                      onClick={() => setIsDialogOpen(true)}
+                      className="bg-primary hover:bg-primary/90"
+                    >
+                      <Plus className="mr-2" /> Add New Address
+                    </Button>
+                  </div>
+                  
+                  {formData?.addresses?.length ? (
+                    formData.addresses.map((addr) => (
+                      <div key={addr.id} className="flex justify-between items-center py-3 px-3 rounded-lg shadow-md border w-full">
+                        <div className="flex flex-col gap-3">
+                        <p>{addr.address}</p>
+                        <p>{addr.phoneNo}</p>
+                        </div>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <X className="text-destructive cursor-pointer" />
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>This action cannot be undone.</AlertDialogTitle>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction className="bg-destructive text-white" onClick={() => handleDeleteAddress(addr.id)}>
+                                Delete
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
                       </div>
                     ))
                   ) : (
-                    <div className="py-3 bg-slate-100 px-3 rounded-lg">
-                      <h3 className="font-normal text-sm sm:text-base">No addresses added yet.</h3>
+                    <div className="text-center py-8">
+                      <p className="text-gray-500 mb-4">No address found.</p>
+                      <Button 
+                        onClick={() => setIsDialogOpen(true)}
+                        className="bg-primary hover:bg-primary/90"
+                      >
+                        + Add Your First Address
+                      </Button>
                     </div>
                   )}
-                  <Dialog>
-                    <DialogTrigger className="mt-4 px-4 py-2 bg-primary text-white rounded-lg">Add</DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogDescription className="py-10">
-                          <input
-                            type="text"
-                            placeholder="Add a new address"
-                            className="border-b-2 border-transparent focus:border-primary focus:outline-none w-full"
-                          />
-                        </DialogDescription>
-                      </DialogHeader>
-                    </DialogContent>
-                  </Dialog>
+                  
+                  <AddAddressDialog
+                    onSubmit={handleAddAddress}
+                    isOpen={isDialogOpen}
+                    onClose={() => setIsDialogOpen(false)}
+                    isLoading={addingAddress}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          <ChangePassword />
         </div>
-      </div>}
+      )}
     </>
   );
 };
