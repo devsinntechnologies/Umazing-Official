@@ -51,7 +51,7 @@ const Customercare: React.FC = () => {
       {
         points: "You can return your product easily through the Umazing app in a few seconds. Just follow these steps:",
         subPoints: [
-          <li key="1">Sign in to your Clicky Account from here.</li>,
+          <li key="1">Sign in to your Umazing Account from here.</li>,
           <li key="2">Go to the My Order section</li>,
           <li key="3">Click on View Order for the specific order you want to place a replacement/refund request</li>,
           <li key="4">Select the refund/replace option and click on one or all items you want returned or replaced.</li>,
@@ -95,10 +95,10 @@ const Customercare: React.FC = () => {
 
   return (
     <>
-      <div className="w-full h-20 bg-primary flex justify-center items-center text-xl md:text-4xl font-bold text-white">
+      <div className="w-full h-20 bg-primary shadow-xl rounded-b-xl flex justify-center items-center text-xl md:text-4xl font-bold text-white">
         Hi. How Can We Help?
       </div>
-      <div className=" w-full pl-5 pr-5 sm:pl-16 sm:pr-16">
+      <div className=" w-full px-3 sm:px-16a">
         {/* <h1 className="text-2xl sm:text-4xl text-primary font-semibold pt-8 pb-4">Helps & Topics</h1> */}
         {/* <div className="bg-white w-full h-80 grid grid-cols-2 sm:grid-cols-3 overflow-auto">
           <div className="flex-col flex items-center justify-center gap-4 md:gap-8">
@@ -126,7 +126,7 @@ const Customercare: React.FC = () => {
             <h1 className="text-xs sm:text-md lg:text-lg">Account Settings</h1>
           </div>
         </div> */}
-        <h1 className="text-2xl sm:text-4xl text-primary  font-semibold  pt-8 pb-4">Frequently Asked Questions</h1>
+        <h1 className="text-2xl sm:text-4xl text-primary  font-semibold  py-4">Frequently Asked Questions</h1>
         <Faq data={faq1} />
         <Faq data={faq2} />
         <Faq data={faq3} />

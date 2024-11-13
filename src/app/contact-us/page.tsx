@@ -1,6 +1,6 @@
 "use client";
 import BreadCrumb from "@/components/BreadCrumb";
-
+import { Facebook, Instagram, Twitter } from "lucide-react";
 const Page = () => {
   return (
     <>
@@ -16,42 +16,43 @@ const Page = () => {
               /> */}
             </div>
             <div className="address flex flex-col gap-3">
-              <h3 className="text-lg font-medium	text-slate-950">Address</h3>
+              <h3 className="text-lg	text-primary font-bold">Address</h3>
               <p className="text-sm font-normal text-slate-950">
                 NY State Thruway, New York, USA
               </p>
             </div>
             <div className=" flex flex-col gap-3">
-              <h3 className="text-lg font-medium	text-slate-950">Phone</h3>
+              <h3 className="text-lg	text-primary font-bold">Phone</h3>
               <p className="text-sm font-normal text-slate-950">
-                +129290122122
+                +92 315 4031364
               </p>
             </div>
             <div className="flex flex-col gap-3">
-              <h3 className="text-lg font-medium	text-slate-950">
+              <h3 className="text-lg	text-primary font-bold">
                 Email Address
               </h3>
               <p className="text-sm font-normal text-slate-950">
-                demo@demo.com
+                umazingofficial@gmail.com
               </p>
             </div>
-            <div className=" flex flex-col gap-3">
+            {/* <div className=" flex flex-col gap-3">
               <h3 className="text-lg font-medium	text-slate-950">Website</h3>
               <p className="text-sm font-normal text-slate-950">
                 https://redq.io
               </p>
-            </div>
+            </div> */}
             <div className="flex flex-col gap-3">
-              <h3 className="text-lg font-medium	text-slate-950">Follow Us</h3>
-              <div className="flex gap-3 cursor-pointer text-slate-950">
-                {/* <i className="fa-brands fa-facebook"></i>
-                <i className="fa-brands fa-twitter"></i>
-                <i className="fa-brands fa-instagram"></i> */}
+              <h3 className="text-lg	text-primary font-bold">Follow Us</h3>
+              <div className="flex gap-3 cursor-pointer flex text-slate-950">
+              <Facebook />
+              <Instagram />
+              <Twitter />
+              
               </div>
             </div>
           </div>
           <div className="bg-white w-full rounded-lg shadow-md px-5 py-6 flex flex-col gap-0  sm::w-[40vw] md:w-[50vw] lg:w-[52vw]  xl:w-[45vw]  ">
-            <h2 className="text-xl font-bold  md:text-start md:text-2xl">
+            <h2 className="text-xl font-bold  text-primary md:text-start md:text-2xl">
               How can we improve your experience?
             </h2>
             <div className="pt-5 flex flex-col gap-6 w-full">
