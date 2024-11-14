@@ -39,6 +39,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import ChangePassword from "../../components/profile/ChangePassword";
 
 interface Address {
   id: string;
@@ -296,6 +297,7 @@ const Page: React.FC = () => {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+          <ChangePassword/>
         </div>
       )}
     </>
