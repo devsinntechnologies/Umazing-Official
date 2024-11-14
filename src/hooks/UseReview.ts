@@ -24,6 +24,14 @@ export const review = createApi({
         return `getAllProductReviews/${id}`;
       },
     }),
+
+    addReview: builder.mutation({
+        query: (reviewData) => ({
+          url: "/addReview",
+          method: "POST",
+          body: reviewData,
+        }),
+      }),
     // getProductById: builder.query({
     //   query: (id) => `/getById/${id}`,
     // }),
@@ -37,13 +45,6 @@ export const review = createApi({
     //   query: () => `getAllVariants`,
     // }),
 
-    // addProduct: builder.mutation({
-    //   query: (product) => ({
-    //     url: "/addProduct",
-    //     method: "POST",
-    //     body: product,
-    //   }),
-    // }),
     // updateProduct: builder.mutation({
     //   query: (updateProduct) => ({
     //     url: "/updateProduct",
