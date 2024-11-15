@@ -7,8 +7,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from '@/hooks/use-toast';
 import { Star } from 'lucide-react';
 import ReviewsCard from './ReviewsCard';
+import { useAddReviewMutation } from '@/hooks/UseReview';
 
-const TabComponent = ({product, review}) => {
+const TabComponent = ({product, review, refetch}) => {
   const [activeTab, setActiveTab] = useState('description');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [rating, setRating] = useState(0);
@@ -16,7 +17,7 @@ const TabComponent = ({product, review}) => {
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [hoveredRating, setHoveredRating] = useState(0);
   const { toast } = useToast();
-
+const [addReview,{isLoading,data}] = useAddReviewMutation()
   // Calculate average rating with better null checks
   const avgRating = review?.data?.length > 0 
     ? (review.data.reduce((acc, curr) => {
@@ -64,13 +65,30 @@ const TabComponent = ({product, review}) => {
       });
       return;
     }
+  const reviewForm = new FormData()
+  reviewForm.append("star", rating)
+  reviewForm.append("comment", comment)
+  reviewForm.append("productId", product?.id)
 
-    // If validation passes, log the data
-    console.log({
-      rating,
-      comment,
-      images: selectedImages,
-    });
+  for (let i = 0; i < selectedImages.length; i++) {
+    reviewForm.append("images", selectedImages[i])
+    
+  }
+  console.log(reviewForm)
+  addReview(reviewForm)
+if (isLoading){
+  toast({
+    title: "Adding Review..."
+  })
+}
+if (data?.Success){
+  toast({
+    title: "Added Review"
+  })
+  refetch()
+}
+
+
 
     // Reset form and close dialog
     setRating(0);

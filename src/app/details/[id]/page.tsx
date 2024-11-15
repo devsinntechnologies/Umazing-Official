@@ -40,7 +40,7 @@ const Page = () => {
 
   const { data: productData, isLoading: productLoading ,refetch } = useGetProductByIdQuery(id);
   const { data: relatedData, isLoading: relatedLoading } = useGetAllProductsQuery({ pageNo: "1", pageSize: "8", CategoryId: product?.Category?.id });
-  const { data: reviewData, isLoading: reviewLoading } = useGetAllProductReviewsQuery(id);
+  const { data: reviewData, isLoading: reviewLoading, refetch:refetchReview } = useGetAllProductReviewsQuery(id);
 
   useEffect(() => {
     if (productData) setProduct(productData.data);
@@ -265,7 +265,7 @@ const Page = () => {
 
         {/* Tabs Section */}
         <div className="w-full flex justify-center">
-          {productLoading || reviewLoading ? <Skeleton className="h-24 w-full" /> : <TabComponent product={product} review={reviewData} />}
+          {productLoading || reviewLoading ? <Skeleton className="h-24 w-full" /> : <TabComponent product={product} review={reviewData} refetch={refetchReview}/>}
         </div>
 
         {/* Related Products Section */}

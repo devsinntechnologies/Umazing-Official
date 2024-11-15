@@ -57,4 +57,5 @@ export const review = createApi({
 
 export const {
   useGetAllProductReviewsQuery,
+  useAddReviewMutation,
 } = review;
