@@ -22,7 +22,7 @@ const TabComponent = ({ product, review, refetch }) => {
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [hoveredRating, setHoveredRating] = useState(0);
   const { toast } = useToast();
-  const [addReview, { isLoading, data }] = useAddReviewMutation()
+  const [addReview, { isLoading, data:response }] = useAddReviewMutation()
   // Calculate average rating with better null checks
   const avgRating = review?.data?.length > 0
     ? (review.data.reduce((acc, curr) => {
@@ -51,7 +51,7 @@ const TabComponent = ({ product, review, refetch }) => {
     setSelectedImages(prev => prev.filter((_, i) => i !== index));
   };
 
-  const handleSubmitReview = () => {
+  const handleSubmitReview = async () => {
     // Validation
     if (rating === 0) {
       toast({
@@ -80,27 +80,31 @@ const TabComponent = ({ product, review, refetch }) => {
 
     }
     console.log(reviewForm)
-    addReview(reviewForm)
-    if (isLoading) {
+
+    try {
       toast({
-        title: "Adding Review..."
-      })
-    }
-    if (data?.Success) {
+        title: "Adding Review...",
+        description: "Please wait while we add your review"
+      });
+
+      const result = await addReview(reviewForm).unwrap();
+      
+      // Handle success
       toast({
         title: "Review Added Successfully",
-        variant: "success"
       });
-      refetch();
-      // Reset form and close dialog
+      
+      // Refetch and reset form
+      await refetch();
       setRating(0);
       setComment('');
       setSelectedImages([]);
       setIsDialogOpen(false);
-    } else if (data?.error) {
+      
+    } catch (error: any) {
       toast({
         title: "Error Adding Review",
-        description: data.error,
+        description: error?.data?.message || "Something went wrong",
         variant: "destructive"
       });
     }
@@ -147,7 +151,7 @@ const TabComponent = ({ product, review, refetch }) => {
         )}
 
         {activeTab === 'feedback' && (
-          <div className="feedback-content sm:text-md text-sm">
+          <div className="w-full sm:text-md text-sm">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mb-4">
               <div>
                 <h1 className='text-xl font-semibold'>{avgRating} Ratings</h1>

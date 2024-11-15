@@ -1,6 +1,6 @@
 //@ts-nocheck
 "use client";
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent, useRef } from "react";
 import { Camera, Plus, X } from "lucide-react";
 import {
   Accordion,
@@ -66,6 +66,7 @@ const Page: React.FC = () => {
   const [editField, setEditField] = useState("");
   const [formData, setFormData] = useState<UserProfileData | null>(null);
   const [hasChanges, setHasChanges] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { toast } = useToast();
   const {
@@ -181,6 +182,36 @@ const Page: React.FC = () => {
     }
   };
 
+  const handleImageClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('image', file);
+    // formData.append('UserId', userId as string);
+
+    try {
+      const response = await updateProfile(formData).unwrap();
+      if (response?.success) {
+        toast({
+          title: "Profile Picture Updated",
+          description: "Your profile picture has been updated successfully.",
+        });
+        refetch();
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to update profile picture. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <>
       {isLoading ? (
@@ -199,7 +230,17 @@ const Page: React.FC = () => {
                   className="w-full h-full"
                 />
               </div>
-              <div className="absolute bottom-0 right-0 bg-black rounded-full p-1 flex items-center justify-center">
+              <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
+                accept="image/*"
+                onChange={handleImageUpload}
+              />
+              <div 
+                className="absolute bottom-0 right-0 bg-black rounded-full p-1 flex items-center justify-center cursor-pointer"
+                onClick={handleImageClick}
+              >
                 <Camera className="text-white" />
               </div>
             </div>
@@ -282,7 +323,7 @@ const Page: React.FC = () => {
                         onClick={() => setIsDialogOpen(true)}
                         className="bg-primary hover:bg-primary/90"
                       >
-                        + Add Your First Address
+                        <Plus /> Add Your First Address
                       </Button>
                     </div>
                   )}
