@@ -8,8 +8,13 @@ import { useToast } from '@/hooks/use-toast';
 import { Star } from 'lucide-react';
 import ReviewsCard from './ReviewsCard';
 import { useAddReviewMutation } from '@/hooks/UseReview';
+import AuthDialog from '../layout/auth/AuthDialog';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
+import Image from "next/image"
 
-const TabComponent = ({product, review, refetch}) => {
+const TabComponent = ({ product, review, refetch }) => {
+  const isLoggedIn = useSelector((state:RootState) => state.authSlice.isLoggedIn);
   const [activeTab, setActiveTab] = useState('description');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [rating, setRating] = useState(0);
@@ -17,19 +22,19 @@ const TabComponent = ({product, review, refetch}) => {
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [hoveredRating, setHoveredRating] = useState(0);
   const { toast } = useToast();
-const [addReview,{isLoading,data}] = useAddReviewMutation()
+  const [addReview, { isLoading, data }] = useAddReviewMutation()
   // Calculate average rating with better null checks
-  const avgRating = review?.data?.length > 0 
+  const avgRating = review?.data?.length > 0
     ? (review.data.reduce((acc, curr) => {
-        console.log('Accumulator:', acc, 'Current stars:', curr.star);
-        const stars = parseFloat(curr.star) || 0;
-        return acc + stars;
-      }, 0) / review.data.length).toFixed(1)
+      console.log('Accumulator:', acc, 'Current stars:', curr.star);
+      const stars = parseFloat(curr.star) || 0;
+      return acc + stars;
+    }, 0) / review.data.length).toFixed(1)
     : '0.0';
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    
+
     if (selectedImages.length + files.length > 3) {
       toast({
         variant: "destructive",
@@ -38,7 +43,7 @@ const [addReview,{isLoading,data}] = useAddReviewMutation()
       });
       return;
     }
-    
+
     setSelectedImages(prev => [...prev, ...files]);
   };
 
@@ -65,41 +70,52 @@ const [addReview,{isLoading,data}] = useAddReviewMutation()
       });
       return;
     }
-  const reviewForm = new FormData()
-  reviewForm.append("star", rating)
-  reviewForm.append("comment", comment)
-  reviewForm.append("productId", product?.id)
+    const reviewForm = new FormData()
+    reviewForm.append("star", rating)
+    reviewForm.append("comment", comment)
+    reviewForm.append("ProductId", product?.id)
 
-  for (let i = 0; i < selectedImages.length; i++) {
-    reviewForm.append("images", selectedImages[i])
-    
-  }
-  console.log(reviewForm)
-  addReview(reviewForm)
-if (isLoading){
-  toast({
-    title: "Adding Review..."
-  })
-}
-if (data?.Success){
-  toast({
-    title: "Added Review"
-  })
-  refetch()
-}
+    for (let i = 0; i < selectedImages.length; i++) {
+      reviewForm.append("images", selectedImages[i])
 
+    }
+    console.log(reviewForm)
+    addReview(reviewForm)
+    if (isLoading) {
+      toast({
+        title: "Adding Review..."
+      })
+    }
+    if (data?.Success) {
+      toast({
+        title: "Review Added Successfully",
+        variant: "success"
+      });
+      refetch();
+      // Reset form and close dialog
+      setRating(0);
+      setComment('');
+      setSelectedImages([]);
+      setIsDialogOpen(false);
+    } else if (data?.error) {
+      toast({
+        title: "Error Adding Review",
+        description: data.error,
+        variant: "destructive"
+      });
+    }
+  };
 
-
-    // Reset form and close dialog
-    setRating(0);
-    setComment('');
-    setSelectedImages([]);
-    setIsDialogOpen(false);
-
-    toast({
-      title: "Review submitted",
-      description: "Thank you for your review!",
-    });
+  const handleAddReviewClick = () => {
+    if (!isLoggedIn) {
+      toast({
+        title: "Not Logged In",
+        description: "Please log in to add a review",
+        variant: "destructive",
+      });
+      return;
+    }
+    setIsDialogOpen(true);
   };
 
   return (
@@ -107,17 +123,15 @@ if (data?.Success){
       {/* Tab navigation */}
       <div className="flex border-b">
         <button
-          className={`px-4 py-2 sm:text-lg text-sm font-medium ${
-            activeTab === 'description' ? 'border-b-2 border-primary text-primary' : 'text-gray-500'
-          }`}
+          className={`px-4 py-2 sm:text-lg text-sm font-medium ${activeTab === 'description' ? 'border-b-2 border-primary text-primary' : 'text-gray-500'
+            }`}
           onClick={() => setActiveTab('description')}
         >
           Descriptions
         </button>
         <button
-          className={`ml-4 px-4 py-2 sm:text-lg text-sm font-medium  ${
-            activeTab === 'feedback' ? 'border-b-2 border-primary text-primary' : 'text-gray-500'
-          }`}
+          className={`ml-4 px-4 py-2 sm:text-lg text-sm font-medium  ${activeTab === 'feedback' ? 'border-b-2 border-primary text-primary' : 'text-gray-500'
+            }`}
           onClick={() => setActiveTab('feedback')}
         >
           Customer Reviews
@@ -139,89 +153,96 @@ if (data?.Success){
                 <h1 className='text-xl font-semibold'>{avgRating} Ratings</h1>
                 <h3>{review?.data?.length || 0} Reviews</h3>
               </div>
-              
-              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button className="w-full sm:w-auto">Add Review</Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle>Add Your Review</DialogTitle>
-                  </DialogHeader>
-                  
-                  <div className="grid gap-4 py-4">
-                    {/* Rating Stars */}
-                    <div className="flex items-center gap-1">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star
-                          key={star}
-                          className={`cursor-pointer ${
-                            star <= (hoveredRating || rating)
-                              ? 'fill-yellow-400 text-yellow-400'
-                              : 'text-gray-300'
-                          }`}
-                          onMouseEnter={() => setHoveredRating(star)}
-                          onMouseLeave={() => setHoveredRating(0)}
-                          onClick={() => setRating(star)}
-                        />
-                      ))}
-                    </div>
 
-                    {/* Comment */}
-                    <div className="grid gap-2">
-                      <Label htmlFor="comment">Your Review</Label>
-                      <Textarea
-                        id="comment"
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        placeholder="Write your review here..."
-                      />
-                    </div>
+              {isLoggedIn ? (
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button className="w-full sm:w-auto" onClick={handleAddReviewClick}>
+                      Add Review
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Add Your Review</DialogTitle>
+                    </DialogHeader>
 
-                    {/* Image Upload */}
-                    <div className="grid gap-2">
-                      <Label>Images (Max 3)</Label>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        multiple
-                        onChange={handleImageUpload}
-                        className="hidden"
-                        id="image-upload"
-                      />
-                      <Label
-                        htmlFor="image-upload"
-                        className="cursor-pointer bg-gray-100 p-2 rounded text-center"
-                      >
-                        Click to upload images
-                      </Label>
-                      
-                      {/* Image Preview */}
-                      <div className="flex gap-2 flex-wrap">
-                        {selectedImages.map((image, index) => (
-                          <div key={index} className="relative">
-                            <img
-                              src={URL.createObjectURL(image)}
-                              alt={`Preview ${index}`}
-                              className="w-20 h-20 object-cover rounded"
-                            />
-                            <button
-                              onClick={() => removeImage(index)}
-                              className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center"
-                            >
-                              ×
-                            </button>
-                          </div>
+                    <div className="grid gap-4 py-4">
+                      {/* Rating Stars */}
+                      <div className="flex items-center gap-1">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <Star
+                            key={star}
+                            className={`cursor-pointer ${star <= (hoveredRating || rating)
+                                ? 'fill-yellow-400 text-yellow-400'
+                                : 'text-gray-300'
+                              }`}
+                            onMouseEnter={() => setHoveredRating(star)}
+                            onMouseLeave={() => setHoveredRating(0)}
+                            onClick={() => setRating(star)}
+                          />
                         ))}
                       </div>
-                    </div>
 
-                    <Button onClick={handleSubmitReview}>Submit Review</Button>
-                  </div>
-                </DialogContent>
-              </Dialog>
+                      {/* Comment */}
+                      <div className="grid gap-2">
+                        <Label htmlFor="comment">Your Review</Label>
+                        <Textarea
+                          id="comment"
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                          placeholder="Write your review here..."
+                        />
+                      </div>
+
+                      {/* Image Upload */}
+                      <div className="grid gap-2">
+                        <Label>Images (Max 3)</Label>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          onChange={handleImageUpload}
+                          className="hidden"
+                          id="image-upload"
+                        />
+                        <Label
+                          htmlFor="image-upload"
+                          className="cursor-pointer bg-gray-100 p-2 rounded text-center"
+                        >
+                          Click to upload images
+                        </Label>
+
+                        {/* Image Preview */}
+                        <div className="flex gap-2 flex-wrap">
+                          {selectedImages.map((image, index) => (
+                            <div key={index} className="relative">
+                              <Image
+                                src={URL.createObjectURL(image)}
+                                alt={`Preview ${index}`}
+                                className="w-20 h-20 object-cover rounded"
+                                width={40}
+                                height={40}
+                              />
+                              <button
+                                onClick={() => removeImage(index)}
+                                className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center"
+                              >
+                                ×
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <Button onClick={handleSubmitReview}>Submit Review</Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              ) : (
+                <AuthDialog isOpen={isDialogOpen} setIsOpen={setIsDialogOpen} useTrigger={false} />
+              )}
             </div>
-            <ReviewsCard review={review}/>
+            <ReviewsCard review={review} />
           </div>
         )}
       </div>

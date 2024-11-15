@@ -6,17 +6,11 @@ import Image from 'next/image';
 const ReviewsCard = ({ review }) => {
   const [data, setData] = useState([]);
 
+  console.log(data)
+
   useEffect(() => {
     setData(review?.data || []);
   }, [review]);
-
-  // Helper function to format image URL
-  const getFormattedImageUrl = (url: string) => {
-    if (url?.startsWith('http://') || url?.startsWith('https://')) {
-      return url;
-    }
-    return `http://97.74.89.204/${url}`;
-  };
 
   return (
     <div className="w-full space-y-6 my-4">
@@ -37,7 +31,7 @@ const ReviewsCard = ({ review }) => {
                 <div className="w-10 h-10 rounded-full bg-black overflow-hidden">
                   {item.User?.imageUrl && (
                     <Image
-                      src={getFormattedImageUrl(item.User.imageUrl)}
+                      src={`http://97.74.89.204/${item.User.imageUrl}`}
                       alt={item.User?.name || 'User image'}
                       width={40}
                       height={40}
@@ -57,7 +51,7 @@ const ReviewsCard = ({ review }) => {
                 {item.Review_Images.map((image, imgIndex) => (
                   <div key={imgIndex} className="relative aspect-square size-20 border border-primary rounded-lg overflow-hidden">
                     <Image
-                      src={getFormattedImageUrl(image.imageUrl)}
+                      src={`http://97.74.89.204/${image.imageUrl}`}
                       alt={`Review image ${imgIndex + 1}`}
                       fill
                       className="object-cover rounded-lg"
