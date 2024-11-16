@@ -5,7 +5,7 @@ import {
   useAddToFavouriteMutation,
   useRemoveFromFavouriteProductIdMutation,
 } from "@/hooks/UseFavourite";
-import { Trash2, Heart, Loader2, ShoppingCart } from "lucide-react";
+import { Trash2, Heart, Loader2, ShoppingCart, Star } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -13,6 +13,7 @@ import { usePathname } from "next/navigation";
 import AuthDialog from "@/components/layout/auth/AuthDialog";
 import { useAddToCartMutation, useGetUserCartQuery } from "@/hooks/UseCart";
 import Link from "next/link";
+import Stars from "./singleProduct/Stars";
 
 const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
   const { toast } = useToast();
@@ -146,35 +147,45 @@ const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
   const isSeller = pathname === "/seller" || pathname === "/seller/products";
 
   return (
-    <div className="w-full h-auto relative hover:shadow-lg border border-border rounded-md overflow-hidden hover:border-primary">
+    <div className="w-full h-auto p-1 relative hover:shadow-lg  shadow-md rounded-md overflow-hidden border-gray-400 ">
       <Link href={`/details/${product.id}`} className="w-full flex flex-col">
         <AuthDialog isOpen={isDialogOpen} setIsOpen={setIsDialogOpen} useTrigger={false} />
         <Image
-          className="w-full h-[140px] md:h-[160px] lg:h-[200px] object-cover"
+          className="w-full rounded h-[140px] md:h-[160px] lg:h-[200px] object-cover"
           width={500}
           height={300}
           src={product?.Product_Images[0]?.imageUrl ? `http://97.74.89.204/${product?.Product_Images[0]?.imageUrl}` : ""}
           alt={product.name}
         />
         <div className="w-full space-y-2 p-2">
-          <h3 className="text-xs md:text-sm font-semibold h-8 md:h-10 transition duration-200 text-primary truncate-multiline">{product.name}</h3>
-          <p className="text-xs md:text-sm text-gray-600">Rs. {product.basePrice}</p>
+          <h3 className="text-sm md:text-lg font-bold transition duration-200 text-primary  tracking-wide capitalize truncate-multiline-1">{product.name}</h3>
+        <div className="w-full flex justify-between items-center">
+        <p className="text-sm md:text-xl font-semibold text-black">Rs.
+            <span className="text-base md:text-2xl font-bold "> {product.basePrice}</span>
+          </p>
+          <p className="text-sm md:text-base font-semibold text-black">Qty:
+            <span className="text-base md:text-lg   "> {product.baseQuantity}</span>
+          </p>
+        </div>
         </div>
       </Link>
       {/* Add to Cart button */}
-      {!isSeller && (
-        <button
-          className="w-full text-xs lg:text-sm bg-primary py-2 lg:py-3 text-white rounded-b-sm flex items center justify-center gap-2"
+        <div className="w-full flex items-center justify-between md:p-3 p-1">
+          <Stars rating={4}/>
+          {!isSeller && (
+          <button
+          className="md:p-3 p-1.5 rounded-full  flex items-center justify-center"
           onClick={handleAddToCart} // Add to Cart functionality
           disabled={addingToCart} // Disable while loading
         >
           {addingToCart ? (
-            <Loader2 size={20} className="animate-spin text-white" />
+            <Loader2 className="animate-spin size-6 md:size-8 " />
           ) : (
-            <div className="flex items-center justify-center gap-3"><ShoppingCart className="size-3 md:size-4"/> add To Cart</div>
+            <ShoppingCart className="size-6 md:size-8"/>
           )}
         </button>
       )}
+        </div>
       <div className="absolute top-2 right-2 flex items-center">
         {isSeller && (
           <button
