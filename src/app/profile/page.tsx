@@ -1,7 +1,7 @@
 //@ts-nocheck
 "use client";
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
-import { Camera, Plus, X } from "lucide-react";
+import { Camera, Dot, Plus, X } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -265,7 +265,7 @@ const Page: React.FC = () => {
                 accept="image/*"
                 onChange={handleImageUpload}
               />
-              <div 
+              <div
                 className="absolute bottom-0 right-0 bg-black rounded-full p-1 flex items-center justify-center cursor-pointer"
                 onClick={handleImageClick}
               >
@@ -358,20 +358,20 @@ const Page: React.FC = () => {
               <AccordionContent>
                 <div className="flex flex-col gap-4">
                   <div className="w-full flex justify-end mb-4">
-                    <Button 
+                    <Button
                       onClick={() => setIsDialogOpen(true)}
                       className="bg-primary hover:bg-primary/90"
                     >
                       <Plus className="mr-2" /> Add New Address
                     </Button>
                   </div>
-                  
+
                   {formData?.addresses?.length ? (
                     formData.addresses.map((addr) => (
                       <div key={addr.id} className="flex justify-between items-center py-3 px-3 rounded-lg shadow-md border w-full">
                         <div className="flex flex-col gap-3">
-                        <p>{addr.address}</p>
-                        <p>{addr.phoneNo}</p>
+                          <p>{addr.address}</p>
+                          <p>{addr.phoneNo}</p>
                         </div>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
@@ -396,7 +396,7 @@ const Page: React.FC = () => {
                       <p className="text-gray-500">No address found.</p>
                     </div>
                   )}
-                  
+
                   <AddAddressDialog
                     onSubmit={handleAddAddress}
                     isOpen={isDialogOpen}
@@ -407,7 +407,17 @@ const Page: React.FC = () => {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          <ChangePassword/>
+          <div className="flex justify-between mb-4">
+            <div className="flex">
+              <h3 className="font-semibold text-base sm:text-lg mr-2 capitalize">Password:</h3>
+              <p className="tracking-wider font-bold">
+                {Array.from({ length: 5 }).map((_, index) => {
+                  <Dot />
+                })}</p>
+
+            </div>
+            <ChangePassword />
+          </div>
         </div>
       )}
     </>
