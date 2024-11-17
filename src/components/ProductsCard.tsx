@@ -147,11 +147,11 @@ const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
   const isSeller = pathname === "/seller" || pathname === "/seller/products";
 
   return (
-    <div className="w-full h-auto p-1 relative hover:shadow-lg  shadow-md rounded-md overflow-hidden border-gray-400 ">
+    <div className="w-full h-auto p-1 relative hover:shadow-lg shadow-md rounded-md overflow-hidden border-gray-400 ">
       <Link href={`/details/${product.id}`} className="w-full flex flex-col">
         <AuthDialog isOpen={isDialogOpen} setIsOpen={setIsDialogOpen} useTrigger={false} />
         <Image
-          className="w-full rounded h-[140px] md:h-[160px] lg:h-[200px] object-cover"
+          className="w-full rounded h-[140px] md:h-[160px] lg:h-[180px] xl:h-[200px] object-cover"
           width={500}
           height={300}
           src={product?.Product_Images[0]?.imageUrl ? `http://97.74.89.204/${product?.Product_Images[0]?.imageUrl}` : ""}
@@ -160,17 +160,17 @@ const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
         <div className="w-full space-y-2 p-2">
           <h3 className="text-sm md:text-lg font-bold transition duration-200 text-primary  tracking-wide capitalize truncate-multiline-1">{product.name}</h3>
         <div className="w-full flex justify-between items-center">
-        <p className="text-sm md:text-xl font-semibold text-black">Rs.
-            <span className="text-base md:text-2xl font-bold "> {product.basePrice}</span>
+        <p className="text-sm md:text-base xl:text-xl font-semibold text-black">Rs.
+            <span className="text-base md:text-lg lg:text-xl xl:text-2xl font-bold "> {product.basePrice}</span>
           </p>
-          <p className="text-sm md:text-base font-semibold text-black">Qty:
-            <span className="text-base md:text-lg   "> {product.baseQuantity}</span>
+          <p className="text-sm md:text-base xl:text-lg font-semibold text-black">Qty:
+            <span className="text-sm md:text-base xl:text-lg  "> {product.baseQuantity}</span>
           </p>
         </div>
         </div>
       </Link>
       {/* Add to Cart button */}
-        <div className="w-full flex items-center justify-between md:p-3 p-1">
+        <div className="w-full flex items-center justify-between md:p-3 p-1 !pt-0">
           <Stars rating={4}/>
           {!isSeller && (
           <button
