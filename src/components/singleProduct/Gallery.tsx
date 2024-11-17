@@ -47,7 +47,7 @@ const Gallery = (data) => {
                 height={300}
                 src={`http://97.74.89.204/${image.imageUrl}`}
                 alt={`Image ${index}`}
-                className="w-auto h-full p-3 object-cover mx-auto"
+                className="w-auto h-full p-3 object-cover mx-auto border-2 swiper-slide-active:border-primary border-transparent"
               />
             </SwiperSlide>
           </div>
@@ -55,23 +55,23 @@ const Gallery = (data) => {
       </Swiper>
 
       {/* Thumbnail Swiper */}
-     <div className='px-4 py-2 md:py-5'>
+     <div className='px-4 py-2 md:py-5 overflow-x-auto'>
      <Swiper
         onSwiper={setThumbsSwiper}
         loop={true}
-        spaceBetween={-300}
+        spaceBetween={10}
         slidesPerView={4}
 
         watchSlidesProgress={true}
         modules={[Navigation, Thumbs]} // Registering modules for thumbnail swiper
-        className="w-full p-4 h-auto py-4 px-3 gap-3 flex justify-center items-center  "
+        className="w-full h-auto py-4 px-3 flex justify-center items-center"
       >
         {images?.map((image, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={index} className="size-10 flex justify-center items-center">
             <Image
               width={60}
               height={60}
-              className="w-10 h-10 rounded-full object-cover"
+              className="size-10 rounded-full object-cover cursor-pointer border-2 swiper-slide-thumb-active:border-primary border-transparent hover:border-primary/50"
               src={`http://97.74.89.204/${image.imageUrl}`}
               alt={`Thumbnail ${index}`}
             />

@@ -174,7 +174,7 @@ const Page = () => {
             <meta name="robots" content="index, follow" />
           </Head>
 
-          <div className="w-full flex flex-col gap-5 py-4">
+          <div className="w-full flex flex-col gap-5 py-4 min-h-[80vh]">
             {/* Product Section */}
             <div className="gap-2 md:gap-5 w-full h-fit flex flex-col md:flex-row justify-center lg:justify-between">
               <div className="w-full md:w-[50%] h-[500px] overflow-hidden">

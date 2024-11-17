@@ -171,7 +171,10 @@ const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
       </Link>
       {/* Add to Cart button */}
         <div className="w-full flex items-center justify-between md:p-3 p-1 !pt-0">
-          <Stars rating={4}/>
+          <div className="h-fit flex items-end justify-center gap-1 text-sm">
+          <Stars rating={product.review}/>
+          <p className="size-auto">({product.totalReview})</p>
+          </div>
           {!isSeller && (
           <button
           className="md:p-3 p-1.5 rounded-full  flex items-center justify-center"
