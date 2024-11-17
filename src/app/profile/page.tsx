@@ -217,7 +217,7 @@ const Page: React.FC = () => {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <div className="w-full py-10 flex flex-col gap-8 px-5">
+        <div className="w-full flex flex-col gap-8 px-5">
           <BreadCrumb />
           <div className="flex items-center gap-5 flex-col md:flex-row">
             <div className="relative">
