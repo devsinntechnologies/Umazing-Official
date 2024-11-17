@@ -28,7 +28,7 @@ const Customercare: React.FC = () => {
     faqData: [
       {
         points: [
-          "No, we don't call customers for order confirmation. All new customers are logged into the Clicky app via OTP (one-time password), so we take this as order confirmation and ship your order right away.",
+          "No, we don't call customers for order confirmation. All new customers are logged into the Umazing app via OTP (one-time password), so we take this as order confirmation and ship your order right away.",
         ],
       },
     ],
@@ -39,7 +39,7 @@ const Customercare: React.FC = () => {
     faqData: [
       {
         points: [
-          "To cancel your order, please log into the Clicky app, go to your My Account section, open the order you want to cancel, and select the cancel option. Your order can only be canceled before it reaches the ‘Dispatched’ status in your My Account on the Umazing app.",
+          "To cancel your order, please log into the Umazing app, go to your My Account section, open the order you want to cancel, and select the cancel option. Your order can only be canceled before it reaches the ‘Dispatched’ status in your My Account on the Umazing app.",
         ],
       },
     ],

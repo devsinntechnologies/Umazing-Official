@@ -46,10 +46,10 @@ const HeaderSlider = () => {
           >
             {/* Text Content */}
             <div className="z-[10] max-w-lg pt-3 md:pt-0 space-y-5 text-white flex-1 h-full">
-              <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
+              <h1 className="text-2xl md:text-4xl  lg:text-5xl font-bold leading-tight mb-4">
                 {offer.offerName}
               </h1>
-              <p className="text-sm md:text-lg lg:text-xl text-white mb-6">
+              <p className="text-sm  md:text-lg lg:text-xl text-white mb-6">
                 {offer.description} <br />
                 <span className="text-lg md:text-2xl lg:text-3xl font-bold">
                   Expires on:{" "}

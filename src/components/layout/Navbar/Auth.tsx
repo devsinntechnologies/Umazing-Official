@@ -89,7 +89,7 @@ const Auth: React.FC<AuthProps> = ({ className }) => {
                       alt=""
                       width={48}
                       height={48}
-                      className="size-12 rounded-full"
+                      className="size-10 rounded-full"
                     />
                   </div>
                 )}

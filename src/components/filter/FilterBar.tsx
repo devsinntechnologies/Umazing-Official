@@ -110,23 +110,23 @@ const FilterBar = () => {
 
   return (
     <div>
-      <div className="hidden md:block w-full md:w-[260px] px-3 py-2 rounded-lg bg-white h-full overflow-y-scroll border border-primary">
-        <h1 className="text-xl font-bold mb-4">Filters</h1>
+      <div className="hidden md:block w-full md:w-[260px] px-3 py-2 rounded-lg bg-white max-h-full h-fit overflow-y-scroll border border-primary">
+        <h1 className="text-xl font-bold ">Filters</h1>
 
         {/* Categories Section */}
-        <div className="border-b pb-4 mb-4">
-          {/* <h1 className="text-lg font-medium mb-3">All Categories</h1> */}
+        <div className="border-b pb-2 ">
+          {/* <h1 className="text-lg font-medium ">All Categories</h1> */}
           {isLoadingCategories ? (
             <div className="w-full space-y-2">
               {Array.from({ length: 4 }).map((_, idx) => (
-                <Skeleton key={idx} className="w-full h-7 rounded-md mb-3" />
+                <Skeleton key={idx} className="w-full h-7 rounded-md " />
               ))}
             </div>
           ) : (
             <div>
               <Accordion type="single" collapsible>
                 <AccordionItem value="item-1">
-                  <AccordionTrigger className="text-lg font-medium mb-3">
+                  <AccordionTrigger className="text-lg font-medium ">
                     {selectedParams.categoryId
                       ? categories?.data?.find(
                         (category) => category.id === selectedParams.categoryId
@@ -136,7 +136,7 @@ const FilterBar = () => {
                   <AccordionContent>
                     {categories?.data?.map((category) => (
                       <div
-                        className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${selectedParams.categoryId === category.id
+                        className={`flex gap-2 items-center  cursor-pointer p-2 rounded-md ${selectedParams.categoryId === category.id
                             ? "bg-primary text-white"
                             : ""
                           }`}
@@ -152,7 +152,7 @@ const FilterBar = () => {
 
               {/* {categories?.data?.map((category) => (
                 <div
-                  className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${
+                  className={`flex gap-2 items-center  cursor-pointer p-2 rounded-md ${
                     selectedParams.categoryId === category.id
                       ? "bg-primary text-white"
                       : ""
@@ -182,25 +182,25 @@ const FilterBar = () => {
         </div>
 
         {/* Offers Section */}
-        <div className="border-b pb-4 mb-4">
-          {/* <h1 className="text-lg font-medium mb-3">Offers</h1> */}
+        <div className="border-b pb-2">
+          {/* <h1 className="text-lg font-medium ">Offers</h1> */}
           {isLoadingOffers ? (
             <div className="w-full space-y-2">
               {Array.from({ length: 4 }).map((_, idx) => (
-                <Skeleton key={idx} className="w-full h-7 rounded-md mb-3" />
+                <Skeleton key={idx} className="w-full h-7 rounded-md " />
               ))}
             </div>
           ) : (
             <div>
               <Accordion type="single" collapsible>
                 <AccordionItem value="item-1">
-                  <AccordionTrigger className="text-lg font-medium mb-3">
+                  <AccordionTrigger className="text-lg font-medium ">
                     Offers
                   </AccordionTrigger>
                   <AccordionContent>
                     {offers?.data?.map((offer) => (
                       <div
-                        className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${selectedParams.offerId === offer.id
+                        className={`flex gap-2 items-center  cursor-pointer p-2 rounded-md ${selectedParams.offerId === offer.id
                             ? "bg-primary text-white"
                             : ""
                           }`}
@@ -215,7 +215,7 @@ const FilterBar = () => {
               </Accordion>
               {/* {offers?.data?.map((offer) => (
                 <div
-                  className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${
+                  className={`flex gap-2 items-center  cursor-pointer p-2 rounded-md ${
                     selectedParams.offerId === offer.id
                       ? "bg-primary text-white"
                       : ""
@@ -245,17 +245,17 @@ const FilterBar = () => {
         </div>
 
         {/* Condition Section */}
-        <div className="py-4 border-b">
-          {/* <h1 className="text-lg font-medium mb-3">Condition</h1> */}
+        <div className="py-2 border-b">
+          {/* <h1 className="text-lg font-medium ">Condition</h1> */}
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
-              <AccordionTrigger className="text-lg font-medium mb-3">
+              <AccordionTrigger className="text-lg font-medium ">
                 Condition
               </AccordionTrigger>
               <AccordionContent>
                 {conditionData.map((condition) => (
                   <div
-                    className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${selectedParams.condition === condition
+                    className={`flex gap-2 items-center  cursor-pointer p-2 rounded-md ${selectedParams.condition === condition
                         ? "bg-primary text-white"
                         : ""
                       }`}
@@ -286,11 +286,11 @@ const FilterBar = () => {
         </div>
 
         {/* City Section */}
-        <div className="py-4 border-b">
-          {/* <h1 className="text-lg font-medium mb-3">City</h1> */}
+        <div className="py-2 border-b">
+          {/* <h1 className="text-lg font-medium ">City</h1> */}
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
-              <AccordionTrigger className="text-lg font-medium mb-3">
+              <AccordionTrigger className="text-lg font-medium ">
                 City
               </AccordionTrigger>
               <AccordionContent>
@@ -322,11 +322,11 @@ const FilterBar = () => {
         </div>
 
         {/* Price Filter Section */}
-        <div className="py-4 border-b">
-          {/* <h1 className="text-lg font-medium mb-3">Price</h1> */}
+        <div className="py-2 border-b">
+          {/* <h1 className="text-lg font-medium ">Price</h1> */}
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
-              <AccordionTrigger className="text-lg font-medium mb-3">
+              <AccordionTrigger className="text-lg font-medium ">
                 Price
               </AccordionTrigger>
               <AccordionContent>
@@ -414,11 +414,11 @@ const FilterBar = () => {
         </div>
 
         {/* Claim Checkbox */}
-        <div className="py-4 border-b">
-          {/* <h1 className="text-lg font-medium mb-3">Claim</h1> */}
+        <div className="py-2 border-b">
+          {/* <h1 className="text-lg font-medium ">Claim</h1> */}
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
-              <AccordionTrigger className="text-lg font-medium mb-3">
+              <AccordionTrigger className="text-lg font-medium ">
                 Claim
               </AccordionTrigger>
               <AccordionContent>
@@ -481,8 +481,8 @@ const FilterBar = () => {
           </SheetHeader>
           <div className="w-full h-[300px] px-3 py-2 rounded-lg bg-white overflow-y-scroll md:hidden grid grid-cols-1">
             {/* Categories Section */}
-            <div className="border-b pb-4 mb-4">
-              {/* <h1 className="text-lg font-medium mb-3">All Categories</h1> */}
+            <div className="border-b pb-2 ">
+              {/* <h1 className="text-lg font-medium ">All Categories</h1> */}
               {isLoadingCategories ? (
                 <div className="w-full flex items-center gap-3">
                   {Array.from({ length: 4 }).map((_, idx) => (
@@ -493,7 +493,7 @@ const FilterBar = () => {
                 <div className="w-full overflow-x-scroll">
                   <Accordion type="single" collapsible>
                     <AccordionItem value="item-1">
-                      <AccordionTrigger className="text-lg font-medium mb-3">
+                      <AccordionTrigger className="text-lg font-medium ">
                       {selectedParams.categoryId
                       ? categories?.data?.find(
                         (category) => category.id === selectedParams.categoryId
@@ -559,14 +559,14 @@ const FilterBar = () => {
             </div>
 
             {/* Offers Section */}
-            <div className="border-b pb-4 mb-4">
-              {/* <h1 className="text-lg font-medium mb-3">Offers</h1> */}
+            <div className="border-b pb-2 ">
+              {/* <h1 className="text-lg font-medium ">Offers</h1> */}
               {isLoadingOffers ? (
                 <div className="w-full space-y-2">
                   {Array.from({ length: 4 }).map((_, idx) => (
                     <Skeleton
                       key={idx}
-                      className="w-full h-7 rounded-md mb-3"
+                      className="w-full h-7 rounded-md "
                     />
                   ))}
                 </div>
@@ -574,13 +574,13 @@ const FilterBar = () => {
                 <div>
                   <Accordion type="single" collapsible>
                     <AccordionItem value="item-1">
-                      <AccordionTrigger className="text-lg font-medium mb-3">
+                      <AccordionTrigger className="text-lg font-medium ">
                         Offers
                       </AccordionTrigger>
                       <AccordionContent>
                         {offers?.data?.map((offer) => (
                           <div
-                            className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${selectedParams.offerId === offer.id
+                            className={`flex gap-2 items-center  cursor-pointer p-2 rounded-md ${selectedParams.offerId === offer.id
                                 ? "bg-primary text-white"
                                 : ""
                               }`}
@@ -596,7 +596,7 @@ const FilterBar = () => {
 
                   {/* {offers?.data?.map((offer) => (
                     <div
-                      className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${
+                      className={`flex gap-2 items-center  cursor-pointer p-2 rounded-md ${
                         selectedParams.offerId === offer.id
                           ? "bg-primary text-white"
                           : ""
@@ -626,17 +626,17 @@ const FilterBar = () => {
             </div>
 
             {/* Condition Section */}
-            <div className="py-4 border-b">
-              {/* <h1 className="text-lg font-medium mb-3">Condition</h1> */}
+            <div className="py-2 border-b">
+              {/* <h1 className="text-lg font-medium ">Condition</h1> */}
               <Accordion type="single" collapsible>
                 <AccordionItem value="item-1">
-                  <AccordionTrigger className="text-lg font-medium mb-3">
+                  <AccordionTrigger className="text-lg font-medium ">
                     Condition
                   </AccordionTrigger>
                   <AccordionContent>
                     {conditionData.map((condition) => (
                       <div
-                        className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${selectedParams.condition === condition
+                        className={`flex gap-2 items-center  cursor-pointer p-2 rounded-md ${selectedParams.condition === condition
                             ? "bg-primary text-white"
                             : ""
                           }`}
@@ -652,7 +652,7 @@ const FilterBar = () => {
 
               {/* {conditionData.map((condition) => (
                 <div
-                  className={`flex gap-2 items-center mb-2 cursor-pointer p-2 rounded-md ${
+                  className={`flex gap-2 items-center  cursor-pointer p-2 rounded-md ${
                     selectedParams.condition === condition
                       ? "bg-primary text-white"
                       : ""
@@ -680,11 +680,11 @@ const FilterBar = () => {
             </div>
 
             {/* City Section */}
-            <div className="py-4 border-b">
-              {/* <h1 className="text-lg font-medium mb-3">City</h1> */}
+            <div className="py-2 border-b">
+              {/* <h1 className="text-lg font-medium ">City</h1> */}
               <Accordion type="single" collapsible>
                 <AccordionItem value="item-1">
-                  <AccordionTrigger className="text-lg font-medium mb-3">
+                  <AccordionTrigger className="text-lg font-medium ">
                     City
                   </AccordionTrigger>
                   <AccordionContent>
@@ -723,11 +723,11 @@ const FilterBar = () => {
             </div>
 
             {/* Price Filter Section */}
-            <div className="py-4 border-b">
-              {/* <h1 className="text-lg font-medium mb-3">Price</h1> */}
+            <div className="py-2 border-b">
+              {/* <h1 className="text-lg font-medium ">Price</h1> */}
               <Accordion type="single" collapsible>
                 <AccordionItem value="item-1">
-                  <AccordionTrigger className="text-lg font-medium mb-3">
+                  <AccordionTrigger className="text-lg font-medium ">
                     Price
                   </AccordionTrigger>
                   <AccordionContent>
@@ -816,11 +816,11 @@ const FilterBar = () => {
             </div>
 
             {/* Claim Checkbox */}
-            <div className="py-4 border-b">
-              {/* <h1 className="text-lg font-medium mb-3">Claim</h1> */}
+            <div className="py-2 border-b">
+              {/* <h1 className="text-lg font-medium ">Claim</h1> */}
               <Accordion type="single" collapsible>
                 <AccordionItem value="item-1">
-                  <AccordionTrigger className="text-lg font-medium mb-3">
+                  <AccordionTrigger className="text-lg font-medium ">
                     Claim
                   </AccordionTrigger>
                   <AccordionContent>
