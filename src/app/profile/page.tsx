@@ -338,7 +338,14 @@ const Page: React.FC = () => {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+         <div className="flex justify-between mb-4">
+         <div className="flex">
+                  <h3 className="font-semibold text-base sm:text-lg mr-2 capitalize">Password:</h3>
+                    <p>.........</p>
+                
+                </div>
           <ChangePassword/>
+         </div>
         </div>
       )}
     </>
