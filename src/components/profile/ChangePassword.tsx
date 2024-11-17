@@ -22,7 +22,7 @@ const ChangePassword = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [changePassword, { isLoading }] = useChangePasswordMutation();
+  const [changePassword, { data:resData, isLoading }] = useChangePasswordMutation();
 
   const handleValidation = () => {
     if (!oldPassword) {
@@ -64,22 +64,30 @@ const ChangePassword = () => {
     if (!handleValidation()) return;
 
     try {
-      await changePassword({ oldPassword, newPassword }).unwrap();
+      const response = await changePassword({ oldPassword, newPassword }).unwrap();
+      
+      if (response.success) {
+        toast({
+          title: "Success",
+          description: response.message || "Password updated successfully",
+          variant: "default",
+        });
 
-      toast({
-        title: "Success",
-        description: "Password updated successfully",
-        variant: "default",
-      });
-
-      setOldPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
-      setOpen(false);
+        setOldPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+        setOpen(false);
+      } else {
+        toast({
+          title: "Error",
+          description: response.message || "Failed to update password. Please try again.",
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to update password. Please try again.",
+        description: error?.data?.message || "Failed to update password. Please try again.",
         variant: "destructive",
       });
       console.error("Password update error:", error);
