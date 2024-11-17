@@ -113,7 +113,7 @@ const ChangePassword = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="px-2 py-1 rounded-lg bg-gray-200 hover:bg-primary hover:text-white border border-solid flex justify-center">
+      <DialogTrigger className="px-3 py-1 rounded-lg bg-primary text-white border border-solid flex justify-center">
         Change Password
       </DialogTrigger>
       <DialogContent>
