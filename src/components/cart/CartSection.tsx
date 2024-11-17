@@ -11,6 +11,17 @@ import {
   useRemoveFromCartMutation,
 } from "@/hooks/UseCart";
 import { Skeleton } from "../ui/skeleton";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 import { useRouter } from "next/navigation";
 
@@ -174,18 +185,33 @@ const CartSection = () => {
                 <p className="text-xs md:text-base lg:text-lg text-primary font-medium">Rs. {item.Product.basePrice}</p>
               </div>
               <div className="flex flex-col items-end justify-between h-full">
-                <CircleX
-                  onClick={() => removeItem(item.id)}
-                  className={`text-destructive cursor-pointer w-5 ${updatingItemId === item.id ? "opacity-50 pointer-events-none" : ""}`}
-                  size={24}
-                />
+                <AlertDialog>
+                  <AlertDialogTrigger>
+                    <CircleX
+                      className={`text-destructive cursor-pointer w-5 ${updatingItemId === item.id ? "opacity-50 pointer-events-none" : ""}`}
+                      size={24}
+                    /></AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                      Are you absolutely sure to remove this product from cart?
+                   </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction   onClick={() => removeItem(item.id)}>Delete</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+
                 <div className="flex items-center gap-2 md:space-x-2 lg:space-x-4 p-1 rounded-2xl border md:border-primary">
                   <button
                     onClick={() => updateQuantity(item.id, item.quantity - 1)}
                     className="p-1 rounded-full bg-primary text-white"
                     disabled={item.quantity <= 1 || updatingItemId === item.id}
                   >
-                    <Minus size={16} className="size-3 lg:size-4"/>
+                    <Minus size={16} className="size-3 lg:size-4" />
                   </button>
                   <span className="text-xs md:text-base font-medium">{item.quantity}</span>
                   <button
@@ -193,7 +219,7 @@ const CartSection = () => {
                     className="p-1 rounded-full bg-primary text-white"
                     disabled={updatingItemId === item.id}
                   >
-                    <Plus size={16} className="size-3 lg:size-4"/>
+                    <Plus size={16} className="size-3 lg:size-4" />
                   </button>
                 </div>
               </div>
@@ -205,7 +231,7 @@ const CartSection = () => {
           {[...Array(4)].map((_, index) => (
             <Skeleton key={index} className="w-full h-[80px] rounded-lg shadow-sm" />
           ))}
-          </div> : (
+        </div> : (
           <div className=" w-full flex-1 text-lg flex items-center justify-center flex-col gap-2">
             <h1 className="text-lg font-semi">No products Found</h1>
             <Link href="/" className="bg-primary text-white rounded-full px-5 py-2 text-base">Shop Now</Link>
@@ -216,21 +242,21 @@ const CartSection = () => {
       <div className="fixed bottom-0 left-0 flex-row md:sticky border-t-2 md:border-none bg-white shadow-lg md:rounded-lg border p-4 flex md:flex-col gap-2 md:gap-5 w-full md:w-[270px] lg:w-[360px] xl:w-[400px] h-fit justify-between items-center">
         <h2 className="hidden md:block font-bold text-lg">Order Summary</h2>
         <div className=" md:w-full md:space-y-4">
-        <div className="w-fit md:w-full flex md:block text-xs md:text-base">
-          <div className="hidden sm:flex gap-2 md:justify-between mb-2">
-            <p className="font-semibold">Subtotal:</p>
-            <p>Rs. {selectedSubtotal}</p>
+          <div className="w-fit md:w-full flex md:block text-xs md:text-base">
+            <div className="hidden sm:flex gap-2 md:justify-between mb-2">
+              <p className="font-semibold">Subtotal:</p>
+              <p>Rs. {selectedSubtotal}</p>
+            </div>
+            <div className="flex gap-2 md:justify-between mb-2">
+              <p className="font-semibold">Shipping Fee:</p>
+              <p>{shippingFee === 0 ? "Free Shipping" : <>Rs. {shippingFee}</>}</p>
+            </div>
           </div>
-          <div className="flex gap-2 md:justify-between mb-2">
-            <p className="font-semibold">Shipping Fee:</p>
-            <p>{shippingFee === 0 ? "Free Shipping" : <>Rs. {shippingFee}</>}</p>
+          <hr className="hidden md:block w-full" />
+          <div className="w-fit md:w-full flex gap-2 md:justify-between text-base sm:text-xs md:text-base md:mb-2 font-semibold">
+            <p className="font-semibold">Total:</p>
+            <p>Rs. {total}</p>
           </div>
-        </div>
-        <hr className="hidden md:block w-full" />
-        <div className="w-fit md:w-full flex gap-2 md:justify-between text-base sm:text-xs md:text-base md:mb-2 font-semibold">
-          <p className="font-semibold">Total:</p>
-          <p>Rs. {total}</p>
-        </div>
         </div>
         <button
           onClick={handleCheckout}
