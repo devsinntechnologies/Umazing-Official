@@ -32,7 +32,7 @@ const Signup: React.FC<SignupProps> = ({ onBack, onSignupSuccess }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>(""); // Added Confirm Password state
-  const [phoneNo, setPhoneNo] = useState<string>("");
+  const [phoneNo, setPhoneNo] = useState<string>("+92 ");
   const [gender, setGender] = useState<"male" | "female">("male");
   const [dob, setDob] = useState<Date | null>(null);
   const { toast } = useToast();
@@ -45,8 +45,8 @@ const Signup: React.FC<SignupProps> = ({ onBack, onSignupSuccess }) => {
   };
 
   const validatePhoneNumber = (phoneNo: string): boolean => {
-    const phoneRegex = /^[0-9]+$/;
-    return phoneRegex.test(phoneNo);
+    const numberOnly = phoneNo.replace('+92 ', '');
+    return numberOnly.length === 10 && /^\d+$/.test(numberOnly);
   };
 
   useEffect(() => {
@@ -157,11 +157,14 @@ const Signup: React.FC<SignupProps> = ({ onBack, onSignupSuccess }) => {
     }
     return true;
   };
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    if (value.length <= 11) { // Enforce character limit
-      setPhoneNo(value);
-    }}
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace('+92 ', '').replace(/\D/g, '');
+    
+    if (value.length <= 10) {
+      const formattedValue = `+92 ${value}`;
+      setPhoneNo(formattedValue);
+    }
+  };
   const signup = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -247,21 +250,22 @@ const Signup: React.FC<SignupProps> = ({ onBack, onSignupSuccess }) => {
         </div>
 
         <div>
-      <div className="flex items-center border border-gray-300 p-2 rounded-md">
-        <Phone className="text-gray-500 mr-2" />
-        <input
-          type="tel"
-          placeholder="Enter your phone number"
-          value={phoneNo}
-          onChange={handleInputChange}
-          maxLength={11} // Ensure no more than 12 characters
-          className="w-full focus:outline-none"
-        />
-      </div>
-      <p className="text-gray-500 text-sm mt-1">
-        Maximum 11 characters allowed.
-      </p>
-    </div>
+          <div className="relative flex items-center border border-gray-300 p-2 rounded-md">
+            <Phone className="text-gray-500 mr-2" />
+            <span className="text-gray-800">+92</span>
+            <input
+              type="tel"
+              placeholder="3001234567"
+              value={phoneNo.replace('+92 ', '')}
+              onChange={handleInputChange}
+              maxLength={10}
+              className="w-full focus:outline-none pl-2"
+            />
+          </div>
+          <p className="text-gray-500 text-sm mt-1">
+            Format: +92 followed by 10 digits
+          </p>
+        </div>
 
         {/* Gender Selection */}
         <div className="flex space-x-4">

@@ -13,13 +13,20 @@ interface AddAddressDialogProps {
 
 const AddAddressDialog: React.FC<AddAddressDialogProps> = ({ onSubmit, isOpen, onClose, isLoading }) => {
   const [streetAddress, setStreetAddress] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState("+92 ");
   const { toast } = useToast();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     if (id === "streetAddress") setStreetAddress(value);
-    if (id === "phone") setPhone(value);
+    if (id === "phone") {
+      let phoneValue = value.replace('+92 ', '').replace(/\D/g, '');
+      
+      if (phoneValue.length <= 10) {
+        const formattedValue = `+92 ${phoneValue}`;
+        setPhone(formattedValue);
+      }
+    }
   };
 
   const handleAddAddress = async () => {
@@ -55,16 +62,18 @@ const AddAddressDialog: React.FC<AddAddressDialogProps> = ({ onSubmit, isOpen, o
             className="border border-gray-300 rounded-md p-2 placeholder:text-base focus:outline-none"
           />
           <label htmlFor="phone" className="text-sm font-normal">Phone</label>
-          <input
-            type="text"
-            id="phone"
-            placeholder="Phone number"
-            value={phone}
-            onChange={handleInputChange}
-            className="border border-gray-300 rounded-md p-2 placeholder:text-base focus:outline-none"
-            pattern="\d*"
-            maxLength={10} 
-          />
+          <div className="relative flex items-center">
+            <span className="absolute left-2 text-gray-800">+92</span>
+            <input
+              type="tel"
+              id="phone"
+              placeholder="3001234567"
+              value={phone.replace('+92 ', '')}
+              onChange={handleInputChange}
+              className="pl-12 w-full border border-gray-300 rounded-md p-2 placeholder:text-base focus:outline-none"
+              maxLength={10}
+            />
+          </div>
         </div>
         <Button onClick={handleAddAddress} className="mt-4" disabled={isLoading}>
           {isLoading ? "Adding..." : "Add"}

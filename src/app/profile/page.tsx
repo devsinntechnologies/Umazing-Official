@@ -109,6 +109,21 @@ const Page: React.FC = () => {
 
   const handleFieldChange = (e: ChangeEvent<HTMLInputElement>, field: keyof UserProfileData) => {
     if (formData) {
+      if (field === 'phoneNo') {
+        let value = e.target.value;
+        // Remove the prefix and any non-digits
+        value = value.replace('+92 ', '').replace(/\D/g, '');
+        
+        // Only update if remaining digits are 10 or less
+        if (value.length <= 10) {
+          const formattedValue = `+92 ${value}`;
+          const updatedFormData = { ...formData, [field]: formattedValue };
+          setFormData(updatedFormData);
+          setHasChanges(true);
+        }
+        return;
+      }
+
       const updatedFormData = { ...formData, [field]: e.target.value };
       setFormData(updatedFormData);
       setHasChanges(true);
@@ -254,14 +269,36 @@ const Page: React.FC = () => {
                 <div className="flex w-full flex-col sm:flex-row">
                   <h3 className="font-semibold text-base sm:text-lg mr-2 capitalize">{field}:</h3>
                   {editField === field ? (
-                    <input
-                      type="text"
-                      value={formData?.[field]}
-                      onChange={(e) => handleFieldChange(e, field)}
-                      className="border-b-2 border-transparent focus:outline-none flex-grow"
-                    />
+                    field === 'phoneNo' ? (
+                      <div className="relative flex-grow">
+                        <span className="absolute text-gray-800">+92</span>
+                        <input
+                          type="tel"
+                          value={formData?.[field]?.replace('+92 ', '') || ''}
+                          onChange={(e) => handleFieldChange(e, field)}
+                          maxLength={10}
+                          className="pl-8 border-b-2 border-transparent focus:outline-none w-full"
+                        />
+                      </div>
+                    ) : (
+                      <input
+                        type="text"
+                        value={formData?.[field] || ''}
+                        onChange={(e) => handleFieldChange(e, field)}
+                        className="border-b-2 border-transparent focus:outline-none flex-grow"
+                      />
+                    )
                   ) : (
-                    <p>{formData?.[field]}</p>
+                    <p>
+                      {field === 'phoneNo' ? (
+                        <span>
+                          <span className="text-gray-800">+92</span>
+                          {' ' + formData?.[field]?.replace('+92 ', '')}
+                        </span>
+                      ) : (
+                        formData?.[field]
+                      )}
+                    </p>
                   )}
                 </div>
                 {editField === field ? (
