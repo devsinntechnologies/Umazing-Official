@@ -196,11 +196,11 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onBack, email }) => {
       {/* Resend OTP button with timer */}
       {!isOtpVerified &&  <button
         type="button"
-        className={`w-full ${isResendDisabled ? "bg-gray-200": "bg-primary text-white"} py-2 rounded-md`}
+        className={`w-full ${isResendDisabled ? "bg-gray-200": "bg-primary text-white"} py-2 rounded-md flex justify-center items-center`}
         onClick={handleResendOtp}
         disabled={isResendDisabled || forgotPasswordLoading} // Disable resend if on timer or loading
       >
-        {forgotPasswordLoading ? <Loader className="animate-spin" size={16} /> : `Resend OTP (${resendTimer}s)`} 
+        {forgotPasswordLoading ? <Loader className="animate-spin " size={16} /> : `Resend OTP (${resendTimer}s)`} 
       </button>}
 
       <button
