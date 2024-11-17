@@ -53,6 +53,14 @@ const CartSection = () => {
     }
   }, [cartData]);
 
+  useEffect(() => {
+    if (cart.length > 0) {
+      const allSelected = {};
+      cart.forEach((item) => (allSelected[item.id] = item.quantity));
+      setSelectedItems(allSelected);
+    }
+  }, [cart]);
+
   const updateQuantity = async (id, quantity) => {
     setUpdatingItemId(id);
     setShowLoader(true);

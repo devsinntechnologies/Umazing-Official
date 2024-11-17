@@ -40,6 +40,10 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import ChangePassword from "../../components/profile/ChangePassword";
+import { Calendar } from "@/components/ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { format } from "date-fns"
+import { CalendarIcon } from "lucide-react"
 
 interface Address {
   id: string;
@@ -227,6 +231,15 @@ const Page: React.FC = () => {
     }
   };
 
+  const handleDateChange = (date: Date | undefined) => {
+    if (date && formData) {
+      const formattedDate = format(date, 'yyyy-MM-dd');
+      const updatedFormData = { ...formData, dob: formattedDate };
+      setFormData(updatedFormData);
+      setHasChanges(true);
+    }
+  };
+
   return (
     <>
       {isLoading ? (
@@ -265,11 +278,34 @@ const Page: React.FC = () => {
           <div className="flex flex-col gap-4">
             <h1 className="font-bold text-2xl sm:text-3xl">Account</h1>
             {["name", "dob", "gender", "phoneNo"].map((field) => (
-              <div key={field} className={`${editField === field && "border-b-primary"} flex justify-between items-center border-b pb-3 pt-4 sm:pt-6`} >
-                <div className="flex w-full flex-col sm:flex-row">
-                  <h3 className="font-semibold text-base sm:text-lg mr-2 capitalize">{field}:</h3>
+              <div key={field} className={`${editField === field && "border-b-primary"} flex justify-between items-center border-b py-2 sm:py-4`}>
+                <div className="flex w-full flex-col sm:flex-row sm:items-center">
+                  <h3 className="font-semibold text-base sm:text-lg mr-2 capitalize min-w-[120px]">
+                    {field === 'dob' ? 'Date of Birth' : field}:
+                  </h3>
                   {editField === field ? (
-                    field === 'phoneNo' ? (
+                    field === 'dob' ? (
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button 
+                            variant="ghost" 
+                            className="w-[240px] justify-start p-0 font-normal hover:bg-transparent"
+                          >
+                            {formData?.dob ? format(new Date(formData.dob), "PPP") : <span className="text-muted-foreground">Pick a date</span>}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={formData?.dob ? new Date(formData.dob) : undefined}
+                            onSelect={handleDateChange}
+                            initialFocus
+                            disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    ) : field === 'phoneNo' ? (
                       <div className="relative flex-grow">
                         <span className="absolute text-gray-800">+92</span>
                         <input
@@ -289,24 +325,26 @@ const Page: React.FC = () => {
                       />
                     )
                   ) : (
-                    <p>
-                      {field === 'phoneNo' ? (
+                    <p className="text-gray-600 flex-1">
+                      {field === 'dob' && formData?.dob ? (
+                        format(new Date(formData.dob), "PPP")
+                      ) : field === 'phoneNo' ? (
                         <span>
                           <span className="text-gray-800">+92</span>
                           {' ' + formData?.[field]?.replace('+92 ', '')}
                         </span>
                       ) : (
-                        formData?.[field]
+                        formData?.[field] || 'Not set'
                       )}
                     </p>
                   )}
                 </div>
                 {editField === field ? (
-                  <button onClick={handleSave} className="text-primary font-semibold">
+                  <button onClick={handleSave} className="text-primary font-semibold whitespace-nowrap">
                     Save
                   </button>
                 ) : (
-                  <button onClick={() => handleEditClick(field)} className="text-primary font-semibold">
+                  <button onClick={() => handleEditClick(field)} className="text-primary font-semibold whitespace-nowrap">
                     Edit
                   </button>
                 )}
@@ -355,13 +393,7 @@ const Page: React.FC = () => {
                     ))
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-gray-500 mb-4">No address found.</p>
-                      <Button 
-                        onClick={() => setIsDialogOpen(true)}
-                        className="bg-primary hover:bg-primary/90"
-                      >
-                        <Plus /> Add Your First Address
-                      </Button>
+                      <p className="text-gray-500">No address found.</p>
                     </div>
                   )}
                   
