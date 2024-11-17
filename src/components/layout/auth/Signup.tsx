@@ -157,7 +157,11 @@ const Signup: React.FC<SignupProps> = ({ onBack, onSignupSuccess }) => {
     }
     return true;
   };
-
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    if (value.length <= 11) { // Enforce character limit
+      setPhoneNo(value);
+    }}
   const signup = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -242,16 +246,22 @@ const Signup: React.FC<SignupProps> = ({ onBack, onSignupSuccess }) => {
           )}
         </div>
 
-        <div className="flex items-center border border-gray-300 p-2 rounded-md">
-          <Phone className="text-gray-500 mr-2" />
-          <input
-            type="tel"
-            placeholder="Enter your phone number"
-            value={phoneNo}
-            onChange={(e) => setPhoneNo(e.target.value)}
-            className="w-full focus:outline-none"
-          />
-        </div>
+        <div>
+      <div className="flex items-center border border-gray-300 p-2 rounded-md">
+        <Phone className="text-gray-500 mr-2" />
+        <input
+          type="tel"
+          placeholder="Enter your phone number"
+          value={phoneNo}
+          onChange={handleInputChange}
+          maxLength={11} // Ensure no more than 12 characters
+          className="w-full focus:outline-none"
+        />
+      </div>
+      <p className="text-gray-500 text-sm mt-1">
+        Maximum 11 characters allowed.
+      </p>
+    </div>
 
         {/* Gender Selection */}
         <div className="flex space-x-4">
