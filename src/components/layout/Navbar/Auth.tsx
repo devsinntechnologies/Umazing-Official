@@ -26,6 +26,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface AuthProps {
   className?: string;
@@ -74,12 +75,29 @@ const Auth: React.FC<AuthProps> = ({ className }) => {
           </div>
         ) : (
           <div className="flex items-center gap-3 min-h-10">
-            <Link href='/wishlist' className="size-8 md:size-10 rounded-full text-primary font-bold flex items-center justify-center">
-              <Heart className="font-bold" />
-            </Link>
-            <Link href='/cart' className="size-8 md:size-10 rounded-full text-primary font-bold flex items-center justify-center">
-              <ShoppingCart className="font-bold" />
-            </Link>
+            <Tooltip content="Wishlist">
+              <TooltipTrigger>
+                <Link href='/wishlist' className="relative size-8 md:size-10 rounded-full text-primary font-bold flex items-center justify-center">
+                  <div className="absolute -top-1 -right-1 flex items-center justify-center bg-destructive text-white text-xs w-5 h-5 rounded-full">10</div>
+                  <Heart className="font-bold" />
+                </Link></TooltipTrigger>
+              <TooltipContent>
+                <p>Wishlist</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip content="Cart">
+
+              <TooltipTrigger>
+                <Link href='/cart' className="relative size-8 md:size-10 rounded-full text-primary font-bold flex items-center justify-center">
+                  <div className="absolute -top-1 -right-1 flex items-center justify-center bg-destructive text-white text-xs w-5 h-5 rounded-full">10</div>
+                  <ShoppingCart className="font-bold" />
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Cart</p>
+              </TooltipContent>
+            </Tooltip>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 {userData && (

@@ -5,6 +5,7 @@ import Provider from "./Provider";
 import { Toaster } from "@/components/ui/toaster";
 import Child from "./Child";
 import { ReactNode } from "react";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 const urbanist = Urbanist({ subsets: ["latin"] });
 
@@ -33,7 +34,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body className={`${urbanist.className} w-screen min-h-screen`}>
         <Provider>
+          <TooltipProvider>
           <Child>{children}</Child>
+          </TooltipProvider>
           <Toaster />
         </Provider>
       </body>
