@@ -25,7 +25,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onBack, email }) => {
   const { toast } = useToast();
   const [isOtpVerified, setIsOtpVerified] = useState<boolean>(false);
   const [resendTimer, setResendTimer] = useState<number>(60); // Timer for resend OTP
-  const [isResendDisabled, setIsResendDisabled] = useState<boolean>(false); // Disable resend button initially
+  const [isResendDisabled, setIsResendDisabled] = useState<boolean>(true); // Disable resend button initially
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 

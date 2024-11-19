@@ -1,7 +1,7 @@
 //@ts-nocheck
 "use client";
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
-import { Camera, Dot, Plus, X } from "lucide-react";
+import { Camera, CreditCard, Dot, MapPinned, Plus, X } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -117,7 +117,7 @@ const Page: React.FC = () => {
         let value = e.target.value;
         // Remove the prefix and any non-digits
         value = value.replace('+92 ', '').replace(/\D/g, '');
-        
+
         // Only update if remaining digits are 10 or less
         if (value.length <= 10) {
           const formattedValue = `+92 ${value}`;
@@ -245,34 +245,46 @@ const Page: React.FC = () => {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <div className="w-full flex flex-col gap-8 px-5">
+        <div className="w-full flex flex-col gap-8 px-5 pb-4">
           <BreadCrumb />
-          <div className="flex items-center gap-5 flex-col md:flex-row">
-            <div className="relative">
-              <div className="relative bg-slate-300 rounded-full flex justify-center items-center w-[120px] h-[120px] overflow-hidden">
-                <Image
-                  src={formData?.imageUrl ? `http://97.74.89.204/${formData.imageUrl}` : "/Images/profileImg.png"}
-                  width={100}
-                  height={100}
-                  alt="User Profile"
-                  className="w-full h-full"
+          <div className="flex items-center justify-between gap-5 flex-col md:flex-row">
+            <div className="flex items-center gap-5">
+              <div className="relative">
+                <div className="relative bg-slate-300 rounded-full flex justify-center items-center w-[120px] h-[120px] overflow-hidden">
+                  <Image
+                    src={formData?.imageUrl ? `http://97.74.89.204/${formData.imageUrl}` : "/Images/profileImg.png"}
+                    width={100}
+                    height={100}
+                    alt="User Profile"
+                    className="w-full h-full"
+                  />
+                </div>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  className="hidden"
+                  accept="image/*"
+                  onChange={handleImageUpload}
                 />
+                <div
+                  className="absolute bottom-0 right-0 bg-black rounded-full p-1 flex items-center justify-center cursor-pointer"
+                  onClick={handleImageClick}
+                >
+                  <Camera className="text-white size-4 md:size-5" />
+                </div>
               </div>
-              <input
-                type="file"
-                ref={fileInputRef}
-                className="hidden"
-                accept="image/*"
-                onChange={handleImageUpload}
-              />
-              <div
-                className="absolute bottom-0 right-0 bg-black rounded-full p-1 flex items-center justify-center cursor-pointer"
-                onClick={handleImageClick}
-              >
-                <Camera className="text-white" />
+              <div className="flex flex-col items-start">
+                <h3 className="font-semibold text-2xl">{userProfile?.data.name}</h3>
+                <p className="text-gray-600">{userProfile?.data.email}</p>
               </div>
             </div>
-            <h3 className="font-semibold text-2xl">{userProfile?.data.name}</h3>
+            <div className="flex gap-3 flex-col">
+              <Button onClick={() => console.log("Payment Method Clicked")}>
+                <MapPinned className="size-4 md:size-5" /> Addresses
+              </Button> <Button onClick={() => console.log("Payment Method Clicked")}>
+                <CreditCard className="size-4 md:size-5" /> Payment Methods
+              </Button>
+            </div>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -287,8 +299,8 @@ const Page: React.FC = () => {
                     field === 'dob' ? (
                       <Popover>
                         <PopoverTrigger asChild>
-                          <Button 
-                            variant="ghost" 
+                          <Button
+                            variant="ghost"
                             className="w-[240px] justify-start p-0 font-normal hover:bg-transparent"
                           >
                             {formData?.dob ? format(new Date(formData.dob), "PPP") : <span className="text-muted-foreground">Pick a date</span>}
@@ -350,32 +362,39 @@ const Page: React.FC = () => {
                 )}
               </div>
             ))}
+            <div className="flex gap-3 items-center border-b py-2 sm:py-4">
+              <h3 className="font-semibold text-base sm:text-lg mr-2 capitalize">Email:</h3>
+              <p className="flex items-center gap-0">
+                {userProfile?.data.email}
+              </p>
+            </div>
           </div>
+
 
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
-              <AccordionTrigger>Address</AccordionTrigger>
+              <AccordionTrigger className="font-semibold text-base sm:text-lg mr-2 capitalize">Address</AccordionTrigger>
               <AccordionContent>
                 <div className="flex flex-col gap-4">
-                  <div className="w-full flex justify-end mb-4">
+                  <div className="w-full flex justify-end mb-2">
                     <Button
                       onClick={() => setIsDialogOpen(true)}
                       className="bg-primary hover:bg-primary/90"
                     >
-                      <Plus className="mr-2" /> Add New Address
+                      <Plus className="size-4 md:size-5" /> Add New Address
                     </Button>
                   </div>
 
                   {formData?.addresses?.length ? (
                     formData.addresses.map((addr) => (
-                      <div key={addr.id} className="flex justify-between items-center py-3 px-3 rounded-lg shadow-md border w-full">
+                      <div key={addr.id} className="flex justify-between items-center py-3 px-3 rounded-lg shadow-md border w-full" onClick={() => console.log(addr.address)}>
                         <div className="flex flex-col gap-3">
                           <p>{addr.address}</p>
                           <p>{addr.phoneNo}</p>
                         </div>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
-                            <X className="text-destructive cursor-pointer" />
+                            <X className="text-destructive cursor-pointer size-4 md:size-5" />
                           </AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
@@ -407,14 +426,14 @@ const Page: React.FC = () => {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          <div className="flex justify-between mb-4">
+          <div className="flex justify-between mb-2">
             <div className="flex">
               <h3 className="font-semibold text-base sm:text-lg mr-2 capitalize">Password:</h3>
-              <p className="tracking-wider font-bold">
-                {Array.from({ length: 5 }).map((_, index) => {
-                  <Dot />
-                })}</p>
-
+              <p className="font-bold flex items-center gap-0">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <Dot className="size-4 md:size-5" key={index} />
+                ))}
+              </p>
             </div>
             <ChangePassword />
           </div>

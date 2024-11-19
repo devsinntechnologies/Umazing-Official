@@ -129,3 +129,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+ /* custom css for Phone Number Input */
+.PhoneInputInput{
+  padding: 2px 4px !important;
+  outline: 0 !important;
+}

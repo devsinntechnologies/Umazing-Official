@@ -9,8 +9,10 @@ import Image from "next/image";
 import { useGetAllOffersQuery } from "@/hooks/UseOffers";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const HeaderSlider = () => {
+  const router = useRouter();
   const { data: offers, isLoading, isError } = useGetAllOffersQuery();
 
   if (isLoading) {
@@ -18,7 +20,7 @@ const HeaderSlider = () => {
   }
 
   if (isError || !offers?.data?.length) {
-    return <p className="text-center text-red-500">Failed to load offers.</p>;
+    return <p className="text-center text-destructive">Failed to load offers.</p>;
   }
 
   return (
@@ -43,6 +45,7 @@ const HeaderSlider = () => {
           <SwiperSlide
             key={offer.id}
             className="relative flex items-center justify-between shadow-md p-6 md:p-10 lg:p-20 w-full h-full"
+            onClick={() => router.push(`/search?offerId=${offer.id}`)}
           >
             {/* Text Content */}
             <div className="z-[10] max-w-lg pt-3 md:pt-0 space-y-5 text-white flex-1 h-full">

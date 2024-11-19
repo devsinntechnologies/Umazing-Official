@@ -21,6 +21,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "../ui/button";
 
 const FilterBar = () => {
   const router = useRouter();
@@ -107,12 +108,35 @@ const FilterBar = () => {
 
     router.push(`?${currentParams.toString()}`);
   };
+  const handleResetFilters = () => {
+    // Reset selected parameters to their initial values
+    setSelectedParams({
+      categoryId: "",
+      city: "",
+      claim: false,
+      minPrice: 0,
+      maxPrice: 0,
+      condition: "", // Added condition reset
+      offerId: "",   // Added offerId reset
+    });
+
+    const currentParams = new URLSearchParams(window.location.search);
+    currentParams.delete("categoryId");
+    currentParams.delete("city");
+    currentParams.delete("claim");
+    currentParams.delete("minPrice");
+    currentParams.delete("maxPrice");
+    currentParams.delete("condition"); // Added condition deletion
+    currentParams.delete("offerId");    // Added offerId deletion
+
+    router.push(`?${currentParams.toString()}`);
+  };
 
   return (
     <div>
       <div className="hidden md:block w-full md:w-[260px] px-3 py-2 rounded-lg bg-white max-h-full h-fit overflow-y-scroll border border-primary">
         <h1 className="text-xl font-bold ">Filters</h1>
-
+        <Button onClick={handleResetFilters}> Reset All </Button>
         {/* Categories Section */}
         <div className="border-b pb-2 ">
           {/* <h1 className="text-lg font-medium ">All Categories</h1> */}
@@ -137,8 +161,8 @@ const FilterBar = () => {
                     {categories?.data?.map((category) => (
                       <div
                         className={`flex gap-2 items-center  cursor-pointer p-2 rounded-md ${selectedParams.categoryId === category.id
-                            ? "bg-primary text-white"
-                            : ""
+                          ? "bg-primary text-white"
+                          : ""
                           }`}
                         key={category.id}
                         onClick={() => handleSelect("categoryId", category.id)}
@@ -201,8 +225,8 @@ const FilterBar = () => {
                     {offers?.data?.map((offer) => (
                       <div
                         className={`flex gap-2 items-center  cursor-pointer p-2 rounded-md ${selectedParams.offerId === offer.id
-                            ? "bg-primary text-white"
-                            : ""
+                          ? "bg-primary text-white"
+                          : ""
                           }`}
                         key={offer.id}
                         onClick={() => handleSelect("offerId", offer.id)}
@@ -256,8 +280,8 @@ const FilterBar = () => {
                 {conditionData.map((condition) => (
                   <div
                     className={`flex gap-2 items-center  cursor-pointer p-2 rounded-md ${selectedParams.condition === condition
-                        ? "bg-primary text-white"
-                        : ""
+                      ? "bg-primary text-white"
+                      : ""
                       }`}
                     key={condition}
                     onClick={() => handleSelect("condition", condition)}
@@ -336,12 +360,13 @@ const FilterBar = () => {
                     <input
                       type="number"
                       min={0}
+                      max={999999}
                       value={minPrice}
                       placeholder="Min"
                       className="w-full border-none outline-none"
                       onChange={(e) => {
-                        const newMinPrice = parseInt(e.target.value) || 0;
-                        setMinPrice(newMinPrice);
+                        const newMinPrice = Math.min(parseInt(e.target.value) || 0, 999999);
+                        setMinPrice(newMinPrice.toString().replace(/^0+(?=\d)/, ''));
                         setMaxPrice(Math.max(maxPrice, newMinPrice + 1)); // Ensure maxPrice is higher than minPrice
                       }}
                     />
@@ -351,13 +376,13 @@ const FilterBar = () => {
                     <input
                       type="number"
                       min={minPrice + 1}
+                      max={999999}
                       value={maxPrice}
                       placeholder="Max"
                       className="w-full border-none outline-none"
                       onChange={(e) => {
-                        const newMaxPrice =
-                          parseInt(e.target.value) || minPrice + 1;
-                        setMaxPrice(newMaxPrice);
+                        const newMaxPrice = Math.min(parseInt(e.target.value) || minPrice + 1, 999999);
+                        setMaxPrice(newMaxPrice.toString().replace(/^0+(?=\d)/, ''));
                       }}
                     />
                   </div>
@@ -494,11 +519,11 @@ const FilterBar = () => {
                   <Accordion type="single" collapsible>
                     <AccordionItem value="item-1">
                       <AccordionTrigger className="text-lg font-medium ">
-                      {selectedParams.categoryId
-                      ? categories?.data?.find(
-                        (category) => category.id === selectedParams.categoryId
-                      )?.name || "All Categories"
-                      : "All Categories"}
+                        {selectedParams.categoryId
+                          ? categories?.data?.find(
+                            (category) => category.id === selectedParams.categoryId
+                          )?.name || "All Categories"
+                          : "All Categories"}
                       </AccordionTrigger>
                       <AccordionContent>
                         <div
@@ -507,8 +532,8 @@ const FilterBar = () => {
                           {categories?.data?.map((category) => (
                             <div
                               className={`w-full cursor-pointer px-3 py-2 rounded-full ${selectedParams.categoryId === category.id
-                                  ? "bg-primary text-white"
-                                  : ""
+                                ? "bg-primary text-white"
+                                : ""
                                 }`}
                               key={category.id}
                               onClick={() =>
@@ -581,8 +606,8 @@ const FilterBar = () => {
                         {offers?.data?.map((offer) => (
                           <div
                             className={`flex gap-2 items-center  cursor-pointer p-2 rounded-md ${selectedParams.offerId === offer.id
-                                ? "bg-primary text-white"
-                                : ""
+                              ? "bg-primary text-white"
+                              : ""
                               }`}
                             key={offer.id}
                             onClick={() => handleSelect("offerId", offer.id)}
@@ -637,8 +662,8 @@ const FilterBar = () => {
                     {conditionData.map((condition) => (
                       <div
                         className={`flex gap-2 items-center  cursor-pointer p-2 rounded-md ${selectedParams.condition === condition
-                            ? "bg-primary text-white"
-                            : ""
+                          ? "bg-primary text-white"
+                          : ""
                           }`}
                         key={condition}
                         onClick={() => handleSelect("condition", condition)}
@@ -737,12 +762,13 @@ const FilterBar = () => {
                         <input
                           type="number"
                           min={0}
+                          max={999999}
                           value={minPrice}
                           placeholder="Min"
                           className="w-full border-none outline-none"
                           onChange={(e) => {
-                            const newMinPrice = parseInt(e.target.value) || 0;
-                            setMinPrice(newMinPrice);
+                            const newMinPrice = Math.min(parseInt(e.target.value) || 0, 999999);
+                            setMinPrice(newMinPrice.toString().replace(/^0+(?=\d)/, ''));
                             setMaxPrice(Math.max(maxPrice, newMinPrice + 1)); // Ensure maxPrice is higher than minPrice
                           }}
                         />
@@ -752,13 +778,13 @@ const FilterBar = () => {
                         <input
                           type="number"
                           min={minPrice + 1}
+                          max={999999}
                           value={maxPrice}
                           placeholder="Max"
                           className="w-full border-none outline-none"
                           onChange={(e) => {
-                            const newMaxPrice =
-                              parseInt(e.target.value) || minPrice + 1;
-                            setMaxPrice(newMaxPrice);
+                            const newMaxPrice = Math.min(parseInt(e.target.value) || minPrice + 1, 999999);
+                            setMaxPrice(newMaxPrice.toString().replace(/^0+(?=\d)/, ''));
                           }}
                         />
                       </div>

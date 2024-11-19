@@ -12,6 +12,7 @@ import {
 import { useChangePasswordMutation } from "@/hooks/UseAuth";
 import { useToast } from "@/hooks/use-toast";
 import { EyeIcon, EyeOffIcon, LockKeyhole } from "lucide-react";
+import { Button } from "../ui/button";
 
 const ChangePassword = () => {
   const { toast } = useToast();
@@ -121,8 +122,10 @@ const ChangePassword = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="px-3 py-1 rounded-lg bg-primary text-white border border-solid flex justify-center">
+      <DialogTrigger >
+       <Button>
         Change Password
+       </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

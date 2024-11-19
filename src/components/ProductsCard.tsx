@@ -160,11 +160,11 @@ const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
         <div className="w-full space-y-2 p-2">
           <h3 className="text-sm md:text-lg font-bold transition duration-200 text-primary  tracking-wide capitalize truncate-multiline-1">{product.name}</h3>
         <div className="w-full flex justify-between items-center">
-        <p className="text-sm md:text-base xl:text-xl font-semibold text-black">Rs.
-            <span className="text-base md:text-lg lg:text-xl xl:text-2xl font-bold "> {product.basePrice}</span>
+        <p className="text-sm md:text-base xl:text-lg font-semibold text-black">Rs.
+            <span className="text-base md:text-lg lg:text-xl 2xl:text-2xl font-bold "> {product.basePrice}</span>
           </p>
-          <p className="text-sm md:text-base xl:text-lg font-semibold text-black">Qty:
-            <span className="text-sm md:text-base xl:text-lg  "> {product.baseQuantity}</span>
+          <p className="text-sm lg:text-base font-semibold text-black">Qty:
+            <span className="text-sm md:text-base lg:text-lg  "> {product.baseQuantity}</span>
           </p>
         </div>
         </div>

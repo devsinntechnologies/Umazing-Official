@@ -79,7 +79,7 @@ const AuthDialog: React.FC<AuthDialogProps> = ({
         {(currentView === "forgetPassword" || currentView === "signup" || currentView === "resetPassword") && (
           <button
             onClick={() => setCurrentView("login")}
-            className="absolute top-2 left-2 size-10 p-2 text-primary shadow-md rounded-full flex items-center justify-center"
+            className="absolute top-2 left-2 size-10 p-2 bg-primary text-white shadow-md rounded-full flex items-center justify-center"
           >
             <ArrowLeftIcon size={20} />
           </button>
