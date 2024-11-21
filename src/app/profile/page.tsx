@@ -250,11 +250,11 @@ const Page: React.FC = () => {
           <div className="flex items-center justify-between gap-5 flex-col md:flex-row">
             <div className="flex items-center gap-5">
               <div className="relative">
-                <div className="relative bg-slate-300 rounded-full flex justify-center items-center w-[120px] h-[120px] overflow-hidden">
+                <div className="relative border shadow-md rounded-full flex justify-center items-center w-[120px] h-[120px] overflow-hidden">
                   <Image
                     src={formData?.imageUrl ? `http://97.74.89.204/${formData.imageUrl}` : "/Images/profileImg.png"}
-                    width={100}
-                    height={100}
+                    width={140}
+                    height={140}
                     alt="User Profile"
                     className="w-full h-full"
                   />
@@ -426,7 +426,7 @@ const Page: React.FC = () => {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          <div className="flex justify-between mb-2">
+          <div className="flex justify-between items-center pb-1 mb-2 border-b">
             <div className="flex">
               <h3 className="font-semibold text-base sm:text-lg mr-2 capitalize">Password:</h3>
               <p className="font-bold flex items-center gap-0">
