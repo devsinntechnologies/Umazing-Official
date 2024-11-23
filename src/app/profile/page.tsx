@@ -1,7 +1,7 @@
 //@ts-nocheck
 "use client";
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
-import { Camera, CreditCard, Dot, MapPinned, Plus, X } from "lucide-react";
+import { Camera, CreditCard, Dot, MapPinned, Plus, X, PackageOpen } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 import { useToast } from "@/hooks/use-toast";
 import withAuth from "@/components/hoc/withAuth";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Dialog,
   DialogContent,
@@ -245,9 +246,9 @@ const Page: React.FC = () => {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <div className="w-full flex flex-col gap-8 px-5 pb-4">
+        <div className="w-full flex flex-col sm:gap-8 gap-4 px-5 pb-4">
           <BreadCrumb />
-          <div className="flex items-center justify-between gap-5 flex-col md:flex-row">
+          <div className="flex sm:items-center items-left sm:justify-between gap-5 flex-col sm:flex-row">
             <div className="flex items-center gap-5">
               <div className="relative">
                 <div className="relative border shadow-md rounded-full flex justify-center items-center w-[120px] h-[120px] overflow-hidden">
@@ -278,21 +279,28 @@ const Page: React.FC = () => {
                 <p className="text-gray-600">{userProfile?.data.email}</p>
               </div>
             </div>
-            <div className="flex gap-3 flex-col">
-              <Button onClick={() => console.log("Payment Method Clicked")}>
-                <MapPinned className="size-4 md:size-5" /> Addresses
+            {/* <div className="flex gap-3">
+              <Button onClick={() => console.log("Payment Method Clicked")} className="bg-none  hover:bg-primary">
+                <MapPinned />
               </Button> 
-            <Button>
-                Orders
-              </Button>
+           <Link href="/orders"> 
+           <Button>
+           <PackageOpen/>
+              </Button></Link>
               <Button onClick={() => console.log("Payment Method Clicked")}>
-                <CreditCard className="size-4 md:size-5" /> Payment Methods
+                <CreditCard className="hover:color-white"/> 
               </Button>
+            </div> */}
+            <div className="flex gap-3 items-center ">
+              <button className="border border-solid-3px border-primary rounded-full p-2 hover:bg-primary"> <PackageOpen color="#3C999A" /></button>
+              <button className="border border-solid-3px border-primary rounded-full p-2 hover:bg-primary"> <CreditCard color="#3C999A" /></button>
+              <button className="border border-solid-3px border-primary rounded-full p-2 hover:bg-primary"> <MapPinned color="#3C999A" /></button>
+             
             </div>
           </div>
 
           <div className="flex flex-col gap-4">
-            <h1 className="font-bold text-2xl sm:text-3xl">Account</h1>
+            <h1 className="font-bold text-2xl sm:text-3xl ">Account</h1>
             {["name", "dob", "gender", "phoneNo"].map((field) => (
               <div key={field} className={`${editField === field && "border-b-primary"} flex justify-between items-center border-b py-2 sm:py-4`}>
                 <div className="flex w-full flex-col sm:flex-row sm:items-center">
@@ -367,7 +375,7 @@ const Page: React.FC = () => {
               </div>
             ))}
             <div className="flex gap-3 items-center border-b py-2 sm:py-4">
-              <h3 className="font-semibold text-base sm:text-lg mr-2 capitalize">Email:</h3>
+              <h3 className="font-semibold text-base sm:text-lg mr-2  capitalize">Email:</h3>
               <p className="flex items-center gap-0">
                 {userProfile?.data.email}
               </p>
