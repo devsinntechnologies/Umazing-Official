@@ -281,7 +281,11 @@ const Page: React.FC = () => {
             <div className="flex gap-3 flex-col">
               <Button onClick={() => console.log("Payment Method Clicked")}>
                 <MapPinned className="size-4 md:size-5" /> Addresses
-              </Button> <Button onClick={() => console.log("Payment Method Clicked")}>
+              </Button> 
+            <Button>
+                Orders
+              </Button>
+              <Button onClick={() => console.log("Payment Method Clicked")}>
                 <CreditCard className="size-4 md:size-5" /> Payment Methods
               </Button>
             </div>
