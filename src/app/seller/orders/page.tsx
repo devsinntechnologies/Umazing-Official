@@ -105,9 +105,9 @@ const Page = () => {
   return (
     <div className="w-full py-6 min-h-[70vh]">
       <Breadcrumb/>
-      <h1 className="text-lg md:text-xl lg:text-2xl font-semibold mb-6 text-center">
+      <h3 className="text-3xl font-bold mb-2 text-primary cursor-pointer">
         Orders
-      </h1>
+      </h3>
      <div className="w-full  mx-auto">
      <DataTable columns={columns} data={orders} isLoading={isLoading} />
      </div>

@@ -73,9 +73,9 @@ const Page: React.FC = () => {
   return (
     <div className="w-full flex flex-col gap-5">
       {/* Header Section */}
-      <h1 className="text-2xl font-semibold text-primary">
+      <h3 className="sm:text-3xl text-xl font-bold text-primary cursor-pointer">
         {`Welcome Back, ${userName}`}
-      </h1>
+      </h3>
 
       {/* Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">

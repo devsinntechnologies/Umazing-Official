@@ -6,7 +6,7 @@ import Image from 'next/image';
 const ReviewsCard = ({ review }) => {
   const [data, setData] = useState([]);
 
-  console.log(data)
+
 
   useEffect(() => {
     setData(review?.data || []);

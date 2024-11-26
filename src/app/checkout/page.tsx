@@ -118,7 +118,7 @@ const Page: React.FC = () => {
       receiverAddress: selectedAddress.address,
     };
 
-    console.log(orderDetails);
+    
 
     try {
       const response = await createOrder(orderDetails).unwrap(); // Unwrap to get the result
@@ -179,7 +179,7 @@ const Page: React.FC = () => {
   return (
     <>
       <BreadCrumb />
-      <div className="flex w-full p-5 gap-10 flex-wrap md:flex-nowrap lg:px-10">
+      <div className="flex w-full  p-5 gap-10 flex-wrap md:flex-nowrap lg:px-10">
         <div className="w-full flex flex-col gap-5 md:w-[60%]">
           <h1 className="font-medium text-2xl">Billing Information</h1>
 
@@ -229,11 +229,11 @@ const Page: React.FC = () => {
         </div>
 
         <div className="w-full md:w-[40%]">
-          <h1 className="font-medium text-2xl">Order Summary</h1>
+          <h1 className="font-semibold sm:text-2xl text-xl">Order Summary</h1>
           {cartLoading ? (
             <Skeleton className="h-16 w-full" />
           ) : cartItems.length > 0 ? (
-            <div className="space-y-4">
+            <div className="space-y-4 text-sm sm:text-md">
               {cartItems.map((item) => (
                 <div key={item.id} className="flex justify-between">
                   <span>{item.Product.name} x {item.quantity}</span>

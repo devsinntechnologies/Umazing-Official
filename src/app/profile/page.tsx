@@ -331,7 +331,7 @@ const Page: React.FC = () => {
                       </Popover>
                     ) : field === 'phoneNo' ? (
                       <div className="relative flex-grow">
-                        <span className="absolute text-gray-800">+92</span>
+                        <span className="absolute text-gray-800"></span>
                         <input
                           type="tel"
                           value={formData?.[field]?.replace('+92 ', '') || ''}

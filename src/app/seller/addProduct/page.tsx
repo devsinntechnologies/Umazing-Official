@@ -314,7 +314,7 @@ const Page = () => {
 
       formData.append("images", images[i].file)
     }
-console.log(productDetails)
+    console.log(productDetails)
     // if (showVariants) {
     //   // Update the variants object based on the attributes
     //   // const newVariants = generateVariants(attributes);
@@ -353,7 +353,7 @@ console.log(productDetails)
   return (
     <div className="w-full">
       <h3 className="text-3xl font-bold text-primary cursor-pointer" >Add Product</h3>
-      <div className="flex flex-col-reverse lg:flex-row justify-between items-start m-1 p-5">
+      <div className="flex flex-col-reverse lg:flex-row justify-between items-start m-1 px-5">
         <form className="w-full lg:w-2/3" onSubmit={(e) => e.preventDefault()}>
           <div className="mb-4">
             <label className="text-sm">Product Name</label>
@@ -361,7 +361,7 @@ console.log(productDetails)
               name="name"
               value={productDetails.name}
               onChange={handleInputChange}
-              className="w-full h-12 rounded-md pl-2 mt-2 border border-gray-500"
+              className="w-full h-12 rounded-md pl-2 border border-gray-500"
               type="text"
               placeholder="Type name here"
             />
@@ -401,8 +401,100 @@ console.log(productDetails)
             </span>
           </div>
 
-          
-<div className="flex flex-col sm:flex-row mb-4 gap-3">
+          <div className="mb-4 outline-none">
+            <label className="text-sm font-semibold">Category</label>
+            <Select
+              value={productDetails.categoryId}
+              onValueChange={(value) =>
+                setProductDetails((prevDetails) => ({
+                  ...prevDetails,
+                  categoryId: value,
+                }))
+              }
+              className="w-full mt-2 rounded-md border border-gray-500 focus:outline-none focus:ring focus:ring-primary"
+            >
+              <SelectTrigger className="w-full h-12 px-3 flex items-center justify-between cursor-pointer border border-gray-500 rounded-md">
+                <SelectValue placeholder="Select Category" />
+              </SelectTrigger>
+              <SelectContent className="bg-white rounded-md shadow-lg">
+                {isLoadingCategories ? (
+                  <SelectItem disabled>Loading...</SelectItem>
+                ) : isErrorCategories ? (
+                  <SelectItem disabled>Error loading categories</SelectItem>
+                ) : (
+                  categories?.data.map((category) => (
+                    <SelectItem key={category.id} value={category.id}>
+                      {category.name}
+                    </SelectItem>
+                  ))
+                )}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex flex-col sm:flex-row mb-4 gap-3">
+            <div className="outline-none w-full sm:w-1/2">
+            <label className="text-sm font-semibold">Sub Category</label>
+            <Select
+              value={productDetails.categoryId}
+              onValueChange={(value) =>
+                setProductDetails((prevDetails) => ({
+                  ...prevDetails,
+                  categoryId: value,
+                }))
+              }
+              className="w-full mt-2 rounded-md border border-gray-500 focus:outline-none focus:ring focus:ring-primary"
+            >
+              <SelectTrigger className="w-full h-12 px-3 flex items-center justify-between cursor-pointer border border-gray-500 rounded-md">
+                <SelectValue placeholder="Select Category" />
+              </SelectTrigger>
+              <SelectContent className="bg-white rounded-md shadow-lg">
+                {isLoadingCategories ? (
+                  <SelectItem disabled>Loading...</SelectItem>
+                ) : isErrorCategories ? (
+                  <SelectItem disabled>Error loading categories</SelectItem>
+                ) : (
+                  categories?.data.map((category) => (
+                    <SelectItem key={category.id} value={category.id}>
+                      {category.name}
+                    </SelectItem>
+                  ))
+                )}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="outline-none w-full sm:w-1/2">
+            <label className="text-sm font-semibold">Category Type</label>
+            <Select
+              value={productDetails.categoryId}
+              onValueChange={(value) =>
+                setProductDetails((prevDetails) => ({
+                  ...prevDetails,
+                  categoryId: value,
+                }))
+              }
+              className="w-full mt-2 rounded-md border border-gray-500 focus:outline-none focus:ring focus:ring-primary"
+            >
+              <SelectTrigger className="w-full h-12 px-3 flex items-center justify-between cursor-pointer border border-gray-500 rounded-md">
+                <SelectValue placeholder="Select Category" />
+              </SelectTrigger>
+              <SelectContent className="bg-white rounded-md shadow-lg">
+                {isLoadingCategories ? (
+                  <SelectItem disabled>Loading...</SelectItem>
+                ) : isErrorCategories ? (
+                  <SelectItem disabled>Error loading categories</SelectItem>
+                ) : (
+                  categories?.data.map((category) => (
+                    <SelectItem key={category.id} value={category.id}>
+                      {category.name}
+                    </SelectItem>
+                  ))
+                )}
+              </SelectContent>
+            </Select>
+          </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row mb-4 gap-3">
             <div className="w-full sm:w-1/2">
               <label className="text-sm">Base Price</label>
               <input
@@ -482,37 +574,6 @@ console.log(productDetails)
               <label className="text-sm">Claim In Case of Issue</label>
             </div>
           </div>
-
-          <div className="mb-4 outline-none">
-      <label className="text-sm font-semibold">Category</label>
-      <Select
-        value={productDetails.categoryId}
-        onValueChange={(value) =>
-          setProductDetails((prevDetails) => ({
-            ...prevDetails,
-            categoryId: value,
-          }))
-        }
-        className="w-full mt-2 rounded-md border border-gray-500 focus:outline-none focus:ring focus:ring-primary"
-      >
-        <SelectTrigger className="w-full h-12 px-3 flex items-center justify-between cursor-pointer border border-gray-500 rounded-md">
-          <SelectValue placeholder="Select Category" />
-        </SelectTrigger>
-        <SelectContent className="bg-white rounded-md shadow-lg">
-          {isLoadingCategories ? (
-            <SelectItem disabled>Loading...</SelectItem>
-          ) : isErrorCategories ? (
-            <SelectItem disabled>Error loading categories</SelectItem>
-          ) : (
-            categories?.data.map((category) => (
-              <SelectItem key={category.id} value={category.id}>
-                {category.name}
-              </SelectItem>
-            ))
-          )}
-        </SelectContent>
-      </Select>
-    </div>
 
           {/* <div className="w-full">
             <div className="my-4 flex items-center">
@@ -687,7 +748,7 @@ console.log(productDetails)
           </div>
         </form>
 
-        <div className="w-full lg:w-1/3 lg:ml-10 mt-10 lg:mt-0">
+        <div className="w-full lg:w-1/3 lg:ml-10 mt-5 lg:mt-0">
           <div className="mb-4">
             <div
               className="w-full h-[264px] border overflow-hidden rounded-md mt-2 flex flex-wrap gap-2 items-center justify-center cursor-pointer"

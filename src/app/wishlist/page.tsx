@@ -84,7 +84,6 @@ const Page: React.FC = () => {
     try {
       await addToCart({ ProductId: productId, quantity });
     } catch (error) {
-      console.error("Error updating cart:", error);
     }
   };
 

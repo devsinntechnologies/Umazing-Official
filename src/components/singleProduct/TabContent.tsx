@@ -26,7 +26,7 @@ const TabComponent = ({ product, review, refetch }) => {
   // Calculate average rating with better null checks
   const avgRating = review?.data?.length > 0
     ? (review.data.reduce((acc, curr) => {
-      console.log('Accumulator:', acc, 'Current stars:', curr.star);
+
       const stars = parseFloat(curr.star) || 0;
       return acc + stars;
     }, 0) / review.data.length).toFixed(1)
@@ -79,7 +79,7 @@ const TabComponent = ({ product, review, refetch }) => {
       reviewForm.append("images", selectedImages[i])
 
     }
-    console.log(reviewForm)
+
 
     try {
       toast({

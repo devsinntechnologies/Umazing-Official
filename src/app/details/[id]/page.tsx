@@ -47,7 +47,7 @@ const Page = () => {
     if (productData) setProduct(productData.data);
     if (relatedData) setRelatedProducts(relatedData.data);
   }, [productData, relatedData, product]);
-  console.log(product);
+
 
   const handleIncrement = () => setQuantity((prevQty) => prevQty + 1);
   const handleDecrement = () => setQuantity((prevQty) => (prevQty > 1 ? prevQty - 1 : 1));
@@ -132,16 +132,15 @@ const Page = () => {
 
   useEffect(() => {
     if (reviewData?.data && Array.isArray(reviewData.data) && reviewData.data.length > 0) {
-      console.log('Review Data:', reviewData.data);
+
       const totalRating = reviewData.data.reduce((sum, review) => {
-        console.log('Current Review:', review);
-        console.log('Review Rating:', review.star);
+
         const rating = Number(review.star) || 0;
         return sum + rating;
       }, 0);
-      console.log('Total Rating:', totalRating);
+
       const avgRating = totalRating / reviewData.data.length;
-      console.log('Average Rating:', avgRating);
+
       setAverageRating(Number(avgRating.toFixed(1)));
     } else {
       setAverageRating(0);

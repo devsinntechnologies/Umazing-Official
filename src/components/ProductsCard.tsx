@@ -22,7 +22,7 @@ const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
   const pathname = usePathname();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const quantity = 1;
-  console.log(product);
+ 
 
   const [addToCart, { isSuccess: cartSuccess, isLoading: addingToCart, isError: cartError }] = useAddToCartMutation();
   const [addToFavourite, { isSuccess: addSuccess, isLoading: addingToFav, isError: addError }] = useAddToFavouriteMutation();
@@ -70,7 +70,7 @@ const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
     try {
         await addToCart({ ProductId: product.id, quantity });
     } catch (error) {
-      console.error("Error updating cart:", error);
+   
     }
   };
 
@@ -95,7 +95,7 @@ const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
     try {
       await addToFavourite({ UserId: userId, ProductId: product.id });
 
-      console.log(products[index].isFavorite);
+     
 
 
 
@@ -108,7 +108,7 @@ const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
 
       // refetchFavourites();
     } catch (error) {
-      console.error("Failed to add to wishlist:", error);
+    
     }
   };
 
@@ -140,7 +140,7 @@ const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
       });
 
     } catch (error) {
-      console.error("Failed to remove from wishlist:", error);
+
     }
   };
 

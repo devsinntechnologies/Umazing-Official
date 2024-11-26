@@ -40,7 +40,7 @@ export const decodeToken = (token: string): DecodedToken | null => {
 
     return decoded;
   } catch (error) {
-    console.error('Error decoding token:', error);
+
     return null;
   }
 };

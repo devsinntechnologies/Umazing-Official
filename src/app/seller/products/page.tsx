@@ -74,7 +74,7 @@ const Page: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-5 justify-center w-full">
-      <h1 className="text-3xl font-bold text-primary">All Products</h1>
+      <h3 className="text-3xl font-bold text-primary cursor-pointer">All Products</h3>
       {/* AlertDialog for Deleting Product */}
       {productToDelete && (
         <AlertDialog open={true} onOpenChange={() => setProductToDelete(null)}>
