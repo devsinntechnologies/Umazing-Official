@@ -75,72 +75,72 @@ const Page = () => {
     }
   }, [isSuccess, isLoading, error, responseData, toast]);
 
-  // const [variants, setVariants] = useState([]);
-  // const [showVariants, setShowVariants] = useState(false);
-  // const [attributes, setAttributes] = useState([{ attribute: "", attributeName: "", attributeValues: [] }]);
+  const [variants, setVariants] = useState([]);
+  const [showVariants, setShowVariants] = useState(false);
+  const [attributes, setAttributes] = useState([{ attribute: "", attributeName: "", attributeValues: [] }]);
 
-  // const generateVariants = () => {
-  //   const newVariants = [];
+  const generateVariants = () => {
+    const newVariants = [];
 
-  //   // Generate variants only if all attributes have been selected
-  //   if (attributes.every((attr) => attr.attribute && attr.attributeValues.length > 0)) {
-  //     // Generate combinations of attribute values
-  //     const attributeValueCombinations = cartesian(attributes.map((attr) => attr.attributeValues));
+    // Generate variants only if all attributes have been selected
+    if (attributes.every((attr) => attr.attribute && attr.attributeValues.length > 0)) {
+      // Generate combinations of attribute values
+      const attributeValueCombinations = cartesian(attributes.map((attr) => attr.attributeValues));
 
-  //     // Generate SKU for each variant
-  //     attributeValueCombinations.forEach((combination) => {
-  //       const sku = `${productDetails.name}-${combination.map((value) => value.name).join('-')}`;
-  //       newVariants.push({
-  //         sku: sku,
-  //         quantity: 1,
-  //         price: "",
-  //         attributes: attributes.map((attr, index) => ({
-  //           AttributeId: attr.attribute,
-  //           AttributeValueId: attr.attributeValues[index]?.id,
-  //         })),
-  //       });
-  //     });
-  //   }
+      // Generate SKU for each variant
+      attributeValueCombinations.forEach((combination) => {
+        const sku = `${productDetails.name}-${combination.map((value) => value.name).join('-')}`;
+        newVariants.push({
+          sku: sku,
+          quantity: 1,
+          price: "",
+          attributes: attributes.map((attr, index) => ({
+            AttributeId: attr.attribute,
+            AttributeValueId: attr.attributeValues[index]?.id,
+          })),
+        });
+      });
+    }
 
-  //   setVariants(newVariants);
-  // };
+    setVariants(newVariants);
+  };
 
-  // // Function to handle changes in variant price
-  // const handleVariantPriceChange = (index, price) => {
-  //   const updatedVariants = [...variants];
-  //   updatedVariants[index].price = price;
-  //   setVariants(updatedVariants);
-  // };
+  // Function to handle changes in variant price
+  const handleVariantPriceChange = (index, price) => {
+    const updatedVariants = [...variants];
+    updatedVariants[index].price = price;
+    setVariants(updatedVariants);
+  };
 
-  // // Function to handle changes in variant stock quantity
-  // const handleVariantStockChange = (index, stockQuantity) => {
-  //   const updatedVariants = [...variants];
-  //   updatedVariants[index].stockQuantity = stockQuantity;
-  //   setVariants(updatedVariants);
-  // };
+  // Function to handle changes in variant stock quantity
+  const handleVariantStockChange = (index, stockQuantity) => {
+    const updatedVariants = [...variants];
+    updatedVariants[index].stockQuantity = stockQuantity;
+    setVariants(updatedVariants);
+  };
 
-  // // Function to handle deletion of variant
-  // const handleDeleteVariant = (index) => {
-  //   const updatedVariants = [...variants];
-  //   updatedVariants.splice(index, 1);
-  //   setVariants(updatedVariants);
-  // };
+  // Function to handle deletion of variant
+  const handleDeleteVariant = (index) => {
+    const updatedVariants = [...variants];
+    updatedVariants.splice(index, 1);
+    setVariants(updatedVariants);
+  };
 
-  // // Helper function to generate combinations of attribute values
-  // const cartesian = (arrays) => {
-  //   return arrays.reduce((acc, curr) => {
-  //     return acc.flatMap((x) => curr.map((y) => x.concat(y)));
-  //   }, [[]]);
-  // };
+  // Helper function to generate combinations of attribute values
+  const cartesian = (arrays) => {
+    return arrays.reduce((acc, curr) => {
+      return acc.flatMap((x) => curr.map((y) => x.concat(y)));
+    }, [[]]);
+  };
 
-  // const [isAttrTable, setIsAttrTable] = useState(false)
-  // const toggleAttrtable = () => {
-  //   setIsAttrTable(!isAttrTable);
-  // }
-  // useEffect(() => {
-  //   generateVariants();
-  //   setIsAttrTable(false)
-  // }, [attributes]);
+  const [isAttrTable, setIsAttrTable] = useState(false)
+  const toggleAttrtable = () => {
+    setIsAttrTable(!isAttrTable);
+  }
+  useEffect(() => {
+    generateVariants();
+    setIsAttrTable(false)
+  }, [attributes]);
 
 
   const [images, setImages] = useState([]);
@@ -181,53 +181,58 @@ const Page = () => {
   };
 
 
-  // const handleAddAttribute = () => {
-  //   setAttributes((prevAttributes) => [
-  //     ...prevAttributes,
-  //     { attribute: "", attributeName: "", attributeValue: "", attributeValueName: "" }
-  //   ]);
-  // };
+  const handleAddAttribute = () => {
+    setAttributes((prevAttributes) => [
+      ...prevAttributes,
+      { attribute: "", attributeName: "", attributeValues: [] }
+    ]);
+  };
 
-  // const handleRemoveAttribute = (index) => {
-  //   if (attributes.length > 1) {
-  //     setAttributes((prevAttributes) => prevAttributes.filter((_, idx) => idx !== index));
-  //   }
-  // };
+  const handleRemoveAttribute = (index) => {
+    if (attributes.length > 1) {
+      setAttributes((prevAttributes) => prevAttributes.filter((_, idx) => idx !== index));
+    }
+  };
 
-  // const handleAttributeChange = (index, key, value, name) => {
-  //   setAttributes((prevAttributes) =>
-  //     prevAttributes.map((attrib, idx) =>
-  //       idx === index ? { ...attrib, [key]: value, [`${key}Name`]: name } : attrib
-  //     )
-  //   );
-  // };
+  const handleAttributeChange = (index, key, value, name) => {
+    setAttributes((prevAttributes) =>
+      prevAttributes.map((attrib, idx) =>
+        idx === index ? { ...attrib, [key]: value, [`${key}Name`]: name } : attrib
+      )
+    );
+  };
 
-  // const handleAddAttributeValue = (index, valueId, valueName) => {
-  //   setAttributes((prevAttributes) =>
-  //     prevAttributes.map((attrib, idx) =>
-  //       idx === index
-  //         ? { ...attrib, attributeValues: [...attrib.attributeValues, { id: valueId, name: valueName }] }
-  //         : attrib
-  //     )
-  //   );
-  // };
+  const handleAddAttributeValue = (index, valueId, valueName) => {
+    setAttributes((prevAttributes) =>
+      prevAttributes.map((attrib, idx) =>
+        idx === index
+          ? { ...attrib, attributeValues: [...attrib.attributeValues, { id: valueId, name: valueName }] }
+          : attrib
+      )
+    );
+  };
 
-  // const handleRemoveAttributeValue = (index, valueIndex) => {
-  //   setAttributes((prevAttributes) =>
-  //     prevAttributes.map((attrib, idx) =>
-  //       idx === index
-  //         ? { ...attrib, attributeValues: attrib.attributeValues.filter((_, i) => i !== valueIndex) }
-  //         : attrib
-  //     )
-  //   );
-  // };
+  const handleRemoveAttributeValue = (index, valueIndex) => {
+    setAttributes((prevAttributes) =>
+      prevAttributes.map((attrib, idx) =>
+        idx === index
+          ? { ...attrib, attributeValues: attrib.attributeValues.filter((_, i) => i !== valueIndex) }
+          : attrib
+      )
+    );
+  };
 
 
 
-  // const getAttributeValues = (attributeId) => {
-  //   const attribute = attributesData?.data.find((attr) => attr.id === attributeId);
-  //   return attribute ? attribute.Attribute_Values : [];
-  // };
+  const getAttributeValues = (attributeId) => {
+    if (!attributesData || !attributesData.data) {
+        console.warn('attributesData is not available or empty');
+        return [];
+    }
+
+    const attribute = attributesData.data.find((attr) => attr.id === attributeId);
+    return attribute ? attribute.Attribute_Values : [];
+  };
 
   const handleInputChange = (e) => {
     const { name, type, value, checked } = e.target;
@@ -314,12 +319,12 @@ const Page = () => {
 
       formData.append("images", images[i].file)
     }
-console.log(productDetails)
-    // if (showVariants) {
-    //   // Update the variants object based on the attributes
-    //   // const newVariants = generateVariants(attributes);
-    //   formData.append("variants", JSON.stringify(variants));
-    // }
+    console.log(productDetails)
+    if (showVariants) {
+      // Update the variants object based on the attributes
+      // const newVariants = generateVariants(attributes);
+      formData.append("variants", JSON.stringify(variants));
+    }
 
     // for (let [key, value] of formData.entries()) {
     //   console.log("formData :")
@@ -345,10 +350,18 @@ console.log(productDetails)
       variants: [{
       }],
     });
-    // setAttributes([{ attribute: "", attributeName: "", attributeValue: "", attributeValueName: "" }]);
+    setAttributes([{ attribute: "", attributeName: "", attributeValue: "", attributeValueName: "" }]);
     setImages([]);
     setShowSuccessModal(false);
   };
+
+  if (isLoadingAttributes) {
+    return <div>Loading attributes...</div>;
+  }
+
+  if (isErrorAttributes) {
+    return <div>Error loading attributes.</div>;
+  }
 
   return (
     <div className="w-full">
@@ -401,8 +414,8 @@ console.log(productDetails)
             </span>
           </div>
 
-          
-<div className="flex flex-col sm:flex-row mb-4 gap-3">
+
+          <div className="flex flex-col sm:flex-row mb-4 gap-3">
             <div className="w-full sm:w-1/2">
               <label className="text-sm">Base Price</label>
               <input
@@ -484,37 +497,37 @@ console.log(productDetails)
           </div>
 
           <div className="mb-4 outline-none">
-      <label className="text-sm font-semibold">Category</label>
-      <Select
-        value={productDetails.categoryId}
-        onValueChange={(value) =>
-          setProductDetails((prevDetails) => ({
-            ...prevDetails,
-            categoryId: value,
-          }))
-        }
-        className="w-full mt-2 rounded-md border border-gray-500 focus:outline-none focus:ring focus:ring-primary"
-      >
-        <SelectTrigger className="w-full h-12 px-3 flex items-center justify-between cursor-pointer border border-gray-500 rounded-md">
-          <SelectValue placeholder="Select Category" />
-        </SelectTrigger>
-        <SelectContent className="bg-white rounded-md shadow-lg">
-          {isLoadingCategories ? (
-            <SelectItem disabled>Loading...</SelectItem>
-          ) : isErrorCategories ? (
-            <SelectItem disabled>Error loading categories</SelectItem>
-          ) : (
-            categories?.data.map((category) => (
-              <SelectItem key={category.id} value={category.id}>
-                {category.name}
-              </SelectItem>
-            ))
-          )}
-        </SelectContent>
-      </Select>
-    </div>
+            <label className="text-sm font-semibold">Category</label>
+            <Select
+              value={productDetails.categoryId}
+              onValueChange={(value) =>
+                setProductDetails((prevDetails) => ({
+                  ...prevDetails,
+                  categoryId: value,
+                }))
+              }
+              className="w-full mt-2 rounded-md border border-gray-500 focus:outline-none focus:ring focus:ring-primary"
+            >
+              <SelectTrigger className="w-full h-12 px-3 flex items-center justify-between cursor-pointer border border-gray-500 rounded-md">
+                <SelectValue placeholder="Select Category" />
+              </SelectTrigger>
+              <SelectContent className="bg-white rounded-md shadow-lg">
+                {isLoadingCategories ? (
+                  <SelectItem disabled>Loading...</SelectItem>
+                ) : isErrorCategories ? (
+                  <SelectItem disabled>Error loading categories</SelectItem>
+                ) : (
+                  categories?.data.map((category) => (
+                    <SelectItem key={category.id} value={category.id}>
+                      {category.name}
+                    </SelectItem>
+                  ))
+                )}
+              </SelectContent>
+            </Select>
+          </div>
 
-          {/* <div className="w-full">
+          <div className="w-full">
             <div className="my-4 flex items-center">
               <input
                 type="checkbox"
@@ -674,7 +687,7 @@ console.log(productDetails)
                 </TableBody>
               </Table>
             </div>
-          )} */}
+          )}
 
           <div className="flex items-center justify-end w-full">
             <button
