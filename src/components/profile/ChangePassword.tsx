@@ -91,7 +91,7 @@ const ChangePassword = () => {
         description: error?.data?.message || "Failed to update password. Please try again.",
         variant: "destructive",
       });
-      console.error("Password update error:", error);
+
     }
   };
 

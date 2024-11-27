@@ -60,7 +60,7 @@ const Auth: React.FC<AuthProps> = ({ className }) => {
       dispatch(setUserProfile(userProfile.data));  // Store profile data in Redux
     }
     if (error) {
-      console.error("Error fetching user profile:", error);
+
     }
   }, [userProfile, error, dispatch]);
 
