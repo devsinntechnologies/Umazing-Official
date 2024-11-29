@@ -364,7 +364,7 @@ const Page = () => {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-[#F5F5F5] p-4">
       <h3 className="text-3xl font-bold text-primary cursor-pointer" >Add Product</h3>
       <div className="flex flex-col-reverse lg:flex-row justify-between items-start m-1 px-5">
         <form className="w-full lg:w-2/3" onSubmit={(e) => e.preventDefault()}>
@@ -374,7 +374,7 @@ const Page = () => {
               name="name"
               value={productDetails.name}
               onChange={handleInputChange}
-              className="w-full h-12 rounded-md pl-2 border border-gray-500"
+              className="w-full h-10 rounded-sm pl-2 "
               type="text"
               placeholder="Type name here"
             />
@@ -389,7 +389,7 @@ const Page = () => {
               rows={3}
               maxLength={200}
               minLength={30}
-              className="w-full h-20 p-2 mt-2 border rounded-md border-gray-500 resize-none"
+              className="w-full h-20 p-2 mt-2 rounded-sm  resize-none"
               placeholder="Type description here (30-200 characters)"
             />
             <span className="absolute bottom-2 right-2 text-sm text-gray-500">
@@ -406,7 +406,7 @@ const Page = () => {
               rows={3}
               maxLength={600}
               minLength={80}
-              className="w-full h-32 p-2 mt-2 border rounded-md border-gray-500 resize-none"
+              className="w-full h-32 p-2 mt-2 rounded-sm  resize-none"
               placeholder="Type long description here (80-600 characters)"
             />
             <span className="absolute bottom-2 right-2 text-sm text-gray-500">
@@ -414,7 +414,7 @@ const Page = () => {
             </span>
           </div>
 
-          <div className="mb-4 outline-none">
+          {/* <div className="mb-4 outline-none">
             <label className="text-sm font-semibold">Category</label>
             <Select
               value={productDetails.categoryId}
@@ -424,12 +424,12 @@ const Page = () => {
                   categoryId: value,
                 }))
               }
-              className="w-full mt-2 rounded-md border border-gray-500 focus:outline-none focus:ring focus:ring-primary"
+              className="w-full mt-2 rounded-sm  focus:outline-none focus:ring focus:ring-primary"
             >
-              <SelectTrigger className="w-full h-12 px-3 flex items-center justify-between cursor-pointer border border-gray-500 rounded-md">
+              <SelectTrigger className="w-full h-10 px-3 flex items-center justify-between cursor-pointer  rounded-sm">
                 <SelectValue placeholder="Select Category" />
               </SelectTrigger>
-              <SelectContent className="bg-white rounded-md shadow-lg">
+              <SelectContent className="bg-white rounded-sm shadow-lg">
                 {isLoadingCategories ? (
                   <SelectItem disabled>Loading...</SelectItem>
                 ) : isErrorCategories ? (
@@ -443,8 +443,38 @@ const Page = () => {
                 )}
               </SelectContent>
             </Select>
-          </div>
-          <div className="flex flex-col sm:flex-row mb-4 gap-3">
+          </div> */}
+          <div className="mb-4 outline-none">
+      <label className="text-sm font-semibold">Category</label>
+      <Select
+        value={productDetails.categoryId}
+        onValueChange={(value) =>
+          setProductDetails((prevDetails) => ({
+            ...prevDetails,
+            categoryId: value,
+          }))
+        }
+        className="w-full mt-2 rounded-sm  focus:outline-none focus:ring focus:ring-primary"
+      >
+        <SelectTrigger className="w-full h-10 px-3 flex items-center justify-between cursor-pointer  rounded-sm">
+          <SelectValue placeholder="Select Category" />
+        </SelectTrigger>
+        <SelectContent className="bg-white rounded-sm shadow-lg">
+          {isLoadingCategories ? (
+            <SelectItem disabled>Loading...</SelectItem>
+          ) : isErrorCategories ? (
+            <SelectItem disabled>Error loading categories</SelectItem>
+          ) : (
+            categories?.data.map((category) => (
+              <SelectItem key={category.id} value={category.id}>
+                {category.name}
+              </SelectItem>
+            ))
+          )}
+        </SelectContent>
+      </Select>
+    </div>
+    <div className="flex flex-col sm:flex-row mb-4 gap-3">
             <div className="outline-none w-full sm:w-1/2">
             <label className="text-sm font-semibold">Sub Category</label>
             <Select
@@ -455,12 +485,12 @@ const Page = () => {
                   categoryId: value,
                 }))
               }
-              className="w-full mt-2 rounded-md border border-gray-500 focus:outline-none focus:ring focus:ring-primary"
+              className="w-full mt-2 rounded-sm  focus:outline-none focus:ring focus:ring-primary"
             >
-              <SelectTrigger className="w-full h-12 px-3 flex items-center justify-between cursor-pointer border border-gray-500 rounded-md">
+              <SelectTrigger className="w-full h-10 px-3 flex items-center justify-between cursor-pointer  rounded-sm">
                 <SelectValue placeholder="Select Category" />
               </SelectTrigger>
-              <SelectContent className="bg-white rounded-md shadow-lg">
+              <SelectContent className="bg-white rounded-sm shadow-lg">
                 {isLoadingCategories ? (
                   <SelectItem disabled>Loading...</SelectItem>
                 ) : isErrorCategories ? (
@@ -485,12 +515,12 @@ const Page = () => {
                   categoryId: value,
                 }))
               }
-              className="w-full mt-2 rounded-md border border-gray-500 focus:outline-none focus:ring focus:ring-primary"
+              className="w-full mt-2 rounded-sm  focus:outline-none focus:ring focus:ring-primary"
             >
-              <SelectTrigger className="w-full h-12 px-3 flex items-center justify-between cursor-pointer border border-gray-500 rounded-md">
+              <SelectTrigger className="w-full h-10 px-3 flex items-center justify-between cursor-pointer  rounded-sm">
                 <SelectValue placeholder="Select Category" />
               </SelectTrigger>
-              <SelectContent className="bg-white rounded-md shadow-lg">
+              <SelectContent className="bg-white rounded-sm shadow-lg">
                 {isLoadingCategories ? (
                   <SelectItem disabled>Loading...</SelectItem>
                 ) : isErrorCategories ? (
@@ -506,119 +536,6 @@ const Page = () => {
             </Select>
           </div>
           </div>
-
-          <div className="flex flex-col sm:flex-row mb-4 gap-3">
-            <div className="w-full sm:w-1/2">
-              <label className="text-sm">Base Price</label>
-              <input
-                name="basePrice"
-                value={productDetails.basePrice}
-                onChange={handleInputChange}
-                className=" w-full h-12 rounded-md px-2 mt-2 border border-gray-500"
-                type="number"
-                placeholder="Enter base price"
-                min="0"
-              />
-            </div>
-            <div className="w-full sm:w-1/2">
-              <label className="text-sm">Base Quantity</label>
-              <input
-                name="baseQuantity"
-                value={productDetails.baseQuantity}
-                onChange={handleInputChange}
-                className="  base w-full h-12 rounded-md px-2 mt-2 border border-gray-500"
-                type="number"
-                placeholder="Enter base quantity"
-                min="0"
-              />
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row mb-4  gap-3 pt-1  ">
-            <div className="w-full sm:w-1/2">
-              <label className="text-sm">City</label>
-              <input
-                name="city"
-                value={productDetails.city}
-                onChange={handleInputChange}
-                className="w-full h-12 rounded-md pl-2 mt-2 border border-gray-500"
-                type="text"
-                placeholder="Enter city"
-              />
-            </div>
-
-            {/* <input
-                name="condition"
-                value={productDetails.condition}
-                onChange={handleInputChange}
-                className="w-full h-12 rounded-md pl-2 mt-2 border border-gray-500"
-                type="text"
-                placeholder="Enter condition"
-              /> */}
-            <div className="w-full sm:w-1/2 flex flex-col gap-2">
-              <label className="text-sm mt-1">Condition</label>
-              <Select
-                value={productDetails.condition}
-                onValueChange={(value) =>
-                  handleInputChange({ target: { name: "condition", value } })
-                }
-                className="w-full  rounded-md pl-2   border border-gray-500  focus:outline-none"
-              >
-                <SelectTrigger className="w-full h-[70%]">
-                  <SelectValue placeholder="Select Condition" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="new">New</SelectItem>
-                  <SelectItem value="used">Used</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="my-4 flex items-center">
-            <div className="flex items-center justify-center gap-2">
-              <input
-                name="claim"
-                type="checkbox"
-                checked={productDetails.claim}
-                onChange={handleInputChange}
-                className="mr-2"
-              />
-              <label className="text-sm">Claim In Case of Issue</label>
-            </div>
-          </div>
-
-          <div className="mb-4 outline-none">
-      <label className="text-sm font-semibold">Category</label>
-      <Select
-        value={productDetails.categoryId}
-        onValueChange={(value) =>
-          setProductDetails((prevDetails) => ({
-            ...prevDetails,
-            categoryId: value,
-          }))
-        }
-        className="w-full mt-2 rounded-md border border-gray-500 focus:outline-none focus:ring focus:ring-primary"
-      >
-        <SelectTrigger className="w-full h-12 px-3 flex items-center justify-between cursor-pointer border border-gray-500 rounded-md">
-          <SelectValue placeholder="Select Category" />
-        </SelectTrigger>
-        <SelectContent className="bg-white rounded-md shadow-lg">
-          {isLoadingCategories ? (
-            <SelectItem disabled>Loading...</SelectItem>
-          ) : isErrorCategories ? (
-            <SelectItem disabled>Error loading categories</SelectItem>
-          ) : (
-            categories?.data.map((category) => (
-              <SelectItem key={category.id} value={category.id}>
-                {category.name}
-              </SelectItem>
-            ))
-          )}
-        </SelectContent>
-      </Select>
-    </div>
-
           <div className="w-full">
             <div className="my-4 flex items-center">
               <input
@@ -634,11 +551,11 @@ const Page = () => {
               <div className="mb-4">
                 <h4 className="text-lg font-bold mb-2">Attributes</h4>
                 {attributes.map((attr, index) => (
-                  <div key={index} className="mb-4 border border-gray-500 p-2 rounded-md">
+                  <div key={index} className="mb-4  p-2 rounded-sm">
                     <div className="flex justify-between items-center">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <div className="w-full h-12 rounded-md mt-2 border border-gray-500 px-3 py-2 flex items-center justify-between cursor-pointer">
+                          <div className="w-full h-10 rounded-sm mt-2  px-3 py-2 flex items-center justify-between cursor-pointer">
                             <div>
                               {attr.attributeName || "Select Attribute"}
                             </div>
@@ -673,7 +590,7 @@ const Page = () => {
                     {attr.attribute && (
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <div className="w-full h-12 rounded-md mt-2 border border-gray-500 px-3 py-2 flex items-center justify-between cursor-pointer">
+                          <div className="w-full h-10 rounded-sm mt-2  px-3 py-2 flex items-center justify-between cursor-pointer">
                             <div>
                               Select Attribute Values
                             </div>
@@ -719,7 +636,7 @@ const Page = () => {
                 ))}
                 <button
                   type="button"
-                  className="my-4 px-4 py-2 border rounded-md text-sm bg-primary text-white transition duration-200"
+                  className="my-4 px-4 py-2 rounded-sm text-sm bg-primary text-white transition duration-200"
                   onClick={handleAddAttribute}
                 >
                   Add Attribute
@@ -727,7 +644,7 @@ const Page = () => {
                 <hr />
                 <button
                   type="button"
-                  className="mt-2 px-4 py-2 border rounded-md text-sm bg-primary text-white transition duration-200"
+                  className="mt-2 px-4 py-2 rounded-sm text-sm bg-primary text-white transition duration-200"
                   onClick={toggleAttrtable}
                 >
                   Generate Variants
@@ -781,21 +698,12 @@ const Page = () => {
             </div>
           )}
 
-          <div className="flex items-center justify-end w-full">
-            <button
-              type="submit"
-              onClick={handleSubmit}
-              className="mt-2 px-4 py-2 border rounded-md text-sm text-primary border-primary hover:bg-primary hover:text-white transition duration-200"
-            >
-              {isLoading ? " Adding..." : "Add Product"}
-            </button>
-          </div>
         </form>
 
         <div className="w-full lg:w-1/3 lg:ml-10 mt-5 lg:mt-0">
           <div className="mb-4">
             <div
-              className="w-full h-[264px] border overflow-hidden rounded-md mt-2 flex flex-wrap gap-2 items-center justify-center cursor-pointer"
+              className="w-full h-[264px] overflow-hidden rounded-sm mt-2 flex flex-wrap gap-2 items-center border border-solid-black justify-center cursor-pointer"
               onClick={handlePlaceholderClick}
             >
               {images.length === 0 ? (
@@ -818,7 +726,7 @@ const Page = () => {
               {images.map((image, index) => (
                 <div
                   key={index}
-                  className={`relative w-24 h-24 border rounded-md flex items-center justify-center ${index === 0 ? "border-blue-500" : ""
+                  className={`relative w-24 h-24 rounded-sm flex items-center  justify-center ${index === 0 ? "border-blue-500" : ""
                     }`}
                 >
                   <Image
@@ -826,7 +734,7 @@ const Page = () => {
                     alt={`Uploaded ${index}`}
                     layout="fill"
                     objectFit="cover"
-                    className="rounded-md"
+                    className="rounded-sm border-solid-black border"
                   />
                   <button
                     type="button"
@@ -838,7 +746,7 @@ const Page = () => {
                 </div>
               ))}
               <div
-                className="w-24 h-24 border rounded-md flex items-center justify-center cursor-pointer"
+                className="w-24 h-24 rounded-sm flex items-center justify-center cursor-pointer border border-solid-black"
                 onClick={handlePlaceholderClick}
               >
                 <span className="text-gray-500">+</span>
@@ -848,11 +756,76 @@ const Page = () => {
                   onChange={handleImageUpload}
                   accept="image/*"
                   multiple
-                  className="hidden"
+                  className="hidden border border-solid-black"
                 />
               </div>
             </div>
           </div>
+    
+    
+            <div className="w-full">
+              <label className="text-sm">Base Price</label>
+              <input
+                name="basePrice"
+                value={productDetails.basePrice}
+                onChange={handleInputChange}
+                className=" w-full h-10 rounded-sm px-2 mt-2 "
+                type="number"
+                placeholder="Enter base price"
+                min="0"
+              />
+            </div>
+            <div className="w-full ">
+              <label className="text-sm">Base Quantity</label>
+              <input
+                name="baseQuantity"
+                value={productDetails.baseQuantity}
+                onChange={handleInputChange}
+                className="  base w-full h-10 rounded-sm px-2 mt-2 "
+                type="number"
+                placeholder="Enter base quantity"
+                min="0"
+              />
+            </div>
+            <div className="w-full">
+              <label className="text-sm">City</label>
+              <input
+                name="city"
+                value={productDetails.city}
+                onChange={handleInputChange}
+                className="w-full h-10 rounded-sm pl-2 mt-2 "
+                type="text"
+                placeholder="Enter city"
+              />
+            </div>
+            <div className="w-full  flex flex-col gap-2">
+              <label className="text-sm mt-1">Condition</label>
+              <Select
+                value={productDetails.condition}
+                onValueChange={(value) =>
+                  handleInputChange({ target: { name: "condition", value } })
+                }
+                className="w-full  rounded-sm pl-2     focus:outline-none"
+              >
+                <SelectTrigger className="w-full h-[70%]">
+                  <SelectValue placeholder="Select Condition" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="new">New</SelectItem>
+                  <SelectItem value="used">Used</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-center mt-3 justify-end w-full">
+            <button
+              type="submit"
+              onClick={handleSubmit}
+              className="mt-2 w-full py-3 rounded-sm text-md  bg-[#F5F5F5] border hover:border-primary hover:bg-primary text-primary hover:text-white transition duration-200"
+            >
+              {isLoading ? " Adding..." : "Add Product"}
+            </button>
+          </div>
+
         </div>
 
       </div>
