@@ -552,10 +552,10 @@ const Page = () => {
                 <h4 className="text-lg font-bold mb-2">Attributes</h4>
                 {attributes.map((attr, index) => (
                   <div key={index} className="mb-4  p-2 rounded-sm">
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center border border-solid-black">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <div className="w-full h-10 rounded-sm mt-2  px-3 py-2 flex items-center justify-between cursor-pointer">
+                          <div className="w-full h-10 rounded-sm mt-2  px-3 py-2 flex items-center  justify-between cursor-pointer">
                             <div>
                               {attr.attributeName || "Select Attribute"}
                             </div>
