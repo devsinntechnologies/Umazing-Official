@@ -365,23 +365,27 @@ const Page = () => {
 
   return (
     <div className="w-full  p-4">
-      <h3 className="text-3xl font-bold text-primary cursor-pointer" >Add Product</h3>
-      <div className="flex flex-col-reverse lg:flex-row justify-between items-start m-1 px-5">
-        <form className="w-full lg:w-2/3" onSubmit={(e) => e.preventDefault()}>
-          <div className="w-full h-auto border border-solid-black p-3 shadow-sm bg-[#F5F5F5]">
-          <div className="mb-4">
+        <div className="mb-8">
+        <h3 className="text-4xl font-bold text-primary">Add New Product</h3>
+        <p className="text-gray-600 mt-2">Fill in the details to list your product</p>
+      </div>
+      <div className="flex flex-col-reverse lg:flex-row gap-8">
+        <form className="w-full lg:w-2/3 space-y-6" onSubmit={(e) => e.preventDefault()}>
+          <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+           <h2 className="text-xl font-semibold mb-4">Basic Details</h2>
+         <div className="space-y-4">
+          <div>
             <label className="text-sm">Product Name</label>
             <input
               name="name"
               value={productDetails.name}
               onChange={handleInputChange}
-              className="w-full h-10 rounded-sm pl-2 "
+              className="w-full py-2 rounded-sm px-2 mt-2 border border-solid-black"
               type="text"
               placeholder="Type name here"
             />
           </div>
-
-          <div className="mb-4 relative">
+          <div>
             <label className="text-sm">Description</label>
             <textarea
               name="description"
@@ -390,15 +394,14 @@ const Page = () => {
               rows={3}
               maxLength={200}
               minLength={30}
-              className="w-full h-20 p-2 mt-2 rounded-sm  resize-none"
+              className="w-full py-2 rounded-sm px-2 mt-2 border border-solid-black"
               placeholder="Type description here (30-200 characters)"
             />
             <span className="absolute bottom-2 right-2 text-sm text-gray-500">
               {productDetails.description.length}/200
             </span>
           </div>
-
-          <div className="mb-4 relative">
+          <div >
             <label className="text-sm">Long Description</label>
             <textarea
               name="longDescription"
@@ -407,13 +410,14 @@ const Page = () => {
               rows={3}
               maxLength={600}
               minLength={80}
-              className="w-full h-32 p-2 mt-2 rounded-sm  resize-none"
+              className="w-full py-2 rounded-sm px-2 mt-2 border border-solid-black"
               placeholder="Type long description here (80-600 characters)"
             />
             <span className="absolute bottom-2 right-2 text-sm text-gray-500">
               {productDetails.longDescription.length}/600
             </span>
           </div>
+         </div>
           </div>
 
           {/* <div className="mb-4 outline-none">
@@ -446,7 +450,10 @@ const Page = () => {
               </SelectContent>
             </Select>
           </div> */}
-          <div className="mb-4 outline-none">
+
+       <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+          <h2 className="text-xl font-semibold mb-4">Category Details</h2>
+       <div className="mb-4 outline-none">
       <label className="text-sm font-semibold">Category</label>
       <Select
         value={productDetails.categoryId}
@@ -538,6 +545,7 @@ const Page = () => {
             </Select>
           </div>
           </div>
+       </div>
           <div className="w-full">
             <div className="my-4 flex items-center">
               <input
@@ -765,31 +773,36 @@ const Page = () => {
           </div>
     
     
-            <div className="w-full">
-              <label className="text-sm">Base Price</label>
+           <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+           <h2 className="text-xl font-semibold mb-4">Pricing & Stock</h2>
+          <div className="space-y-4">
+           <div className="w-full">
+              <label className="text-sm">Price</label>
               <input
                 name="basePrice"
                 value={productDetails.basePrice}
                 onChange={handleInputChange}
-                className=" w-full h-10 rounded-sm px-2 mt-2 "
+                className=" w-full h-10 rounded-sm px-2 mt-2 border border-solid-black"
                 type="number"
-                placeholder="Enter base price"
+                placeholder="Enter price"
                 min="0"
               />
             </div>
-            <div className="w-full ">
-              <label className="text-sm">Base Quantity</label>
+           <div className="w-full ">
+              <label className="text-sm">Quantity</label>
               <input
                 name="baseQuantity"
                 value={productDetails.baseQuantity}
                 onChange={handleInputChange}
-                className="  base w-full h-10 rounded-sm px-2 mt-2 "
+                className="  base w-full h-10 rounded-sm px-2 mt-2 border border-solid-black"
                 type="number"
-                placeholder="Enter base quantity"
+                placeholder="Enter quantity"
                 min="0"
               />
             </div>
-            <div className="w-full">
+          </div>
+           </div>
+            {/* <div className="w-full">
               <label className="text-sm">City</label>
               <input
                 name="city"
@@ -817,7 +830,7 @@ const Page = () => {
                   <SelectItem value="used">Used</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
             <div className="flex items-center mt-3 justify-end w-full">
             <button
               type="submit"
