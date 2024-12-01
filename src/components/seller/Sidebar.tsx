@@ -13,6 +13,7 @@ const Sidebar: React.FC = () => {
       : "hover:bg-primary hover:text-white rounded-full lg:rounded-sm py-1";
 
   return (
+    <div className="bg-[#F5F5F5]">
     <div className="lg:w-[230px] w-full flex h-fit lg:flex-col gap-3 lg:bg-[#f3f4f6] py-3 text-start lg:shadow-sm lg:shadow-primary lg:border-[1px] lg:border-solid lg:border-primary lg:rounded-md md:px-2">
       <h1 className="text-2xl font-semibold lg:flex hidden md:px-3">Seller</h1>
       <Link href="/seller" className={getLinkClass("/seller")}>
@@ -39,6 +40,7 @@ const Sidebar: React.FC = () => {
           Orders
         </div>
       </Link>
+    </div>
     </div>
   );
 };

@@ -364,11 +364,11 @@ const Page = () => {
   }
 
   return (
-    <div className="w-full bg-[#F5F5F5] p-4">
+    <div className="w-full  p-4">
       <h3 className="text-3xl font-bold text-primary cursor-pointer" >Add Product</h3>
       <div className="flex flex-col-reverse lg:flex-row justify-between items-start m-1 px-5">
         <form className="w-full lg:w-2/3" onSubmit={(e) => e.preventDefault()}>
-          <div className="w-full h-auto border border-solid-black">
+          <div className="w-full h-auto border border-solid-black p-3 shadow-sm bg-[#F5F5F5]">
           <div className="mb-4">
             <label className="text-sm">Product Name</label>
             <input
