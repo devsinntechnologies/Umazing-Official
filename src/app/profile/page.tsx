@@ -1,7 +1,7 @@
 //@ts-nocheck
 "use client";
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
-import { Camera, CreditCard, Dot, MapPinned, Plus, X, PackageOpen } from "lucide-react";
+import { Camera, CreditCard, Dot, MapPinned, Plus, X, PackageOpen, Loader2 } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -24,6 +24,7 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { RootState } from "@/store/store";
@@ -45,6 +46,7 @@ import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
+import AddressManager from "@/components/profile/AddressManager";
 
 interface Address {
   id: string;
@@ -72,6 +74,9 @@ const Page: React.FC = () => {
   const [formData, setFormData] = useState<UserProfileData | null>(null);
   const [hasChanges, setHasChanges] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
+  const [isImageLoading, setIsImageLoading] = useState(true);
 
   const { toast } = useToast();
   const {
@@ -210,18 +215,31 @@ const Page: React.FC = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const imageUrl = URL.createObjectURL(file);
+    setPreviewImage(imageUrl);
+    setIsImageDialogOpen(true);
+
     const formData = new FormData();
     formData.append('image', file);
-    // formData.append('UserId', userId as string);
+    setFormData((prev) => ({ ...prev, image: formData }));
+  };
+
+  const handleUpdateProfilePicture = async () => {
+    const imageFile = formData?.image?.get('image');
+    if (!imageFile) return;
+
+    const imageData = new FormData();
+    imageData.append('image', imageFile);
 
     try {
-      const response = await updateProfile(formData).unwrap();
+      const response = await updateProfile(imageData).unwrap();
       if (response?.success) {
         toast({
           title: "Profile Picture Updated",
           description: "Your profile picture has been updated successfully.",
         });
         refetch();
+        setIsImageDialogOpen(false);
       }
     } catch (error) {
       toast({
@@ -248,17 +266,27 @@ const Page: React.FC = () => {
       ) : (
         <div className="w-full flex flex-col sm:gap-8 gap-4 px-5 pb-4">
           <BreadCrumb />
-          <div className="flex sm:items-center items-left sm:justify-between gap-5 flex-col sm:flex-row">
-            <div className="flex items-center gap-5">
+          <div className="flex items-center items-left sm:justify-between gap-5 flex-col sm:flex-row">
+            <div className="flex items-center gap-5 flex-col md:flex-row">
               <div className="relative">
-                <div className="relative border shadow-md rounded-full flex justify-center items-center w-[120px] h-[120px] overflow-hidden">
+                <div className="relative border shadow-md rounded-full flex justify-center items-center w-[100px] h-[100px] overflow-hidden">
+                  {isImageLoading && (
+                    <div className="absolute inset-0 flex justify-center items-center">
+                      <Loader2 className="animate-spin text-primary" size={32} />
+                    </div>
+                  )}
                   <Image
                     src={formData?.imageUrl ? `http://97.74.89.204/${formData.imageUrl}` : "/Images/profileImg.png"}
-                    width={140}
-                    height={140}
+                    width={100}
+                    height={100}
                     alt="User Profile"
-                    className="w-full h-full"
+                    className={`w-full h-full rounded-full ${isImageLoading ? "invisible" : ""}`}
+                    onLoad={() => setIsImageLoading(false)}
+                    onError={(e) => {
+                      e.currentTarget.src = "/Images/profileImg.png"; // Set to static image on error
+                    }}
                   />
+                  {isImageLoading && <div className="loader" />}
                 </div>
                 <input
                   type="file"
@@ -279,23 +307,25 @@ const Page: React.FC = () => {
                 <p className="text-gray-600">{userProfile?.data.email}</p>
               </div>
             </div>
-            {/* <div className="flex gap-3">
-              <Button onClick={() => console.log("Payment Method Clicked")} className="bg-none  hover:bg-primary">
-                <MapPinned />
-              </Button> 
-           <Link href="/orders"> 
-           <Button>
-           <PackageOpen/>
-              </Button></Link>
-              <Button onClick={() => console.log("Payment Method Clicked")}>
-                <CreditCard className="hover:color-white"/> 
-              </Button>
-            </div> */}
-            <div className="flex gap-3 items-center ">
-              <button className="border border-solid-3px border-primary rounded-full p-2 hover:bg-primary"> <PackageOpen color="#3C999A" /></button>
-              <button className="border border-solid-3px border-primary rounded-full p-2 hover:bg-primary"> <CreditCard color="#3C999A" /></button>
-              <button className="border border-solid-3px border-primary rounded-full p-2 hover:bg-primary"> <MapPinned color="#3C999A" /></button>
-             
+            <div className="flex gap-4 items-center">
+              <Link href='/orders' className="text-primary font-semibold flex flex-col items-center">
+                <div className="size-12 border border-primary rounded-full p-2 flex items-center justify-center">
+                  <PackageOpen className="size-6 md:size-8" />
+                </div>
+                <p className="text-sm md:text-base">Orders</p>
+              </Link>
+              <button className="text-primary font-semibold flex flex-col items-center">
+                <div className="size-12 border border-primary rounded-full p-2 flex items-center justify-center">
+                  <CreditCard className="size-6 md:size-8" />
+                </div>
+                <p className="text-sm md:text-base">Payments Info</p>
+              </button>
+              <button className="text-primary font-semibold flex flex-col items-center">
+                <div className="size-12 border border-primary rounded-full p-2 flex items-center justify-center">
+                  <MapPinned className="size-6 md:size-8" />
+                </div>
+                <p className="text-sm md:text-base">Addresses</p>
+              </button>
             </div>
           </div>
 
@@ -449,8 +479,30 @@ const Page: React.FC = () => {
             </div>
             <ChangePassword />
           </div>
+          <Dialog open={isImageDialogOpen} onOpenChange={setIsImageDialogOpen}>
+            <DialogContent>
+              <DialogTitle>
+                <h2 className="text-lg font-semibold">Update Profile Picture</h2>
+              </DialogTitle>
+              <div className="flex justify-center mb-4">
+                <div className="border rounded-full overflow-hidden w-[150px] h-[150px]">
+                  <Image
+                    src={previewImage}
+                    width={150}
+                    height={150}
+                    alt="Preview"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+              <button onClick={handleUpdateProfilePicture} className="bg-primary text-white rounded px-4 py-2">
+                Update Profile Picture
+              </button>
+            </DialogContent>
+          </Dialog>
         </div>
       )}
+      <AddressManager/>
     </>
   );
 };

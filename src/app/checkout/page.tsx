@@ -15,6 +15,7 @@ import { X } from "lucide-react";
 import { AlertDialog, AlertDialogContent, AlertDialogTrigger, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog";
 import { useCreateOrderMutation } from "@/hooks/UseOrders";
 import AddAddressDialog from "../../components/AddAddressDialog";
+import { CURRENCY } from "@/lib/constants";
 
 interface BillingInfo {
   streetAddress: string;
@@ -237,17 +238,17 @@ const Page: React.FC = () => {
               {cartItems.map((item) => (
                 <div key={item.id} className="flex justify-between">
                   <span>{item.Product.name} x {item.quantity}</span>
-                  <span>Rs. {item.Product.basePrice * item.quantity}</span>
+                  <span>{CURRENCY} {item.Product.basePrice * item.quantity}</span>
                 </div>
               ))}
               <hr />
               <div className="flex justify-between">
                 <span>Shipping Fee</span>
-                <span>{shipping === 0 ? "Free Shipping" : `Rs. ${shipping}`}</span>
+                <span>{shipping === 0 ? "Free Shipping" : `{CURRENCY} ${shipping}`}</span>
               </div>
               <div className="flex justify-between font-semibold">
                 <span>Total</span>
-                <span>Rs. {total}</span>
+                <span>{CURRENCY} {total}</span>
               </div>
               <Button disabled={placingOrder} onClick={handlePlaceOrder} className="w-full mt-4">
                 {placingOrder ? "Placing Order..." : "Place Order"}
