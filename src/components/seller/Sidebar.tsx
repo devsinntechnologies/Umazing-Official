@@ -40,7 +40,7 @@ const Sidebar: React.FC = () => {
         </div>
       </Link>
     </div>
- 
+  
   );
 };
 

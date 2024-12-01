@@ -40,6 +40,8 @@ const Page = () => {
   const { data: categories, isErrorCategories, isLoadingCategories } = useGetCategoriesQuery();
   const { data: attributesData, isErrorAttributes, isLoadingAttributes } = useGetAllAttributesQuery();
   const [addProduct, { isSuccess, error, data: responseData, isLoading }] = useAddProductMutation();
+  const [subCategories, setSubCategories] = useState([]);
+  const [categoryTypes, setCategoryTypes] = useState([]);
 
   const handleModalClose = () => {
     if (responseData?.data?.product?.id) {
@@ -242,7 +244,33 @@ const Page = () => {
     }));
   };
 
+  // Handle category selection
+  const handleCategoryChange = (value) => {
+    setProductDetails((prevDetails) => ({
+      ...prevDetails,
+      categoryId: value,
+      subCategoryId: "", // Reset subcategory when category changes
+      categoryTypeId: "", // Reset category type when category changes
+    }));
+    
+    // Here you would typically fetch subcategories based on the selected category
+    // For now, using mock data - replace this with your actual API call
+    setSubCategories(categories?.data.find(cat => cat.id === value)?.subcategories || []);
+    setCategoryTypes([]); // Reset category types
+  };
 
+  // Handle subcategory selection
+  const handleSubCategoryChange = (value) => {
+    setProductDetails((prevDetails) => ({
+      ...prevDetails,
+      subCategoryId: value,
+      categoryTypeId: "", // Reset category type when subcategory changes
+    }));
+    
+    // Here you would typically fetch category types based on the selected subcategory
+    // For now, using mock data - replace this with your actual API call
+    setCategoryTypes(subCategories.find(subcat => subcat.id === value)?.categoryTypes || []);
+  };
 
   const [productDetails, setProductDetails] = useState({
     name: "",
@@ -254,6 +282,8 @@ const Page = () => {
     condition: "",
     claim: false,
     categoryId: "",
+    subCategoryId: "",
+    categoryTypeId: "",
     regularPrice: "",
     stockQuantity: "1",
     variants: [{
@@ -365,7 +395,7 @@ const Page = () => {
 
   return (
     <div className="w-full  p-4">
-        <div className="mb-8">
+        <div className="mb-4">
         <h3 className="text-4xl font-bold text-primary">Add New Product</h3>
         <p className="text-gray-600 mt-2">Fill in the details to list your product</p>
       </div>
@@ -420,19 +450,16 @@ const Page = () => {
          </div>
           </div>
 
-          {/* <div className="mb-4 outline-none">
+       <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+          <h2 className="text-xl font-semibold mb-4">Category Details</h2>
+          <div className="mb-4 outline-none">
             <label className="text-sm font-semibold">Category</label>
             <Select
               value={productDetails.categoryId}
-              onValueChange={(value) =>
-                setProductDetails((prevDetails) => ({
-                  ...prevDetails,
-                  categoryId: value,
-                }))
-              }
-              className="w-full mt-2 rounded-sm  focus:outline-none focus:ring focus:ring-primary"
+              onValueChange={handleCategoryChange}
+              className="w-full mt-2 rounded-sm focus:outline-none focus:ring focus:ring-primary"
             >
-              <SelectTrigger className="w-full h-10 px-3 flex items-center justify-between cursor-pointer  rounded-sm">
+              <SelectTrigger className="w-full h-10 px-3 flex items-center justify-between cursor-pointer rounded-sm">
                 <SelectValue placeholder="Select Category" />
               </SelectTrigger>
               <SelectContent className="bg-white rounded-sm shadow-lg">
@@ -449,112 +476,70 @@ const Page = () => {
                 )}
               </SelectContent>
             </Select>
-          </div> */}
-
-       <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-          <h2 className="text-xl font-semibold mb-4">Category Details</h2>
-       <div className="mb-4 outline-none">
-      <label className="text-sm font-semibold">Category</label>
-      <Select
-        value={productDetails.categoryId}
-        onValueChange={(value) =>
-          setProductDetails((prevDetails) => ({
-            ...prevDetails,
-            categoryId: value,
-          }))
-        }
-        className="w-full mt-2 rounded-sm  focus:outline-none focus:ring focus:ring-primary"
-      >
-        <SelectTrigger className="w-full h-10 px-3 flex items-center justify-between cursor-pointer  rounded-sm">
-          <SelectValue placeholder="Select Category" />
-        </SelectTrigger>
-        <SelectContent className="bg-white rounded-sm shadow-lg">
-          {isLoadingCategories ? (
-            <SelectItem disabled>Loading...</SelectItem>
-          ) : isErrorCategories ? (
-            <SelectItem disabled>Error loading categories</SelectItem>
-          ) : (
-            categories?.data.map((category) => (
-              <SelectItem key={category.id} value={category.id}>
-                {category.name}
-              </SelectItem>
-            ))
-          )}
-        </SelectContent>
-      </Select>
-    </div>
-    <div className="flex flex-col sm:flex-row mb-4 gap-3">
+          </div>
+          
+          <div className="flex flex-col sm:flex-row mb-4 gap-3">
             <div className="outline-none w-full sm:w-1/2">
-            <label className="text-sm font-semibold">Sub Category</label>
-            <Select
-              value={productDetails.categoryId}
-              onValueChange={(value) =>
-                setProductDetails((prevDetails) => ({
-                  ...prevDetails,
-                  categoryId: value,
-                }))
-              }
-              className="w-full mt-2 rounded-sm  focus:outline-none focus:ring focus:ring-primary"
-            >
-              <SelectTrigger className="w-full h-10 px-3 flex items-center justify-between cursor-pointer  rounded-sm">
-                <SelectValue placeholder="Select Category" />
-              </SelectTrigger>
-              <SelectContent className="bg-white rounded-sm shadow-lg">
-                {isLoadingCategories ? (
-                  <SelectItem disabled>Loading...</SelectItem>
-                ) : isErrorCategories ? (
-                  <SelectItem disabled>Error loading categories</SelectItem>
-                ) : (
-                  categories?.data.map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
-                      {category.name}
+              <label className="text-sm font-semibold">Sub Category</label>
+              <Select
+                value={productDetails.subCategoryId}
+                onValueChange={handleSubCategoryChange}
+                disabled={!productDetails.categoryId}
+                className="w-full mt-2 rounded-sm focus:outline-none focus:ring focus:ring-primary"
+              >
+                <SelectTrigger className="w-full h-10 px-3 flex items-center justify-between cursor-pointer rounded-sm">
+                  <SelectValue placeholder="Select Sub Category" />
+                </SelectTrigger>
+                <SelectContent className="bg-white rounded-sm shadow-lg">
+                  {subCategories.map((subCategory) => (
+                    <SelectItem key={subCategory.id} value={subCategory.id}>
+                      {subCategory.name}
                     </SelectItem>
-                  ))
-                )}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="outline-none w-full sm:w-1/2">
-            <label className="text-sm font-semibold">Category Type</label>
-            <Select
-              value={productDetails.categoryId}
-              onValueChange={(value) =>
-                setProductDetails((prevDetails) => ({
-                  ...prevDetails,
-                  categoryId: value,
-                }))
-              }
-              className="w-full mt-2 rounded-sm  focus:outline-none focus:ring focus:ring-primary"
-            >
-              <SelectTrigger className="w-full h-10 px-3 flex items-center justify-between cursor-pointer  rounded-sm">
-                <SelectValue placeholder="Select Category" />
-              </SelectTrigger>
-              <SelectContent className="bg-white rounded-sm shadow-lg">
-                {isLoadingCategories ? (
-                  <SelectItem disabled>Loading...</SelectItem>
-                ) : isErrorCategories ? (
-                  <SelectItem disabled>Error loading categories</SelectItem>
-                ) : (
-                  categories?.data.map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
-                      {category.name}
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="outline-none w-full sm:w-1/2">
+              <label className="text-sm font-semibold">Category Type</label>
+              <Select
+                value={productDetails.categoryTypeId}
+                onValueChange={(value) =>
+                  setProductDetails((prev) => ({ ...prev, categoryTypeId: value }))
+                }
+                disabled={!productDetails.subCategoryId}
+                className="w-full mt-2 rounded-sm focus:outline-none focus:ring focus:ring-primary"
+              >
+                <SelectTrigger className="w-full h-10 px-3 flex items-center justify-between cursor-pointer rounded-sm">
+                  <SelectValue placeholder="Select Category Type" />
+                </SelectTrigger>
+                <SelectContent className="bg-white rounded-sm shadow-lg">
+                  {categoryTypes.map((type) => (
+                    <SelectItem key={type.id} value={type.id}>
+                      {type.name}
                     </SelectItem>
-                  ))
-                )}
-              </SelectContent>
-            </Select>
-          </div>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
        </div>
-          <div className="w-full">
-            <div className="my-4 flex items-center">
-              <input
-                type="checkbox"
+
+       <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+       <h2 className="text-xl font-semibold mb-4">Add Product Variants</h2>
+       <div className="w-full">
+            <div className="w-full py-2 rounded-sm px-2 mt-2 border border-solid-black flex justify-between items-center">
+              {/* <input
+                type="button"
                 checked={showVariants}
                 onChange={() => setShowVariants(!showVariants)}
-                className="mr-2"
-              />
-              <label className="text-sm">Add Variants</label>
+                className="w-full py-2 rounded-sm px-2 mt-2 border border-solid-black"
+              /> */}
+              <h3>Variants</h3>
+              <button
+            onClick={() => setShowVariants(!showVariants)}
+              className="text-sm bg-primary text-white px-4 py-2 rounded-sm"
+              >Add Variants</button>
             </div>
 
             {showVariants && (
@@ -707,6 +692,7 @@ const Page = () => {
               </Table>
             </div>
           )}
+       </div>
 
         </form>
 
@@ -756,7 +742,7 @@ const Page = () => {
                 </div>
               ))}
               <div
-                className="w-24 h-24 rounded-sm flex items-center justify-center cursor-pointer border border-solid-black"
+                className="w-24 h-24 rounded-sm flex mb-4 items-center justify-center cursor-pointer border border-solid-black"
                 onClick={handlePlaceholderClick}
               >
                 <span className="text-gray-500">+</span>
@@ -802,35 +788,6 @@ const Page = () => {
             </div>
           </div>
            </div>
-            {/* <div className="w-full">
-              <label className="text-sm">City</label>
-              <input
-                name="city"
-                value={productDetails.city}
-                onChange={handleInputChange}
-                className="w-full h-10 rounded-sm pl-2 mt-2 "
-                type="text"
-                placeholder="Enter city"
-              />
-            </div>
-            <div className="w-full  flex flex-col gap-2">
-              <label className="text-sm mt-1">Condition</label>
-              <Select
-                value={productDetails.condition}
-                onValueChange={(value) =>
-                  handleInputChange({ target: { name: "condition", value } })
-                }
-                className="w-full  rounded-sm pl-2     focus:outline-none"
-              >
-                <SelectTrigger className="w-full h-[70%]">
-                  <SelectValue placeholder="Select Condition" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="new">New</SelectItem>
-                  <SelectItem value="used">Used</SelectItem>
-                </SelectContent>
-              </Select>
-            </div> */}
             <div className="flex items-center mt-3 justify-end w-full">
             <button
               type="submit"
