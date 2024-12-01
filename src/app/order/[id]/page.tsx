@@ -7,6 +7,7 @@ import { useGetSingleOrderQuery } from '@/hooks/UseOrders';
 import { useParams } from 'next/navigation';
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from 'date-fns';
+import { CURRENCY } from "@/lib/constants";
 
 interface Product {
   name: string;
@@ -24,7 +25,7 @@ const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "basePrice",
     header: "Base Price",
-    cell: ({ getValue }) => `Rs. ${getValue()}`,
+    cell: ({ getValue }) => `{CURRENCY} ${getValue()}`,
   },
   {
     accessorKey: "claim",
@@ -85,7 +86,7 @@ const Page = () => {
             <span className="font-bold text-primary">Receiver Address:</span> {receiverAddress}
           </div>
           <div className="text-gray p-2 rounded-md">
-          <span className="font-bold text-primary">Total Amount:</span> Rs. {totalAmount}
+          <span className="font-bold text-primary">Total Amount:</span> {CURRENCY} {totalAmount}
         </div>
         </div>
       

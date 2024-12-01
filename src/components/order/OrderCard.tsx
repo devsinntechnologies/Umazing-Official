@@ -2,7 +2,9 @@
 import { CircleX, Trash } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
-import { Order } from '@/lib/types'; // Adjust the import according to your file structure
+import { Order } from '@/lib/types'; 
+import { CURRENCY } from "@/lib/constants";
+
 
 interface OrderCardProps {
   data: Order;
@@ -22,7 +24,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ data }) => {
             <h3 className="text-sm md:text-lg font-semibold truncate">
               {item.Product.name}
             </h3>
-            <p className="text-primary font-medium">Rs. {item.Product.basePrice}</p>
+            <p className="text-primary font-medium">{CURRENCY} {item.Product.basePrice}</p>
             <p className="text-gray-600">Quantity: {item.quantity}</p>
           </div>
           <button aria-label="Cancel Order" className="text-destructive cursor-pointer">

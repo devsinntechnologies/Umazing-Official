@@ -14,6 +14,7 @@ import AuthDialog from "@/components/layout/auth/AuthDialog";
 import { useAddToCartMutation, useGetUserCartQuery } from "@/hooks/UseCart";
 import Link from "next/link";
 import Stars from "./singleProduct/Stars";
+import { CURRENCY } from "@/lib/constants";
 
 const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
   const { toast } = useToast();
@@ -160,7 +161,7 @@ const ProductsCard = ({ product, onDelete, index, setProducts, products }) => {
         <div className="w-full space-y-2 p-2">
           <h3 className="text-sm md:text-lg font-bold transition duration-200 text-primary  tracking-wide capitalize truncate-multiline-1">{product.name}</h3>
         <div className="w-full flex justify-between items-center">
-        <p className="text-sm md:text-base xl:text-lg font-semibold text-black">Rs.
+        <p className="text-sm md:text-base xl:text-lg font-semibold text-black">{CURRENCY}
             <span className="text-base md:text-lg lg:text-xl 2xl:text-2xl font-bold "> {product.basePrice}</span>
           </p>
           <p className="text-sm lg:text-base font-semibold text-black">Qty:

@@ -24,6 +24,8 @@ import {
 } from "@/components/ui/alert-dialog"
 import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 import { useRouter } from "next/navigation";
+import { CURRENCY } from "@/lib/constants";
+
 
 interface CartItem {
   id: string;
@@ -190,7 +192,7 @@ const CartSection = () => {
               </div>
               <div className="flex-grow h-full">
                 <h3 className="text-xs md:text-base lg:text-lg font-semibold h-9 truncate-multiline">{item.Product.name}</h3>
-                <p className="text-xs md:text-base lg:text-lg text-primary font-medium">Rs. {item.Product.basePrice}</p>
+                <p className="text-xs md:text-base lg:text-lg text-primary font-medium">{CURRENCY} {item.Product.basePrice}</p>
               </div>
               <div className="flex flex-col items-end justify-between h-full">
                 <AlertDialog>
@@ -253,17 +255,17 @@ const CartSection = () => {
           <div className="w-fit md:w-full flex md:block text-xs md:text-base">
             <div className="hidden sm:flex gap-2 md:justify-between mb-2">
               <p className="font-semibold">Subtotal:</p>
-              <p>Rs. {selectedSubtotal}</p>
+              <p>{CURRENCY} {selectedSubtotal}</p>
             </div>
             <div className="flex gap-2 md:justify-between mb-2">
               <p className="font-semibold">Shipping Fee:</p>
-              <p>{shippingFee === 0 ? "Free Shipping" : <>Rs. {shippingFee}</>}</p>
+              <p>{shippingFee === 0 ? "Free Shipping" : <>{CURRENCY} {shippingFee}</>}</p>
             </div>
           </div>
           <hr className="hidden md:block w-full" />
           <div className="w-fit md:w-full flex gap-2 md:justify-between text-base sm:text-xs md:text-base md:mb-2 font-semibold">
             <p className="font-semibold">Total:</p>
-            <p>Rs. {total}</p>
+            <p>{CURRENCY} {total}</p>
           </div>
         </div>
         <button

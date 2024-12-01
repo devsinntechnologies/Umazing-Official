@@ -22,6 +22,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "../ui/button";
+import { CURRENCY } from "@/lib/constants";
+
 
 const FilterBar = () => {
   const router = useRouter();
@@ -356,7 +358,7 @@ const FilterBar = () => {
               <AccordionContent>
                 <div className="flex flex-row gap-x-2 items-center">
                   <div className="flex items-center border border-gray-300 px-3 py-2 rounded gap-2">
-                    <span>Rs. </span>
+                    <span>{CURRENCY} </span>
                     <input
                       type="number"
                       min={0}
@@ -372,7 +374,7 @@ const FilterBar = () => {
                     />
                   </div>
                   <div className="flex items-center border border-gray-300 px-3 py-2 rounded gap-2">
-                    <span>Rs. </span>
+                    <span>{CURRENCY} </span>
                     <input
                       type="number"
                       min={minPrice + 1}
@@ -393,7 +395,7 @@ const FilterBar = () => {
 
           {/* <div className="flex flex-row gap-x-2 items-center">
             <div className="flex items-center border border-gray-300 px-3 py-2 rounded gap-2">
-              <span>Rs. </span>
+              <span>{CURRENCY} </span>
               <input
                 type="number"
                 min={0}
@@ -408,7 +410,7 @@ const FilterBar = () => {
               />
             </div>
             <div className="flex items-center border border-gray-300 px-3 py-2 rounded gap-2">
-              <span>Rs. </span>
+              <span>{CURRENCY} </span>
               <input
                 type="number"
                 min={minPrice + 1}
@@ -758,7 +760,7 @@ const FilterBar = () => {
                   <AccordionContent>
                     <div className="flex flex-row gap-x-2 items-center">
                       <div className="flex items-center border border-gray-300 px-3 py-2 rounded gap-2">
-                        <span>Rs. </span>
+                        <span>{CURRENCY} </span>
                         <input
                           type="number"
                           min={0}
@@ -774,7 +776,7 @@ const FilterBar = () => {
                         />
                       </div>
                       <div className="flex items-center border border-gray-300 px-3 py-2 rounded gap-2">
-                        <span>Rs. </span>
+                        <span>{CURRENCY} </span>
                         <input
                           type="number"
                           min={minPrice + 1}
@@ -795,7 +797,7 @@ const FilterBar = () => {
 
               {/* <div className="flex flex-row gap-x-2 items-center">
                 <div className="flex items-center border border-gray-300 px-3 py-2 rounded gap-2">
-                  <span>Rs. </span>
+                  <span>{CURRENCY} </span>
                   <input
                     type="number"
                     min={0}
@@ -810,7 +812,7 @@ const FilterBar = () => {
                   />
                 </div>
                 <div className="flex items-center border border-gray-300 px-3 py-2 rounded gap-2">
-                  <span>Rs. </span>
+                  <span>{CURRENCY} </span>
                   <input
                     type="number"
                     min={minPrice + 1}
