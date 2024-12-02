@@ -7,6 +7,8 @@ import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import withAuth from "@/components/hoc/withAuth";
+import { CURRENCY } from "@/lib/constants";
+
 
 const Page = () => {
   const { toast } = useToast();
@@ -44,7 +46,7 @@ const Page = () => {
     {
       header: "Total Amount",
       accessorKey: "totalAmount",
-      cell: ({ getValue }) => `Rs. ${getValue()}`,
+      cell: ({ getValue }) => `${CURRENCY} ${getValue()}`,
     },
     {
       header: "Items",

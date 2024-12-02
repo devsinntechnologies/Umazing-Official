@@ -108,6 +108,9 @@ const Auth: React.FC<AuthProps> = ({ className }) => {
                       width={48}
                       height={48}
                       className="size-10 rounded-full"
+                      onError={(e) => {
+                        e.currentTarget.src = "/Images/profileImg.png"; // Set to static image on error
+                      }}
                     />
                   </div>
                 )}

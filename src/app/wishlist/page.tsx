@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ColumnDef } from "@tanstack/react-table";
 import { useAddToCartMutation } from "@/hooks/UseCart";
+import { CURRENCY } from "@/lib/constants";
 
 interface WishlistItem {
   id: string;
@@ -141,7 +142,7 @@ const Page: React.FC = () => {
     {
       accessorKey: "Product.basePrice",
       header: "Price",
-      cell: ({ getValue }) => <span>Rs. {getValue()}</span>,
+      cell: ({ getValue }) => <span>{CURRENCY} {getValue()}</span>,
     },
     {
       accessorKey: "Product.baseQuantity",
