@@ -127,9 +127,12 @@ const Auth: React.FC<AuthProps> = ({ className }) => {
                           <Image
                             src={userData?.imageUrl ? `http://97.74.89.204/${userData?.imageUrl}` : "/Images/profileImg.png"}
                             alt=""
-                            width={64}
-                            height={64}
+                            width={100}
+                            height={100}
                             className="size-16 rounded-full"
+                            onError={(e) => {
+                              e.currentTarget.src = "/Images/profileImg.png"; // Set to static image on error
+                            }}
                           />
                         </div>
                       )}
