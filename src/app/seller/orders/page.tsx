@@ -45,7 +45,7 @@ const Page = () => {
     {
       header: "Total Amount",
       accessorKey: "price",
-      cell: ({ getValue }) => `{CURRENCY} ${getValue()}`,
+      cell: ({ getValue }) => `${CURRENCY} ${getValue()}`,
     },
     {
       header: "Product",

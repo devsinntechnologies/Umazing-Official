@@ -1,13 +1,10 @@
 "use client";
 
-import { Suspense, ReactNode, useEffect } from "react"; // Import ReactNode for type annotation
-// import Navbar from "@/components/Navbar/Navbar";
-// import Footer from "@/components/Footer/Footer";
+import { Suspense, ReactNode, useEffect } from "react";
 import LoadingSpinner from "@/components/loadingSpinner/LoadingSpinner";
 import Footer from "@/components/layout/Footer/Footer";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import useClickSound from "@/hooks/useClickSound";
-// import useTypingSound from "@/hooks/useTypingSound";
 
 
 interface ChildProps {
