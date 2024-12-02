@@ -74,7 +74,8 @@ const Page: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-5 justify-center w-full">
-      <h3 className="text-3xl font-bold text-primary cursor-pointer">All Products</h3>
+      <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-primary cursor-pointer">
+        All Products</h3>
       {/* AlertDialog for Deleting Product */}
       {productToDelete && (
         <AlertDialog open={true} onOpenChange={() => setProductToDelete(null)}>
@@ -102,7 +103,7 @@ const Page: React.FC = () => {
       )}
 
       {isError && (
-        <div className="text-red-500 text-lg">Error loading products. Please try again.</div>
+        <div className="text-destructive text-lg">Error loading products. Please try again.</div>
       )}
 
       {/* Products Grid */}

@@ -112,7 +112,7 @@ const AddressManager = () => {
 
       {/* Address List */}
       {isLoading && <p>Loading...</p>}
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-destructive">{error}</p>}
       {!isLoading && addresses.length === 0 && <p>No addresses found.</p>}
 
       <div className="space-y-4">
@@ -200,7 +200,7 @@ const AddressManager = () => {
                 <Button
                   onClick={handleDelete}
                   disabled={isLoading}
-                  className="bg-red-500 text-white"
+                  className="bg-destructive text-white"
                 >
                   {isLoading ? 'Deleting...' : 'Delete'}
                 </Button>

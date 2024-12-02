@@ -71,9 +71,9 @@ const Page: React.FC = () => {
   }, [deleteSuccess, deleteError, toast, deleting, refetch, resData]);
 
   return (
-    <div className="w-full flex flex-col gap-5">
+    <div className="w-full flex flex-col gap-5 py-4">
       {/* Header Section */}
-      <h3 className="sm:text-3xl text-xl font-bold text-primary cursor-pointer">
+      <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-primary cursor-pointer">
         {`Welcome Back, ${userName}`}
       </h3>
 
@@ -87,7 +87,7 @@ const Page: React.FC = () => {
       </div>
 
       {/* Recent Products Section */}
-      <h1 className="text-2xl font-semibold text-primary">Recent Products</h1>
+      <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-primary">Recent Products</h1>
 
       {/* Loading & Error States */}
       {isLoading && (
@@ -99,7 +99,7 @@ const Page: React.FC = () => {
       )}
 
       {isError && (
-        <div className="text-red-500 text-lg">
+        <div className="text-destructive text-lg">
           Error loading products. Please try again.
         </div>
       )}

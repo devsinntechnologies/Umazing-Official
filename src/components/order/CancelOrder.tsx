@@ -23,7 +23,7 @@ const CancelOrder = () => {
               <p> Are you sure to cancel this Order</p>
               <div className='flex justify-between'>
                 <div></div>
-                <button className='px-3 py-1 border border-solid-primary rounded-sm  text-primary hover  text-lg hover:text-red-500'>Yes</button>
+                <button className='px-3 py-1 border border-solid-primary rounded-sm  text-primary hover  text-lg hover:text-destructive'>Yes</button>
               </div>
             </DialogDescription>
           </DialogHeader>

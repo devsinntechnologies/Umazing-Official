@@ -30,7 +30,7 @@ const Stars = ({rating}: {rating: number}) => {
                       y1="0" 
                       y2="0"
                     >
-                      <stop offset={`${percentage}%`} stopColor="#ADAD00FF" />
+                      <stop offset={`${percentage}%`} stopColor="#EED91FFF" />
                       <stop offset={`${percentage}%`} stopColor="white" />
                     </linearGradient>
                   );

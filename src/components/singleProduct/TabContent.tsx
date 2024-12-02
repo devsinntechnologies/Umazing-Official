@@ -229,7 +229,7 @@ const TabComponent = ({ product, review, refetch }) => {
                               />
                               <button
                                 onClick={() => removeImage(index)}
-                                className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center"
+                                className="absolute -top-2 -right-2 bg-destructive text-white rounded-full w-5 h-5 flex items-center justify-center"
                               >
                                 ×
                               </button>

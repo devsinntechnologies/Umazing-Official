@@ -12,8 +12,8 @@ import { CURRENCY } from "@/lib/constants";
 const Page = () => {
   const { toast } = useToast();
   const router = useRouter();
-  const { data: ordersData, isLoading, isError ,refetch} = useGetSellerOrdersQuery({});
-  const [orders,setOrders] = useState([])
+  const { data: ordersData, isLoading, isError, refetch } = useGetSellerOrdersQuery({});
+  const [orders, setOrders] = useState([])
 
   useEffect(() => {
     if (ordersData) {
@@ -83,11 +83,11 @@ const Page = () => {
 
   const handleUpdateStatus = async (id: string) => {
     try {
-      const response = await updateOrder({ 
+      const response = await updateOrder({
         id,
-        status: "complete" 
+        status: "complete"
       }).unwrap();
-      
+
       toast({
         title: "Success",
         description: "Order status updated successfully",
@@ -105,13 +105,13 @@ const Page = () => {
 
   return (
     <div className="w-full py-6 min-h-[70vh]">
-      <Breadcrumb/>
-      <h3 className="text-3xl font-bold mb-2 text-primary cursor-pointer">
+      <Breadcrumb />
+      <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-primary cursor-pointer">
         Orders
       </h3>
-     <div className="w-full  mx-auto">
-     <DataTable columns={columns} data={orders} isLoading={isLoading} />
-     </div>
+      <div className="w-full mx-auto">
+        <DataTable columns={columns} data={orders} isLoading={isLoading} />
+      </div>
     </div>
   );
 };

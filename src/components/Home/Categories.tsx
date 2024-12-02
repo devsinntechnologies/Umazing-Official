@@ -37,7 +37,7 @@ const Categories = () => {
        </div>
         </div>
       ) : isError ? (
-        <p className="text-red-500">Error loading categories. Please try again.</p>
+        <p className="text-destructive">Error loading categories. Please try again.</p>
       ) : (
         <div className="w-full overflow-x-scroll">
          <div className="flex items-center justify-center gap-5 lg:gap-6 min-w-fit flex-nowrap">

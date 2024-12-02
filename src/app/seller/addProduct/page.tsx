@@ -3,7 +3,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { useGetCategoriesQuery } from "@/hooks/UseCategories";
+import { useGetCategoriesV2Query } from "@/hooks/UseCategories";
 import { useGetAllAttributesQuery } from "@/hooks/UseAttributes";
 import { useAddProductMutation } from "@/hooks/UseProducts";
 import { X } from "lucide-react";
@@ -37,11 +37,13 @@ const Page = () => {
   const { toast } = useToast();
   const router = useRouter();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const { data: categories, isErrorCategories, isLoadingCategories } = useGetCategoriesQuery();
+  const { data: categories, isErrorCategories, isLoadingCategories } = useGetCategoriesV2Query();
   const { data: attributesData, isErrorAttributes, isLoadingAttributes } = useGetAllAttributesQuery();
   const [addProduct, { isSuccess, error, data: responseData, isLoading }] = useAddProductMutation();
   const [subCategories, setSubCategories] = useState([]);
   const [categoryTypes, setCategoryTypes] = useState([]);
+
+console.log(categories)
 
   const handleModalClose = () => {
     if (responseData?.data?.product?.id) {
@@ -228,8 +230,8 @@ const Page = () => {
 
   const getAttributeValues = (attributeId) => {
     if (!attributesData || !attributesData.data) {
-        console.warn('attributesData is not available or empty');
-        return [];
+      console.warn('attributesData is not available or empty');
+      return [];
     }
 
     const attribute = attributesData.data.find((attr) => attr.id === attributeId);
@@ -252,10 +254,10 @@ const Page = () => {
       subCategoryId: "", // Reset subcategory when category changes
       categoryTypeId: "", // Reset category type when category changes
     }));
-    
+
     // Here you would typically fetch subcategories based on the selected category
     // For now, using mock data - replace this with your actual API call
-    setSubCategories(categories?.data.find(cat => cat.id === value)?.subcategories || []);
+    setSubCategories(categories?.data.find(cat => cat.id === value)?.subCategory || []);
     setCategoryTypes([]); // Reset category types
   };
 
@@ -266,10 +268,10 @@ const Page = () => {
       subCategoryId: value,
       categoryTypeId: "", // Reset category type when subcategory changes
     }));
-    
+
     // Here you would typically fetch category types based on the selected subcategory
     // For now, using mock data - replace this with your actual API call
-    setCategoryTypes(subCategories.find(subcat => subcat.id === value)?.categoryTypes || []);
+    setCategoryTypes(subCategories.find(subcat => subcat.id === value)?.categoryType|| []);
   };
 
   const [productDetails, setProductDetails] = useState({
@@ -394,305 +396,306 @@ const Page = () => {
   }
 
   return (
-    <div className="w-full  p-4">
-        <div className="mb-4">
-        <h3 className="text-4xl font-bold text-primary">Add New Product</h3>
+    <div className="w-full p-4">
+      <div className="mb-4">
+        <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-primary cursor-pointer">
+          Add New Product</h3>
         <p className="text-gray-600 mt-2">Fill in the details to list your product</p>
       </div>
       <div className="flex flex-col-reverse lg:flex-row gap-8">
         <form className="w-full lg:w-2/3 space-y-6" onSubmit={(e) => e.preventDefault()}>
           <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-           <h2 className="text-xl font-semibold mb-4">Basic Details</h2>
-         <div className="space-y-4">
-          <div>
-            <label className="text-sm">Product Name</label>
-            <input
-              name="name"
-              value={productDetails.name}
-              onChange={handleInputChange}
-              className="w-full py-2 rounded-sm px-2 mt-2 border border-solid-black"
-              type="text"
-              placeholder="Type name here"
-            />
-          </div>
-          <div>
-            <label className="text-sm">Description</label>
-            <textarea
-              name="description"
-              value={productDetails.description}
-              onChange={handleInputChange}
-              rows={3}
-              maxLength={200}
-              minLength={30}
-              className="w-full py-2 rounded-sm px-2 mt-2 border border-solid-black"
-              placeholder="Type description here (30-200 characters)"
-            />
-            <span className="absolute bottom-2 right-2 text-sm text-gray-500">
-              {productDetails.description.length}/200
-            </span>
-          </div>
-          <div >
-            <label className="text-sm">Long Description</label>
-            <textarea
-              name="longDescription"
-              value={productDetails.longDescription}
-              onChange={handleInputChange}
-              rows={3}
-              maxLength={600}
-              minLength={80}
-              className="w-full py-2 rounded-sm px-2 mt-2 border border-solid-black"
-              placeholder="Type long description here (80-600 characters)"
-            />
-            <span className="absolute bottom-2 right-2 text-sm text-gray-500">
-              {productDetails.longDescription.length}/600
-            </span>
-          </div>
-         </div>
+            <h2 className="text-xl font-semibold mb-4">Basic Details</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm">Product Name</label>
+                <input
+                  name="name"
+                  value={productDetails.name}
+                  onChange={handleInputChange}
+                  className="w-full py-2 rounded-sm px-2 mt-2 border border-solid-black"
+                  type="text"
+                  placeholder="Type name here"
+                />
+              </div>
+              <div>
+                <label className="text-sm">Description</label>
+                <textarea
+                  name="description"
+                  value={productDetails.description}
+                  onChange={handleInputChange}
+                  rows={3}
+                  maxLength={200}
+                  minLength={30}
+                  className="w-full py-2 rounded-sm px-2 mt-2 border border-solid-black"
+                  placeholder="Type description here (30-200 characters)"
+                />
+                <span className="absolute bottom-2 right-2 text-sm text-gray-500">
+                  {productDetails.description.length}/200
+                </span>
+              </div>
+              <div >
+                <label className="text-sm">Long Description</label>
+                <textarea
+                  name="longDescription"
+                  value={productDetails.longDescription}
+                  onChange={handleInputChange}
+                  rows={3}
+                  maxLength={600}
+                  minLength={80}
+                  className="w-full py-2 rounded-sm px-2 mt-2 border border-solid-black"
+                  placeholder="Type long description here (80-600 characters)"
+                />
+                <span className="absolute bottom-2 right-2 text-sm text-gray-500">
+                  {productDetails.longDescription.length}/600
+                </span>
+              </div>
+            </div>
           </div>
 
-       <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-          <h2 className="text-xl font-semibold mb-4">Category Details</h2>
-          <div className="mb-4 outline-none">
-            <label className="text-sm font-semibold">Category</label>
-            <Select
-              value={productDetails.categoryId}
-              onValueChange={handleCategoryChange}
-              className="w-full mt-2 rounded-sm focus:outline-none focus:ring focus:ring-primary"
-            >
-              <SelectTrigger className="w-full h-10 px-3 flex items-center justify-between cursor-pointer rounded-sm">
-                <SelectValue placeholder="Select Category" />
-              </SelectTrigger>
-              <SelectContent className="bg-white rounded-sm shadow-lg">
-                {isLoadingCategories ? (
-                  <SelectItem disabled>Loading...</SelectItem>
-                ) : isErrorCategories ? (
-                  <SelectItem disabled>Error loading categories</SelectItem>
-                ) : (
-                  categories?.data.map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
-                      {category.name}
-                    </SelectItem>
-                  ))
-                )}
-              </SelectContent>
-            </Select>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row mb-4 gap-3">
-            <div className="outline-none w-full sm:w-1/2">
-              <label className="text-sm font-semibold">Sub Category</label>
+          <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+            <h2 className="text-xl font-semibold mb-4">Category Details</h2>
+            <div className="mb-4 outline-none">
+              <label className="text-sm font-semibold">Category</label>
               <Select
-                value={productDetails.subCategoryId}
-                onValueChange={handleSubCategoryChange}
-                disabled={!productDetails.categoryId}
+                value={productDetails.categoryId}
+                onValueChange={handleCategoryChange}
                 className="w-full mt-2 rounded-sm focus:outline-none focus:ring focus:ring-primary"
               >
                 <SelectTrigger className="w-full h-10 px-3 flex items-center justify-between cursor-pointer rounded-sm">
-                  <SelectValue placeholder="Select Sub Category" />
+                  <SelectValue placeholder="Select Category" />
                 </SelectTrigger>
                 <SelectContent className="bg-white rounded-sm shadow-lg">
-                  {subCategories.map((subCategory) => (
-                    <SelectItem key={subCategory.id} value={subCategory.id}>
-                      {subCategory.name}
-                    </SelectItem>
-                  ))}
+                  {isLoadingCategories ? (
+                    <SelectItem disabled>Loading...</SelectItem>
+                  ) : isErrorCategories ? (
+                    <SelectItem disabled>Error loading categories</SelectItem>
+                  ) : (
+                    categories?.data.map((category) => (
+                      <SelectItem key={category.id} value={category.id}>
+                        {category.name}
+                      </SelectItem>
+                    ))
+                  )}
                 </SelectContent>
               </Select>
             </div>
-            
-            <div className="outline-none w-full sm:w-1/2">
-              <label className="text-sm font-semibold">Category Type</label>
-              <Select
-                value={productDetails.categoryTypeId}
-                onValueChange={(value) =>
-                  setProductDetails((prev) => ({ ...prev, categoryTypeId: value }))
-                }
-                disabled={!productDetails.subCategoryId}
-                className="w-full mt-2 rounded-sm focus:outline-none focus:ring focus:ring-primary"
-              >
-                <SelectTrigger className="w-full h-10 px-3 flex items-center justify-between cursor-pointer rounded-sm">
-                  <SelectValue placeholder="Select Category Type" />
-                </SelectTrigger>
-                <SelectContent className="bg-white rounded-sm shadow-lg">
-                  {categoryTypes.map((type) => (
-                    <SelectItem key={type.id} value={type.id}>
-                      {type.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+
+            <div className="flex flex-col sm:flex-row mb-4 gap-3">
+              <div className="outline-none w-full sm:w-1/2">
+                <label className="text-sm font-semibold">Sub Category</label>
+                <Select
+                  value={productDetails.subCategoryId}
+                  onValueChange={handleSubCategoryChange}
+                  disabled={!productDetails.categoryId}
+                  className="w-full mt-2 rounded-sm focus:outline-none focus:ring focus:ring-primary"
+                >
+                  <SelectTrigger className="w-full h-10 px-3 flex items-center justify-between cursor-pointer rounded-sm">
+                    <SelectValue placeholder="Select Sub Category" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white rounded-sm shadow-lg">
+                    {subCategories.map((subCategory) => (
+                      <SelectItem key={subCategory.id} value={subCategory.id}>
+                        {subCategory.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="outline-none w-full sm:w-1/2">
+                <label className="text-sm font-semibold">Category Type</label>
+                <Select
+                  value={productDetails.categoryTypeId}
+                  onValueChange={(value) =>
+                    setProductDetails((prev) => ({ ...prev, categoryTypeId: value }))
+                  }
+                  disabled={!productDetails.subCategoryId}
+                  className="w-full mt-2 rounded-sm focus:outline-none focus:ring focus:ring-primary"
+                >
+                  <SelectTrigger className="w-full h-10 px-3 flex items-center justify-between cursor-pointer rounded-sm">
+                    <SelectValue placeholder="Select Category Type" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white rounded-sm shadow-lg">
+                    {categoryTypes.map((type) => (
+                      <SelectItem key={type.id} value={type.id}>
+                        {type.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
-       </div>
 
-       <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-       <h2 className="text-xl font-semibold mb-4">Add Product Variants</h2>
-       <div className="w-full">
-            <div className="w-full py-2 rounded-sm px-2 mt-2 border border-solid-black flex justify-between items-center">
-              {/* <input
+          <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+            <h2 className="text-xl font-semibold mb-4">Add Product Variants</h2>
+            <div className="w-full">
+              <div className="w-full py-2 rounded-sm px-2 mt-2 border border-solid-black flex justify-between items-center">
+                {/* <input
                 type="button"
                 checked={showVariants}
                 onChange={() => setShowVariants(!showVariants)}
                 className="w-full py-2 rounded-sm px-2 mt-2 border border-solid-black"
               /> */}
-              <h3>Variants</h3>
-              <button
-            onClick={() => setShowVariants(!showVariants)}
-              className="text-sm bg-primary text-white px-4 py-2 rounded-sm"
-              >Add Variants</button>
+                <h3>Variants</h3>
+                <button
+                  onClick={() => setShowVariants(!showVariants)}
+                  className="text-sm bg-primary text-white px-4 py-2 rounded-sm"
+                >Add Variants</button>
+              </div>
+
+              {showVariants && (
+                <div className="mb-4">
+                  <h4 className="text-lg font-bold mb-2">Attributes</h4>
+                  {attributes.map((attr, index) => (
+                    <div key={index} className="mb-4  p-2 rounded-sm">
+                      <div className="flex justify-between items-center border border-solid-black">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <div className="w-full h-10 rounded-sm mt-2  px-3 py-2 flex items-center  justify-between cursor-pointer">
+                              <div>
+                                {attr.attributeName || "Select Attribute"}
+                              </div>
+                              <span>&#x25BC;</span>
+                            </div>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent>
+                            {attributesData?.data.map((attribute) => (
+                              <DropdownMenuItem
+                                key={attribute.id}
+                                onClick={() =>
+                                  handleAttributeChange(index, "attribute", attribute.id, attribute.name)
+                                }
+                                disabled={attributes.find(attr => attr.attribute === attribute.id)}
+                                style={{ color: attributes.find(attr => attr.attribute === attribute.id) ? 'red' : 'inherit' }}
+                              >
+                                {attribute.name}
+                              </DropdownMenuItem>
+                            ))}
+                          </DropdownMenuContent>
+
+                        </DropdownMenu>
+                        {index > 0 && <button
+                          type="button"
+                          className="ml-2 text-destructive"
+                          onClick={() => handleRemoveAttribute(index)}
+                        >
+                          <X size={20} />
+                        </button>}
+                      </div>
+
+                      {attr.attribute && (
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <div className="w-full h-10 rounded-sm mt-2  px-3 py-2 flex items-center justify-between cursor-pointer">
+                              <div>
+                                Select Attribute Values
+                              </div>
+                              <span>&#x25BC;</span>
+                            </div>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent>
+                            {getAttributeValues(attr.attribute).map((value) => (
+                              <DropdownMenuItem
+                                key={value.id}
+                                onClick={() =>
+                                  handleAddAttributeValue(index, value.id, value.value)
+                                }
+                                disabled={attributes[index].attributeValues.find(attrValue => attrValue.id === value.id)}
+                                style={{ color: attributes[index].attributeValues.find(attrValue => attrValue.id === value.id) ? 'red' : 'inherit' }}
+                              >
+                                {value.value}
+                              </DropdownMenuItem>
+                            ))}
+                          </DropdownMenuContent>
+
+                        </DropdownMenu>
+                      )}
+
+                      <div className="flex flex-wrap mt-2">
+                        {attr.attributeValues?.map((value, valueIndex) => (
+                          <div
+                            key={valueIndex}
+                            className="bg-black text-gray-200 rounded-full px-4 py-2 mr-2 mb-2 flex items-center"
+                          >
+                            <span className="mr-1">{value.name}</span>
+                            <button
+                              type="button"
+                              className="text-white font-bold"
+                              onClick={() => handleRemoveAttributeValue(index, valueIndex)}
+                            >
+                              <X size={16} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    className="my-4 px-4 py-2 rounded-sm text-sm bg-primary text-white transition duration-200"
+                    onClick={handleAddAttribute}
+                  >
+                    Add Attribute
+                  </button>
+                  <hr />
+                  <button
+                    type="button"
+                    className="mt-2 px-4 py-2 rounded-sm text-sm bg-primary text-white transition duration-200"
+                    onClick={toggleAttrtable}
+                  >
+                    Generate Variants
+                  </button>
+                </div>
+              )}
             </div>
 
-            {showVariants && (
-              <div className="mb-4">
-                <h4 className="text-lg font-bold mb-2">Attributes</h4>
-                {attributes.map((attr, index) => (
-                  <div key={index} className="mb-4  p-2 rounded-sm">
-                    <div className="flex justify-between items-center border border-solid-black">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <div className="w-full h-10 rounded-sm mt-2  px-3 py-2 flex items-center  justify-between cursor-pointer">
-                            <div>
-                              {attr.attributeName || "Select Attribute"}
-                            </div>
-                            <span>&#x25BC;</span>
-                          </div>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          {attributesData?.data.map((attribute) => (
-                            <DropdownMenuItem
-                              key={attribute.id}
-                              onClick={() =>
-                                handleAttributeChange(index, "attribute", attribute.id, attribute.name)
-                              }
-                              disabled={attributes.find(attr => attr.attribute === attribute.id)}
-                              style={{ color: attributes.find(attr => attr.attribute === attribute.id) ? 'red' : 'inherit' }}
-                            >
-                              {attribute.name}
-                            </DropdownMenuItem>
-                          ))}
-                        </DropdownMenuContent>
-
-                      </DropdownMenu>
-                      {index > 0 && <button
-                        type="button"
-                        className="ml-2 text-red-500"
-                        onClick={() => handleRemoveAttribute(index)}
-                      >
-                        <X size={20} />
-                      </button>}
-                    </div>
-
-                    {attr.attribute && (
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <div className="w-full h-10 rounded-sm mt-2  px-3 py-2 flex items-center justify-between cursor-pointer">
-                            <div>
-                              Select Attribute Values
-                            </div>
-                            <span>&#x25BC;</span>
-                          </div>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          {getAttributeValues(attr.attribute).map((value) => (
-                            <DropdownMenuItem
-                              key={value.id}
-                              onClick={() =>
-                                handleAddAttributeValue(index, value.id, value.value)
-                              }
-                              disabled={attributes[index].attributeValues.find(attrValue => attrValue.id === value.id)}
-                              style={{ color: attributes[index].attributeValues.find(attrValue => attrValue.id === value.id) ? 'red' : 'inherit' }}
-                            >
-                              {value.value}
-                            </DropdownMenuItem>
-                          ))}
-                        </DropdownMenuContent>
-
-                      </DropdownMenu>
-                    )}
-
-                    <div className="flex flex-wrap mt-2">
-                      {attr.attributeValues?.map((value, valueIndex) => (
-                        <div
-                          key={valueIndex}
-                          className="bg-black text-gray-200 rounded-full px-4 py-2 mr-2 mb-2 flex items-center"
-                        >
-                          <span className="mr-1">{value.name}</span>
-                          <button
-                            type="button"
-                            className="text-white font-bold"
-                            onClick={() => handleRemoveAttributeValue(index, valueIndex)}
-                          >
-                            <X size={16} />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  className="my-4 px-4 py-2 rounded-sm text-sm bg-primary text-white transition duration-200"
-                  onClick={handleAddAttribute}
-                >
-                  Add Attribute
-                </button>
-                <hr />
-                <button
-                  type="button"
-                  className="mt-2 px-4 py-2 rounded-sm text-sm bg-primary text-white transition duration-200"
-                  onClick={toggleAttrtable}
-                >
-                  Generate Variants
-                </button>
+            {showVariants && isAttrTable && (
+              <div>
+                <h4 className="text-lg font-bold mb-2">Variants</h4>
+                <Table>
+                  <TableCaption>A list of variants</TableCaption>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[80px]">Sr</TableHead>
+                      <TableHead className="w-[100px]">SKU</TableHead>
+                      <TableHead>Price</TableHead>
+                      <TableHead>Stock Quantity</TableHead>
+                      <TableHead className="text-right">Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {variants.map((variant, index) => (
+                      <TableRow key={index}>
+                        <TableCell>{index + 1}</TableCell>
+                        <TableCell>{variant.sku}</TableCell>
+                        <TableCell>
+                          <input
+                            type="text"
+                            value={variant.price}
+                            onChange={(e) => handleVariantPriceChange(index, e.target.value)}
+                            placeholder="Price"
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <input
+                            type="text"
+                            value={variant.stockQuantity}
+                            onChange={(e) => handleVariantStockChange(index, e.target.value)}
+                            placeholder="Stock Quantity"
+                          />
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <button onClick={() => handleDeleteVariant(index)}>Delete</button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </div>
             )}
           </div>
-
-          {showVariants && isAttrTable && (
-            <div>
-              <h4 className="text-lg font-bold mb-2">Variants</h4>
-              <Table>
-                <TableCaption>A list of variants</TableCaption>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[80px]">Sr</TableHead>
-                    <TableHead className="w-[100px]">SKU</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>Stock Quantity</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {variants.map((variant, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{index + 1}</TableCell>
-                      <TableCell>{variant.sku}</TableCell>
-                      <TableCell>
-                        <input
-                          type="text"
-                          value={variant.price}
-                          onChange={(e) => handleVariantPriceChange(index, e.target.value)}
-                          placeholder="Price"
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <input
-                          type="text"
-                          value={variant.stockQuantity}
-                          onChange={(e) => handleVariantStockChange(index, e.target.value)}
-                          placeholder="Stock Quantity"
-                        />
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <button onClick={() => handleDeleteVariant(index)}>Delete</button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          )}
-       </div>
 
         </form>
 
@@ -735,7 +738,7 @@ const Page = () => {
                   <button
                     type="button"
                     onClick={() => handleRemoveImage(index)}
-                    className="absolute top-0 right-0 mt-1 mr-1 bg-white text-red-500 rounded-full w-5 h-5 flex items-center justify-center"
+                    className="absolute top-0 right-0 mt-1 mr-1 bg-white text-destructive rounded-full w-5 h-5 flex items-center justify-center"
                   >
                     <X size={12} />
                   </button>
@@ -757,38 +760,38 @@ const Page = () => {
               </div>
             </div>
           </div>
-    
-    
-           <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-           <h2 className="text-xl font-semibold mb-4">Pricing & Stock</h2>
-          <div className="space-y-4">
-           <div className="w-full">
-              <label className="text-sm">Price</label>
-              <input
-                name="basePrice"
-                value={productDetails.basePrice}
-                onChange={handleInputChange}
-                className=" w-full h-10 rounded-sm px-2 mt-2 border border-solid-black"
-                type="number"
-                placeholder="Enter price"
-                min="0"
-              />
-            </div>
-           <div className="w-full ">
-              <label className="text-sm">Quantity</label>
-              <input
-                name="baseQuantity"
-                value={productDetails.baseQuantity}
-                onChange={handleInputChange}
-                className="  base w-full h-10 rounded-sm px-2 mt-2 border border-solid-black"
-                type="number"
-                placeholder="Enter quantity"
-                min="0"
-              />
+
+
+          <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+            <h2 className="text-xl font-semibold mb-4">Pricing & Stock</h2>
+            <div className="space-y-4">
+              <div className="w-full">
+                <label className="text-sm">Price</label>
+                <input
+                  name="basePrice"
+                  value={productDetails.basePrice}
+                  onChange={handleInputChange}
+                  className=" w-full h-10 rounded-sm px-2 mt-2 border border-solid-black"
+                  type="number"
+                  placeholder="Enter price"
+                  min="0"
+                />
+              </div>
+              <div className="w-full ">
+                <label className="text-sm">Quantity</label>
+                <input
+                  name="baseQuantity"
+                  value={productDetails.baseQuantity}
+                  onChange={handleInputChange}
+                  className="  base w-full h-10 rounded-sm px-2 mt-2 border border-solid-black"
+                  type="number"
+                  placeholder="Enter quantity"
+                  min="0"
+                />
+              </div>
             </div>
           </div>
-           </div>
-            <div className="flex items-center mt-3 justify-end w-full">
+          <div className="flex items-center mt-3 justify-end w-full">
             <button
               type="submit"
               onClick={handleSubmit}
