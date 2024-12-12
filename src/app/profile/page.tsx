@@ -502,7 +502,7 @@ const Page: React.FC = () => {
           </Dialog>
         </div>
       )}
-      <AddressManager/>
+      {/* <AddressManager/> */}
     </>
   );
 };
