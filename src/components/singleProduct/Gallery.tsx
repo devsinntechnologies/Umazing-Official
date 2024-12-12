@@ -60,7 +60,7 @@ const Gallery = (data) => {
         onSwiper={setThumbsSwiper}
         loop={true}
         spaceBetween={10}
-        slidesPerView={4}
+        slidesPerView={8}
 
         watchSlidesProgress={true}
         modules={[Navigation, Thumbs]} // Registering modules for thumbnail swiper
