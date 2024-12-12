@@ -4,15 +4,27 @@ import { Suspense, ReactNode, useEffect } from "react";
 import LoadingSpinner from "@/components/loadingSpinner/LoadingSpinner";
 import Footer from "@/components/layout/Footer/Footer";
 import Navbar from "@/components/layout/Navbar/Navbar";
-import useClickSound from "@/hooks/useClickSound";
-
+import { usePathname } from 'next/navigation';
 
 interface ChildProps {
-  children: ReactNode; // Define the type for children
+  children: ReactNode;
 }
 
 export default function Child({ children }: ChildProps) {
+  const pathname = usePathname();
   
+  // Routes where we don't want to show the footer
+  const noFooterRoutes = [
+    '/cart',
+    '/wishlist',
+    '/checkout',
+    '/seller',
+    '/seller/dashboard',
+    // Add any other seller routes here
+  ];
+
+  const shouldShowFooter = !noFooterRoutes.some(route => pathname?.startsWith(route));
+
   return (
     <>
       <Navbar />
@@ -21,7 +33,7 @@ export default function Child({ children }: ChildProps) {
           {children}
         </div>
       </Suspense>
-      <Footer />
+      {shouldShowFooter && <Footer />}
     </>
   );
 }
