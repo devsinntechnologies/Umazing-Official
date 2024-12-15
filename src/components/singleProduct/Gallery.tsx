@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs } from 'swiper/modules';
+import {Loader2 } from "lucide-react";
 
 // Import Swiper styles
 import 'swiper/css';
@@ -10,12 +11,11 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import Image from 'next/image';
 
-const Gallery = (data) => {
+const Gallery = ({ data }) => {
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [isSSR, setIsSSR] = useState(true);
   const [images, setImages] = useState([]);
-  console.log(data)
 
   useEffect(() => {
     setIsSSR(false);
@@ -26,33 +26,31 @@ const Gallery = (data) => {
       setImages(data);
     }
   }, [data]);
-  if (isSSR) return null;
 
+  if (isSSR) return null;
 
   return (
     <div className="w-full h-full overflow-hidden">
-      {/* Main Gallery Swiper */}
       <Swiper
         loop={true}
         navigation={true}
         spaceBetween={10}
         thumbs={{ swiper: thumbsSwiper }}
-        modules={[Navigation, Thumbs]} // Registering modules in the component itself
+        modules={[Navigation, Thumbs]}
         className="w-auto flex items-center justify-center h-[calc(100%-60px)] md:h-[calc(100%-80px)] overflow-hidden border border-gray-300 shadow-md p-2"
-
       >
-          {isImageLoading && (
-                    <div className="absolute inset-0 flex justify-center items-center">
-                      <Loader2 className="animate-spin text-primary" size={32} />
-                    </div>
-                  )}
+        {isImageLoading && (
+          <div className="absolute inset-0 flex justify-center items-center">
+            <Loader2 className="animate-spin text-primary" size={32} />
+          </div>
+        )}
         {images?.map((image, index) => (
           <div key={index} className="w-auto h-16 bg-primary">
             <SwiperSlide key={index}>
               <Image
                 width={300}
                 height={300}
-                src={`${image.imageUrl}`}
+                src={`http://97.74.89.204/${image.imageUrl}`}
                 alt={`Image ${index}`}
                 onLoad={() => setIsImageLoading(false)}
                 className={`w-auto h-full p-3 object-cover mx-auto border-2 swiper-slide-active:border-primary border-transparent ${isImageLoading ? "invisible" : ""}`}
@@ -80,7 +78,7 @@ const Gallery = (data) => {
               width={60}
               height={60}
               className="size-10 rounded-full object-cover cursor-pointer border-2 swiper-slide-thumb-active:border-primary border-transparent hover:border-primary/50"
-              src={`${image.imageUrl}`}
+              src={`http://97.74.89.204/${image.imageUrl}`}
               alt={`Thumbnail ${index}`}
             />
           </SwiperSlide>

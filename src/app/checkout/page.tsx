@@ -67,16 +67,26 @@ const Page: React.FC = () => {
   }, [userProfile]);
 
   useEffect(() => {
-    const localStorageItems = JSON.parse(localStorage.getItem("selectedItems") || "[]");
+    let localStorageItems = [];
+    try {
+      localStorageItems = JSON.parse(localStorage.getItem("selectedItems") || "[]");
+    } catch (error) {
+      console.error("Error parsing localStorage data:", error);
+      localStorageItems = [];
+    }
+  
     if (localStorageItems.length === 0) {
       window.location.href = "/cart";
       return;
     }
-    const filteredCartItems = cartData?.data.filter((item: CartItem) =>
-      localStorageItems.some((localItem) => localItem.id === item.id.toString())
-    ) || [];
+  
+    const filteredCartItems =
+      cartData?.data.filter((item: CartItem) =>
+        localStorageItems.some((localItem) => localItem.id === item.id.toString())
+      ) || [];
     setCartItems(filteredCartItems);
   }, [cartData]);
+  
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;

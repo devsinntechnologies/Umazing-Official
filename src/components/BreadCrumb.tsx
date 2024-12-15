@@ -39,9 +39,9 @@ const BreadCrumb: React.FC = () => {
           <BreadcrumbItem>
             <BreadcrumbLink
               href="/"
-              className="text-sm md:text-base flex gap-3 items-center"
+              className="text-sm md:text-base flex gap-1 items-center justify-center"
             >
-              <Home /> Home
+              <Home className="size-4"/> Home
             </BreadcrumbLink>
           </BreadcrumbItem>
 

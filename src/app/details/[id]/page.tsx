@@ -8,7 +8,7 @@ import ProductsCard from "@/components/ProductsCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Minus, Plus, ShoppingCart, Heart, Loader2 } from "lucide-react";
 import Head from "next/head";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import {
   useAddToFavouriteMutation,
@@ -27,6 +27,7 @@ const TabComponent = dynamic(() => import("@/components/singleProduct/TabContent
 const Stars = dynamic(() => import("@/components/singleProduct/Stars"), { ssr: false });
 
 const Page = () => {
+  const router = useRouter()
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState(null);
@@ -155,6 +156,52 @@ const Page = () => {
     }
   }, [product]);
 
+  const handleCheckout= () => {
+    // Safeguard: Check if product exists
+    if (!product || !product.id) {
+      toast({
+        title: "Error",
+        description: "Product information not available.",
+        variant: "destructive",
+      });
+      return;
+    }
+  
+    // Safeguard: Validate quantity
+    if (quantity > product.baseQuantity || quantity <= 0 || isNaN(quantity)) {
+      toast({
+        title: "Invalid Quantity",
+        description: "Please select a valid quantity that is available in stock.",
+        variant: "destructive",
+      });
+      return;
+    }
+  
+    try {
+      // Clear any existing selected items
+      localStorage.removeItem("selectedItems");
+  
+      // Create and add the current product
+      const selectedItem = [{ id: product.id, quantity }];
+      localStorage.setItem("selectedItems", (selectedItem));
+  
+      // Confirm successful addition
+      console.log("Added to localStorage:", localStorage.getItem("selectedItems"));
+  
+      // Navigate to the checkout page
+      router.push("/checkout");
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
+      toast({
+        title: "Storage Error",
+        description: "Unable to save product selection. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+  
+
+
   return (
     <>
       {isError ? <div className="flex flex-col items-center justify-center space-y-4 w-full h-[80vh]">
@@ -186,6 +233,20 @@ const Page = () => {
                 <div className="rounded-[4px] text-primary text-2xl font-bold">
                   {productLoading ? <Skeleton className="h-6 w-3/4" /> : product?.name}
                 </div>
+                <button
+                    onClick={handleToggleFavorite}
+                    disabled={addingToFav || removingFromFav}
+                    className="bg-primary h-[51px] w-[20%] flex justify-center items-center rounded-[43px]"
+                  >
+                    {addingToFav || removingFromFav ? (
+                      <Loader2 className="animate-spin text-white" />
+                    ) : (
+                      <Heart
+                        color="white"
+                        fill={product?.isFavorite ? "white" : "none"}
+                      />
+                    )}
+                  </button>
                 <div className="flex items-center gap-3 my-2">
                   {reviewLoading ? (
                     <Skeleton className="h-4 w-20" />
@@ -244,18 +305,11 @@ const Page = () => {
                     )}
                   </button>
                   <button
-                    onClick={handleToggleFavorite}
-                    disabled={addingToFav || removingFromFav}
-                    className="bg-primary h-[51px] w-[20%] flex justify-center items-center rounded-[43px]"
+                    onClick={handleCheckout}
+                    disabled={addingToCart}
+                    className="h-[51px] w-[55%] text-sm lg:w-[347px] bg-primary text-white text-[16px] font-semibold flex justify-center items-center gap-3 lg:gap-4 rounded-[43px]"
                   >
-                    {addingToFav || removingFromFav ? (
-                      <Loader2 className="animate-spin text-white" />
-                    ) : (
-                      <Heart
-                        color="white"
-                        fill={product?.isFavorite ? "white" : "none"}
-                      />
-                    )}
+                    Buy Now
                   </button>
                 </div>
 

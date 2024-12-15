@@ -141,6 +141,7 @@ const CartSection = () => {
       return;
     }
     const selectedItemsArray = Object.entries(selectedItems).map(([id, quantity]) => ({ id, quantity }));
+    console.log(selectedItemsArray)
     localStorage.setItem("selectedItems", JSON.stringify(selectedItemsArray));
     // Optional: Navigate to the checkout page
     router.push("/checkout");
