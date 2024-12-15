@@ -179,7 +179,7 @@ const Page = () => {
             {/* Product Section */}
             <div className="gap-2 md:gap-5 w-full h-fit flex flex-col md:flex-row justify-center lg:justify-between">
               <div className="w-full md:w-[50%] h-[500px] overflow-hidden">
-                {productLoading ? <Skeleton className="h-full w-full" /> : <Gallery data={product} />}
+                {productLoading ? <Skeleton className="h-full w-full" /> : <Gallery data={product?.Product_Images} />}
               </div>
 
               <div className="w-full md:w-[50%] h-full space-y-5">

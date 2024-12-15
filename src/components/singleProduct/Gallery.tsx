@@ -11,9 +11,11 @@ import 'swiper/css/thumbs';
 import Image from 'next/image';
 
 const Gallery = (data) => {
+  const [isImageLoading, setIsImageLoading] = useState(true);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [isSSR, setIsSSR] = useState(true);
   const [images, setImages] = useState([]);
+  console.log(data)
 
   useEffect(() => {
     setIsSSR(false);
@@ -21,7 +23,7 @@ const Gallery = (data) => {
 
   useEffect(() => {
     if(data){
-      setImages(data.data?.Product_Images);
+      setImages(data);
     }
   }, [data]);
   if (isSSR) return null;
@@ -39,15 +41,21 @@ const Gallery = (data) => {
         className="w-auto flex items-center justify-center h-[calc(100%-60px)] md:h-[calc(100%-80px)] overflow-hidden border border-gray-300 shadow-md p-2"
 
       >
+          {isImageLoading && (
+                    <div className="absolute inset-0 flex justify-center items-center">
+                      <Loader2 className="animate-spin text-primary" size={32} />
+                    </div>
+                  )}
         {images?.map((image, index) => (
           <div key={index} className="w-auto h-16 bg-primary">
             <SwiperSlide key={index}>
               <Image
                 width={300}
                 height={300}
-                src={`http://97.74.89.204/${image.imageUrl}`}
+                src={`${image.imageUrl}`}
                 alt={`Image ${index}`}
-                className="w-auto h-full p-3 object-cover mx-auto border-2 swiper-slide-active:border-primary border-transparent"
+                onLoad={() => setIsImageLoading(false)}
+                className={`w-auto h-full p-3 object-cover mx-auto border-2 swiper-slide-active:border-primary border-transparent ${isImageLoading ? "invisible" : ""}`}
               />
             </SwiperSlide>
           </div>
@@ -72,7 +80,7 @@ const Gallery = (data) => {
               width={60}
               height={60}
               className="size-10 rounded-full object-cover cursor-pointer border-2 swiper-slide-thumb-active:border-primary border-transparent hover:border-primary/50"
-              src={`http://97.74.89.204/${image.imageUrl}`}
+              src={`${image.imageUrl}`}
               alt={`Thumbnail ${index}`}
             />
           </SwiperSlide>

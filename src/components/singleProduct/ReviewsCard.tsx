@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Stars from './Stars';
 import Image from 'next/image';
+import Gallery from './Gallery';
 
 const ReviewsCard = ({ review }) => {
   const [data, setData] = useState([]);
@@ -62,7 +63,7 @@ const ReviewsCard = ({ review }) => {
                     <div 
                       key={imgIndex} 
                       className="relative aspect-square size-20 border border-primary rounded-lg overflow-hidden cursor-pointer"
-                      onClick={() => handleImageClick(`http://97.74.89.204/${image.imageUrl}`)}
+                      onClick={() => handleImageClick(image)}
                     >
                       <Image
                         src={`http://97.74.89.204/${image.imageUrl}`}
@@ -95,13 +96,14 @@ const ReviewsCard = ({ review }) => {
             >
               ×
             </button>
-            <Image
+            <Gallery data={selectedImage}/>
+            {/* <Image
               src={selectedImage}
               alt="Enlarged review image"
               width={1200}
               height={800}
               className="object-contain w-full h-full"
-            />
+            /> */}
           </div>
         </div>
       )}
