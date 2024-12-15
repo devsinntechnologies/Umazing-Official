@@ -200,7 +200,7 @@ const Page = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <p className="text-[#2C742F] text-[24px] font-medium">
-                    {productLoading ? <Skeleton className="h-6 w-16" /> : `{CURRENCY} ${product?.basePrice}`}
+                    {productLoading ? <Skeleton className="h-6 w-16" /> : `${CURRENCY} ${product?.basePrice}`}
                   </p>
                   <div className="w-[75px] h-[27px] rounded-[30px] text-destructive text-[14px] py-[3px] px-[10px]">
                     {productLoading ? <Skeleton className="h-4 w-10" /> : `${product?.baseQuantity} Qty`}
