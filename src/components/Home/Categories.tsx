@@ -43,7 +43,7 @@ const Categories = () => {
          <div className="flex items-center justify-center gap-5 lg:gap-6 min-w-fit flex-nowrap">
          {categoriesData?.data?.map((category, index) => (
             <Link key={index} href={`/search?categoryId=${category.id}`}>
-              <div className="flex items-between flex-col justify-center h-full w-max space-y-3">
+              <div className="flex items-center flex-col justify-center h-full w-max  space-y-3">
                 <div className="size-16 sm:size-20 md:size-28 lg:size-36 rounded-full bg-secondary p-4 border border-border gap-6 cursor-pointer">
                   <Image
                     src={

@@ -15,7 +15,6 @@ const FooterMiddleSection = () => {
           <p className="text-sm text-gray-500 mb-4">
           Umazing is renowned online fashion platform of Pakistan that solely offers style products for women, men and kids.
           </p>
-
           <div className="flex space-x-4">
             <a
               href="tel:+923154031364"
@@ -30,6 +29,15 @@ const FooterMiddleSection = () => {
               className="font-semibold border-b-2 border-primary pt-2"
             >
               umazingofficial@gmail.com
+            </a>
+          </div>
+        </div>
+        <div className="col-span-1 md:col-span-1 flex sm:hidden w-full flex-col sm:space-y-4 space-y-2">
+          <h3 className="font-semibold text-gray-800">Download Mobile App</h3>
+          <div className="flex">
+            <a href="#" className="flex gap-2">
+              <Image src='/Images/playStore.png' width={80} alt="" height={20} />
+              <Image src='/Images/appStore.png' width={80} alt="" height={20} />
             </a>
           </div>
         </div>
@@ -62,7 +70,7 @@ const FooterMiddleSection = () => {
         </div>
 
         {/* Right Section - Download Mobile App */}
-        <div className="col-span-1 md:col-span-1 flex w-full flex-col sm:space-y-4 space-y-2">
+        <div className="col-span-1 md:col-span-1 sm:flex hidden w-full flex-col sm:space-y-4 space-y-2">
           <h3 className="font-semibold text-gray-800">Download Mobile App</h3>
           <div className="flex">
             <a href="#" className="flex gap-2">

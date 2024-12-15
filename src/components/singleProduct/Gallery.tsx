@@ -59,7 +59,7 @@ const Gallery = (data) => {
      <Swiper
         onSwiper={setThumbsSwiper}
         loop={true}
-        spaceBetween={10}
+        spaceBetween={5}
         slidesPerView={8}
 
         watchSlidesProgress={true}

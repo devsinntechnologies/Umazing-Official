@@ -300,8 +300,8 @@ console.log(categories)
       "longDescription",
       "basePrice",
       "baseQuantity",
-      "city",
-      "condition",
+      // "city",
+      // "condition",
       "categoryId",
     ];
 
@@ -343,8 +343,8 @@ console.log(categories)
     formData.append("longDescription", productDetails.longDescription);
     formData.append("basePrice", productDetails.basePrice);
     formData.append("baseQuantity", productDetails.baseQuantity);
-    formData.append("city", productDetails.city);
-    formData.append("condition", productDetails.condition);
+    formData.append("city", "Lahore");
+    formData.append("condition", "New");
     formData.append("CategoryId", productDetails.categoryId);
     formData.append("claim", productDetails.claim);
     for (let i = 0; i < images.length; i++) {
@@ -539,10 +539,10 @@ console.log(categories)
                 className="w-full py-2 rounded-sm px-2 mt-2 border border-solid-black"
               /> */}
                 <h3>Variants</h3>
-                <button
+                <Button
                   onClick={() => setShowVariants(!showVariants)}
-                  className="text-sm bg-primary text-white px-4 py-2 rounded-sm"
-                >Add Variants</button>
+                variant={"hover"}
+                >Add Variants</Button>
               </div>
 
               {showVariants && (
@@ -632,21 +632,23 @@ console.log(categories)
                       </div>
                     </div>
                   ))}
-                  <button
+                  <Button
                     type="button"
-                    className="my-4 px-4 py-2 rounded-sm text-sm bg-primary text-white transition duration-200"
+                    className="my-4 "
+                    variant={"hover"}
                     onClick={handleAddAttribute}
                   >
                     Add Attribute
-                  </button>
+                  </Button>
                   <hr />
-                  <button
+                  <Button
                     type="button"
-                    className="mt-2 px-4 py-2 rounded-sm text-sm bg-primary text-white transition duration-200"
+                    className="mt-2 "
+                    variant={"hover"}
                     onClick={toggleAttrtable}
                   >
                     Generate Variants
-                  </button>
+                  </Button>
                 </div>
               )}
             </div>
@@ -792,13 +794,14 @@ console.log(categories)
             </div>
           </div>
           <div className="flex items-center mt-3 justify-end w-full">
-            <button
+            <Button
               type="submit"
               onClick={handleSubmit}
-              className="mt-2 w-full py-3 rounded-sm text-md  bg-[#F5F5F5] border hover:border-primary hover:bg-primary text-primary hover:text-white transition duration-200"
+              variant={"hover"}
+              className="mt-2 w-full transition duration-200"
             >
               {isLoading ? " Adding..." : "Add Product"}
-            </button>
+            </Button>
           </div>
 
         </div>

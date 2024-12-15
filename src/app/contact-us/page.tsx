@@ -1,6 +1,8 @@
 "use client";
 import BreadCrumb from "@/components/BreadCrumb";
 import { Facebook, Instagram, Twitter } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
 const Page = () => {
   return (
     <>
@@ -91,9 +93,11 @@ const Page = () => {
                   id="message"
                 ></textarea>
               </div>
-              <button className="py-3 px-4 text-xl bg-primary w-1/2 text-white rounded-lg">
+              <Button 
+               variant={"hover"}
+              className="">
                 Submit
-              </button>
+              </Button>
             </div>
           </div>
         </div>

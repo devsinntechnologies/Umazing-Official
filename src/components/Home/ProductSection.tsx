@@ -73,8 +73,8 @@ const ProductSection: React.FC = () => {
           }
           endMessage={
             !hasMore && (
-              <p className="text-lg font-semibold text-center text-gray-700 mt-4">
-                <b>Yay! You have seen it all</b>
+              <p className="text-lg text-center text-gray-700 mt-4">
+              No more products!
               </p>
             )
           }
