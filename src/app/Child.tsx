@@ -19,6 +19,7 @@ export default function Child({ children }: ChildProps) {
     '/wishlist',
     '/checkout',
     '/seller',
+    '/messages',
     '/seller/dashboard',
     // Add any other seller routes here
   ];

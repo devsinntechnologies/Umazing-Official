@@ -1,0 +1,79 @@
+[
+  {
+    "senderInitials": "JD",
+    "senderName": "John Doe",
+    "type": "buyer",
+    "messageContent": "Hi! How are you?",
+    "timestamp": "10:32 AM",
+    "unreadMessages": 1,
+    "messages": [
+      { "text": "Hello!", "sender": "John", "time": "10:30 AM" },
+      { "text": "Hi! How are you?", "sender": "You", "time": "10:32 AM" }
+    ]
+  },
+  {
+    "senderInitials": "JS",
+    "senderName": "Jane Smith",
+    "type": "buyer",
+    "messageContent": "Hey!",
+    "timestamp": "11:00 AM",
+    "unreadMessages": 0,
+    "messages": [
+      { "text": "Hey!", "sender": "Jane", "time": "11:00 AM" }
+    ]
+  },
+  {
+    "senderInitials": "MI",
+    "senderName": "Mishal Irfan",
+    "type": "buyer",
+    "messageContent": "Are you available for a meeting?",
+    "timestamp": "10:00 AM",
+    "unreadMessages": 3,
+    "messages": []
+  },
+  {
+    "senderInitials": "JW",
+    "senderName": "John Wick",
+    "type": "buyer",
+    "messageContent": "Let's catch up over coffee.",
+    "timestamp": "11:30 AM",
+    "unreadMessages": 6,
+    "messages": []
+  },
+  {
+    "senderInitials": "AH",
+    "senderName": "Alice Hatter",
+    "type": "seller",
+    "messageContent": "What do you think about the new project?",
+    "timestamp": "1:45 PM",
+    "unreadMessages": 8,
+    "messages": []
+  },
+  {
+    "senderInitials": "ES",
+    "senderName": "Elon Musk",
+    "type": "seller",
+    "messageContent": "We're launching a new product next month.",
+    "timestamp": "3:20 PM",
+    "unreadMessages": 2,
+    "messages": []
+  },
+  {
+    "senderInitials": "JB",
+    "senderName": "Jane Bond",
+    "type": "seller",
+    "messageContent": "Are you free for dinner tonight?",
+    "timestamp": "5:00 PM",
+    "unreadMessages": 3,
+    "messages": []
+  },
+  {
+    "senderInitials": "PP",
+    "senderName": "Peter Parker",
+    "type": "seller",
+    "messageContent": "I've got tickets to the game tomorrow.",
+    "timestamp": "6:30 PM",
+    "unreadMessages": 5,
+    "messages": []
+  }
+]
