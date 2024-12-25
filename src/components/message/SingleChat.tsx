@@ -20,7 +20,7 @@ const SingleChat = ({ selectedChat, onClose }) => {
     };
 
     return (
-        <div className="flex flex-col h-screen w-[70%] border-l border-gray-200">
+        <div className="flex flex-col flex-1 border-l border-gray-200">
 
             <div className="flex items-center gap-2 p-4 bg-white border-b shadow-md">
                 <button onClick={onClose} className="text-gray-600 hover:text-black">

@@ -17,10 +17,10 @@ const Logo = ()=>{
      </div>} */}
      <Link
        href="/"
-       className="w-[40px] sm:w-[145px] items-baseline md:items-center justify-center flex "
+       className="w-[40px] sm:w-[132px] items-baseline md:items-center justify-center flex "
      >
-       <Image priority width={56} height={56} src={ "/icon.svg" } alt="Umazing" className="block sm:hidden" />
-       <Image priority width={145} height={50} src={ "/logo.svg" } alt="Umazing" className="hidden sm:block" />
+       <Image priority width={48} height={48} src={ "/icon.svg" } alt="Umazing" className="block sm:hidden" />
+       <Image priority width={136} height={42} src={ "/logo.svg" } alt="Umazing" className="hidden sm:block" />
      </Link>
    </div>
   )

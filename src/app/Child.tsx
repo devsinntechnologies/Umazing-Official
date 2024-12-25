@@ -30,7 +30,7 @@ export default function Child({ children }: ChildProps) {
     <>
       <Navbar />
       <Suspense fallback={<LoadingSpinner />}>
-        <div className="px-2 sm:px-4 md:px-6 lg:px-8 w-full min-h-auto">
+      <div className={`${pathname === '/messages' ? 'p-0' : 'px-2 sm:px-4 md:px-6 lg:px-8'} w-full min-h-auto`}>
           {children}
         </div>
       </Suspense>

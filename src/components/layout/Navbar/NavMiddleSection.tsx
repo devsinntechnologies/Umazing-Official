@@ -31,7 +31,7 @@ const NavMiddleSection = () => {
     <div>
       <header className="bg-white w-full">
         {/* Top Section */}
-        <div className="w-full px-2 py-3 flex justify-between items-center flex-col md:flex-row gap-4 md:gap-[auto]">
+        <div className="w-full py-2 md:py-1 flex justify-between items-center flex-col md:flex-row gap-4 md:gap-[auto]">
           {/* Logo Section */}
           <div className="w-full md:w-fit flex items-center justify-between md:justify-center">
             <Logo />
