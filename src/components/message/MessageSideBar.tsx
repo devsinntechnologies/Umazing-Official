@@ -4,13 +4,14 @@ import React, { useState } from "react";
 import { Search } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import messages from "@/data/message.json";
-import { Button } from "@/components/ui/button";
+import { useRouter, useParams } from "next/navigation";
 
 const Messages = () => {
-  const [selectedChat, setSelectedChat] = useState(null);
-
-  // Filter state
+  const { id } = useParams(); // Get the message id from the URL
   const [filter, setFilter] = useState("All"); // Default filter is "All"
+
+  // Convert the id from the URL to a number (if it's a valid number)
+  const activeId = id ? parseInt(id, 10) : null;
 
   // Filter messages based on the selected filter
   const filteredMessages = messages.filter((message) => {
@@ -23,12 +24,14 @@ const Messages = () => {
       messages={filteredMessages}
       setFilter={setFilter}
       filter={filter}
-      setSelectedChat={setSelectedChat}
+      activeId={activeId} // Pass active id to MessageSideBar
     />
   );
 };
 
-const MessageSideBar = ({ messages, setFilter, filter, setSelectedChat }) => {
+const MessageSideBar = ({ messages, setFilter, filter, activeId }) => {
+  const router = useRouter();
+
   return (
     <div className="relative w-[400px] h-full bg-gray-50 border-r">
       <div className="h-full py-4 px-4 overflow-y-auto">
@@ -46,30 +49,35 @@ const MessageSideBar = ({ messages, setFilter, filter, setSelectedChat }) => {
         {/* Filter Buttons */}
         <div className="w-full flex items-center justify-start gap-3 py-4 text-sm">
           {["All", "Seller", "Buyer"].map((type) => (
-            <Button
+            <button
               key={type}
-              type="button"
               onClick={() => setFilter(type)}
               className={`transition-all duration-200 ${
                 filter === type
-                  ? "bg-primary text-white"
-                  : "bg-white text-primary border border-primary"
+                  ? "bg-primary rounded-full px-3 py-1 font-bold text-white"
+                  : " text-primary font-bold "
               }`}
             >
               {type}
-            </Button>
+            </button>
           ))}
         </div>
 
         {/* Display filtered messages */}
-        <div className="space-y-3">
-          {messages.map((message, index) => (
+        <div className="space-y-1">
+          {messages.map((message) => (
             <div
-              key={index}
-              onClick={() => setSelectedChat(message)}
-              className="cursor-pointer hover:bg-gray-200 p-2 rounded-lg transition-all"
+             
+            
             >
-              <div className="rounded-xl w-full h-20 justify-center bg-white border border-primary shadow-lg py-2 px-2 grid grid-cols-6 gap-2 items-center">
+              <div 
+              onClick={() => router.push(`${message.id}`)}
+              key={message.id}
+              className={`cursor-pointer p-2 rounded-lg transition-all rounded-xl w-full h-20 justify-center bg-white border border-primary hover:shadow-lg py-2 px-2 grid grid-cols-6  items-center ${
+                activeId === message.id
+                  ? "border-4 " // Highlight active card with blue border
+                  : ""
+              }`}>
                 {/* Avatar */}
                 <Avatar>
                   <AvatarImage

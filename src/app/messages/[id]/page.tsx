@@ -1,11 +1,19 @@
 // @ts-nocheck
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Send, ArrowLeft, MousePointerClick } from "lucide-react";
+import { useParams } from "next/navigation";
+import allMessages from "@/data/message.json";
 
-const SingleChat = ({ selectedChat, onClose }) => {
-    // Initialize messages, ensuring fallback to an empty array if undefined
+const SingleChat = ({ onClose }) => {
+    const { id } = useParams();
+    
+    // Filter selected chat based on ID
+    const selectedChat = allMessages.find(chat => chat.id === Number(id)); 
+
+
+    // State to manage messages and input
     const [messages, setMessages] = useState(selectedChat?.messages || []);
     const [input, setInput] = useState("");
 
@@ -21,16 +29,6 @@ const SingleChat = ({ selectedChat, onClose }) => {
             setInput(""); // Clear input field
         }
     };
-
-    // If no chat is selected, show placeholder
-    if (!selectedChat) {
-        return (
-            <div className="flex flex-col flex-1 items-center justify-center text-gray-500 h-full">
-                <MousePointerClick size={48} />
-                <p className="text-lg mt-2">Select a chat to start messaging</p>
-            </div>
-        );
-    }
 
     return (
         <div className="flex flex-col flex-1 border-l border-gray-200">
