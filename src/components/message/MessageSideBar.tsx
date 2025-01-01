@@ -1,6 +1,6 @@
 // @ts-nocheck
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import messages from "@/data/message.json";
@@ -9,6 +9,16 @@ import { useRouter, useParams } from "next/navigation";
 const Messages = () => {
   const { id } = useParams(); // Get the message id from the URL
   const [filter, setFilter] = useState("All"); // Default filter is "All"
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth < 768); // Check for md breakpoint
+    };
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Convert the id from the URL to a number (if it's a valid number)
   const activeId = id ? parseInt(id, 10) : null;
@@ -18,6 +28,10 @@ const Messages = () => {
     if (filter === "All") return true; // Show all messages
     return message.type.toLowerCase() === filter.toLowerCase(); // Match by type
   });
+
+  if (isMobileView && id) {
+    return <ChatPage id={id} />; // Show chat page if id is selected in mobile view
+  }
 
   return (
     <MessageSideBar
@@ -33,7 +47,7 @@ const MessageSideBar = ({ messages, setFilter, filter, activeId }) => {
   const router = useRouter();
 
   return (
-    <div className="relative w-[400px] h-full bg-gray-50 border-r">
+    <div className="relative w-full lg:w-[30%] md:w-[50%] h-full bg-gray-50 border-r">
       <div className="h-full py-4 px-4 overflow-y-auto">
         <div className="w-full h-10 overflow-hidden bg-white m-auto flex items-center shadow-xl border-darkGrey rounded-full pr-2 pl-4">
           <div className="w-6 sm:w-8">
@@ -64,18 +78,14 @@ const MessageSideBar = ({ messages, setFilter, filter, activeId }) => {
         </div>
 
         {/* Display filtered messages */}
-        <div className="space-y-1">
+        <div className="space-y-2">
           {messages.map((message) => (
-            <div
-             
-            
-            >
               <div 
-              onClick={() => router.push(`${message.id}`)}
+              onClick={() => router.push(`/messages/${message.id}`)}
               key={message.id}
-              className={`cursor-pointer p-2 rounded-lg transition-all rounded-xl w-full h-20 justify-center bg-white border border-primary hover:shadow-lg py-2 px-2 grid grid-cols-6  items-center ${
+              className={`cursor-pointer p-2 rounded-lg transition-all rounded-xl w-full h-20 justify-center bg-white border border-primary  py-2 px-2 grid grid-cols-6 items-center ${
                 activeId === message.id
-                  ? "border-4 " // Highlight active card with blue border
+                  ? "border-2 " // Highlight active card with blue border
                   : ""
               }`}>
                 {/* Avatar */}
@@ -115,12 +125,16 @@ const MessageSideBar = ({ messages, setFilter, filter, activeId }) => {
                   )}
                 </div>
               </div>
-            </div>
           ))}
         </div>
       </div>
     </div>
   );
+};
+
+const ChatPage = ({ id }) => {
+  return
+//    <div className="p-4 text-center">Chat Page for ID: {id}</div>;
 };
 
 export default Messages;

@@ -3,15 +3,15 @@
 
 import { useState, useEffect } from "react";
 import { Send, ArrowLeft, MousePointerClick } from "lucide-react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation"; // Import useRouter
 import allMessages from "@/data/message.json";
 
 const SingleChat = ({ onClose }) => {
     const { id } = useParams();
-    
-    // Filter selected chat based on ID
-    const selectedChat = allMessages.find(chat => chat.id === Number(id)); 
+    const router = useRouter(); // Initialize useRouter
 
+    // Filter selected chat based on ID
+    const selectedChat = allMessages.find(chat => chat.id === Number(id));
 
     // State to manage messages and input
     const [messages, setMessages] = useState(selectedChat?.messages || []);
@@ -30,11 +30,16 @@ const SingleChat = ({ onClose }) => {
         }
     };
 
+    // Handle navigation back to sidebar
+    const handleBack = () => {
+        router.push("/messages"); // Navigate back to sidebar page
+    };
+
     return (
-        <div className="flex flex-col flex-1 border-l border-gray-200">
+        <div className="flex flex-col w-full lg:w-[70%] md:w-[50%] flex-1 border-l border-gray-200">
             {/* Header Section */}
             <div className="flex items-center gap-2 p-4 bg-white border-b shadow-md">
-                <button onClick={onClose} className="text-gray-600 hover:text-black">
+                <button onClick={handleBack} className="text-gray-600 hover:text-black"> {/* Updated onClick */}
                     <ArrowLeft size={20} />
                 </button>
                 <h2 className="text-lg text-primary font-semibold">
@@ -51,11 +56,10 @@ const SingleChat = ({ onClose }) => {
                             className={`flex mb-3 ${msg.sender === "You" ? "justify-end" : "justify-start"}`}
                         >
                             <div
-                                className={`p-3 rounded-lg shadow-md max-w-xs ${
-                                    msg.sender === "You"
+                                className={`p-3 rounded-lg shadow-md max-w-xs ${msg.sender === "You"
                                         ? "bg-primary text-white"
                                         : "bg-white text-primary"
-                                }`}
+                                    }`}
                             >
                                 <p className="text-sm">{msg.text}</p>
                                 <p className="text-xs text-gray-300 mt-1">{msg.time}</p>
@@ -82,9 +86,8 @@ const SingleChat = ({ onClose }) => {
                 <button
                     onClick={handleSend}
                     disabled={!input.trim()} // Disable button if input is empty
-                    className={`ml-3 p-3 rounded-full ${
-                        input.trim() ? "bg-primary text-white hover:bg-blue-600" : "bg-gray-300"
-                    }`}
+                    className={`ml-3 p-3 rounded-full ${input.trim() ? "bg-primary text-white hover:bg-primary" : "bg-gray-300"
+                        }`}
                 >
                     <Send size={20} />
                 </button>
