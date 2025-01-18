@@ -1,18 +1,18 @@
 'use client';
+
 import { ReactNode, useRef } from 'react';
 import { Provider } from 'react-redux';
 import { makeStore } from '../store/store';
-import { Store } from 'redux'; // Import the Store type from redux
+import { Store } from 'redux';
 
 interface StoreProviderProps {
-  children: ReactNode; // Define the type for children
+  children: ReactNode;
 }
 
 export default function StoreProvider({ children }: StoreProviderProps) {
-  const storeRef = useRef<Store | undefined>(undefined); // Use a ref type
+  const storeRef = useRef<Store | undefined>(undefined);
 
   if (!storeRef.current) {
-    // Create the store instance the first time this renders
     storeRef.current = makeStore();
   }
 
