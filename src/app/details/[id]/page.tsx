@@ -230,23 +230,24 @@ const Page = () => {
               </div>
 
               <div className="w-full md:w-[50%] h-full space-y-5">
-                <div className="rounded-[4px] text-primary text-2xl font-bold">
+               <div className="flex justify-between">
+               <div className="rounded-[4px] text-primary text-2xl font-bold">
                   {productLoading ? <Skeleton className="h-6 w-3/4" /> : product?.name}
                 </div>
                 <button
                     onClick={handleToggleFavorite}
                     disabled={addingToFav || removingFromFav}
-                    className="bg-primary h-[51px] w-[20%] flex justify-center items-center rounded-[43px]"
                   >
                     {addingToFav || removingFromFav ? (
                       <Loader2 className="animate-spin text-white" />
                     ) : (
                       <Heart
-                        color="white"
-                        fill={product?.isFavorite ? "white" : "none"}
+                       color="#007F80"
+                        fill={product?.isFavorite ? "none" : "#007F80"}
                       />
                     )}
                   </button>
+               </div>
                 <div className="flex items-center gap-3 my-2">
                   {reviewLoading ? (
                     <Skeleton className="h-4 w-20" />
@@ -312,7 +313,15 @@ const Page = () => {
                     Buy Now
                   </button>
                 </div>
-
+               <div>
+               <button
+                    // onClick={handleCheckout}
+                    // disabled={addingToCart}
+                    className="h-[51px] w-[20%] text-white font-bold text-sm lg:w-[30%] bg-primary"
+                  >
+                    Chat with Seller
+                  </button>
+               </div>
                 <div className="w-full lg:w-[647px] my-6 border border-[#E6E6E6]"></div>
 
                 <div>
