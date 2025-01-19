@@ -9,6 +9,7 @@ import {
   PackagePlus,
   ShoppingBag,
   ShoppingCart,
+  MessageCircleMore,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -75,6 +76,16 @@ const Auth: React.FC<AuthProps> = ({ className }) => {
           </div>
         ) : (
           <div className="flex items-center gap-3 min-h-10">
+             <Tooltip content="chat">
+              <TooltipTrigger>
+                <Link href='/messages' className="relative size-8 md:size-10 rounded-full text-primary font-bold flex items-center justify-center">
+                  <div className="absolute -top-1 -right-1 flex items-center justify-center bg-destructive text-white text-xs w-5 h-5 rounded-full">10</div>
+                  <MessageCircleMore  className="font-bold" />
+                </Link></TooltipTrigger>
+              <TooltipContent>
+                <p>chat</p>
+              </TooltipContent>
+            </Tooltip>
             <Tooltip content="Wishlist">
               <TooltipTrigger>
                 <Link href='/wishlist' className="relative size-8 md:size-10 rounded-full text-primary font-bold flex items-center justify-center">
