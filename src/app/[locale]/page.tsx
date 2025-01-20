@@ -12,12 +12,12 @@ export default function HomePage() {
       <div className="w-full mt-4 flex justify-center items-center gap-2 h-[220px] sm:h-[260px] md:h-[340px] lg:h-[400px]">
         <HeaderSlider />
       </div>
-      <div className="text-center mt-8">
+      {/* <div className="text-center mt-8">
         <h1>{t("title")}</h1>
         <Link href="/about" className="text-blue-500 underline">
           {t("about")}
         </Link>
-      </div>
+      </div> */}
       <Categories />
       <ProductSection />
     </div>
