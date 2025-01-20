@@ -5,7 +5,7 @@ import LoadingSpinner from "@/components/loadingSpinner/LoadingSpinner";
 import MessageSideBar from "@/components/chat/message/MessageSideBar";
 import Header from "@/components/chat/Header";
 import { connectSocket } from "@/lib/socket";
-import StoreProvider from "@/app/Provider";
+import StoreProvider from "@/app/[locale]/Provider";
 import { Toaster } from "@/components/ui/toaster";
 
 interface RootLayoutProps {

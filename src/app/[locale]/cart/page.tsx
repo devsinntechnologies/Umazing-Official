@@ -1,5 +1,5 @@
 "use client";
-import CartSection from "../../components/cart/CartSection";
+import CartSection from "../../../components/cart/CartSection";
 import BreadCrumb from "@/components/BreadCrumb";
 
 const Page = () => {

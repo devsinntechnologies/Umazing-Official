@@ -14,7 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { X } from "lucide-react";
 import { AlertDialog, AlertDialogContent, AlertDialogTrigger, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog";
 import { useCreateOrderMutation } from "@/hooks/UseOrders";
-import AddAddressDialog from "../../components/AddAddressDialog";
+import AddAddressDialog from "../../../components/AddAddressDialog";
 import { CURRENCY } from "@/lib/constants";
 
 interface BillingInfo {
