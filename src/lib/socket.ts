@@ -1,18 +1,18 @@
 "use client"
 import { io, Socket } from "socket.io-client";
-// import { BASE_URL } from "@/lib/constants";
-let token = localStorage.getItem('token');
+import { BASE_URL_SOCKET } from "@/lib/constants";
 let socket: Socket | null = null;
 
 
 export const connectSocket = (): Socket => {
   
   if (!socket) {
-    socket = io('http://192.168.43.191:5000', { auth: { token } });
+    let token = localStorage.getItem('token');
+    socket = io(BASE_URL_SOCKET, { auth: { token } });
      
 
     socket.on("connect", () => {
-      console.log("Connected to WebSocket server:", socket?.id);
+      console.log("Connected to Socket server:", socket?.id);
     });
 
     socket.on("connect_error", (error) => {
