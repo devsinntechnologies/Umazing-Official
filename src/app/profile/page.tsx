@@ -322,7 +322,7 @@ const Page: React.FC = () => {
                 <div className="size-12 border border-primary rounded-full p-2 flex items-center justify-center">
                   <CreditCard className="size-6 md:size-8" />
                 </div>
-                <p className="text-sm md:text-base">Payments Info</p>
+                <p className="text-sm md:text-base">{t("paymentInfo")}</p>
               </button>
               <button className="text-primary font-semibold flex flex-col items-center">
                 <div className="size-12 border border-primary rounded-full p-2 flex items-center justify-center">

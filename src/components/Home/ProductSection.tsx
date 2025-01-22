@@ -42,7 +42,7 @@ const ProductSection: React.FC = () => {
         {t("products")}
         </p>
         <h1 className="font-semibold text-xl sm:text-2xl md:text-3xl">
-          Our Featured Products
+          {t("ourFeaturedProducts")}
         </h1>
       </div>
 

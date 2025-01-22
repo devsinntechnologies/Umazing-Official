@@ -12,8 +12,12 @@ import AuthDialog from '../layout/auth/AuthDialog';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import Image from "next/image"
+import {useTranslations} from "next-intl"
+
+
 
 const TabComponent = ({ product, review, refetch }) => {
+  const t = useTranslations();
   const isLoggedIn = useSelector((state:RootState) => state.authSlice.isLoggedIn);
   const [activeTab, setActiveTab] = useState('description');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -131,14 +135,15 @@ const TabComponent = ({ product, review, refetch }) => {
             }`}
           onClick={() => setActiveTab('description')}
         >
-          Descriptions
+          {t("descriptions")}
         </button>
         <button
           className={`ml-4 px-4 py-2 sm:text-lg text-sm font-medium  ${activeTab === 'feedback' ? 'border-b-2 border-primary text-primary' : 'text-gray-500'
             }`}
           onClick={() => setActiveTab('feedback')}
         >
-          Customer Reviews
+          {t("customerReviews")}
+        
         </button>
       </div>
 
@@ -162,7 +167,8 @@ const TabComponent = ({ product, review, refetch }) => {
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                   <DialogTrigger asChild>
                     <Button className="w-full sm:w-auto" onClick={handleAddReviewClick}>
-                      Add Review
+                      
+          {t("addReview")}
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-[425px]">

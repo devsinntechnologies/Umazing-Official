@@ -47,7 +47,7 @@ const FooterMiddleSection = () => {
 
         {/* Center Sections - Links */}
         <div className="col-span-1 md:col-span-1 w-full sm:space-y-2 space-y-1">
-          <h3 className="font-semibold text-gray-800 sm:mb-5 mb-3">My Account</h3>
+          <h3 className="font-semibold text-gray-800 sm:mb-5 mb-3">{t("myAccount")}</h3>
           <ul className="text-gray-600 flex flex-col gap-4">
             <Link href="/seller">
               <li className="hover:text-primary">{t("sell")}</li>
@@ -67,8 +67,8 @@ const FooterMiddleSection = () => {
               <li className="hover:text-primary">{t("contact")}</li>
             </Link>
            <Link href="/faqs"> <li className="hover:text-primary">FAQs</li></Link>
-           <Link href="/termsAndConditions"> <li className="hover:text-primary">Terms & Condition</li></Link>
-           <Link href="/privacyPolicy"> <li className="hover:text-primary">Privacy Policy</li></Link>
+           <Link href="/termsAndConditions"> <li className="hover:text-primary">{t("terms&Condition")}</li></Link>
+           <Link href="/privacyPolicy"> <li className="hover:text-primary">{t("privacypolicy")}</li></Link>
           </ul>
         </div>
 

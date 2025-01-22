@@ -140,6 +140,11 @@
   "productImages": "پروڈکٹ کی تصاویر",
   "clickToUpload": "اپ لوڈ کرنے کے لیے کلک کریں",
   "aToZ": "[a-zA-Z ]",
+  "helps": "مدد",
+  "terms&Condition": "شرائط و ضوابط",
+  "contact": "رابطہ",
+
+
   "enterNamee": "نام درج کریں",
   "typeDescriptionHere": "یہاں تفصیل درج کریں (30-200 حروف)",
   "longDescription": "طویل تفصیل",
@@ -430,6 +435,19 @@
   "confirmPassword": "تصدیقی پاس ورڈ",
   "forgetPassword2": "پاس ورڈ بھول گئے",
   "account": "اکاؤنٹ",
+  "myAccount": "میرا اکاؤنٹ",
+  "privacypolicy": "رازداری کی پالیسی",
+  "paymentInfo": "ادائیگی کی معلومات",
+  "ourFeaturedProducts":"ہماری نمایاں مصنوعات",
+  "shopByTopcategory":"ٹاپ زمرے کے لحاظ سے خریداری کریں۔",
+  "addtoCart":"ٹوکری میں شامل کریں",
+  "buyNow":"ابھی خریدیں",
+  "":"",
+  "":"",
+
+
+
+
   "offer": "آفر",
   "cart": "کارت",
   "explore": "ایکسپلور کریں",

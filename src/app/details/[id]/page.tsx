@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 import AuthDialog from "@/components/layout/auth/AuthDialog";
 import Link from "next/link";
 import { CURRENCY } from "@/lib/constants";
+import {useTranslations} from "next-intl"
 
 
 // Dynamic imports for heavy components
@@ -27,6 +28,7 @@ const TabComponent = dynamic(() => import("@/components/singleProduct/TabContent
 const Stars = dynamic(() => import("@/components/singleProduct/Stars"), { ssr: false });
 
 const Page = () => {
+  const t = useTranslations();
   const router = useRouter()
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -268,7 +270,7 @@ const Page = () => {
                   </div>
                 </div>
                 <div className="my-4">
-                  <h1 className="font-semibold text-md">Product Description</h1>
+                  <h1 className="font-semibold text-md">{t("productDescription")}</h1>
                   <p>{productLoading ? <Skeleton className="h-5 w-full" count={3} /> : product?.description}</p>
                 </div>
 
@@ -300,7 +302,7 @@ const Page = () => {
                       <Loader2 className="animate-spin" />
                     ) : (
                       <>
-                        Add to Cart <ShoppingCart width={20} height={20} />
+                       {t("addtoCart")} <ShoppingCart width={20} height={20} />
                       </>
                     )}
                   </button>
@@ -309,7 +311,7 @@ const Page = () => {
                     disabled={addingToCart}
                     className="h-[51px] w-[55%] text-sm lg:w-[347px] bg-primary text-white text-[16px] font-semibold flex justify-center items-center gap-3 lg:gap-4 rounded-[43px]"
                   >
-                    Buy Now
+                 {t("buyNow")}
                   </button>
                 </div>
 
@@ -317,7 +319,8 @@ const Page = () => {
 
                 <div>
                   <p className="text-[14px] font-bold">
-                    Category:{" "}
+                  {t("category")}
+                  :{" "}
                     <span className="text-[#808080] font-normal">
                       {productLoading ? <Skeleton className="h-4 w-16" /> : product?.Category?.name}
                     </span>

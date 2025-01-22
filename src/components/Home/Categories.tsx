@@ -26,7 +26,7 @@ const Categories = () => {
         )} */}
       </div>
       <h1 className="font-semibold text-xl sm:text-2xl md:text-3xl lg:text-4xl">
-        Shop by Top {t("category")}
+      {t("shopByTopcategory")}
       </h1>
 
       {/* Conditionally render loading state or categories */}
