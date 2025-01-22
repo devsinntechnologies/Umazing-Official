@@ -7,6 +7,11 @@ import Child from "./Child";
 import { ReactNode } from "react";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 
+
+import {NextIntlClientProvider} from 'next-intl';
+import {getLocale, getMessages} from 'next-intl/server';
+
+
 const urbanist = Urbanist({ subsets: ["latin"] });
 
 // const poppins = Poppins({
@@ -25,20 +30,28 @@ interface RootLayoutProps {
   children: ReactNode; // Define the type for children
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const locale = await getLocale();
+ 
+  // Providing all messages to the client
+  // side is the easiest way to get started
+  const messages = await getMessages();
+  
   return (
-    <html lang="en">
+    <html lang={locale}>
       <head>
         <title>Umazing Official</title>
         <link rel="icon" type="image/svg+xml" href="/icon.svg" />
       </head>
       <body className={`${urbanist.className} w-screen min-h-screen`}>
+      <NextIntlClientProvider messages={messages}>
         <Provider>
           <TooltipProvider>
           <Child>{children}</Child>
           </TooltipProvider>
           <Toaster />
         </Provider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

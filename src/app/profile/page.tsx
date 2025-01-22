@@ -47,6 +47,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 import AddressManager from "@/components/profile/AddressManager";
+import { useTranslations } from "next-intl";
+import LanguageToggle from "@/components/LanguageToggle";
 
 interface Address {
   id: string;
@@ -66,6 +68,7 @@ interface UserProfileData {
 }
 
 const Page: React.FC = () => {
+  const t = useTranslations();
   const isLoggedIn = useSelector((state: RootState) => state.authSlice.isLoggedIn);
   const userId = useSelector((state: RootState) => state.authSlice.user?.id);
   const [triggerFetch, setTriggerFetch] = useState(false);
@@ -308,6 +311,7 @@ const Page: React.FC = () => {
               </div>
             </div>
             <div className="flex gap-4 items-center">
+              <LanguageToggle/>
               <Link href='/orders' className="text-primary font-semibold flex flex-col items-center">
                 <div className="size-12 border border-primary rounded-full p-2 flex items-center justify-center">
                   <PackageOpen className="size-6 md:size-8" />
@@ -324,7 +328,7 @@ const Page: React.FC = () => {
                 <div className="size-12 border border-primary rounded-full p-2 flex items-center justify-center">
                   <MapPinned className="size-6 md:size-8" />
                 </div>
-                <p className="text-sm md:text-base">Addresses</p>
+                <p className="text-sm md:text-base">{t('addresses')}</p>
               </button>
             </div>
           </div>
