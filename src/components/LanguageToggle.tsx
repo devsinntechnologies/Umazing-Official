@@ -17,14 +17,13 @@ const LanguageToggle: React.FC = () => {
 
   const toggleLanguage = () => {
     const newLocale = locale === "en" ? "ur" : "en";
-    Cookies.set("NEXT_LOCALE", newLocale, { expires: 365 }); // Set cookie for a year
+    Cookies.set("NEXT_LOCALE", newLocale, { expires: 365 });
     setLocale(newLocale);
-    router.refresh();
-
-    // Preserve the current path and query parameters while changing the locale
+  
     const queryString = searchParams.toString();
     const newPath = queryString ? `${pathname}?${queryString}` : pathname;
-    router.push(newPath, newPath, { locale: newLocale });
+    router.push(newPath, undefined, { scroll: false });
+    window.location.reload()
   };
 
   return (
