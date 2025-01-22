@@ -10,6 +10,7 @@ import { useGetAllOffersQuery } from "@/hooks/UseOffers";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { BASE_IMAGE } from "@/lib/constants";
 
 const HeaderSlider = () => {
   const router = useRouter();
@@ -22,6 +23,7 @@ const HeaderSlider = () => {
   if (isError || !offers?.data?.length) {
     return <p className="text-center text-destructive">Failed to load offers.</p>;
   }
+  console.log(BASE_IMAGE + offers.data[0].imageUrl)
 
   return (
     <div className="relative w-full h-full">
@@ -68,12 +70,12 @@ const HeaderSlider = () => {
             {/* Image Content */}
             <div className="absolute top-0 right-0 z-[-1] w-full h-full opacity-95">
               <Image
-                src={`http://97.74.89.204/${offer.imageUrl}`}
+                src={`${BASE_IMAGE}${offer.imageUrl}`}
                 alt={offer.offerName}
                 width={1000}
                 height={420}
                 className="object-cover opacity-95 size-full"
-                priority
+                // priority
               />
             </div>
           </SwiperSlide>
