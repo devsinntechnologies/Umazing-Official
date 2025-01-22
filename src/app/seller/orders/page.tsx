@@ -8,12 +8,14 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import withAuth from "@/components/hoc/withAuth";
 import { CURRENCY } from "@/lib/constants";
+import {useTranslations} from "next-intl"
 
 const Page = () => {
   const { toast } = useToast();
   const router = useRouter();
   const { data: ordersData, isLoading, isError, refetch } = useGetSellerOrdersQuery({});
   const [orders, setOrders] = useState([])
+  const t = useTranslations();
 
   useEffect(() => {
     if (ordersData) {
@@ -107,7 +109,7 @@ const Page = () => {
     <div className="w-full py-6 min-h-[70vh]">
       <Breadcrumb />
       <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-primary cursor-pointer">
-        Orders
+       {t("orders")}
       </h3>
       <div className="w-full mx-auto">
         <DataTable columns={columns} data={orders} isLoading={isLoading} />

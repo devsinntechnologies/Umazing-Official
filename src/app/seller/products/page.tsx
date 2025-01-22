@@ -119,7 +119,7 @@ const Page: React.FC = () => {
         <div className="w-full flex items-center justify-center gap-4 flex-col py-5">
           <p className="text-base">No products found.</p>
           <Link href="/seller/addProduct" className="bg-primary px-3 py-1.5 rounded-full text-white">
-            Add Products
+          {t("addProducts")}
           </Link>
         </div>
       )}

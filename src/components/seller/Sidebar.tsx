@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { LayoutDashboard, Package, PackagePlus } from "lucide-react";
 import { usePathname } from "next/navigation";
+import {useTranslations} from "next-intl"
 
 const Sidebar: React.FC = () => {
   const pathname = usePathname();
-
+  const t = useTranslations();
   const getLinkClass = (path: string) =>
     pathname === path
       ? "lg:bg-primary lg:text-white text-primary border border-solid-primary lg:border-hidden rounded-sm lg:rounded-md py-1"
@@ -30,13 +31,13 @@ const Sidebar: React.FC = () => {
       <Link href="/seller/addProduct" className={getLinkClass("/seller/addProduct")}>
         <div className="flex md:gap-3 text-md text-center lg:text-lg sm:text-md text-xs gap-2 md:px-3 py-1 px-2 items-center">
           <PackagePlus className="hidden sm:flex" />
-          Add Products
+         {t("addProduct")}
         </div>
       </Link>
       <Link href="/seller/orders" className={getLinkClass("/seller/orders")}>
         <div className="flex md:gap-3 text-md text-center lg:text-lg sm:text-md text-xs gap-2 md:px-3 py-1 px-2 items-center">
           <Package className="hidden sm:flex" />
-          Orders
+          {t("orders")}
         </div>
       </Link>
     </div>

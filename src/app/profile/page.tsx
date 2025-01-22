@@ -41,13 +41,13 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import ChangePassword from "../../components/profile/ChangePassword";
+import ChangePassword from "@/components/profile/ChangePassword";
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 import AddressManager from "@/components/profile/AddressManager";
-import { useTranslations } from "next-intl";
+import {useTranslations} from "next-intl"
 import LanguageToggle from "@/components/LanguageToggle";
 
 interface Address {
@@ -311,12 +311,12 @@ const Page: React.FC = () => {
               </div>
             </div>
             <div className="flex gap-4 items-center">
-              <LanguageToggle/>
+            <LanguageToggle/>
               <Link href='/orders' className="text-primary font-semibold flex flex-col items-center">
                 <div className="size-12 border border-primary rounded-full p-2 flex items-center justify-center">
                   <PackageOpen className="size-6 md:size-8" />
                 </div>
-                <p className="text-sm md:text-base">Orders</p>
+                <p className="text-sm md:text-base">{t("orders")}</p>
               </Link>
               <button className="text-primary font-semibold flex flex-col items-center">
                 <div className="size-12 border border-primary rounded-full p-2 flex items-center justify-center">
@@ -328,14 +328,14 @@ const Page: React.FC = () => {
                 <div className="size-12 border border-primary rounded-full p-2 flex items-center justify-center">
                   <MapPinned className="size-6 md:size-8" />
                 </div>
-                <p className="text-sm md:text-base">{t('addresses')}</p>
+                <p className="text-sm md:text-base">{t("addresses")}</p>
               </button>
             </div>
           </div>
 
           <div className="flex flex-col gap-4">
-            <h1 className="font-bold text-2xl sm:text-3xl ">Account</h1>
-            {["name", "dob", "gender", "phoneNo"].map((field) => (
+            <h1 className="font-bold text-2xl sm:text-3xl ">{t("account")}</h1>
+            {[t("names"), "dob", t("gender"), t("phone no")].map((field) => (
               <div key={field} className={`${editField === field && "border-b-primary"} flex justify-between items-center border-b py-2 sm:py-4`}>
                 <div className="flex w-full flex-col sm:flex-row sm:items-center">
                   <h3 className="font-semibold text-base sm:text-lg mr-2 capitalize min-w-[120px]">
@@ -409,7 +409,7 @@ const Page: React.FC = () => {
               </div>
             ))}
             <div className="flex gap-3 items-center border-b py-2 sm:py-4">
-              <h3 className="font-semibold text-base sm:text-lg mr-2  capitalize">Email:</h3>
+              <h3 className="font-semibold text-base sm:text-lg mr-2  capitalize">{t("emails")}:</h3>
               <p className="flex items-center gap-0">
                 {userProfile?.data.email}
               </p>
@@ -419,7 +419,7 @@ const Page: React.FC = () => {
 
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
-              <AccordionTrigger className="font-semibold text-base sm:text-lg mr-2 capitalize">Address</AccordionTrigger>
+              <AccordionTrigger className="font-semibold text-base sm:text-lg mr-2 capitalize">{t("addresses")}</AccordionTrigger>
               <AccordionContent>
                 <div className="flex flex-col gap-4">
                   <div className="w-full flex justify-end mb-2">
@@ -449,7 +449,7 @@ const Page: React.FC = () => {
                             <AlertDialogFooter>
                               <AlertDialogCancel>Cancel</AlertDialogCancel>
                               <AlertDialogAction className="bg-destructive text-white" onClick={() => handleDeleteAddress(addr.id)}>
-                                Delete
+                              {t("delete")}
                               </AlertDialogAction>
                             </AlertDialogFooter>
                           </AlertDialogContent>
@@ -474,7 +474,7 @@ const Page: React.FC = () => {
           </Accordion>
           <div className="flex justify-between items-center pb-1 mb-2 border-b">
             <div className="flex">
-              <h3 className="font-semibold text-base sm:text-lg mr-2 capitalize">Password:</h3>
+              <h3 className="font-semibold text-base sm:text-lg mr-2 capitalize">{t("enterPassword")}:</h3>
               <p className="font-bold flex items-center gap-0">
                 {Array.from({ length: 5 }).map((_, index) => (
                   <Dot className="size-4 md:size-5" key={index} />

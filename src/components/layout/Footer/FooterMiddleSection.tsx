@@ -1,8 +1,11 @@
 import Image from "next/image";
 import Logo from "../Logo";
 import Link from "next/link";
+import {useTranslations} from "next-intl"
 
 const FooterMiddleSection = () => {
+  const t = useTranslations();
+
   return (
     <div className="w-full py-8">
       <div className="w-full grid grid-cols-1 md:grid-cols-5 gap-6">
@@ -47,21 +50,21 @@ const FooterMiddleSection = () => {
           <h3 className="font-semibold text-gray-800 sm:mb-5 mb-3">My Account</h3>
           <ul className="text-gray-600 flex flex-col gap-4">
             <Link href="/seller">
-              <li className="hover:text-primary">Sell</li>
+              <li className="hover:text-primary">{t("sell")}</li>
             </Link>
             <Link href="/profile">
-              <li className="hover:text-primary">Account</li>
+              <li className="hover:text-primary">{t("account")}</li>
             </Link>
             <Link href="/wishlist">
-              <li className="hover:text-primary">Wishlist</li>
+              <li className="hover:text-primary">{t("wishList")}</li>
             </Link>
           </ul>
         </div>
         <div className="col-span-1 md:col-span-1 w-full sm:space-y-2 space-y-1">
-          <h3 className="font-semibold text-gray-800 sm:mb-5 mb-3">Helps</h3>
+          <h3 className="font-semibold text-gray-800 sm:mb-5 mb-3">{t("helps")}</h3>
           <ul className="text-gray-600 flex flex-col gap-4">
             <Link href="/contact-us">
-              <li className="hover:text-primary">Contact</li>
+              <li className="hover:text-primary">{t("contact")}</li>
             </Link>
            <Link href="/faqs"> <li className="hover:text-primary">FAQs</li></Link>
            <Link href="/termsAndConditions"> <li className="hover:text-primary">Terms & Condition</li></Link>

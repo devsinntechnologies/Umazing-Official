@@ -15,6 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {useTranslations} from "next-intl"
 import {
   Table,
   TableBody,
@@ -42,6 +43,7 @@ const Page = () => {
   const [addProduct, { isSuccess, error, data: responseData, isLoading }] = useAddProductMutation();
   const [subCategories, setSubCategories] = useState([]);
   const [categoryTypes, setCategoryTypes] = useState([]);
+  const t = useTranslations();
 
 console.log(categories)
 
@@ -399,7 +401,7 @@ console.log(categories)
     <div className="w-full p-4">
       <div className="mb-4">
         <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-primary cursor-pointer">
-          Add New Product</h3>
+        {t("addNew")} {t("products")}</h3>
         <p className="text-gray-600 mt-2">Fill in the details to list your product</p>
       </div>
       <div className="flex flex-col-reverse lg:flex-row gap-8">
@@ -454,9 +456,9 @@ console.log(categories)
           </div>
 
           <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-            <h2 className="text-xl font-semibold mb-4">Category Details</h2>
+            <h2 className="text-xl font-semibold mb-4">{t("category")} Details</h2>
             <div className="mb-4 outline-none">
-              <label className="text-sm font-semibold">Category</label>
+              <label className="text-sm font-semibold">  {t("category")}</label>
               <Select
                 value={productDetails.categoryId}
                 onValueChange={handleCategoryChange}
@@ -483,7 +485,7 @@ console.log(categories)
 
             <div className="flex flex-col sm:flex-row mb-4 gap-3">
               <div className="outline-none w-full sm:w-1/2">
-                <label className="text-sm font-semibold">Sub Category</label>
+                <label className="text-sm font-semibold">Sub {t("category")}</label>
                 <Select
                   value={productDetails.subCategoryId}
                   onValueChange={handleSubCategoryChange}
@@ -504,7 +506,7 @@ console.log(categories)
               </div>
 
               <div className="outline-none w-full sm:w-1/2">
-                <label className="text-sm font-semibold">Category Type</label>
+                <label className="text-sm font-semibold">{t("category")} Type</label>
                 <Select
                   value={productDetails.categoryTypeId}
                   onValueChange={(value) =>
@@ -529,7 +531,7 @@ console.log(categories)
           </div>
 
           <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-            <h2 className="text-xl font-semibold mb-4">Add Product Variants</h2>
+            <h2 className="text-xl font-semibold mb-4">{t("addProducts")} Variants</h2>
             <div className="w-full">
               <div className="w-full py-2 rounded-sm px-2 mt-2 border border-solid-black flex justify-between items-center">
                 {/* <input
@@ -706,7 +708,7 @@ console.log(categories)
               onClick={handlePlaceholderClick}
             >
               {images.length === 0 ? (
-                <span className="text-gray-500">Click to upload</span>
+                <span className="text-gray-500">{t("clickToUpload")}</span>
               ) : (
                 <div className="relative w-72 h-64">
                   <Image
@@ -766,7 +768,7 @@ console.log(categories)
             <h2 className="text-xl font-semibold mb-4">Pricing & Stock</h2>
             <div className="space-y-4">
               <div className="w-full">
-                <label className="text-sm">Price</label>
+                <label className="text-sm">{t("prices")}</label>
                 <input
                   name="basePrice"
                   value={productDetails.basePrice}
@@ -778,7 +780,7 @@ console.log(categories)
                 />
               </div>
               <div className="w-full ">
-                <label className="text-sm">Quantity</label>
+                <label className="text-sm">{t("quantity")}</label>
                 <input
                   name="baseQuantity"
                   value={productDetails.baseQuantity}

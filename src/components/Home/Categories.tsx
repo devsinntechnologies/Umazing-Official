@@ -5,14 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetCategoriesQuery } from "@/hooks/UseCategories";
+import {useTranslations} from "next-intl"
 
 const Categories = () => {
+  const t = useTranslations();
   const { data: categoriesData, isLoading, isError } = useGetCategoriesQuery({});
 
   return (
     <div className="w-full flex justify-center items-center flex-col gap-4 md:gap-8 py-4 md:py-10 px-2">
       <div className="w-full flex justify-center items-center px-4">
-        <p className="font-bold text-lg sm:text-xl md:text-2xl text-center text-primary">Category</p>
+        <p className="font-bold text-lg sm:text-xl md:text-2xl text-center text-primary">{t("category")}</p>
         {/* View All button to toggle showing all categories */}
         {/* {categoriesData?.data?.length > 6 && (
           <button
@@ -24,7 +26,7 @@ const Categories = () => {
         )} */}
       </div>
       <h1 className="font-semibold text-xl sm:text-2xl md:text-3xl lg:text-4xl">
-        Shop by Top Categories
+        Shop by Top {t("category")}
       </h1>
 
       {/* Conditionally render loading state or categories */}
@@ -71,3 +73,4 @@ const Categories = () => {
 };
 
 export default Categories;
+
