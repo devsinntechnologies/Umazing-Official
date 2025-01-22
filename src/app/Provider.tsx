@@ -2,7 +2,7 @@
 
 import { ReactNode, useRef } from 'react';
 import { Provider } from 'react-redux';
-import { makeStore } from '../../store/store';
+import { makeStore } from '../store/store';
 import { Store } from 'redux';
 
 interface StoreProviderProps {

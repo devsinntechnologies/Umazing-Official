@@ -19,6 +19,6 @@ const nextConfig = withNextIntl({
       },
     ],
   },
-};
- 
+})
+
 export default withNextIntl(nextConfig);

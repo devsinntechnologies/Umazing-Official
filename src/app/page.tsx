@@ -1,5 +1,4 @@
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
 import Categories from "@/components/Home/Categories";
 import HeaderSlider from "@/components/Home/HeaderSlider";
 import ProductSection from "@/components/Home/ProductSection";
