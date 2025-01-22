@@ -22,7 +22,7 @@ const Page: React.FC = () => {
   const pageSize = 12;
   const [totalPages, setTotalPages] = useState<number>(1);
   const [productToDelete, setProductToDelete] = useState<string | null>(null);
-
+  const t = useTranslations();
   const queryParams = {
     pageNo,
     pageSize,
