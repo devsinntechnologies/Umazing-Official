@@ -6,15 +6,12 @@ import { useGetAllProductsQuery } from "@/hooks/UseProducts";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Product } from "@/lib/types";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {useTranslations} from "next-intl"
-
 
 const ProductSection: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [pageNo, setPageNo] = useState<number>(1);
   const pageSize = 15;
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const t = useTranslations();
 
   const { data: productsData, isLoading, isError } = useGetAllProductsQuery({
     pageNo,
@@ -39,7 +36,7 @@ const ProductSection: React.FC = () => {
     <div className="flex flex-col gap-5 justify-center w-full py-2">
       <div className="w-full flex items-center justify-center space-y-2 md:space-y-3 flex-col">
         <p className="font-bold text-lg sm:text-xl md:text-2xl text-center text-primary">
-        {t("products")}
+          Products
         </p>
         <h1 className="font-semibold text-xl sm:text-2xl md:text-3xl">
           Our Featured Products

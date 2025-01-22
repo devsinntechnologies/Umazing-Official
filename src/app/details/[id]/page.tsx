@@ -19,7 +19,6 @@ import { useSelector } from "react-redux";
 import AuthDialog from "@/components/layout/auth/AuthDialog";
 import Link from "next/link";
 import { CURRENCY } from "@/lib/constants";
-import ChatWithSeller from "@/components/singleProduct/ChatWithSeller";
 
 
 // Dynamic imports for heavy components
@@ -157,7 +156,7 @@ const Page = () => {
     }
   }, [product]);
 
-  const handleCheckout = () => {
+  const handleCheckout= () => {
     // Safeguard: Check if product exists
     if (!product || !product.id) {
       toast({
@@ -167,7 +166,7 @@ const Page = () => {
       });
       return;
     }
-
+  
     // Safeguard: Validate quantity
     if (quantity > product.baseQuantity || quantity <= 0 || isNaN(quantity)) {
       toast({
@@ -177,18 +176,18 @@ const Page = () => {
       });
       return;
     }
-
+  
     try {
       // Clear any existing selected items
       localStorage.removeItem("selectedItems");
-
+  
       // Create and add the current product
       const selectedItem = [{ id: product.id, quantity }];
       localStorage.setItem("selectedItems", (selectedItem));
-
+  
       // Confirm successful addition
       console.log("Added to localStorage:", localStorage.getItem("selectedItems"));
-
+  
       // Navigate to the checkout page
       router.push("/checkout");
     } catch (error) {
@@ -200,7 +199,7 @@ const Page = () => {
       });
     }
   };
-
+  
 
 
   return (
@@ -231,24 +230,23 @@ const Page = () => {
               </div>
 
               <div className="w-full md:w-[50%] h-full space-y-5">
-                <div className="flex justify-between">
-                  <div className="rounded-[4px] text-primary text-2xl font-bold">
-                    {productLoading ? <Skeleton className="h-6 w-3/4" /> : product?.name}
-                  </div>
-                  <button
+                <div className="rounded-[4px] text-primary text-2xl font-bold">
+                  {productLoading ? <Skeleton className="h-6 w-3/4" /> : product?.name}
+                </div>
+                <button
                     onClick={handleToggleFavorite}
                     disabled={addingToFav || removingFromFav}
+                    className="bg-primary h-[51px] w-[20%] flex justify-center items-center rounded-[43px]"
                   >
                     {addingToFav || removingFromFav ? (
                       <Loader2 className="animate-spin text-white" />
                     ) : (
                       <Heart
-                        color="#007F80"
-                        fill={product?.isFavorite ? "none" : "#007F80"}
+                        color="white"
+                        fill={product?.isFavorite ? "white" : "none"}
                       />
                     )}
                   </button>
-                </div>
                 <div className="flex items-center gap-3 my-2">
                   {reviewLoading ? (
                     <Skeleton className="h-4 w-20" />
@@ -316,7 +314,7 @@ const Page = () => {
                 </div>
 
                 <div className="w-full lg:w-[647px] my-6 border border-[#E6E6E6]"></div>
-                <ChatWithSeller />
+
                 <div>
                   <p className="text-[14px] font-bold">
                     Category:{" "}
