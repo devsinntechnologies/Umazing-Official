@@ -1,5 +1,6 @@
 // import { Poppins } from "next/font/google";
-import { Urbanist } from "next/font/google";
+import { Urbanist, Noto_Nastaliq_Urdu } from "next/font/google";
+import localFont from 'next/font/local'
 import "./globals.css";
 import Provider from "./Provider";
 import { Toaster } from "@/components/ui/toaster";
@@ -13,6 +14,8 @@ import {getLocale, getMessages} from 'next-intl/server';
 
 
 const urbanist = Urbanist({ subsets: ["latin"] });
+// const notoNastaliq = Noto_Nastaliq_Urdu({ subsets: ["latin-ext", "arabic"] });
+const jameelNooriNastleeq = localFont({ src: '../fonts/jameelNooriNastleeq.ttf' })
 
 // const poppins = Poppins({
 //   subsets: ["latin"],
@@ -43,7 +46,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <title>Umazing Official</title>
         <link rel="icon" type="image/svg+xml" href="/icon.svg" />
       </head>
-      <body className={`${urbanist.className} w-screen min-h-screen`}>
+      <body className={`${urbanist.className} ${ locale === "ur" ? jameelNooriNastleeq.className : "" } w-screen min-h-screen`}>
       <NextIntlClientProvider messages={messages}>
         <Provider>
           <TooltipProvider>
