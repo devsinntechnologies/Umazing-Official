@@ -6,7 +6,7 @@ import { useGetAllProductsQuery } from "@/hooks/UseProducts";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Product } from "@/lib/types";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {useTranslations} from "next-intl"
+import { useTranslations } from "next-intl"
 
 
 const ProductSection: React.FC = () => {
@@ -39,7 +39,7 @@ const ProductSection: React.FC = () => {
     <div className="flex flex-col gap-5 justify-center w-full py-2">
       <div className="w-full flex items-center justify-center space-y-2 md:space-y-3 flex-col">
         <p className="font-bold text-lg sm:text-xl md:text-2xl text-center text-primary">
-        {t("products")}
+          {t("products")}
         </p>
         <h1 className="font-semibold text-xl sm:text-2xl md:text-3xl">
           {t("ourFeaturedProducts")}
@@ -77,7 +77,7 @@ const ProductSection: React.FC = () => {
           endMessage={
             !hasMore && (
               <p className="text-lg text-center text-gray-700 mt-4">
-              No more products!
+                {t("noMoreProducts")}
               </p>
             )
           }

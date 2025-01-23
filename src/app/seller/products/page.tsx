@@ -9,6 +9,8 @@ import Link from "next/link";
 import { useDeleteProductByIdMutation, useGetUserProductsQuery } from "@/hooks/UseProducts";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
+import {useTranslations} from "next-intl"
+
 
 interface Product {
   id: string; // Adjust type as necessary
@@ -16,13 +18,14 @@ interface Product {
 }
 
 const Page: React.FC = () => {
+  const t = useTranslations();
   const { toast } = useToast();
   const [products, setProducts] = useState<Product[]>([]);
   const [pageNo, setPageNo] = useState<number>(1);
   const pageSize = 12;
   const [totalPages, setTotalPages] = useState<number>(1);
   const [productToDelete, setProductToDelete] = useState<string | null>(null);
-  const t = useTranslations();
+ 
   const queryParams = {
     pageNo,
     pageSize,

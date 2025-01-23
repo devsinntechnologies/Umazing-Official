@@ -26,6 +26,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl"
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -34,6 +35,7 @@ interface AuthProps {
 }
 
 const Auth: React.FC<AuthProps> = ({ className }) => {
+  const t = useTranslations();
   const dispatch = useDispatch();
   const userId = useSelector((state: any) => state.authSlice.user?.id);
   const isLoggedIn = useSelector((state: any) => state.authSlice.isLoggedIn);
@@ -83,7 +85,7 @@ const Auth: React.FC<AuthProps> = ({ className }) => {
                   <MessageCircleMore  className="font-bold" />
                 </Link></TooltipTrigger>
               <TooltipContent>
-                <p>chat</p>
+                <p>{t("chat")}</p>
               </TooltipContent>
             </Tooltip>
             <Tooltip content="Wishlist">
@@ -93,7 +95,7 @@ const Auth: React.FC<AuthProps> = ({ className }) => {
                   <Heart className="font-bold" />
                 </Link></TooltipTrigger>
               <TooltipContent>
-                <p>Wishlist</p>
+                <p>{t("wishlist")}</p>
               </TooltipContent>
             </Tooltip>
 
@@ -106,7 +108,7 @@ const Auth: React.FC<AuthProps> = ({ className }) => {
                 </Link>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Cart</p>
+                <p>{t("cart")}</p>
               </TooltipContent>
             </Tooltip>
             <DropdownMenu>
@@ -151,44 +153,45 @@ const Auth: React.FC<AuthProps> = ({ className }) => {
                         <span className="text-lg font-bold truncate-multiline-1 w-[180px]">
                           {userData?.name}
                         </span>
-                        <span className="text-md">View Profile</span>
+                        <span className="text-md">{t("viewProfile")}</span>
                       </div>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="cursor-pointer">
                     <Link href="/seller" className="flex items-center gap-2">
                       <LayoutDashboard className="w-4 h-4" />
-                      Sell | Dashboard
+                      {t("sell")} |
+                      {t("dashboard")}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="cursor-pointer">
                     <Link href="/seller/addProduct" className="flex items-center gap-2">
                       <PackagePlus className="w-4 h-4" />
-                      Add Product
+                      {t("addProduct")}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="cursor-pointer">
                     <Link href="/seller/products" className="flex items-center gap-2">
                       <Package className="w-4 h-4" />
-                      Your Products
+                  {t("yourProducts")}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="cursor-pointer">
                     <Link href="/orders" className="flex items-center gap-2">
                       <ShoppingBag className="w-4 h-4" />
-                      Your Orders
+                      {t("yourOrders")}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="cursor-pointer">
                     <Link href="/seller/orders" className="flex items-center gap-2">
                       <ShoppingBag className="w-4 h-4" />
-                      Customer Orders
+                      {("customerOrders")}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="cursor-pointer">
                     <Link href="/wishlist" className="flex items-center gap-2">
                       <Heart className="w-4 h-4" />
-                      Wishlist
+                      {t("wishlist")}
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
@@ -199,7 +202,7 @@ const Auth: React.FC<AuthProps> = ({ className }) => {
                     onClick={handleLogout}
                   >
                     <LogOut className="w-4 h-4" />
-                    Logout
+                    {t("logout")}
                   </button>
                 </DropdownMenuItem>
               </DropdownMenuContent>

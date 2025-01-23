@@ -74,7 +74,7 @@ const FooterMiddleSection = () => {
 
         {/* Right Section - Download Mobile App */}
         <div className="col-span-1 md:col-span-1 sm:flex hidden w-full flex-col sm:space-y-4 space-y-2">
-          <h3 className="font-semibold text-gray-800">Download Mobile App</h3>
+          <h3 className="font-semibold text-gray-800">{t("downloadMobileApp")}</h3>
           <div className="flex">
             <a href="#" className="flex gap-2">
               <Image src='/Images/playStore.png' width={80} alt="" height={20} />

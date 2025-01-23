@@ -19,13 +19,13 @@ const Sidebar: React.FC = () => {
       <Link href="/seller" className={getLinkClass("/seller")}>
         <div className="flex md:gap-3 text-md text-center lg:text-lg sm:text-md text-xs gap-2 md:px-3 py-1 px-2 items-center ">
           <LayoutDashboard className="hidden sm:flex" />
-          Dashboard
+          {t("dashboard")}
         </div>
       </Link>
       <Link href="/seller/products" className={getLinkClass("/seller/products")}>
         <div className="flex md:gap-3 text-md text-center lg:text-lg sm:text-md text-xs gap-2 md:px-3 py-1 px-2 items-center ">
           <Package className="hidden sm:flex" />
-          All Products
+         {t("allProducts")}
         </div>
       </Link>
       <Link href="/seller/addProduct" className={getLinkClass("/seller/addProduct")}>
