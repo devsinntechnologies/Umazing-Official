@@ -7,9 +7,8 @@ import { useRouter, useParams } from "next/navigation";
 import { useFetchChatsQuery } from "@/hooks/useChat";
 import { connectSocket, getSocket } from "@/lib/socket";
 import { useSelector } from "react-redux";
-import AddMessages from "./AddMessages";
+// import AddMessages from "./AddMessages";
 import { useGetUserProfileQuery } from "@/hooks/UseAuth";
-
 
 interface UserProfileData {
   id: string;
@@ -118,7 +117,6 @@ const SidebarContent = ({ rooms, filter, setFilter, activeRoomId, userId, onRoom
         <SearchBar />
         <FilterButtons filter={filter} setFilter={setFilter} />
         <MessageList rooms={rooms} activeRoomId={activeRoomId} onRoomClick={onRoomClick} userId={userId} />
-        <div className="absolute right-4 bottom-4"><AddMessages /></div>
       </div>
     </div>
   );

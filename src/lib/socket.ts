@@ -1,14 +1,15 @@
 "use client"
 import { io, Socket } from "socket.io-client";
 import { BASE_URL_SOCKET } from "@/lib/constants";
-let token = localStorage.getItem('token');
 let socket: Socket | null = null;
 
 
 export const connectSocket = (): Socket => {
   
+  let token = localStorage.getItem('token');
+  
   if (!socket) {
-    socket = io('BASE_URL_SOCKET', { auth: { token } });
+    socket = io(BASE_URL_SOCKET, { auth: { token } });
      
 
     socket.on("connect", () => {

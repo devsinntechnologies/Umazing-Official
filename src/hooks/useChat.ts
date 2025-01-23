@@ -1,12 +1,12 @@
 "use client"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { connectSocket, getSocket } from "@/lib/socket";
-import { BASE_URL } from "@/lib/constants";
+import { BASE_URL_SOCKET } from "@/lib/constants";
 
 export const chat = createApi({
   reducerPath: "chat",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${BASE_URL}/chat/`,
+    baseUrl: `${BASE_URL_SOCKET}/chat/`,
     prepareHeaders: (headers, { getState, endpoint }) => {
       const token = localStorage.getItem("token");
       console.log(token)
