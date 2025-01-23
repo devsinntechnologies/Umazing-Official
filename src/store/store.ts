@@ -12,6 +12,7 @@ import { favourite } from '@/hooks/UseFavourite';
 import { cart } from '@/hooks/UseCart';
 import { review } from '@/hooks/UseReview';
 import { orders } from '@/hooks/UseOrders';
+import { chat } from '@/hooks/useChat';
 
 export const makeStore = () => {
   return configureStore({
@@ -19,6 +20,7 @@ export const makeStore = () => {
       authSlice: authSlice.reducer,
       cartSlice: cartSlice.reducer,
       [auth.reducerPath]: auth.reducer,
+      [chat.reducerPath]: chat.reducer,
       [products.reducerPath]: products.reducer,
       [categories.reducerPath]: categories.reducer,
       [attribute.reducerPath]: attribute.reducer,
@@ -39,6 +41,7 @@ export const makeStore = () => {
         notifications.middleware,
         favourite.middleware,
         cart.middleware,
+        chat.middleware,
         review.middleware,
         orders.middleware
       ),
