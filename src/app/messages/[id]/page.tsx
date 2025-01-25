@@ -7,6 +7,7 @@ import { useParams, useRouter } from "next/navigation"; // Import useRouter
 import allMessages from "@/data/message.json";
 
 const SingleChat = ({ onClose }) => {
+//   const senderId = useSelector((state: RootState) => state.authSlice?.user?.id);
     const { id } = useParams();
     const router = useRouter(); // Initialize useRouter
 
@@ -32,7 +33,7 @@ const SingleChat = ({ onClose }) => {
 
     // Handle navigation back to sidebar
     const handleBack = () => {
-        router.push("/messages"); // Navigate back to sidebar page
+        router.push("/messages/"); // Navigate back to sidebar page
     };
 
     return (

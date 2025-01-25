@@ -7,7 +7,7 @@ import { useRouter, useParams } from "next/navigation";
 import { useFetchChatsQuery } from "@/hooks/useChat";
 import { connectSocket, getSocket } from "@/lib/socket";
 import { useSelector } from "react-redux";
-// import AddMessages from "./AddMessages";
+import AddMessages from "./AddMessages";
 import { useGetUserProfileQuery } from "@/hooks/UseAuth";
 
 interface UserProfileData {
@@ -88,8 +88,9 @@ const MessageSideBar = () => {
   const activeRoomId = id || null;
 
   const handleRoomClick = (roomId) => {
-    router.push(`/${roomId}`);
+    router.push(`messages/${roomId}`);
   }; 
+
 
   if (isLoading) return <div>Loading chats...</div>;
   if (error) return <div>Failed to load chats. Please try again later.</div>;
