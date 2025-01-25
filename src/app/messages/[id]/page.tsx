@@ -31,7 +31,7 @@ const SingleChat = ({ onClose }) => {
             if (!roomId) return;
 
             try {
-                const response = await fetch(`http://97.74.89.204:5000/chat/chat_room/${roomId}`, {
+                const response = await fetch(`${BASE_URL_SOCKET}/chat/chat_room/${roomId}`, {
                     method: "GET",
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
