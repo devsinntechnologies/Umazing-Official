@@ -1,65 +1,40 @@
 // @ts-nocheck
 "use client";
-
 import { useState, useEffect } from "react";
 import { Send, ArrowLeft, MousePointerClick } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import allMessages from "@/data/message.json";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store";
+import { RootState } from "@/store/store";
 import { getSocket } from "@/lib/socket";
 import { useFetchChatRoomQuery } from "@/hooks/useChat";
 
-const SingleChat = ({ onClose }) => {
+const SingleChat = () => {
     const { id } = useParams(); // Get the ID from the URL
     const { data: messagesData, isLoading, error } = useFetchChatRoomQuery(id);
-    console.log(messagesData, "Message")
-    const router = useRouter(); // Initialize useRouter
+    const router = useRouter();
     const senderId = useSelector((state: RootState) => state.authSlice?.user?.id);
     const socket = getSocket();
 
-    // Filter selected chat based on ID
-    const selectedChat = allMessages.find((chat) => chat.id === Number(id));
-    const roomId = selectedChat?.roomId;
-
     // State management
-    const [messages, setMessages] = useState(selectedChat?.messages || []);
+    const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
     const [receiver, setReceiver] = useState(null);
     const [typing, setTyping] = useState(false);
 
-    // Fetch room details if roomId is available
+    // Sync messages and receiver from fetched data
     useEffect(() => {
-        const fetchRoomDetails = async () => {
-            if (!roomId) return;
-
-            try {
-                const response = await fetch(`${BASE_URL_SOCKET}/chat/chat_room/${roomId}`, {
-                    method: "GET",
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    setMessages(data.data.messages || []);
-                    setReceiver(data.data.receiver || null);
-                    markMessagesAsRead();
-                } else {
-                    console.error("Failed to fetch room details");
-                }
-            } catch (error) {
-                console.error("Error fetching room details:", error);
-            }
-        };
-
-        fetchRoomDetails();
-    }, [roomId]);
+        if (messagesData) {
+            setMessages(messagesData.data.messages || []);
+            setReceiver(messagesData.data.receiver || null);
+        }
+    }, [messagesData]);
 
     // Mark messages as read
-    const markMessagesAsRead = () => {
-        if (roomId) {
-            socket.emit("messageRead", { roomId });
+    useEffect(() => {
+        if (messagesData?.data?.receiver?.id && senderId) {
+            socket.emit("messageRead", { roomId: id });
         }
-    };
+    }, [messagesData, senderId, id, socket]);
 
     // Listen for socket events
     useEffect(() => {
@@ -70,13 +45,13 @@ const SingleChat = ({ onClose }) => {
         });
 
         socket.on("typing", ({ roomId: typingRoomId, senderId: typingSenderId }) => {
-            if (typingRoomId === roomId && typingSenderId !== senderId) {
+            if (typingRoomId === id && typingSenderId !== senderId) {
                 setTyping(true);
             }
         });
 
         socket.on("stopTyping", ({ roomId: typingRoomId, senderId: typingSenderId }) => {
-            if (typingRoomId === roomId && typingSenderId !== senderId) {
+            if (typingRoomId === id && typingSenderId !== senderId) {
                 setTyping(false);
             }
         });
@@ -86,18 +61,18 @@ const SingleChat = ({ onClose }) => {
             socket.off("typing");
             socket.off("stopTyping");
         };
-    }, [roomId, senderId, socket]);
+    }, [id, senderId, socket]);
 
     // Handle typing events
     const handleTyping = () => {
         if (!typing) {
-            socket.emit("typing", { roomId });
+            socket.emit("typing", { roomId: id });
         }
     };
 
     const handleStopTyping = () => {
         if (typing) {
-            socket.emit("stopTyping", { roomId });
+            socket.emit("stopTyping", { roomId: id });
             setTyping(false);
         }
     };
@@ -105,7 +80,7 @@ const SingleChat = ({ onClose }) => {
     // Handle sending messages
     const handleSend = () => {
         if (input.trim()) {
-            socket.emit("sendMessage", { roomId, senderId, receiverId: receiver?.id, content: input.trim() });
+            socket.emit("sendMessage", { roomId: id, senderId, receiverId: receiver?.id, content: input.trim() });
             setInput(""); // Clear input after sending
             handleStopTyping();
         }
@@ -123,27 +98,29 @@ const SingleChat = ({ onClose }) => {
                     <ArrowLeft size={20} />
                 </button>
                 <h2 className="text-lg text-primary font-semibold">
-                    {selectedChat?.senderName || "Unknown User"}
+                    {receiver?.name || "Unknown User"}
                 </h2>
             </div>
 
             {/* Chat Messages Section */}
             <div className="flex-1 p-4 h-[calc(100vh-140px)] overflow-y-scroll bg-gray-50">
-                {messages.length > 0 ? (
+                {isLoading ? (
+                    <div className="text-center text-gray-500">Loading...</div>
+                ) : error ? (
+                    <div className="text-center text-red-500">Error loading messages</div>
+                ) : messages.length > 0 ? (
                     messages.map((msg, index) => (
                         <div
                             key={index}
-                            className={`flex mb-3 ${msg.sender === "You" ? "justify-end" : "justify-start"}`}
+                            className={`flex mb-3 ${msg.sender.id === senderId ? "justify-end" : "justify-start"}`}
                         >
                             <div
                                 className={`p-3 rounded-lg shadow-md max-w-xs ${
-                                    msg.sender === "You"
-                                        ? "bg-primary text-white"
-                                        : "bg-white text-primary"
+                                    msg.sender.id === senderId ? "bg-primary text-white" : "bg-white text-primary"
                                 }`}
                             >
-                                <p className="text-sm">{msg.text}</p>
-                                <p className="text-xs text-gray-300 mt-1">{msg.time}</p>
+                                <p className="text-sm">{msg.content}</p>
+                                <p className="text-xs text-gray-300 mt-1">{new Date(msg.timestamp).toLocaleString()}</p>
                             </div>
                         </div>
                     ))
