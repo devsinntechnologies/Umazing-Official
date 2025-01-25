@@ -9,6 +9,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { getSocket } from "@/lib/socket";
 
+// Add BASE_URL_SOCKET constant at the top
+const BASE_URL_SOCKET = process.env.NEXT_PUBLIC_SOCKET_URL || 'http://your-api-url';
+
 const SingleChat = ({ onClose }) => {
     const { id } = useParams(); // Get the ID from the URL
     const router = useRouter(); // Initialize useRouter
@@ -20,7 +23,7 @@ const SingleChat = ({ onClose }) => {
     const roomId = selectedChat?.roomId;
 
     // State management
-    const [messages, setMessages] = useState(selectedChat?.messages || []);
+    const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
     const [receiver, setReceiver] = useState(null);
     const [typing, setTyping] = useState(false);
@@ -33,7 +36,10 @@ const SingleChat = ({ onClose }) => {
             try {
                 const response = await fetch(`${BASE_URL_SOCKET}/chat/chat_room/${roomId}`, {
                     method: "GET",
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                    headers: { 
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                        'Content-Type': 'application/json'
+                    },
                 });
                 if (response.ok) {
                     const data = await response.json();
@@ -41,7 +47,7 @@ const SingleChat = ({ onClose }) => {
                     setReceiver(data.data.receiver || null);
                     markMessagesAsRead();
                 } else {
-                    console.error("Failed to fetch room details");
+                    console.error("Failed to fetch room details:", await response.text());
                 }
             } catch (error) {
                 console.error("Error fetching room details:", error);
@@ -130,17 +136,19 @@ const SingleChat = ({ onClose }) => {
                     messages.map((msg, index) => (
                         <div
                             key={index}
-                            className={`flex mb-3 ${msg.sender === "You" ? "justify-end" : "justify-start"}`}
+                            className={`flex mb-3 ${msg.senderId === senderId ? "justify-end" : "justify-start"}`}
                         >
                             <div
                                 className={`p-3 rounded-lg shadow-md max-w-xs ${
-                                    msg.sender === "You"
+                                    msg.senderId === senderId
                                         ? "bg-primary text-white"
                                         : "bg-white text-primary"
                                 }`}
                             >
-                                <p className="text-sm">{msg.text}</p>
-                                <p className="text-xs text-gray-300 mt-1">{msg.time}</p>
+                                <p className="text-sm">{msg.content}</p>
+                                <p className="text-xs text-gray-300 mt-1">
+                                    {new Date(msg.timestamp).toLocaleTimeString()}
+                                </p>
                             </div>
                         </div>
                     ))
