@@ -1,28 +1,35 @@
-"use client"
+"use client";
+
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { connectSocket, getSocket } from "@/lib/socket";
+import { getSocket } from "@/lib/socket";
 import { BASE_URL_SOCKET } from "@/lib/constants";
 
 export const chat = createApi({
   reducerPath: "chat",
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL_SOCKET}/chat/`,
-    prepareHeaders: (headers, { getState, endpoint }) => {
+    prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
-      console.log(token)
-        if (token) {
-          headers.set("Authorization", `Bearer ${token}`);
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
       }
       return headers;
     },
   }),
   endpoints: (builder) => ({
+    // Fetch all chat rooms
     fetchChats: builder.query({
-      query: (userId: string) => `/chat_rooms/`,
+      query: () => `/chat_rooms/`,
     }),
 
+    // Fetch details of a single chat room
+    fetchChatRoom: builder.query({
+      query: (roomId) => `/chat_room/${roomId}`,
+    }),
+
+    // Send a message via WebSocket
     sendMessage: builder.mutation({
-      queryFn: async (messageData, _queryApi, _extraOptions, fetchWithBQ) => {
+      queryFn: async (messageData) => {
         try {
           const socket = getSocket();
 
@@ -53,4 +60,8 @@ export const chat = createApi({
   }),
 });
 
-export const { useFetchChatsQuery, useSendMessageMutation } = chat;
+export const {
+  useFetchChatsQuery,
+  useFetchChatRoomQuery,
+  useSendMessageMutation,
+} = chat;
