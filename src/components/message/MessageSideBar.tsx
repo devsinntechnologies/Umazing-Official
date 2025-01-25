@@ -9,6 +9,7 @@ import { connectSocket, getSocket } from "@/lib/socket";
 import { useSelector } from "react-redux";
 // import AddMessages from "./AddMessages";
 import { useGetUserProfileQuery } from "@/hooks/UseAuth";
+import { BASE_IMAGE } from "@/lib/constants";
 
 interface UserProfileData {
   id: string;
@@ -160,7 +161,6 @@ const MessageList = ({ rooms, activeRoomId, onRoomClick, userId }) => (
   <div className="space-y-2">
     {rooms.map((room) => {
       const isSender = room.lastMessage?.senderId === userId;
-
       return (
         <div
           onClick={() => onRoomClick(room.roomId)}
@@ -171,9 +171,9 @@ const MessageList = ({ rooms, activeRoomId, onRoomClick, userId }) => (
         >
           <Avatar>
             <AvatarImage
-              src={room?.users?.[0]?.avatarUrl || ""}
+              src={room?.receiver?.imageUrl ? `${BASE_IMAGE}${room?.receiver?.imageUrl }` : ""}
               alt={room?.users?.[0]?.email || ""}
-              className="w-8 h-8 text-sm bg-gradient-to-t to-gradientTo from-gradientFrom"
+              className="size-full text-sm bg-gradient-to-t to-gradientTo from-gradientFrom"
             />
             <AvatarFallback className="bg-primary text-white">
               {room?.roomName?.charAt(0).toUpperCase() || "?"}
