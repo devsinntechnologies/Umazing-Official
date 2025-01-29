@@ -1,6 +1,6 @@
 // @ts-nocheck
-"use client";
-import { useState, useEffect } from "react";
+"use client"
+import { useState, useEffect, useRef } from "react";
 import { Send, ArrowLeft, MousePointerClick } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
@@ -20,6 +20,9 @@ const SingleChat = () => {
     const [input, setInput] = useState("");
     const [receiver, setReceiver] = useState(null);
     const [typing, setTyping] = useState(false);
+
+    // Reference to the message container to scroll to bottom
+    const messagesEndRef = useRef(null);
 
     // Sync messages and receiver from fetched data
     useEffect(() => {
@@ -46,13 +49,13 @@ const SingleChat = () => {
 
         socket.on("typing", ({ roomId: typingRoomId, senderId: typingSenderId }) => {
             if (typingRoomId === id && typingSenderId !== senderId) {
-                setTyping(true);
+                setTyping(true); // Other user is typing
             }
         });
 
         socket.on("stopTyping", ({ roomId: typingRoomId, senderId: typingSenderId }) => {
             if (typingRoomId === id && typingSenderId !== senderId) {
-                setTyping(false);
+                setTyping(false); // Other user stopped typing
             }
         });
 
@@ -66,13 +69,13 @@ const SingleChat = () => {
     // Handle typing events
     const handleTyping = () => {
         if (!typing) {
-            socket.emit("typing", { roomId: id });
+            socket.emit("typing", { roomId: id }); // Emit typing event
         }
     };
 
     const handleStopTyping = () => {
         if (typing) {
-            socket.emit("stopTyping", { roomId: id });
+            socket.emit("stopTyping", { roomId: id }); // Emit stop typing event
             setTyping(false);
         }
     };
@@ -89,6 +92,11 @@ const SingleChat = () => {
     const handleBack = () => {
         router.push("/messages/"); // Navigate back to sidebar page
     };
+
+    // Scroll to the bottom whenever messages change
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
 
     return (
         <div className="flex flex-col w-full lg:w-[70%] md:w-[50%] flex-1 border-l border-gray-200">
@@ -130,20 +138,28 @@ const SingleChat = () => {
                         <p className="text-lg mt-2">No messages yet. Start the conversation!</p>
                     </div>
                 )}
+
+                {/* Typing indicator */}
+                {typing && (
+                    <div className="text-sm text-gray-500 mt-2">User is typing...</div>
+                )}
+
+                {/* Scroll target for messages */}
+                <div ref={messagesEndRef} />
             </div>
 
             {/* Input Box */}
-            <div className="p-4 bg-white border-t flex items-center">
+            <div className="p-4 bg-white sticky left-0 right-0 bottom-0 border-t flex items-center">
                 <input
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={handleTyping}
-                    onBlur={handleStopTyping}
+                    onKeyDown={handleTyping} // Start typing on key down
+                    onBlur={handleStopTyping} // Stop typing when the input loses focus
                     placeholder="Type a message..."
                     className="flex-1 p-3 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
                 />
-                <button
+                <button 
                     onClick={handleSend}
                     disabled={!input.trim()}
                     className={`ml-3 p-3 rounded-full ${

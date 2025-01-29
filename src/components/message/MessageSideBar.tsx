@@ -47,9 +47,9 @@ const MessageSideBar = () => {
 
   useEffect(() => {
     const socket = getSocket();
-
     if (!socket) return;
 
+    // Handle incoming new messages
     const handleNewMessage = (data) => {
       const { roomId, lastMessage } = data;
 
@@ -58,20 +58,48 @@ const MessageSideBar = () => {
         if (existingRoom) {
           return prevRooms.map((room) =>
             room.roomId === roomId
-              ? { ...room, lastMessage, unreadMessages: (room.unreadMessages || 0) + 1 }
+              ? {
+                  ...room,
+                  lastMessage,
+                  unreadMessages: (room.unreadMessages || 0) + 1,
+                }
               : room
           );
         }
-        return [...prevRooms, { roomId, lastMessage, unreadMessages: 1 }];
+        return [
+          ...prevRooms,
+          { roomId, lastMessage, unreadMessages: 1 },
+        ];
       });
     };
 
+    // Handle message read event
+    const handleReadMessage = (data) => {
+      const { roomId, messageId } = data;
+      setRooms((prevRooms) =>
+        prevRooms.map((room) =>
+          room.roomId === roomId
+            ? {
+                ...room,
+                lastMessage: {
+                  ...room.lastMessage,
+                  readBy: [...(room.lastMessage?.readBy || []), userId],
+                },
+              }
+            : room
+        )
+      );
+    };
+
+    // Listen for incoming socket events
     socket.on("newMessage", handleNewMessage);
+    socket.on("readMessage", handleReadMessage);
 
     return () => {
       socket.off("newMessage", handleNewMessage);
+      socket.off("readMessage", handleReadMessage);
     };
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     if (messagesData?.data) {
@@ -89,9 +117,13 @@ const MessageSideBar = () => {
   const activeRoomId = id || null;
 
   const handleRoomClick = (roomId) => {
+    // Mark messages as read when opening a chat room
+    const socket = getSocket();
+    if (socket) {
+      socket.emit("readMessages", { roomId, userId });
+    }
     router.push(`messages/${roomId}`);
-  }; 
-
+  };
 
   if (isLoading) return <div>Loading chats...</div>;
   if (error) return <div>Failed to load chats. Please try again later.</div>;
@@ -125,7 +157,6 @@ const SidebarContent = ({ rooms, filter, setFilter, activeRoomId, userId, onRoom
 };
 
 // Remaining components (SearchBar, FilterButtons, MessageList, MessageDetails, MessageTimestamp) stay unchanged.
-
 
 const SearchBar = () => (
   <div className="w-full h-10 overflow-hidden bg-white m-auto flex items-center shadow-xl border-darkGrey rounded-full pr-2 pl-4">
@@ -172,7 +203,7 @@ const MessageList = ({ rooms, activeRoomId, onRoomClick, userId }) => (
         >
           <Avatar>
             <AvatarImage
-              src={room?.receiver?.imageUrl ? `${BASE_IMAGE}${room?.receiver?.imageUrl }` : ""}
+              src={room?.receiver?.imageUrl ? `${BASE_IMAGE}${room?.receiver?.imageUrl}` : ""}
               alt={room?.users?.[0]?.email || ""}
               className="size-full text-sm bg-gradient-to-t to-gradientTo from-gradientFrom"
             />
@@ -193,7 +224,6 @@ const MessageList = ({ rooms, activeRoomId, onRoomClick, userId }) => (
     })}
   </div>
 );
-
 
 const MessageDetails = ({ room, userId }) => {
   const isSender = room.lastMessage.senderId === userId;
