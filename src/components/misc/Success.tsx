@@ -18,7 +18,6 @@ const Success = ({ size, absolute = true }: { size?: string, absolute?: boolean 
       height={130}
       width={130}
     /></div>
-  
   );
 };
 

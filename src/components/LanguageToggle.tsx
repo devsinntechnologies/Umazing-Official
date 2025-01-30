@@ -3,6 +3,7 @@
 const Cookies = require("js-cookie");
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import { Switch } from "@/components/ui/switch"; // Ensure the Switch component is set up correctly
 
 const LanguageToggle: React.FC = () => {
   const router = useRouter();
@@ -23,21 +24,15 @@ const LanguageToggle: React.FC = () => {
     const queryString = searchParams.toString();
     const newPath = queryString ? `${pathname}?${queryString}` : pathname;
     router.push(newPath, undefined, { scroll: false });
-    window.location.reload()
+    window.location.reload();
   };
 
   return (
     <div className="flex items-center gap-2">
-      <button
-        onClick={toggleLanguage}
-        className="relative flex items-center justify-center w-12 h-6 rounded-full bg-gray-300 dark:bg-gray-700 focus:outline-none"
-      >
-        <span
-          className={`absolute w-5 h-5 bg-white rounded-full shadow transform transition-transform ${
-            locale === "en" ? "translate-x-1" : "translate-x-6"
-          }`}
-        ></span>
-      </button>
+      <Switch
+        checked={locale === "ur"}
+        onCheckedChange={toggleLanguage}
+      />
       <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
         {locale === "en" ? "English" : "اردو"}
       </span>

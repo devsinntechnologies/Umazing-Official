@@ -25,7 +25,7 @@ const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "basePrice",
     header: "Base Price",
-    cell: ({ getValue }) => `{CURRENCY} ${getValue()}`,
+    cell: ({ getValue }) => `${CURRENCY} ${getValue()}`,
   },
   {
     accessorKey: "claim",
