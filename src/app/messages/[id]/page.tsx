@@ -1,12 +1,14 @@
 // @ts-nocheck
-"use client"
+"use client";
 import { useState, useEffect, useRef } from "react";
 import { Send, ArrowLeft, MousePointerClick } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { getSocket } from "@/lib/socket";
+import { MessageBox } from "react-chat-elements";
 import { useFetchChatRoomQuery } from "@/hooks/useChat";
+import "react-chat-elements/dist/main.css";
 
 const SingleChat = () => {
     const { id } = useParams(); // Get the ID from the URL
@@ -117,21 +119,30 @@ const SingleChat = () => {
                 ) : error ? (
                     <div className="text-center text-red-500">Error loading messages</div>
                 ) : messages.length > 0 ? (
-                    messages.map((msg, index) => (
-                        <div
-                            key={index}
-                            className={`flex mb-3 ${msg.sender.id === senderId ? "justify-end" : "justify-start"}`}
-                        >
-                            <div
-                                className={`p-3 rounded-lg shadow-md max-w-xs ${
-                                    msg.sender.id === senderId ? "bg-primary text-white" : "bg-white text-primary"
-                                }`}
-                            >
-                                <p className="text-sm">{msg.content}</p>
-                                <p className="text-xs text-gray-300 mt-1">{new Date(msg.timestamp).toLocaleString()}</p>
+                    messages.map((msg, index) => {
+                        const isSender = msg.sender.id === senderId;
+                        return (
+                            <div key={index} className={`flex mb-3 ${isSender ? "justify-end" : "justify-start"}`}>
+                                <MessageBox
+                                    position={isSender ? "right" : "left"}
+                                    text={msg.content}
+                                    date={new Date(msg.timestamp)}
+                                    type="text"
+                                    className="text-sm"
+                                    data={{
+                                        style: {
+                                            backgroundColor: isSender ? "#3B82F6" : "#F7985C", // Blue for sender, White for receiver
+                                            color: isSender ? "#F7985C" : "#1E293B", // White text for sender, Dark Gray for receiver
+                                            padding: "12px",
+                                            borderRadius: "15px",
+                                            maxWidth: "75%",
+                                            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+                                        },
+                                    }}
+                                />
                             </div>
-                        </div>
-                    ))
+                        );
+                    })
                 ) : (
                     <div className="flex flex-col items-center justify-center text-gray-500 h-full">
                         <MousePointerClick size={48} />
@@ -174,3 +185,4 @@ const SingleChat = () => {
 };
 
 export default SingleChat;
+
